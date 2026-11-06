@@ -57,6 +57,8 @@ Mission Control should offer named Orbit / Follow / Inspect / X-Ray / Replay mod
 
 | File | Purpose |
 | --- | --- |
+| [Agent instructions](AGENTS.md) | Root-level coding-agent constraints and proof rules |
+| [Issue index](docs/ISSUE_INDEX.md) | Dependency-ordered links to all 17 development issues |
 | [Product definition](docs/PRODUCT.md) | User journeys, business scope, P0/P1 boundaries |
 | [Architecture and interfaces](docs/ARCHITECTURE.md) | Shared state, event types, trust boundaries, replay clocks |
 | [Solana contract](docs/SOLANA_PROTOCOL.md) | Exact financial invariants, permissions and attack cases |
@@ -70,6 +72,8 @@ Mission Control should offer named Orbit / Follow / Inspect / X-Ray / Replay mod
 Shared team references:
 - [Notion — Product, Business & Technical Blueprint](https://app.notion.com/p/41001192111281d9b342c1f5b3d3fda5)
 - [Notion — Shared AI Engineering Workflow](https://app.notion.com/p/410011921112819e8667c455ac342e89)
+
+**Start the implementation here:** [VQ-00 / GitHub issue #1](https://github.com/CosmasMandikonza/Vorqyn/issues/1). [View the complete issue backlog](docs/ISSUE_INDEX.md).
 
 ## Workflow for the two developers
 
