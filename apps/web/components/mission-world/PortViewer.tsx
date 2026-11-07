@@ -21,7 +21,7 @@ import {
   addVec,
   type SceneVec3,
 } from "./enu";
-import { HONESTY_BADGE, LIMITATIONS_TEXT } from "./labels";
+import { HONESTY_BADGE, PLAYBACK_BADGE, LIMITATIONS_TEXT, PLAYBACK_LIMITATIONS_TEXT } from "./labels";
 import { poseForMode, type CameraPose, type ViewMode } from "./camera-presets";
 import { fetchWorld, type PortWorld } from "./world-data";
 import { MACHINES } from "./machines";
@@ -162,7 +162,7 @@ export function PortViewer() {
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
           <p className="badge bg-card font-mono" data-testid="honesty-badge">
-            {HONESTY_BADGE}
+            {sessionActive ? PLAYBACK_BADGE : HONESTY_BADGE}
           </p>
           {fixtureMode && (
             <p className="badge border-warning bg-card font-mono text-warning" data-testid="fixture-badge">
@@ -268,7 +268,7 @@ export function PortViewer() {
                 onSelect={setSelectedId}
                 inspectIndex={inspectIndex}
                 onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={LIMITATIONS_TEXT}
+                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
                 sensorRobot={selectedLive}
               />
             </div>
@@ -284,7 +284,7 @@ export function PortViewer() {
                 onSelect={setSelectedId}
                 inspectIndex={inspectIndex}
                 onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={LIMITATIONS_TEXT}
+                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
                 sensorRobot={selectedLive}
                 compact
               />

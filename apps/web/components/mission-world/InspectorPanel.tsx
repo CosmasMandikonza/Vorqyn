@@ -9,7 +9,7 @@
  */
 import { inspectTargets, type CameraPose, type ViewMode } from "./camera-presets";
 import { MACHINES } from "./machines";
-import { SOURCE_LABEL } from "./labels";
+import { SOURCE_LABEL, SOURCE_LABEL_PLAYBACK } from "./labels";
 import { anchorById, type PortWorld } from "./world-data";
 import type { DemoRobotView } from "./demo-sim/contract";
 
@@ -128,7 +128,7 @@ export function InspectorPanel({
                 {refModel.nominal_dims_enu_m.z}
               </Fact>
             )}
-            <Fact term="Source">{sensorRobot ? "SYNTHETIC_SIM · kernel observation" : SOURCE_LABEL}</Fact>
+            <Fact term="Source">{sensorRobot ? SOURCE_LABEL_PLAYBACK : SOURCE_LABEL}</Fact>
           </>
         )}
         {!machine && <Fact term="Selection">none — select a machine</Fact>}
