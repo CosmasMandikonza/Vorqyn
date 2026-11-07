@@ -42,6 +42,12 @@ jobs:
       - name: Deterministic simulation kernel tests
         run: node --test services/simulation/core/*.test.mjs
 
+      # Coordinate alignment must be tested against the actual world metadata.
+      # This is a separate suite from the kernel unit tests and must run on
+      # every PR before 3D users depend on world-frame pose correctness.
+      - name: World-simulator ENU and altitude integration tests
+        run: node --test services/simulation/integration/*.test.mjs
+
       # Independent Lane 2 asset pack: protect GLB integrity, origin/scale,
       # task-zone metadata and reproducible generation on the pinned runner.
       - name: Port-world asset validation and determinism

@@ -49,9 +49,9 @@ test("every observation and the final state are labelled SYNTHETIC_SIM with ENU 
   const kernel = runFaultDemo();
   for (const snapshot of kernel.getObservationLog()) {
     assert.equal(snapshot.provenance.sourceKind, SOURCE_KIND_SYNTHETIC_SIM);
-    assert.equal(snapshot.provenance.frameId, "ENU_PORT_LOCAL");
+    assert.equal(snapshot.provenance.frameId, "ENU_PORT-001_LOCAL");
     assert.equal(snapshot.provenance.positionUnits, "m");
-    assert.equal(snapshot.provenance.scenarioId, "PORT-LOCAL-001");
+    assert.equal(snapshot.provenance.scenarioId, "PORT-001");
     assert.equal(snapshot.provenance.seed, SEED);
   }
   assert.equal(kernel.getState().kernelState !== undefined, true);
