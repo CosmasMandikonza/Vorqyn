@@ -86,14 +86,16 @@ jobs:
       - name: Format check
         run: cargo fmt --check
 
+      # build-sbf must precede clippy/test: the integration tests embed the
+      # produced .so via include_bytes!.
+      - name: Build SBF program
+        run: cargo build-sbf
+
       - name: Clippy
         run: cargo clippy --all-targets -- -D warnings
 
       - name: Check under Anchor MSRV (1.89.0)
         run: rustup toolchain install 1.89.0 --profile minimal && cargo +1.89.0 check
-
-      - name: Build SBF program
-        run: cargo build-sbf
 
       - name: Tests (unit + LiteSVM integration)
         run: cargo test
