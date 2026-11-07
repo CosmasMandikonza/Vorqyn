@@ -40,6 +40,20 @@ declare_id!("AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc");
 // ---------------------------------------------------------------------------
 
 pub const REGISTRY_SEED: &[u8] = b"vorqyn:verifier-registry";
+
+/// Deploy-time registry administrator, compiled into the program binary
+/// from the build environment (`VORQYN_REGISTRY_ADMIN`, base58 pubkey).
+/// The DEFAULT is the Solana system-program id — a key no wallet can sign
+/// with — so a default build is UNBOOTSTRAPPABLE (fail closed): nobody,
+/// including an attacker racing a fresh deployment, can claim the trust
+/// root. The deploying party builds the deployment .so with the real
+/// administrator's pubkey (the secret never enters the repository); see
+/// ACCOUNTS.md §5c for the required deployment agreement.
+pub fn registry_admin_pubkey_string() -> &'static str {
+    // option_env! (stable on all toolchains) — the two-argument env! macro
+    // only stabilized after the program MSRV (1.89).
+    option_env!("VORQYN_REGISTRY_ADMIN").unwrap_or("11111111111111111111111111111111")
+}
 pub const MISSION_SEED: &[u8] = b"vorqyn:mission";
 pub const TASK_SEED: &[u8] = b"vorqyn:task";
 pub const VAULT_SEED: &[u8] = b"vorqyn:vault";
@@ -341,16 +355,21 @@ pub struct PolicyVersionSet {
 pub mod vorqyn {
     use super::*;
 
-    /// Bootstrap the program's verifier registry (deployment-controlled:
-    /// the FIRST caller becomes the admin — the deploying party must run
-    /// this immediately after program deployment; see ACCOUNTS.md §5c).
-    /// Only the admin may register/revoke verifiers and rotate the policy
-    /// version. Missions may only appoint CURRENTLY registered verifiers.
+    /// Bootstrap the program's verifier registry. DEPLOY-TIME
+    /// AUTHORIZATION: only the compiled-in REGISTRY_ADMIN may call this —
+    /// an arbitrary first caller (e.g. an attacker racing a fresh
+    /// deployment) is rejected with NotRegistryAdmin. Only the admin may
+    /// register/revoke verifiers and rotate the policy version; missions
+    /// may only appoint CURRENTLY registered verifiers.
     pub fn initialize_verifier_registry(
         ctx: Context<InitializeVerifierRegistry>,
         policy_version: u64,
     ) -> Result<()> {
         require!(policy_version > 0, VorqynError::ZeroAmount);
+        require!(
+            ctx.accounts.payer.key().to_string() == registry_admin_pubkey_string(),
+            VorqynError::NotRegistryAdmin
+        );
         let registry = &mut ctx.accounts.registry;
         registry.admin = ctx.accounts.payer.key();
         registry.verifiers = Vec::new();

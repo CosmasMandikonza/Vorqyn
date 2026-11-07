@@ -160,10 +160,28 @@ fn registry_state(svm: &LiteSVM) -> VerifierRegistry {
     VerifierRegistry::try_deserialize(&mut data).unwrap()
 }
 
-/// Deployment-controlled bootstrap: the FIRST signer becomes the registry
-/// admin (in production the deploying party's wallet; here the test).
+/// The test-side administrator keypair. The deployment .so is built with
+/// `VORQYN_REGISTRY_ADMIN=<pubkey>` and the matching secret lives in a
+/// gitignored keypair file; tests load it via
+/// `VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR` (CI and local flows generate it
+/// fresh — nothing is committed).
+fn test_admin_keypair() -> Keypair {
+    let path = std::env::var("VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR")
+        .expect("set VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR=<gitignored keypair.json> and build with VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <file>)");
+    let admin = solana_keypair::read_keypair_file(&path)
+        .expect("registry admin keypair file must be readable");
+    assert_eq!(
+        admin.pubkey().to_string(),
+        vorqyn::registry_admin_pubkey_string(),
+        "the compiled-in REGISTRY_ADMIN does not match the test keypair — rebuild the .so with VORQYN_REGISTRY_ADMIN set"
+    );
+    admin
+}
+
+/// Deployment-controlled bootstrap: ONLY the compiled-in REGISTRY_ADMIN
+/// may initialize the registry (the test-side keypair above).
 fn bootstrap_registry(svm: &mut LiteSVM, policy_version: u64) -> Keypair {
-    let deployer = Keypair::new();
+    let deployer = test_admin_keypair();
     svm.airdrop(&deployer.pubkey(), 10 * LAMPORTS).unwrap();
     let ix = Instruction::new_with_bytes(
         vorqyn::ID,
@@ -2351,6 +2369,29 @@ fn full_flow_preserves_exact_ledger_invariant() {
 // `funding_ledger_overflows_are_rejected` in src/lib.rs, which drives the
 // exact checked arithmetic `fund_mission` uses (3/4-of-MAX ledger + the
 // one-lamport-over fund).
+
+#[test]
+fn registry_bootstrap_rejects_arbitrary_first_caller() {
+    let mut svm = load_program();
+    // FAILING-FIRST (pre-fix behaviour): ANY first caller became the
+    // registry admin — an attacker watching a fresh deployment could
+    // claim the trust root before the deploying party. Post-fix, only the
+    // deploy-time REGISTRY_ADMIN (compiled in at build) may bootstrap.
+    let attacker = Keypair::new();
+    svm.airdrop(&attacker.pubkey(), 10 * LAMPORTS).unwrap();
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::InitializeVerifierRegistry { policy_version: 1 }.data(),
+        InitializeVerifierRegistry {
+            payer: attacker.pubkey(),
+            registry: registry_pda(),
+            system_program: system_program::ID,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &attacker, ix);
+    assert_tx_fails(&mut svm, tx, "NotRegistryAdmin");
+}
 
 // ---------------------------------------------------------------------------
 // SECURITY (independent verifier authority) — failing-first for PR #48

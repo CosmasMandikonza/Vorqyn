@@ -73,21 +73,32 @@ evidence DIGEST producer is VQ-10 (typed fixture boundary until then).
 
 ## 5c. Trust boundary: who controls verifier registration
 
-- **Registration authority = the registry admin**, set once at bootstrap
-  by the FIRST signer of `initialize_verifier_registry`. In production
-  that is the deploying party (Lane 1 / VORQYN), whose wallet key never
-  enters the repository. Mission owners, operators and AI delegates can
-  never register, revoke or rotate policy — enforced by `has_one = admin`
-  plus the registry PDA seeds.
+- **Registration authority = the registry admin, authorized at BUILD
+  time.** `initialize_verifier_registry` may ONLY be called by the
+  administrator whose base58 pubkey was compiled into the deployment
+  binary via the `VORQYN_REGISTRY_ADMIN` build variable
+  (`registry_admin_pubkey_string()`). The build default is the Solana
+  system-program id — a key no wallet can sign with — so a default build
+  is UNBOOTSTRAPPABLE and an arbitrary first caller (attacker racing a
+  fresh deployment) is rejected with `NotRegistryAdmin` (failing-first
+  regression test included). CI generates an ephemeral admin keypair per
+  run; the secret never enters the repository.
+- **REQUIRED DEPLOYMENT AGREEMENT (before any devnet deployment):** the
+  VORQYN deploying party (Lane 1, human-owned) must (1) generate a
+  dedicated registry-admin keypair in a secure wallet (NOT a mission
+  owner's key, NOT an operator key, NOT an AI key), (2) build the
+  deployment .so with `VORQYN_REGISTRY_ADMIN=<that pubkey>`, (3) record
+  the pubkey (public information) in the deployment runbook. A multisig
+  is recommended for post-hackathon operation. Without this agreement
+  the program safely refuses all registry bootstrapping.
 - **Remaining centralized trust assumptions (honest list):**
   1. The deploying party controls the verifier set and policy version.
      This is intentional for the hackathon: an independent HUMAN-reviewed
      registration authority instead of per-mission self-appointment.
-  2. Bootstrap is first-mover: a frontrunner on a live cluster could
-     claim the registry before the deploy script. Mitigation: initialize
-     immediately after deployment (deploy-script step); a mainnet-grade
-     deployment would hard-code the admin key or use a multisig at
-     build time.
+  2. ~~Bootstrap is first-mover~~ RESOLVED: the administrator is
+     authorized at BUILD time (compiled-in pubkey), so no frontrunner can
+     claim the registry on any cluster — including a default build, which
+     can never be bootstrapped at all.
   3. The program validates AUTHORIZATION over a digest; physical/sensor
      truth remains the registered verifier's responsibility (unchanged).
 - **Independence guarantees (tested):** an owner-generated verifier key
@@ -199,7 +210,11 @@ borsh payload matched against the program-log base64).
 # Agave CLI (cargo-build-sbf): https://release.anza.xyz/stable/install
 cd programs/vorqyn
 cargo build-sbf          # produces target/deploy/vorqyn.so (crate-local)
-cargo test               # 3 unit + 39 LiteSVM integration tests
+VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <gitignored-admin.json) \
+  cargo build-sbf          # compiles the test admin into the .so
+VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR=<gitignored-admin.json> \
+VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <gitignored-admin.json) \
+  cargo test               # 3 unit + 44 LiteSVM integration tests
 cargo fmt --check && cargo clippy --all-targets -- -D warnings
 ```
 
