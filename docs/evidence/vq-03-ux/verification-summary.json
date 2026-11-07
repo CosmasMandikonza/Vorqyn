@@ -1,0 +1,86 @@
+{
+  "functional_implementation_commit": "f2c4cbaff37c478dc8b3f7b98571cd19dabca0b9",
+  "browser_full_suite": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "reported_duration": "1.2m",
+    "source": "commands/browser.txt",
+    "tests": [
+      "distinct A and B survive reload, edits, repeated save and confirmed deletion",
+      "validation focuses required fields and rejects contradictory evidence and invalid money",
+      "partial inputs and step selection resume after reload",
+      "safe corrupt/version recovery {bad-json",
+      "safe corrupt/version recovery {\"version\":42,\"drafts\":[]}",
+      "storage disabled preserves an editable memory-only draft and prompts before navigation",
+      "sensitive-looking input never reaches local storage",
+      "two tabs detect stale edits, preserve copies and never resurrect a deleted draft",
+      "review visual and axe light 1440",
+      "review visual and axe light 1024",
+      "review visual and axe light 390",
+      "review visual and axe light 320",
+      "review visual and axe dark 1440",
+      "review visual and axe dark 1024",
+      "review visual and axe dark 390",
+      "review visual and axe dark 320",
+      "native 200% zoom and keyboard navigation",
+      "tampered unsupported zones are blocked without silently replacing stored drafts",
+      "quota failures never claim a save",
+      "capability and evidence controls pass accessibility audits and preserve keyboard edits",
+      "unsupported Web Locks keeps planning editable without unsafe last-write behavior",
+      "title text cannot inject markup or scripts into saved drafts"
+    ]
+  },
+  "frontend_unit_tests": 33,
+  "existing_contract_scaffold_tests": 1,
+  "axe_audits": 19,
+  "axe_violations": 0,
+  "widths": [
+    1440,
+    1024,
+    390,
+    320
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "native_zoom": {
+    "factor": 2,
+    "outer_width": 1440,
+    "layout_width": 720,
+    "device_pixel_ratio": 2
+  },
+  "screenshots": [
+    "after-delete-b-preserved-light-1280.png",
+    "corrupt-storage-light-1280.png",
+    "distinct-a-b-light-1280.png",
+    "future-schema-light-1280.png",
+    "native-zoom-200.png",
+    "objective-dark-1024.png",
+    "objective-dark-1440.png",
+    "objective-dark-320.png",
+    "objective-dark-390.png",
+    "objective-light-1024.png",
+    "objective-light-1440.png",
+    "objective-light-320.png",
+    "objective-light-390.png",
+    "review-dark-1024.png",
+    "review-dark-1440.png",
+    "review-dark-320.png",
+    "review-dark-390.png",
+    "review-light-1024.png",
+    "review-light-1440.png",
+    "review-light-320.png",
+    "review-light-390.png",
+    "step-2-light-1280.png",
+    "step-3-light-1280.png",
+    "step-4-light-1280.png",
+    "validation-title-light-390.png"
+  ],
+  "targeted_capture_rerun": {
+    "passed": 1,
+    "source": "commands/capture-rerun.txt"
+  }
+}

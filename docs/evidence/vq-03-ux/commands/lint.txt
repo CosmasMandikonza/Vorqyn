@@ -1,0 +1,3 @@
+
+> vorqyn@ lint /workspace/work/vq28
+> eslint .

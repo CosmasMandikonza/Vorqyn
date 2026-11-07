@@ -1,0 +1,21 @@
+
+> vorqyn@ test /workspace/work/vq28
+> pnpm -r run test
+
+Scope: 2 of 3 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/vq28/packages/contracts
+packages/contracts test:  Test Files  1 passed (1)
+packages/contracts test:       Tests  1 passed (1)
+packages/contracts test:    Start at  15:18:30
+packages/contracts test:    Duration  162ms (import 41%, transform 32%, worker 15%, tests 11%)
+packages/contracts test: Done
+apps/web test$ vitest run
+apps/web test:  RUN  v5.1.0 /workspace/work/vq28/apps/web
+apps/web test:  Test Files  2 passed (2)
+apps/web test:       Tests  33 passed (33)
+apps/web test:    Start at  15:18:31
+apps/web test:    Duration  3.15s (environment 59%, tests 17%, setup 10%, import 9%, transform 4%)
+apps/web test:     Isolate  2 workers spawned · ~967ms startup each (spawn + environment, per file)
+apps/web test:              at least ~967ms faster with isolate: false — reuses workers across files instead of one per file
+apps/web test: Done

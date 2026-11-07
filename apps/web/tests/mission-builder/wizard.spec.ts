@@ -102,7 +102,7 @@ test("distinct A and B survive reload, edits, repeated save and confirmed deleti
   await configure(page, "Mission B · Road", "7.5", "land");
   expect(await collection(page)).toHaveLength(2);
   await capture(page, {
-    path: resolve(shots, "distinct-a-b-light-1440.png"),
+    path: resolve(shots, "distinct-a-b-light-1280.png"),
     fullPage: true,
   });
   await page.reload();
@@ -145,7 +145,7 @@ test("distinct A and B survive reload, edits, repeated save and confirmed deleti
   await expect.poll(async () => (await collection(page)).length).toBe(1);
   expect((await collection(page))[0].input.title).toBe("Mission B · Road");
   await capture(page, {
-    path: resolve(shots, "after-delete-b-preserved-light-1440.png"),
+    path: resolve(shots, "after-delete-b-preserved-light-1280.png"),
     fullPage: true,
   });
   await page.reload();
@@ -249,8 +249,8 @@ for (const raw of ["{bad-json", '{"version":42,"drafts":[]}'])
       path: resolve(
         shots,
         raw.startsWith("{bad")
-          ? "corrupt-storage-light-1440.png"
-          : "future-schema-light-1440.png",
+          ? "corrupt-storage-light-1280.png"
+          : "future-schema-light-1280.png",
       ),
       fullPage: true,
     });
