@@ -18,6 +18,7 @@
  */
 
 import {
+  canonicalJson,
   CONTRACTS_SCHEMA_VERSION,
   err,
   ok,
@@ -88,6 +89,9 @@ export interface MissionProjection {
   /** Applied event ids in order (the timeline UI renders this). */
   timeline: EventId[];
   eventIdIndex: Record<string, number>;
+  /** Canonical content per eventId: exact replays match, tampered
+   * content with the same id/sequence is rejected. */
+  eventCanonIndex: Record<string, string>;
   /** Idempotency: commandId -> the eventId it produced. */
   commandIndex: Record<string, EventId>;
 }
@@ -154,6 +158,14 @@ export function initMissionProjection(rawEvent: unknown): Result<MissionProjecti
       rejectedAlternatives: [],
     };
   }
+  // Finding E: the envelope's missionId is the projection's identity; a
+  // config claiming a different missionId is a cross-mission corruption.
+  if (config.missionId !== event.value.missionId)
+    return err(
+      "cross_mission_reference",
+      `envelope missionId ${event.value.missionId} != config missionId ${config.missionId}`,
+    );
+
   return ok({
     schemaVersion: CONTRACTS_SCHEMA_VERSION,
     missionId: event.value.missionId,
@@ -169,6 +181,7 @@ export function initMissionProjection(rawEvent: unknown): Result<MissionProjecti
     lastSequence: event.value.sequence,
     timeline: [event.value.eventId],
     eventIdIndex: { [event.value.eventId]: event.value.sequence },
+    eventCanonIndex: { [event.value.eventId]: canonicalJson(event.value) },
     commandIndex: event.value.commandId !== undefined ? { [event.value.commandId]: event.value.eventId } : {},
   });
 }
@@ -188,6 +201,7 @@ function cloneProjection(state: MissionProjection): MissionProjection {
     chain: { ...state.chain },
     timeline: [...state.timeline],
     eventIdIndex: { ...state.eventIdIndex },
+    eventCanonIndex: { ...state.eventCanonIndex },
     commandIndex: { ...state.commandIndex },
   };
 }
@@ -200,11 +214,17 @@ export function applyEvent(state: MissionProjection, rawEvent: unknown): ApplyRe
   if (e.missionId !== state.missionId)
     return { ok: false, error: { code: "cross_mission_reference", message: `event ${e.eventId} targets mission ${e.missionId} but projection is ${state.missionId}` } };
 
-  // Idempotent replay of the exact same event.
+  // Idempotent replay of the exact same event — but only when the CONTENT
+  // is byte-for-byte equivalent. Same id/sequence with a tampered payload
+  // is corruption, not a duplicate (Finding B).
   const seenAt = state.eventIdIndex[e.eventId];
   if (seenAt !== undefined) {
-    if (seenAt === e.sequence) return { ok: true, state, duplicate: true };
-    return { ok: false, error: { code: "duplicate_event", message: `eventId ${e.eventId} already applied at a different sequence` } };
+    if (seenAt !== e.sequence)
+      return { ok: false, error: { code: "duplicate_event", message: `eventId ${e.eventId} already applied at a different sequence` } };
+    const storedCanon = state.eventCanonIndex[e.eventId];
+    if (storedCanon !== canonicalJson(e))
+      return { ok: false, error: { code: "duplicate_event", message: `eventId ${e.eventId} replayed with different content` } };
+    return { ok: true, state, duplicate: true };
   }
   if (e.sequence !== state.lastSequence + 1)
     return { ok: false, error: { code: e.sequence <= state.lastSequence ? "duplicate_sequence" : "validation_error", message: `expected sequence ${state.lastSequence + 1}, got ${e.sequence}` } };
@@ -218,6 +238,7 @@ export function applyEvent(state: MissionProjection, rawEvent: unknown): ApplyRe
   next.lastSequence = e.sequence;
   next.timeline.push(e.eventId);
   next.eventIdIndex[e.eventId] = e.sequence;
+  next.eventCanonIndex[e.eventId] = canonicalJson(e);
   if (e.commandId !== undefined) next.commandIndex[e.commandId] = e.eventId;
   return { ok: true, state: next, duplicate: false };
 }
@@ -366,6 +387,12 @@ function applyChainUpdated(state: MissionProjection, e: MissionEvent): HandlerRe
     // timeline cannot order chain truth against simulation time.
     if (e.chainTimeMs === undefined)
       return err("clock_domain_violation", "confirmed/finalized chain updates must carry chainTimeMs");
+
+    // Finding A: a transaction's funding is credited exactly once — only on
+    // the FIRST entry into confirmed/finalized. Later progressions
+    // (confirmed -> finalized, or a confirmed -> unknown -> confirmed
+    // observation gap) must not credit the amount again.
+    const alreadyConfirmed = record.statusHistory.some((s) => s === "confirmed" || s === "finalized");
     const updated: ChainEventRecord = {
       ...record,
       statusHistory: [...record.statusHistory, p.status],
@@ -374,7 +401,7 @@ function applyChainUpdated(state: MissionProjection, e: MissionEvent): HandlerRe
     };
     state.chain[p.transactionSignature] = updated;
 
-    if (record.kind === "funding") {
+    if (!alreadyConfirmed && record.kind === "funding") {
       const amount = updated.amountLamports ?? (0 as Lamports);
       const funded = addLamports(state.fundedLamports, amount);
       if (!funded.ok) return funded;
@@ -536,6 +563,11 @@ function applyReassignmentAuthorized(state: MissionProjection, e: MissionEvent):
     return err("stale_assignment_version", `chain transaction authorized version ${String(record.value.assignmentVersion)}, expected ${task.currentAssignmentVersion + 1}`);
   if (record.value.authorizedBy !== undefined && record.value.authorizedBy !== p.authorizedBy)
     return err("validation_error", `payload authorizedBy ${p.authorizedBy} contradicts chain record ${record.value.authorizedBy}`);
+  // Finding D: the reassignment receipt amount must equal the quoted amount.
+  if (record.value.amountLamports === undefined)
+    return err("validation_error", `reassignment transaction ${p.transactionSignature} lacks amountLamports`);
+  if (record.value.amountLamports !== p.quoteLamports)
+    return err("validation_error", `reassignment quote ${p.quoteLamports} disagrees with chain record (${record.value.amountLamports})`);
 
   if (p.quoteLamports > task.config.maxRewardLamports)
     return err("budget_exceeded", `reassignment quote ${p.quoteLamports} exceeds task budget ${task.config.maxRewardLamports}`);
@@ -606,13 +638,19 @@ function applyPaymentConfirmed(state: MissionProjection, e: MissionEvent): Handl
   if (!record.ok) return record;
   if (record.value.taskId !== p.taskId)
     return err("validation_error", `payout transaction targets task ${String(record.value.taskId)}, not ${p.taskId}`);
-  if (record.value.assignmentVersion !== undefined && record.value.assignmentVersion !== task.currentAssignmentVersion)
-    return err("stale_assignment_version", `payout transaction is for version ${String(record.value.assignmentVersion)}, current is ${task.currentAssignmentVersion}`);
+  // Finding D: the payout receipt MUST be bound to the exact current
+  // assignment version — a version-less or stale record can never pay.
+  if (record.value.assignmentVersion === undefined)
+    return err("validation_error", `payout transaction ${p.transactionSignature} lacks assignmentVersion`);
+  if (record.value.assignmentVersion !== task.currentAssignmentVersion)
+    return err("stale_assignment_version", `payout transaction is for version ${record.value.assignmentVersion}, current is ${task.currentAssignmentVersion}`);
   const assignment = currentAssignment(task);
   if (!assignment.ok) return assignment;
   if (p.amountLamports !== assignment.value.agreedLamports)
     return err("validation_error", `payout amount ${p.amountLamports} != agreed ${assignment.value.agreedLamports}`);
-  if (record.value.amountLamports !== undefined && record.value.amountLamports !== p.amountLamports)
+  if (record.value.amountLamports === undefined)
+    return err("validation_error", `payout transaction ${p.transactionSignature} lacks amountLamports`);
+  if (record.value.amountLamports !== p.amountLamports)
     return err("validation_error", `payout amount disagrees with chain record (${record.value.amountLamports})`);
 
   const committed = subLamports(state.committedRewardLamports, assignment.value.agreedLamports);

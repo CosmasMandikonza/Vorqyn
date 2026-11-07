@@ -193,7 +193,7 @@ describe("stale assignment versions (compare-and-set)", () => {
       { kind: "task.executionStarted", occurredAtMs: T + 400, simulatorTimeMs: 1_000, commandId: "cmd-s1", payload: { taskId: "task-x", robotId: "rov-a" } },
       { kind: "task.evidenceSubmitted", occurredAtMs: T + 500, simulatorTimeMs: 2_000, commandId: "cmd-e1", payload: { taskId: "task-x", evidence: { evidenceId: "ev-1", taskId: "task-x", assignmentVersion: 1, operatorId: "operator-a", sampleRefs: ["s1"], policyVersion: "p1", digest: "ab".repeat(32), simulatorSource: "SYNTHETIC_SIM", capturedAtMs: T + 490 } } },
       { kind: "task.evidenceRejected", occurredAtMs: T + 600, commandId: "cmd-v1", payload: { taskId: "task-x", verdict: { evidenceId: "ev-1", accepted: false, reasons: ["vis"], verifierId: "v1", verdictVersion: "v1", decidedAtMs: T + 590 } } },
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: "VQsigReassignTx" + "1".repeat(73), cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: "VQsigReassignTx" + "1".repeat(73), cluster: "devnet", amountLamports: 900_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: "VQsigReassignTx" + "1".repeat(73), status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
     ]);
     expect(staged.ok).toBe(true);

@@ -536,6 +536,20 @@ export function validateChainSubmittedPayload(raw: unknown): Result<ChainTransac
     if (!amount.ok) return amount;
     amountLamports = amount.value;
   }
+
+  // Finding D: money-moving and version-changing receipts must bind task,
+  // assignment version and amount at submission time. A payout/reassignment
+  // without these could otherwise authorize payment against the wrong
+  // assignment version (SOLANA_PROTOCOL.md §5). Refund shape remains the
+  // open question #2 in CHAIN_SEAM.md.
+  if (kind === "reassignment" || kind === "payout") {
+    if (taskId === undefined) return err("validation_error", `${kind} transaction must reference a taskId`);
+    if (assignmentVersion === undefined) return err("validation_error", `${kind} transaction must carry assignmentVersion`);
+    if (amountLamports === undefined) return err("validation_error", `${kind} transaction must carry amountLamports`);
+  }
+  if (kind === "funding" && amountLamports === undefined)
+    return err("validation_error", "funding transaction must carry amountLamports");
+
   return ok({
     kind: kind as ChainEventKind,
     transactionSignature: signature.value,

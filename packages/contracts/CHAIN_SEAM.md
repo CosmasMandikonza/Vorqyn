@@ -75,21 +75,31 @@ escrow_vault = seeds ["vorqyn:vault",   mission_pda.as_bytes()]
 {
   "kind": "reassignment",              // funding | reassignment | payout | refund
   "missionId": "port-001",
-  "taskId": "task-sea-survey",          // required for reassignment/payout
-  "assignmentVersion": 2,               // target version, when applicable
+  "taskId": "task-sea-survey",          // REQUIRED for reassignment/payout
+  "assignmentVersion": 2,               // REQUIRED for reassignment/payout
   "transactionSignature": "<base58 87-88 chars>",
   "cluster": "devnet",                  // localnet | devnet | mainnet-beta
   "statusHistory": ["submitted", "confirmed"],
   "submittedAtMs": 1762000008000,
   "confirmedAtMs": 1762000008500,
   "slot": 251000002,
-  "amountLamports": 1100000000,
+  "amountLamports": 1100000000,         // REQUIRED for funding/reassignment/payout
   "authorizedBy": "owner"               // owner | delegate, reassignments only
 }
 ```
 
 `unknown` is a first-class status (RPC timeout), never coerced to
-success/failure. Terminal statuses freeze the history.
+success/failure. Terminal statuses freeze the history. A funding amount is
+credited exactly once per transaction, on its FIRST entry into
+confirmed/finalized (later progressions such as confirmed→finalized or a
+confirmed→unknown→confirmed observation gap never re-credit).
+
+**Strengthened during PR #37 review (Finding D):** `taskId`,
+`assignmentVersion` and `amountLamports` are REQUIRED at submission for
+`reassignment` and `payout` receipts, and `amountLamports` for `funding` —
+the reducer refuses to settle against a receipt that is not explicitly
+bound to the current assignment version and exact amount. **Agent B (#5):
+the program should emit/require the same fields in its events and IDL.**
 
 ## 7. JS ↔ Rust precision rules (frozen in contracts, mirrored on chain)
 
@@ -105,6 +115,8 @@ success/failure. Terminal statuses freeze the history.
 1. Are the §4 seed prefixes acceptable, or does Anchor constrain them?
 2. Should `refund` transactions carry `taskId = null` plus an amount only
    (current assumption), or itemized task refunds?
-3. Does the program need `amountLamports` at submission time (§6), or is it
-   read back from the confirmed transaction only?
+3. ~~Does the program need `amountLamports` at submission time?~~
+   **Resolved by PR #37 review (Finding D): yes — funding, reassignment and
+   payout receipts all carry `amountLamports` at submission, and
+   reassignment/payout must also carry `taskId` + `assignmentVersion`.**
 4. Confirm `operatorId`-opaque + `payout_wallet`-on-chain split (§3).

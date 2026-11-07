@@ -110,10 +110,11 @@ export const asCommandId = (raw: string): Result<CommandId> =>
   asId<CommandId>(raw);
 
 /**
- * Operator identity is NOT fully opaque: per SOLANA_PROTOCOL.md an operator
- * is paid at their registered payout wallet, and CHAIN_SEAM.md §3 proposes
- * operatorId == that wallet's public key (base58). Lexical base58 check
- * here; full ed25519 validation belongs to the chain client (VQ-12).
+ * Operator identity stays opaque (lowercase ID). Per CHAIN_SEAM.md §3 the
+ * mapping to money is `OperatorRegistration { operatorId, payoutWallet }`:
+ * the on-chain authority is the payout wallet key, never the display ID.
+ * Lexical base58 check here; full ed25519 validation belongs to the chain
+ * client (VQ-12).
  */
 export type SolanaPublicKey = string & { readonly __brand: "SolanaPublicKey" };
 const BASE58_PATTERN = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
@@ -178,3 +179,29 @@ export const asSimulatorTimeMs = (raw: number): Result<SimulatorTimeMs> =>
   typeof raw === "number" && Number.isSafeInteger(raw) && raw >= 0
     ? ok(raw as SimulatorTimeMs)
     : err("validation_error", `simulator milliseconds must be a non-negative safe integer, got ${String(raw)}`);
+
+// ---------------------------------------------------------------------------
+// Untrusted-input helpers and canonical serialization
+// ---------------------------------------------------------------------------
+
+/** Narrow unknown JSON to a plain object without throwing. */
+export const isRecord = (raw: unknown): raw is Record<string, unknown> =>
+  typeof raw === "object" && raw !== null && !Array.isArray(raw);
+
+/**
+ * Deterministic canonical JSON: object keys sorted recursively, arrays kept
+ * in order. Two structurally equal values always produce the same string,
+ * which lets the reducer detect replayed events whose CONTENT was tampered
+ * with (same eventId/sequence, different payload).
+ */
+export function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (isRecord(value)) {
+    const keys = Object.keys(value).sort();
+    return `{${keys
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  if (value === undefined) return "null";
+  return JSON.stringify(value) ?? "null";
+}

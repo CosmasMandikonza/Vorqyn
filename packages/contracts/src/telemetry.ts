@@ -16,6 +16,7 @@ import {
   asRobotId,
   asSimulatorTimeMs,
   err,
+  isRecord,
   ok,
   type EpochMs,
   type Lamports,
@@ -24,7 +25,7 @@ import {
   type RobotId,
   type SimulatorTimeMs,
 } from "./core";
-import type { SourceKind } from "./enums";
+import { SOURCE_KINDS, type SourceKind } from "./enums";
 
 export const TELEMETRY_UNITS = "metres" as const;
 export const TELEMETRY_FRAME_PATTERN = /^ENU_[A-Z0-9-]{3,28}_LOCAL$/;
@@ -74,50 +75,65 @@ export interface TelemetrySample {
 const isFiniteNumber = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value);
 
-export const makeTelemetrySample = (input: {
-  missionId: string;
-  robotId: string;
-  sourceKind: SourceKind;
-  sourceTimestampMs: number;
-  receivedAtMs: number;
-  frameId: string;
-  sequence: number;
-  position: { x: number; y: number; z: number };
-  orientationDeg?: { heading: number; pitch?: number; roll?: number };
-  quality: { status: TelemetryQualityStatus; detail?: string };
-  qualityMetric?: { kind: string; value: number };
-  costLamports?: number;
-}): Result<TelemetrySample> => {
-  const missionId = asMissionId(input.missionId);
+export function makeTelemetrySample(input: unknown): Result<TelemetrySample> {
+  if (!isRecord(input)) return err("validation_error", "telemetry sample must be an object");
+  const missionIdRaw = input.missionId;
+  if (typeof missionIdRaw !== "string") return err("validation_error", "missionId must be a string");
+  const missionId = asMissionId(missionIdRaw);
   if (!missionId.ok) return missionId;
-  const robotId = asRobotId(input.robotId);
+  const robotIdRaw = input.robotId;
+  if (typeof robotIdRaw !== "string") return err("validation_error", "robotId must be a string");
+  const robotId = asRobotId(robotIdRaw);
   if (!robotId.ok) return robotId;
+  const sourceKind = input.sourceKind;
+  if (typeof sourceKind !== "string" || !(SOURCE_KINDS as readonly string[]).includes(sourceKind))
+    return err("validation_error", `sourceKind must be one of [${SOURCE_KINDS.join("|")}]`);
+  if (typeof input.sourceTimestampMs !== "number") return err("validation_error", "sourceTimestampMs must be a number");
   const sourceTimestampMs = asSimulatorTimeMs(input.sourceTimestampMs);
   if (!sourceTimestampMs.ok) return sourceTimestampMs;
+  if (typeof input.receivedAtMs !== "number") return err("validation_error", "receivedAtMs must be a number");
   const receivedAtMs = asEpochMs(input.receivedAtMs);
   if (!receivedAtMs.ok) return receivedAtMs;
-  if (!TELEMETRY_FRAME_PATTERN.test(input.frameId))
-    return err("validation_error", `frameId "${input.frameId}" must match ENU_<SITE>_LOCAL (world frame contract)`);
-  if (!Number.isSafeInteger(input.sequence) || input.sequence < 0)
+  if (typeof input.frameId !== "string" || !TELEMETRY_FRAME_PATTERN.test(input.frameId))
+    return err("validation_error", `frameId "${String(input.frameId)}" must match ENU_<SITE>_LOCAL (world frame contract)`);
+  const sequence = input.sequence;
+  if (typeof sequence !== "number" || !Number.isSafeInteger(sequence) || sequence < 0)
     return err("validation_error", "telemetry sequence must be a non-negative integer");
-  const { position } = input;
-  if (![position.x, position.y, position.z].every(isFiniteNumber))
+  if (!isRecord(input.position))
+    return err("validation_error", "position must be an object with finite x/y/z");
+  const { x, y, z } = input.position;
+  if (!isFiniteNumber(x) || !isFiniteNumber(y) || !isFiniteNumber(z))
     return err("validation_error", "position components must be finite numbers");
+  if (!isRecord(input.quality) || typeof input.quality.status !== "string" ||
+    !["ok", "degraded", "link_disconnected"].includes(input.quality.status))
+    return err("validation_error", "quality must be { status: ok|degraded|link_disconnected }");
+  const qualityDetail = input.quality.detail;
+  if (qualityDetail !== undefined && typeof qualityDetail !== "string")
+    return err("validation_error", "quality.detail must be a string");
 
   let orientationDeg: OrientationDeg | undefined;
   if (input.orientationDeg !== undefined) {
-    if (!isFiniteNumber(input.orientationDeg.heading))
-      return err("validation_error", "orientation heading must be finite degrees");
-    orientationDeg = { ...input.orientationDeg };
+    const raw = input.orientationDeg;
+    if (!isRecord(raw) || !isFiniteNumber(raw.heading))
+      return err("validation_error", "orientationDeg must be an object with finite heading degrees");
+    const pitch = raw.pitch;
+    const roll = raw.roll;
+    orientationDeg = {
+      heading: raw.heading,
+      ...(isFiniteNumber(pitch) ? { pitch } : {}),
+      ...(isFiniteNumber(roll) ? { roll } : {}),
+    };
   }
   let qualityMetric: { kind: string; value: number } | undefined;
   if (input.qualityMetric !== undefined) {
-    if (input.qualityMetric.kind.trim().length === 0 || !isFiniteNumber(input.qualityMetric.value))
+    if (!isRecord(input.qualityMetric) || typeof input.qualityMetric.kind !== "string" ||
+      input.qualityMetric.kind.trim().length === 0 || !isFiniteNumber(input.qualityMetric.value))
       return err("validation_error", "qualityMetric needs a kind and a finite value");
-    qualityMetric = { ...input.qualityMetric };
+    qualityMetric = { kind: input.qualityMetric.kind, value: input.qualityMetric.value };
   }
   let costLamports: Lamports | undefined;
   if (input.costLamports !== undefined) {
+    if (typeof input.costLamports !== "number") return err("validation_error", "costLamports must be a number");
     const cost = asLamports(input.costLamports);
     if (!cost.ok) return cost;
     costLamports = cost.value;
@@ -125,19 +141,22 @@ export const makeTelemetrySample = (input: {
   return ok({
     missionId: missionId.value,
     robotId: robotId.value,
-    sourceKind: input.sourceKind,
+    sourceKind: sourceKind as SourceKind,
     sourceTimestampMs: sourceTimestampMs.value,
     receivedAtMs: receivedAtMs.value,
     frameId: input.frameId,
-    sequence: input.sequence,
-    position: { x: position.x, y: position.y, z: position.z },
+    sequence,
+    position: { x, y, z },
     units: TELEMETRY_UNITS,
-    quality: { status: input.quality.status, ...(input.quality.detail !== undefined ? { detail: input.quality.detail } : {}) },
+    quality: {
+      status: input.quality.status as TelemetryQualityStatus,
+      ...(qualityDetail !== undefined ? { detail: qualityDetail } : {}),
+    },
     ...(orientationDeg !== undefined ? { orientationDeg } : {}),
     ...(qualityMetric !== undefined ? { qualityMetric } : {}),
     ...(costLamports !== undefined ? { costLamports } : {}),
   });
-};
+}
 
 // ---------------------------------------------------------------------------
 // Deterministic sample application (stale/out-of-order defence)

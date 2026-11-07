@@ -86,7 +86,7 @@ describe("chain status machine", () => {
   it("rejects a confirmed update that lacks the chain clock", () => {
     const base = recoveryBase();
     const result = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 } }, // no chainTimeMs
     ]);
     expect(result.ok).toBe(false);
@@ -98,7 +98,7 @@ describe("payment cannot precede confirmed chain truth", () => {
   it("rejects payment referencing a payout tx that is only submitted", () => {
     const base = recoveryBase();
     const staged = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
       { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN } },
       { kind: "task.executionStarted", occurredAtMs: T + 900, simulatorTimeMs: 3_000, commandId: "cmd-s2", payload: { taskId: "task-x", robotId: "rov-b" } },
@@ -118,7 +118,7 @@ describe("payment cannot precede confirmed chain truth", () => {
   it("rejects a payout amount that disagrees with the agreed assignment", () => {
     const base = recoveryBase();
     const staged = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
       { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN } },
       { kind: "task.executionStarted", occurredAtMs: T + 900, simulatorTimeMs: 3_000, commandId: "cmd-s2", payload: { taskId: "task-x", robotId: "rov-b" } },
@@ -139,7 +139,7 @@ describe("payment cannot precede confirmed chain truth", () => {
   it("a second payment attempt on a paid task is terminal-blocked", () => {
     const base = recoveryBase();
     const staged = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
       { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN } },
       { kind: "task.executionStarted", occurredAtMs: T + 900, simulatorTimeMs: 3_000, commandId: "cmd-s2", payload: { taskId: "task-x", robotId: "rov-b" } },
@@ -163,7 +163,7 @@ describe("reassignment chain binding", () => {
   it("rejects reassignment when the chain tx is still only submitted", () => {
     const base = recoveryBase();
     const result = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN } },
     ]);
     expect(result.ok).toBe(false);
@@ -173,7 +173,7 @@ describe("reassignment chain binding", () => {
   it("rejects reassignment whose chain tx authorized a different version", () => {
     const base = recoveryBase();
     const result = extend(base, [
-      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 5, transactionSignature: SIG_REASSIGN, cluster: "devnet", authorizedBy: "owner" } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 5, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner" } },
       { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
       { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN } },
     ]);
