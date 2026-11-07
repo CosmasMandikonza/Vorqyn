@@ -264,3 +264,147 @@ describe("Finding E: mission identity consistency at creation", () => {
     if (!result.ok) expect(result.error.code).toBe("cross_mission_reference");
   });
 });
+
+// ---------------------------------------------------------------------------
+// Final review, concern 1 — evidence/task identity consistency
+// ---------------------------------------------------------------------------
+
+describe("Concern 1: evidence claiming a different task cannot be attached or accepted", () => {
+  /** Launched mission with task-x executing under operator-a (v1). */
+  function executingMission(): Base {
+    const events = stampScript("port-001", [
+      {
+        kind: "mission.created", occurredAtMs: T, commandId: "cmd-c", payload: {
+          config: {
+            missionId: "port-001", organizationId: "org-x", templateId: "tpl", siteLabel: "site", budgetLamports: BUDGET,
+            tasks: [
+              { taskId: "task-x", kind: "sea", requiredCapabilities: ["sonar"], maxRewardLamports: 1_500_000_000, acceptancePolicyId: "p1" },
+              { taskId: "task-y", kind: "air", requiredCapabilities: ["optical"], maxRewardLamports: 400_000_000, acceptancePolicyId: "p2" },
+            ],
+          },
+        },
+      },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 100, commandId: "cmd-f", payload: { kind: "funding", transactionSignature: SIG_FUND, cluster: "devnet", amountLamports: BUDGET } },
+      { kind: "chain.transactionUpdated", occurredAtMs: T + 150, payload: { transactionSignature: SIG_FUND, status: "confirmed", slot: 1 }, chainTimeMs: T + 150 },
+      { kind: "mission.launched", occurredAtMs: T + 200, commandId: "cmd-l", payload: {} },
+      { kind: "task.assigned", occurredAtMs: T + 300, commandId: "cmd-a", payload: { taskId: "task-x", operatorId: "operator-a", robotId: "rov-a", quoteLamports: 1_000_000_000 } },
+      { kind: "task.executionStarted", occurredAtMs: T + 400, simulatorTimeMs: 1_000, commandId: "cmd-s", payload: { taskId: "task-x", robotId: "rov-a" } },
+    ]);
+    const init = initMissionProjection(events[0] as never);
+    if (!init.ok) throw new Error(init.error.message);
+    let state = init.value;
+    for (const event of events.slice(1)) {
+      const result = applyEvent(state, event);
+      if (!result.ok) throw new Error(`${event.kind}: ${result.error.message}`);
+      state = result.state;
+    }
+    return { state, events };
+  }
+
+  it("task.evidenceSubmitted where evidence.taskId != payload.taskId is rejected", () => {
+    const base = executingMission();
+    const result = extend(base, [
+      {
+        kind: "task.evidenceSubmitted", occurredAtMs: T + 500, simulatorTimeMs: 2_000, commandId: "cmd-e",
+        // Payload targets task-x, but the evidence object claims task-y.
+        payload: {
+          taskId: "task-x",
+          evidence: { evidenceId: "ev-mismatched", taskId: "task-y", assignmentVersion: 1, operatorId: "operator-a", sampleRefs: ["s1"], policyVersion: "p", digest: "ab".repeat(32), simulatorSource: "SYNTHETIC_SIM", capturedAtMs: T + 490 },
+        },
+      },
+    ]);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error.code).toBe("validation_error");
+  });
+
+  it("the acceptance path never associates evidence with a different task", () => {
+    const base = executingMission();
+    // Force a mismatched evidence record through the boundary to prove the
+    // verdict handlers also refuse cross-task association (defense in depth):
+    // simulate it by submitting valid evidence for task-x, then attempting a
+    // verdict whose payload taskId points at task-y.
+    const staged = extend(base, [
+      {
+        kind: "task.evidenceSubmitted", occurredAtMs: T + 500, simulatorTimeMs: 2_000, commandId: "cmd-e",
+        payload: {
+          taskId: "task-x",
+          evidence: { evidenceId: "ev-good", taskId: "task-x", assignmentVersion: 1, operatorId: "operator-a", sampleRefs: ["s1"], policyVersion: "p", digest: "ab".repeat(32), simulatorSource: "SYNTHETIC_SIM", capturedAtMs: T + 490 },
+        },
+      },
+    ]);
+    expect(staged.ok).toBe(true);
+    if (!staged.ok) return;
+    const crossTaskVerdict = extend({ state: staged.state, events: [...base.events, ...staged.applied] }, [
+      {
+        kind: "task.evidenceAccepted", occurredAtMs: T + 600, commandId: "cmd-v",
+        // Verdict payload claims task-y while the evidence belongs to task-x.
+        payload: { taskId: "task-y", verdict: { evidenceId: "ev-good", accepted: true, reasons: ["ok"], verifierId: "v", verdictVersion: "1", decidedAtMs: T + 590 } },
+      },
+    ]);
+    expect(crossTaskVerdict.ok).toBe(false);
+    if (!crossTaskVerdict.ok) expect(crossTaskVerdict.error.code).toBe("unknown_entity");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Final review, concern 2 — reassignment/payout receipts must be able to
+// bind the enacted operator wallet (optional today, proposed REQUIRED for #5)
+// ---------------------------------------------------------------------------
+
+describe("Concern 2: chain receipts can carry enacted wallet bindings", () => {
+  const WALLET_B = "VorQynTestPayKeyB11111111111111111111111111B";
+  const SIG_REASSIGN = "VQsigReassignTx" + "1".repeat(73);
+
+  it("reassignment receipt accepts a valid newPayoutWallet and rejects invalid ones", () => {
+    const good = validateChainSubmittedPayload({ kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, newPayoutWallet: WALLET_B });
+    expect(good.ok).toBe(true);
+    if (good.ok) expect(good.value.newPayoutWallet).toBe(WALLET_B);
+    const bad = validateChainSubmittedPayload({ kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, newPayoutWallet: "not-base58!!" });
+    expect(bad.ok).toBe(false);
+  });
+
+  it("payout receipt accepts a valid recipientWallet and rejects invalid ones", () => {
+    const good = validateChainSubmittedPayload({ kind: "payout", taskId: "task-x", assignmentVersion: 1, transactionSignature: "VQsigPayoutSeaTx" + "1".repeat(72), cluster: "devnet", amountLamports: 100, recipientWallet: WALLET_B });
+    expect(good.ok).toBe(true);
+    const bad = validateChainSubmittedPayload({ kind: "payout", taskId: "task-x", assignmentVersion: 1, transactionSignature: "VQsigPayoutSeaTx" + "1".repeat(72), cluster: "devnet", amountLamports: 100, recipientWallet: 42 });
+    expect(bad.ok).toBe(false);
+  });
+
+  it("reassignmentAuthorized whose claimed wallet contradicts the chain record is rejected", () => {
+    const base = freshMission();
+    const staged = extend(base, [
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 100, commandId: "cmd-f", payload: { kind: "funding", transactionSignature: SIG_FUND, cluster: "devnet", amountLamports: BUDGET } },
+      { kind: "chain.transactionUpdated", occurredAtMs: T + 150, payload: { transactionSignature: SIG_FUND, status: "confirmed", slot: 1 }, chainTimeMs: T + 150 },
+      { kind: "mission.launched", occurredAtMs: T + 200, commandId: "cmd-l", payload: {} },
+      { kind: "task.assigned", occurredAtMs: T + 300, commandId: "cmd-a", payload: { taskId: "task-x", operatorId: "operator-a", robotId: "rov-a", quoteLamports: 1_000_000_000 } },
+      { kind: "task.executionStarted", occurredAtMs: T + 400, simulatorTimeMs: 1_000, commandId: "cmd-s", payload: { taskId: "task-x", robotId: "rov-a" } },
+      { kind: "task.evidenceSubmitted", occurredAtMs: T + 500, simulatorTimeMs: 2_000, commandId: "cmd-e", payload: { taskId: "task-x", evidence: { evidenceId: "ev-1", taskId: "task-x", assignmentVersion: 1, operatorId: "operator-a", sampleRefs: ["s1"], policyVersion: "p", digest: "ab".repeat(32), simulatorSource: "SYNTHETIC_SIM", capturedAtMs: T + 490 } } },
+      { kind: "task.evidenceRejected", occurredAtMs: T + 600, commandId: "cmd-v", payload: { taskId: "task-x", verdict: { evidenceId: "ev-1", accepted: false, reasons: ["vis"], verifierId: "v", verdictVersion: "1", decidedAtMs: T + 590 } } },
+      // Chain enacted reassignment to wallet B.
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner", newPayoutWallet: WALLET_B } },
+      { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
+      // Off-chain event claims a DIFFERENT wallet than the chain enacted.
+      { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN, newPayoutWallet: "VorQynTestPayKeyC11111111111111111111111111C" } },
+    ]);
+    expect(staged.ok).toBe(false);
+    if (!staged.ok) expect(staged.error.code).toBe("validation_error");
+  });
+
+  it("reassignmentAuthorized passes when the claimed wallet matches the chain record", () => {
+    const base = freshMission();
+    const staged = extend(base, [
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 100, commandId: "cmd-f", payload: { kind: "funding", transactionSignature: SIG_FUND, cluster: "devnet", amountLamports: BUDGET } },
+      { kind: "chain.transactionUpdated", occurredAtMs: T + 150, payload: { transactionSignature: SIG_FUND, status: "confirmed", slot: 1 }, chainTimeMs: T + 150 },
+      { kind: "mission.launched", occurredAtMs: T + 200, commandId: "cmd-l", payload: {} },
+      { kind: "task.assigned", occurredAtMs: T + 300, commandId: "cmd-a", payload: { taskId: "task-x", operatorId: "operator-a", robotId: "rov-a", quoteLamports: 1_000_000_000 } },
+      { kind: "task.executionStarted", occurredAtMs: T + 400, simulatorTimeMs: 1_000, commandId: "cmd-s", payload: { taskId: "task-x", robotId: "rov-a" } },
+      { kind: "task.evidenceSubmitted", occurredAtMs: T + 500, simulatorTimeMs: 2_000, commandId: "cmd-e", payload: { taskId: "task-x", evidence: { evidenceId: "ev-1", taskId: "task-x", assignmentVersion: 1, operatorId: "operator-a", sampleRefs: ["s1"], policyVersion: "p", digest: "ab".repeat(32), simulatorSource: "SYNTHETIC_SIM", capturedAtMs: T + 490 } } },
+      { kind: "task.evidenceRejected", occurredAtMs: T + 600, commandId: "cmd-v", payload: { taskId: "task-x", verdict: { evidenceId: "ev-1", accepted: false, reasons: ["vis"], verifierId: "v", verdictVersion: "1", decidedAtMs: T + 590 } } },
+      { kind: "chain.transactionSubmitted", occurredAtMs: T + 700, commandId: "cmd-rtx", payload: { kind: "reassignment", taskId: "task-x", assignmentVersion: 2, transactionSignature: SIG_REASSIGN, cluster: "devnet", amountLamports: 1_100_000_000, authorizedBy: "owner", newPayoutWallet: WALLET_B } },
+      { kind: "chain.transactionUpdated", occurredAtMs: T + 750, payload: { transactionSignature: SIG_REASSIGN, status: "confirmed", slot: 2 }, chainTimeMs: T + 750 },
+      { kind: "task.reassignmentAuthorized", occurredAtMs: T + 800, commandId: "cmd-r", payload: { taskId: "task-x", expectedVersion: 1, newOperatorId: "operator-b", newRobotId: "rov-b", offerId: "o", quoteLamports: 1_100_000_000, authorizedBy: "owner", transactionSignature: SIG_REASSIGN, newPayoutWallet: WALLET_B } },
+    ]);
+    expect(staged.ok).toBe(true);
+    if (staged.ok) expect(staged.state.tasks["task-x"]?.currentAssignmentVersion).toBe(2);
+  });
+});
