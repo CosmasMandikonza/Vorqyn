@@ -1,5 +1,6 @@
 // @ts-check
 import tseslint from "typescript-eslint";
+import frontendLint from "./apps/web/eslint.config.mjs";
 
 /**
  * VORQYN root ESLint config (VQ-00 foundation).
@@ -22,6 +23,7 @@ export default tseslint.config(
     ],
   },
   ...tseslint.configs.recommended,
+  ...frontendLint,
   {
     files: ["apps/web/**/*.{ts,tsx}"],
     languageOptions: {
