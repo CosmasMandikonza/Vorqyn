@@ -1,0 +1,13 @@
+This is VORQYN for the MLH Solana Hackathon.
+
+A storm-damaged port needs air, ground and underwater inspection. When one sensor cannot provide useful observations, the work needs a clear recovery path.
+
+Here is our original fictional port. This survey uses deterministic synthetic observations, not live robots or SITL. I start the survey and advance it. Machine positions come from the kernel in the same world coordinate frame.
+
+I inject the underwater optical fault. The next observation shows degraded optical quality. Sonar is measured separately; that does not automatically make its evidence acceptable. I pause playback and inspect the recorded history. The timeline uses simulator time, not blockchain confirmation time.
+
+If WebGL is unavailable, the two-dimensional view preserves the observation context.
+
+The company entry supports independently configured browser-local briefs. I choose regions and capabilities, set acceptance thresholds and an exact proposed budget, then save and reopen the plan. This is local planning, not authenticated company storage or mission funding.
+
+Our demonstrated result is a reproducible synthetic inspection and fault workflow, paired with an editable planning experience. On-chain escrow, authorized reassignment, independent verification and payout are not demonstrated in this recording. The release packet states precisely what ran and what remains unconnected.

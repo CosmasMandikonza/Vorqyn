@@ -1,0 +1,3 @@
+
+> vorqyn@ lint /workspace/work/release01-final/snapshot
+> eslint .

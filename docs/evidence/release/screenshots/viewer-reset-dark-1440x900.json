@@ -1,0 +1,23 @@
+{
+  "runId": "70d25516-2bd2-44a3-87d9-a48afedb6569",
+  "layout": {
+    "viewport": 1440,
+    "document": 1440,
+    "offenders": []
+  },
+  "name": "viewer-reset-dark-1440x900",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "sha256": "261d9928c8c2ea518e98b961a69a532e4b09cc7e45b114782395453e7ce2f499",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "dark",
+  "capturedAt": "2026-11-07T18:21:00.859Z"
+}

@@ -1,0 +1,298 @@
+TAP version 13
+# Subtest: identical seed and commands produce identical observations, state and audit
+ok 1 - identical seed and commands produce identical observations, state and audit
+  ---
+  duration_ms: 8.70447
+  type: 'test'
+  ...
+# Subtest: a different seed changes measurement streams while structure stays valid
+ok 2 - a different seed changes measurement streams while structure stays valid
+  ---
+  duration_ms: 1.985962
+  type: 'test'
+  ...
+# Subtest: replayScenario from the recorded run trace reproduces the original stream
+ok 3 - replayScenario from the recorded run trace reproduces the original stream
+  ---
+  duration_ms: 2.340077
+  type: 'test'
+  ...
+# Subtest: the PRNG itself is seed-reproducible and consumption-order dependent
+ok 4 - the PRNG itself is seed-reproducible and consumption-order dependent
+  ---
+  duration_ms: 0.268494
+  type: 'test'
+  ...
+# Subtest: sequence strictly increases; time advances exactly one step while running and freezes while paused
+ok 5 - sequence strictly increases; time advances exactly one step while running and freezes while paused
+  ---
+  duration_ms: 1.208479
+  type: 'test'
+  ...
+# Subtest: read-only observation, command and replay accessors cannot rewrite kernel history
+ok 6 - read-only observation, command and replay accessors cannot rewrite kernel history
+  ---
+  duration_ms: 1.871745
+  type: 'test'
+  ...
+# Subtest: PRNG and scenario seeds reject fractional or out-of-range input
+ok 7 - PRNG and scenario seeds reject fractional or out-of-range input
+  ---
+  duration_ms: 0.444907
+  type: 'test'
+  ...
+# Subtest: faulted optical samples are detectable as insufficient against the demo threshold
+ok 8 - faulted optical samples are detectable as insufficient against the demo threshold
+  ---
+  duration_ms: 6.680587
+  type: 'test'
+  ...
+# Subtest: sonar capability does not imply acceptance: same measurement, two policies, two verdicts
+ok 9 - sonar capability does not imply acceptance: same measurement, two policies, two verdicts
+  ---
+  duration_ms: 1.155414
+  type: 'test'
+  ...
+# Subtest: sonar coverage grows under its own range-ring model, independently of optical
+ok 10 - sonar coverage grows under its own range-ring model, independently of optical
+  ---
+  duration_ms: 0.948369
+  type: 'test'
+  ...
+# Subtest: the kernel emits measurements only: no verdict or acceptance fields anywhere
+ok 11 - the kernel emits measurements only: no verdict or acceptance fields anywhere
+  ---
+  duration_ms: 3.137627
+  type: 'test'
+  ...
+# Subtest: fault injection degrades measured optical quality far beyond the noise band
+ok 12 - fault injection degrades measured optical quality far beyond the noise band
+  ---
+  duration_ms: 7.231959
+  type: 'test'
+  ...
+# Subtest: sonar measurements are unaffected by the optical visibility fault
+ok 13 - sonar measurements are unaffected by the optical visibility fault
+  ---
+  duration_ms: 1.90334
+  type: 'test'
+  ...
+# Subtest: replaying the same seed reproduces the identical degradation curve
+ok 14 - replaying the same seed reproduces the identical degradation curve
+  ---
+  duration_ms: 4.456807
+  type: 'test'
+  ...
+# Subtest: duplicate fault command with the same idempotency key has no additional effect
+ok 15 - duplicate fault command with the same idempotency key has no additional effect
+  ---
+  duration_ms: 0.803397
+  type: 'test'
+  ...
+# Subtest: a second distinct fault while one is active is rejected, not stacked
+ok 16 - a second distinct fault while one is active is rejected, not stacked
+  ---
+  duration_ms: 0.414952
+  type: 'test'
+  ...
+# Subtest: fault duration is bounded and expiry restores clean measurements deterministically
+ok 17 - fault duration is bounded and expiry restores clean measurements deterministically
+  ---
+  duration_ms: 1.510298
+  type: 'test'
+  ...
+# Subtest: fault applies only to the underwater role; clearing is idempotent
+ok 18 - fault applies only to the underwater role; clearing is idempotent
+  ---
+  duration_ms: 0.516659
+  type: 'test'
+  ...
+# Subtest: stepToward rejects non-finite and negative displacement budgets
+ok 19 - stepToward rejects non-finite and negative displacement budgets
+  ---
+  duration_ms: 2.120655
+  type: 'test'
+  ...
+# Subtest: ENU sign conventions: drone in survey band, rover on deck surface, ROV submerged, waterline z=0
+ok 20 - ENU sign conventions: drone in survey band, rover on deck surface, ROV submerged, waterline z=0
+  ---
+  duration_ms: 15.574826
+  type: 'test'
+  ...
+# Subtest: positions stay within the documented scenario bounds (no runaway)
+ok 21 - positions stay within the documented scenario bounds (no runaway)
+  ---
+  duration_ms: 11.271089
+  type: 'test'
+  ...
+# Subtest: no teleport: consecutive displacement never exceeds speed × step
+ok 22 - no teleport: consecutive displacement never exceeds speed × step
+  ---
+  duration_ms: 13.595081
+  type: 'test'
+  ...
+# Subtest: world routes traverse ping-pong: index steps by ±1, bouncing at the ends, never wrapping
+ok 23 - world routes traverse ping-pong: index steps by ±1, bouncing at the ends, never wrapping
+  ---
+  duration_ms: 11.042628
+  type: 'test'
+  ...
+# Subtest: step size is exact: running steps advance the clock by exactly stepMs
+ok 24 - step size is exact: running steps advance the clock by exactly stepMs
+  ---
+  duration_ms: 0.689163
+  type: 'test'
+  ...
+# Subtest: sequence ordering and frame/unit labels remain valid over the whole run
+ok 25 - sequence ordering and frame/unit labels remain valid over the whole run
+  ---
+  duration_ms: 5.861387
+  type: 'test'
+  ...
+# Subtest: unknown robot ids are rejected with a clear failure
+ok 26 - unknown robot ids are rejected with a clear failure
+  ---
+  duration_ms: 2.223858
+  type: 'test'
+  ...
+# Subtest: invalid fault target, severity and duration each return distinct typed failures
+ok 27 - invalid fault target, severity and duration each return distinct typed failures
+  ---
+  duration_ms: 0.401933
+  type: 'test'
+  ...
+# Subtest: invalid lifecycle transitions return clear failures and change nothing
+ok 28 - invalid lifecycle transitions return clear failures and change nothing
+  ---
+  duration_ms: 3.055819
+  type: 'test'
+  ...
+# Subtest: unknown command types, malformed commands and forged fields are rejected
+ok 29 - unknown command types, malformed commands and forged fields are rejected
+  ---
+  duration_ms: 0.346066
+  type: 'test'
+  ...
+# Subtest: kernel construction validates the seed; step() validates the count
+ok 30 - kernel construction validates the seed; step() validates the count
+  ---
+  duration_ms: 0.573649
+  type: 'test'
+  ...
+# Subtest: stepping a stopped kernel throws the typed stopped error and freezes state
+ok 31 - stepping a stopped kernel throws the typed stopped error and freezes state
+  ---
+  duration_ms: 0.715714
+  type: 'test'
+  ...
+# Subtest: successful commands land in the audit log with their step index and outcome
+ok 32 - successful commands land in the audit log with their step index and outcome
+  ---
+  duration_ms: 0.417456
+  type: 'test'
+  ...
+# Subtest: paused kernel: no clock advance, no movement, honest frozen labels
+ok 33 - paused kernel: no clock advance, no movement, honest frozen labels
+  ---
+  duration_ms: 4.365494
+  type: 'test'
+  ...
+# Subtest: resume continues motion from the frozen pose, with no jump
+ok 34 - resume continues motion from the frozen pose, with no jump
+  ---
+  duration_ms: 1.940108
+  type: 'test'
+  ...
+# Subtest: stopped kernel is terminal: no steps, no commands, no phantom movement
+ok 35 - stopped kernel is terminal: no steps, no commands, no phantom movement
+  ---
+  duration_ms: 1.550189
+  type: 'test'
+  ...
+# Subtest: disconnected robot freezes at its last authoritative pose and is labelled stale
+ok 36 - disconnected robot freezes at its last authoritative pose and is labelled stale
+  ---
+  duration_ms: 1.188793
+  type: 'test'
+  ...
+# Subtest: coverage and noise streams freeze during disconnection; reconnect resumes truthfully
+ok 37 - coverage and noise streams freeze during disconnection; reconnect resumes truthfully
+  ---
+  duration_ms: 1.464762
+  type: 'test'
+  ...
+# Subtest: all three robots keep moving while running (multi-role scenario stays coherent)
+ok 38 - all three robots keep moving while running (multi-role scenario stays coherent)
+  ---
+  duration_ms: 1.318622
+  type: 'test'
+  ...
+# Subtest: every observation and the final state are labelled SYNTHETIC_SIM with ENU metre units
+ok 39 - every observation and the final state are labelled SYNTHETIC_SIM with ENU metre units
+  ---
+  duration_ms: 6.543224
+  type: 'test'
+  ...
+# Subtest: no command input can influence the provenance label (no forge path exists)
+ok 40 - no command input can influence the provenance label (no forge path exists)
+  ---
+  duration_ms: 0.569047
+  type: 'test'
+  ...
+# Subtest: structural key allowlist: outputs contain only simulator-domain fields
+ok 41 - structural key allowlist: outputs contain only simulator-domain fields
+  ---
+  duration_ms: 3.606391
+  type: 'test'
+  ...
+# Subtest: the only time field family is simulator-domain integer milliseconds
+ok 42 - the only time field family is simulator-domain integer milliseconds
+  ---
+  duration_ms: 3.269292
+  type: 'test'
+  ...
+# Subtest: fault delta is measured in the observations, not asserted by a label
+ok 43 - fault delta is measured in the observations, not asserted by a label
+  ---
+  duration_ms: 1.53709
+  type: 'test'
+  ...
+# Subtest: buildSampleRun is deterministic across invocations
+ok 44 - buildSampleRun is deterministic across invocations
+  ---
+  duration_ms: 12.345984
+  type: 'test'
+  ...
+# Subtest: regenerated sample deep-equals the committed golden fixture
+ok 45 - regenerated sample deep-equals the committed golden fixture
+  ---
+  duration_ms: 4.028075
+  type: 'test'
+  ...
+# Subtest: sample demonstrates a measured optical fault delta far above noise
+ok 46 - sample demonstrates a measured optical fault delta far above noise
+  ---
+  duration_ms: 2.580915
+  type: 'test'
+  ...
+# Subtest: sample records the idempotent duplicate fault attempt and typed rejections
+ok 47 - sample records the idempotent duplicate fault attempt and typed rejections
+  ---
+  duration_ms: 2.192956
+  type: 'test'
+  ...
+# Subtest: sample document contains no chain/wall-clock/verdict FIELD anywhere
+ok 48 - sample document contains no chain/wall-clock/verdict FIELD anywhere
+  ---
+  duration_ms: 2.898868
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 606.980108

@@ -1,0 +1,199 @@
+[WebServer] (node:23658) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:23670) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 12 tests using 1 worker
+
+(node:23689) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/12] [judge] › tests/browser/release-smoke.spec.ts:12:1 › judge journey: landing → guest → real 3D → 2D → independently saved local draft
+[2/12] [judge] › tests/browser/release-smoke.spec.ts:107:1 › no WebGL preserves real metadata, machine selection and source labels
+[3/12] [judge] › tests/browser/release-smoke.spec.ts:137:1 › failed metadata is an explicit error, never an infinite successful loader
+[4/12] [judge] › tests/browser/release-smoke.spec.ts:155:1 › failed GLB is recoverable through actual 2D fallback
+[5/12] [judge] › tests/browser/release-smoke.spec.ts:169:1 › keyboard, reduced motion, selection and theme changes keep static source truth
+[6/12] [judge] › tests/browser/release-smoke.spec.ts:197:1 › native 200% zoom keeps viewer navigation accessible
+(node:24183) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[7/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 1440x900
+[8/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 390x844
+[9/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 320x844
+  1) [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 320x844 ───────
+
+    Error: viewer-reset-light-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: viewer-uw-light-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: viewer-inspect-light-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: mobile-inspector-light-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9
+
+    Error Context: ../../../traces/release-capture-genuine-captures-light-320x844-capture/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../traces/release-capture-genuine-captures-light-320x844-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../traces/release-capture-genuine-captures-light-320x844-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:24436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 1440x900
+[11/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 390x844
+[12/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 320x844
+  2) [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 320x844 ────────
+
+    Error: viewer-reset-dark-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: viewer-uw-dark-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: viewer-inspect-dark-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9
+
+    Error: mobile-inspector-dark-320x844: horizontal overflow; see captured layout metadata
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    322
+
+      66 |       `${name}: horizontal overflow; see captured layout metadata`,
+      67 |     )
+    > 68 |     .toBeLessThanOrEqual(width);
+         |      ^
+      69 | }
+      70 | for (const theme of ["light", "dark"])
+      71 |   for (const { width, height } of [
+        at capture (/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9
+
+    Error Context: ../../../traces/release-capture-genuine-captures-dark-320x844-capture/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../traces/release-capture-genuine-captures-dark-320x844-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../traces/release-capture-genuine-captures-dark-320x844-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 320x844 ────────
+    [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 320x844 ─────────
+  10 passed (1.6m)
+undefined
+/workspace/work/release01-final/snapshot/apps/web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config ../../scripts/release/playwright.config.mjs --project judge --project capture

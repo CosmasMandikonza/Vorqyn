@@ -1,0 +1,13 @@
+This is VORQYN for the MLH Solana Hackathon.
+
+After a storm, a port needs inspection above the cranes, along the access roads, and beneath the water. Different machines see different parts of the problem.
+
+VORQYN brings that work into one understandable environment. This is our original fictional port, with aerial, land and underwater camera stations. These machines are static reference anchors, not live telemetry.
+
+The same metadata drives an accessible two-dimensional fallback, so losing WebGL does not lose the inspection context.
+
+Here is a separate, real run of our deterministic synthetic kernel. I inject a severe underwater optical fault. The measured optical quality falls sharply; sonar remains an independent sensor. This terminal demonstration is not integrated browser playback, physical hardware, an AI decision or a verifier verdict.
+
+Now I create a local mission brief: choose an objective and actual port region, specify a sonar requirement, set acceptance thresholds and propose an exact budget. Save, reload, and the distinct editable draft is still here. It is saved in this browser, not a company account, and is not funded or launched.
+
+Devnet escrow, reassignment and payout are not connected in this release. We are showing the working planning, world and synthetic foundations honestly, with reproducible checks and clear integration boundaries.

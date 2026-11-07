@@ -1,0 +1,25 @@
+
+> vorqyn@ test /workspace/work/release01-final/snapshot
+> pnpm -r run test
+
+Scope: 2 of 3 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/release01-final/snapshot/packages/contracts
+packages/contracts test:  Test Files  1 passed (1)
+packages/contracts test:       Tests  1 passed (1)
+packages/contracts test:    Start at  18:18:52
+packages/contracts test:    Duration  184ms (transform 59%, import 24%, worker 10%, tests 7%)
+packages/contracts test: Done
+apps/web test$ vitest run
+apps/web test:  RUN  v5.1.0 /workspace/work/release01-final/snapshot/apps/web
+apps/web test: (node:23316) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+apps/web test: Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+apps/web test: (Use `node --trace-deprecation ...` to show where the warning was created)
+apps/web test:  Test Files  6 passed (6)
+apps/web test:       Tests  73 passed (73)
+apps/web test:    Start at  18:18:52
+apps/web test:    Duration  9.23s (environment 64%, tests 16%, setup 12%, import 4%, transform 4%)
+apps/web test: Environment  jsdom was created 6 times · 5.40s total, 64% of tracked time
+apps/web test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+apps/web test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+apps/web test: Done

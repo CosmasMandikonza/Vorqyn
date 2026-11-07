@@ -1,0 +1,71 @@
+[WebServer] (node:24742) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:24754) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 2 tests using 1 worker
+
+(node:24772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [integration] › tests/browser/release-integration.spec.ts:4:1 › DEMO-01 actual transport: deterministic fault and stale observations
+  1) [integration] › tests/browser/release-integration.spec.ts:4:1 › DEMO-01 actual transport: deterministic fault and stale observations
+
+    Error: BLOCKED: DEMO-01 endpoint is absent (HTTP 404); Issue #32 must merge.
+
+      10 |   });
+      11 |   if ([404, 405].includes(first.status()))
+    > 12 |     throw new Error(
+         |           ^
+      13 |       `BLOCKED: DEMO-01 endpoint is absent (HTTP ${first.status()}); Issue #32 must merge.`,
+      14 |     );
+      15 |   expect(first.status()).toBe(200);
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:12:11
+
+    Error Context: ../../../traces/release-integration-DEMO-0-9db77-ault-and-stale-observations-integration/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../traces/release-integration-DEMO-0-9db77-ault-and-stale-observations-integration/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../traces/release-integration-DEMO-0-9db77-ault-and-stale-observations-integration/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:24783) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/2] [integration] › tests/browser/release-integration.spec.ts:82:1 › DEMO-02 real browser playback must use actual transport, not fixtures
+  2) [integration] › tests/browser/release-integration.spec.ts:82:1 › DEMO-02 real browser playback must use actual transport, not fixtures
+
+    Error: BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.
+
+      86 |   const start = page.getByRole("button", { name: /Start synthetic survey/i });
+      87 |   if ((await start.count()) === 0)
+    > 88 |     throw new Error(
+         |           ^
+      89 |       "BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.",
+      90 |     );
+      91 |   const responsePromise = page.waitForResponse(
+        at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:88:11
+
+    Error Context: ../../../traces/release-integration-DEMO-0-5f9a2-tual-transport-not-fixtures-integration/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../traces/release-integration-DEMO-0-5f9a2-tual-transport-not-fixtures-integration/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../traces/release-integration-DEMO-0-5f9a2-tual-transport-not-fixtures-integration/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [integration] › tests/browser/release-integration.spec.ts:4:1 › DEMO-01 actual transport: deterministic fault and stale observations
+    [integration] › tests/browser/release-integration.spec.ts:82:1 › DEMO-02 real browser playback must use actual transport, not fixtures
+undefined
+/workspace/work/release01-final/snapshot/apps/web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config ../../scripts/release/playwright.config.mjs --project integration
