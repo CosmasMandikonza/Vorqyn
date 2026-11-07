@@ -186,6 +186,18 @@ describe("telemetry bridge — tampered input rejection", () => {
     expect(outcome.error.message).toContain("frame");
   });
 
+  it("a well-formed but wrong ENU world frame is rejected, not silently accepted", () => {
+    const snapshots = runKernelSnapshots(1, (kernel) => kernel.step(1));
+    const tampered = tamper(snapshots[0] as DemoSnapshot, (clone) => {
+      // This satisfies TELEMETRY_FRAME_PATTERN but is not the kernel's PORT-001 frame.
+      (clone.provenance as Record<string, unknown>).frameId = "ENU_OTHER-001_LOCAL";
+    });
+    const outcome = normalizeSnapshotToTelemetry(tampered, { missionId: MISSION, receivedAtMs: RECEIPT_MS });
+    expect(outcome.ok).toBe(false);
+    if (outcome.ok) return;
+    expect(outcome.error.message).toContain("ENU_PORT-001_LOCAL");
+  });
+
   it("unsupported units are rejected", () => {
     const snapshots = runKernelSnapshots(1, (kernel) => kernel.step(1));
     const tampered = tamper(snapshots[0] as DemoSnapshot, (clone) => {
