@@ -1,0 +1,34 @@
+{
+  "04-underwater-light-1440.png": {
+    "actualPixels": [
+      1329,
+      558
+    ],
+    "historicalFileUntouched": true,
+    "newCaptureNamespace": "docs/evidence/release/screenshots/"
+  },
+  "05-inspect-light-1440.png": {
+    "actualPixels": [
+      1329,
+      558
+    ],
+    "historicalFileUntouched": true,
+    "newCaptureNamespace": "docs/evidence/release/screenshots/"
+  },
+  "12-mobile-390-light.png": {
+    "actualPixels": [
+      390,
+      844
+    ],
+    "historicalFileUntouched": true,
+    "newCaptureNamespace": "docs/evidence/release/screenshots/"
+  },
+  "13-mobile-inspector-390-light.png": {
+    "actualPixels": [
+      390,
+      844
+    ],
+    "historicalFileUntouched": true,
+    "newCaptureNamespace": "docs/evidence/release/screenshots/"
+  }
+}

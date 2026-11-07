@@ -1,0 +1,304 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/release01-final/snapshot/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/playwright.config.mjs",
+      "--project",
+      "integration"
+    ],
+    "configFile": "/workspace/work/release01-final/snapshot/scripts/release/playwright.config.mjs",
+    "rootDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/release01-final/snapshot/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/release01-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge",
+        "name": "judge",
+        "testDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-smoke.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/release01-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "capture",
+        "name": "capture",
+        "testDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-capture.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/release01-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-integration.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/release01-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "integration",
+        "testDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/release01-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "release-integration.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "integration"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/release01-final/integration-playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/release01-final/snapshot",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "release-integration.spec.ts",
+      "file": "release-integration.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "DEMO-01 actual transport: deterministic fault and stale observations",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "integration",
+              "projectName": "integration",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 89,
+                  "error": {
+                    "message": "Error: BLOCKED: DEMO-01 endpoint is absent (HTTP 404); Issue #32 must merge.",
+                    "stack": "Error: BLOCKED: DEMO-01 endpoint is absent (HTTP 404); Issue #32 must merge.\n    at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:12:11",
+                    "location": {
+                      "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                      "column": 11,
+                      "line": 12
+                    },
+                    "snippet": " \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mif\u001b[39m ([\u001b[35m404\u001b[39m\u001b[33m,\u001b[39m \u001b[35m405\u001b[39m]\u001b[33m.\u001b[39mincludes(first\u001b[33m.\u001b[39mstatus()))\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 12 |\u001b[39m     \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m    |\u001b[39m           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 13 |\u001b[39m       \u001b[32m`BLOCKED: DEMO-01 endpoint is absent (HTTP ${first.status()}); Issue #32 must merge.`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 14 |\u001b[39m     )\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m   expect(first\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                        "column": 11,
+                        "line": 12
+                      },
+                      "message": "Error: BLOCKED: DEMO-01 endpoint is absent (HTTP 404); Issue #32 must merge.\n\n  10 |   });\n  11 |   if ([404, 405].includes(first.status()))\n> 12 |     throw new Error(\n     |           ^\n  13 |       `BLOCKED: DEMO-01 endpoint is absent (HTTP ${first.status()}); Issue #32 must merge.`,\n  14 |     );\n  15 |   expect(first.status()).toBe(200);\n    at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:12:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T18:21:25.813Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/release01-final/traces/release-integration-DEMO-0-9db77-ault-and-stale-observations-integration/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/release01-final/traces/release-integration-DEMO-0-9db77-ault-and-stale-observations-integration/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                    "column": 11,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "df5d29f4ff693200a890-5d812cd0f6a2250b46f3",
+          "file": "release-integration.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "DEMO-02 real browser playback must use actual transport, not fixtures",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "integration",
+              "projectName": "integration",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1679,
+                  "error": {
+                    "message": "Error: BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.",
+                    "stack": "Error: BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.\n    at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:88:11",
+                    "location": {
+                      "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                      "column": 11,
+                      "line": 88
+                    },
+                    "snippet": " \u001b[90m 86 |\u001b[39m   \u001b[36mconst\u001b[39m start \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m\"button\"\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/Start synthetic survey/i\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 87 |\u001b[39m   \u001b[36mif\u001b[39m ((\u001b[36mawait\u001b[39m start\u001b[33m.\u001b[39mcount()) \u001b[33m===\u001b[39m \u001b[35m0\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 88 |\u001b[39m     \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m    |\u001b[39m           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 89 |\u001b[39m       \u001b[32m\"BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.\"\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 90 |\u001b[39m     )\u001b[33m;\u001b[39m\n \u001b[90m 91 |\u001b[39m   \u001b[36mconst\u001b[39m responsePromise \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mwaitForResponse("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                        "column": 11,
+                        "line": 88
+                      },
+                      "message": "Error: BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.\n\n  86 |   const start = page.getByRole(\"button\", { name: /Start synthetic survey/i });\n  87 |   if ((await start.count()) === 0)\n> 88 |     throw new Error(\n     |           ^\n  89 |       \"BLOCKED: DEMO-02 dynamic controls are absent; Issue #33 must merge. Static anchors are not playback.\",\n  90 |     );\n  91 |   const responsePromise = page.waitForResponse(\n    at /workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts:88:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T18:21:26.398Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/release01-final/traces/release-integration-DEMO-0-5f9a2-tual-transport-not-fixtures-integration/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/release01-final/traces/release-integration-DEMO-0-5f9a2-tual-transport-not-fixtures-integration/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/release01-final/snapshot/apps/web/tests/browser/release-integration.spec.ts",
+                    "column": 11,
+                    "line": 88
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "df5d29f4ff693200a890-ca5a8df48f2f74001183",
+          "file": "release-integration.spec.ts",
+          "line": 82,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T18:21:23.926Z",
+    "duration": 4662.585,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

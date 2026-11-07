@@ -1,0 +1,55 @@
+VORQYN PORT-001 validator — node v22.21.1 — 2026-11-07T18:19:48.152Z
+pack root: port-world/ (relative mode, no absolute paths emitted)
+
+[PASS] 1 world.json parses; schema id — vorqyn.port-world/1
+[PASS] 2 frame is local ENU in meters
+[PASS] 3 waterline is z=0 — z=0
+[PASS] 4 world bounds min<max on all axes — [-300,-200,-16] .. [300,240,100]
+[PASS] 5 bounds magnitude plausible for a port (100-1000 m per axis) — unit-confusion guard — 600 x 440 x 116 m
+[PASS] 6 gltf conversion rule declares identity root (Y-up authored)
+[PASS] 7 scene daylight documented as world parameter (not UI theme)
+[PASS] 8 required zones present — all present
+[PASS] 9 all zone boxes finite, min<max, inside world bounds
+[PASS] 10 airspace zone entirely above waterline — min z=15
+[PASS] 11 underwater zones entirely below waterline and above/at world seabed floor — uw z[-12.5, -0.5]
+[PASS] 12 obstruction_zone is inside underwater_inspection
+[PASS] 13 pier_c_deck flagged damaged (story consistency)
+[PASS] 14 land-kind zones never dip below waterline
+[PASS] 15 anchors finite and inside world bounds
+[PASS] 16 anchor ids unique
+[PASS] 17 drone_home is airborne (z>=15) — z=55
+[PASS] 18 rover_home stands on land deck elevation (3.5..6.5 m) — z=4.05
+[PASS] 19 rov_home submerged between waterline and seabed — z=-2.5
+[PASS] 20 INSPECT anchors exist (obstruction_primary, crane_boom_tip)
+[PASS] 21 rover route terminates on pier_b_deck
+[PASS] 22 rov route terminates inside obstruction_zone
+[PASS] 23 drone survey waypoints inside aerial_survey
+[PASS] 24 all route points finite
+[PASS] 25 all six camera modes defined
+[PASS] 26 AIR/LAND/UNDERWATER ranges, near/far and targets sane
+[PASS] 27 FOLLOW defines per-role ranges for drone/rover/rov
+[PASS] 28 INSPECT targets reference existing anchors with sane ranges
+[PASS] 29 camera scale sanity: AIR min dist > LAND > FOLLOW(drone) > INSPECT primary — 220 > 50 > 6 > 2.5
+[PASS] 30 RESET framing sane (distance>0, elevation 0..90, azimuth finite) — d=330 el=32 az=215
+[PASS] 31 GLB structure valid: port-world-high.glb — 14882 tris, 18 prims
+[PASS] 31 GLB structure valid: port-world-low.glb — 2458 tris, 14 prims
+[PASS] 31 GLB structure valid: drone-ref.glb — 416 tris, 4 prims
+[PASS] 31 GLB structure valid: rover-ref.glb — 292 tris, 4 prims
+[PASS] 31 GLB structure valid: rov-ref.glb — 392 tris, 5 prims
+[PASS] 32 high-LOD geometry ENU extents inside world bounds (+-1 m tol) — [-300.0,-200.0,-13.8] .. [300.0,240.0,35.7]
+[PASS] 33 world has geometry above waterline and below it (one shared world) — z -13.8 .. 35.7
+[PASS] 34 no geometry beyond world extremes (unit-confusion guard)
+[PASS] 35 triangle budgets: high/low/reference — high=14882/150000 low=2458/35000
+[PASS] 36 low-LOD occupies same world volume as high-LOD (+-2 m)
+[PASS] 37 scale check drone: measured vs declared dims (+-0.02 m) — measured [1.24,1.24,0.25] declared [1.24,1.24,0.25]
+[PASS] 37 scale check rover: measured vs declared dims (+-0.02 m) — measured [1.06,0.72,0.81] declared [1.06,0.72,0.81]
+[PASS] 37 scale check rov: measured vs declared dims (+-0.02 m) — measured [1.38,0.71,0.65] declared [1.38,0.71,0.65]
+[PASS] 38 manifest schema + generator provenance recorded
+[PASS] 39 manifest entries: files exist, sizes + sha256 + stats match actual
+[PASS] 40 manifest covers all deliverable artifacts — complete
+[PASS] 41 no absolute filesystem paths embedded in data artifacts
+[PASS] 42 plan-view preview diagram present
+[PASS] 44 declared rover road corridors are free of container geometry (vertex-precise) — corridors clear
+[PASS] 43 determinism self-check: regenerated GLBs byte-identical to committed — all 5 identical
+
+SUMMARY: 50 passed, 0 failed, 0 warnings

@@ -1,0 +1,23 @@
+{
+  "runId": "70d25516-2bd2-44a3-87d9-a48afedb6569",
+  "layout": {
+    "viewport": 320,
+    "document": 320,
+    "offenders": []
+  },
+  "name": "fallback-dark-320x844",
+  "viewport": {
+    "width": 320,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "89e44529007e59f09e4f1bbcd1a2af9ae1cfe0c6360cb1a6906383fa2f187feb",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "dark",
+  "capturedAt": "2026-11-07T18:21:22.331Z"
+}

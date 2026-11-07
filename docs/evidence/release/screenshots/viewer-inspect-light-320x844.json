@@ -1,0 +1,29 @@
+{
+  "runId": "70d25516-2bd2-44a3-87d9-a48afedb6569",
+  "layout": {
+    "viewport": 320,
+    "document": 322,
+    "offenders": [
+      {
+        "text": "RESETAIRLANDUWINSPECT",
+        "left": 32,
+        "right": 322.171875
+      }
+    ]
+  },
+  "name": "viewer-inspect-light-320x844",
+  "viewport": {
+    "width": 320,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "7c81750abd4ba1a6ea21cb64fce01e45a2beeffa9520b6562b0f3d9889889351",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "capturedAt": "2026-11-07T18:20:50.381Z"
+}

@@ -1,0 +1,23 @@
+{
+  "runId": "70d25516-2bd2-44a3-87d9-a48afedb6569",
+  "layout": {
+    "viewport": 320,
+    "document": 320,
+    "offenders": []
+  },
+  "name": "fallback-light-320x844",
+  "viewport": {
+    "width": 320,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "2c9e154c5e43109085826e523c48e0816fa1ae1e2bac7cfea481d90161c73f58",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "capturedAt": "2026-11-07T18:20:51.400Z"
+}

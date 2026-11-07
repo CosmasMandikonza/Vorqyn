@@ -83,6 +83,7 @@ test("DEMO-02 real browser playback must use actual transport, not fixtures", as
   page,
 }) => {
   await page.goto("/demo/mission");
+  await expect(page.getByTestId("honesty-badge")).toBeVisible();
   const start = page.getByRole("button", { name: /Start synthetic survey/i });
   if ((await start.count()) === 0)
     throw new Error(

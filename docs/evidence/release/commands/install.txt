@@ -1,0 +1,13 @@
+Scope: all 3 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +364
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 364, reused 364, downloaded 0, added 147
+Progress: resolved 364, reused 364, downloaded 0, added 364, done
+
+devDependencies:
++ eslint 10.14.0
++ typescript-eslint 8.72.1
+
+Done in 2.5s using pnpm v10.34.5
