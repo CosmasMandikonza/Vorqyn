@@ -346,6 +346,46 @@ describe("guest trace — budgets and failures", () => {
     await expectError(await actual, 413, "payload_too_large");
   });
 
+  it("stops an undeclared oversized stream at the byte limit without buffering to EOF", async () => {
+    let canceled = false;
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        // No Content-Length and deliberately NO close(): request.text()
+        // would wait for the entire unbounded stream. Bounded reads must
+        // reject and cancel as soon as this first chunk exceeds the cap.
+        controller.enqueue(new Uint8Array(LIMITS.maxBodyBytes + 1));
+      },
+      cancel() {
+        canceled = true;
+      },
+    });
+    const response = await POST(new Request(ROUTE, {
+      method: "POST",
+      body,
+      duplex: "half",
+    } as RequestInit & { duplex: "half" }));
+    await expectError(response, 413, "payload_too_large");
+    expect(canceled).toBe(true);
+  });
+
+  it("accepts a valid bounded request split across stream chunks", async () => {
+    const body = new TextEncoder().encode(json({ schema: REQUEST_SCHEMA, operations: [] }));
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(body.slice(0, 6));
+        controller.enqueue(body.slice(6));
+        controller.close();
+      },
+    });
+    const response = await POST(new Request(ROUTE, {
+      method: "POST",
+      body: stream,
+      duplex: "half",
+    } as RequestInit & { duplex: "half" }));
+    expect(response.status).toBe(200);
+    expect((await response.json()).schema).toBe(TRACE_RESPONSE_SCHEMA);
+  });
+
   it("non-POST methods answer with the typed error schema", async () => {
     const getResponse = await GET();
     expect(getResponse.status).toBe(405);
