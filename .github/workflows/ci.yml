@@ -42,6 +42,11 @@ jobs:
       - name: Deterministic simulation kernel tests
         run: node --test services/simulation/core/*.test.mjs
 
+      # Independent Lane 2 asset pack: protect GLB integrity, origin/scale,
+      # task-zone metadata and reproducible generation on the pinned runner.
+      - name: Port-world asset validation and determinism
+        run: node assets/port-world/tools/validate.mjs --selfcheck
+
       - name: Build
         run: pnpm build
 
