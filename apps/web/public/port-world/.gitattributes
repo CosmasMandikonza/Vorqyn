@@ -1,0 +1,2 @@
+# Keep synced asset copies byte-stable: asset-sync.test.tsx verifies sha256.
+* -text
