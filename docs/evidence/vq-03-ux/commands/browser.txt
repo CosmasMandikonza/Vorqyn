@@ -1,0 +1,38 @@
+[WebServer] (node:16510) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:16522) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 22 tests using 2 workers
+
+(node:16540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:16541) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/22] tests/mission-builder/wizard.spec.ts:87:1 › distinct A and B survive reload, edits, repeated save and confirmed deletion
+[2/22] tests/mission-builder/wizard.spec.ts:154:1 › validation focuses required fields and rejects contradictory evidence and invalid money
+[3/22] tests/mission-builder/wizard.spec.ts:207:1 › partial inputs and step selection resume after reload
+[4/22] tests/mission-builder/wizard.spec.ts:227:3 › safe corrupt/version recovery {bad-json
+[5/22] tests/mission-builder/wizard.spec.ts:227:3 › safe corrupt/version recovery {"version":42,"drafts":[]}
+[6/22] tests/mission-builder/wizard.spec.ts:271:1 › storage disabled preserves an editable memory-only draft and prompts before navigation
+[7/22] tests/mission-builder/wizard.spec.ts:294:1 › sensitive-looking input never reaches local storage
+[8/22] tests/mission-builder/wizard.spec.ts:312:1 › two tabs detect stale edits, preserve copies and never resurrect a deleted draft
+[9/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe light 1440
+[10/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe light 1024
+[11/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe light 390
+[12/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe light 320
+[13/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe dark 1440
+[14/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe dark 1024
+[15/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe dark 390
+[16/22] tests/mission-builder/wizard.spec.ts:353:5 › review visual and axe dark 320
+[17/22] tests/mission-builder/wizard.spec.ts:403:1 › native 200% zoom and keyboard navigation
+[18/22] tests/mission-builder/wizard.spec.ts:456:1 › tampered unsupported zones are blocked without silently replacing stored drafts
+[19/22] tests/mission-builder/wizard.spec.ts:475:1 › quota failures never claim a save
+[20/22] tests/mission-builder/wizard.spec.ts:491:1 › capability and evidence controls pass accessibility audits and preserve keyboard edits
+[21/22] tests/mission-builder/wizard.spec.ts:526:1 › unsupported Web Locks keeps planning editable without unsafe last-write behavior
+[22/22] tests/mission-builder/wizard.spec.ts:540:1 › title text cannot inject markup or scripts into saved drafts
+  22 passed (1.2m)
