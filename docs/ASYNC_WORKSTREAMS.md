@@ -1,21 +1,23 @@
 # Asynchronous two-developer execution plan
 
-**Status (November 6, 2026):** Suggested assignment plan until each developer claims the issue. Both collaborators can work from separate computers, at separate times, on distinct feature branches. The repository currently contains specifications and 17 open issues; **no code branch has been started** as of the initial check. Do not imply tasks are already in progress.
+> **Current role assignment (November 6, 2026):** **Lane 1 = teammate** (foundation, contracts, Solana, verifier/AI/chain). **Lane 2 = founder** (light/dark UI, 3D, simulator, company mission UX, integration and release). This supersedes earlier role labels. The [full Notion START HERE playbook](https://app.notion.com/p/411011921112818a96ecf4d666127da1) contains all 17 GitHub issues, their execution order, copy-ready ChatGPT/ZCode prompts, and PR review handoff.
+
+**Status (November 6, 2026):** Lane roles have been selected; each developer still needs to claim their issue in GitHub. Both collaborators can work from separate computers, at separate times, on distinct feature branches. The repository currently contains specifications and 17 open issues; **no code branch has been started** as of the initial check. Do not imply tasks are already in progress.
 
 ## Decision: split by module ownership, not by competing product implementations
 
-- **Lane A — Founder / shared systems, contracts, Solana and integration ownership.**
+- **Lane 1 — Teammate / foundation, contracts, Solana, verifier, and AI policy ownership.**
   - First: [VQ-00 / Issue #1](https://github.com/CosmasMandikonza/Vorqyn/issues/1), establish repo/build/CI tooling.
   - Then: [VQ-01 / #2](https://github.com/CosmasMandikonza/Vorqyn/issues/2), shared IDs/events/state and tests.
-  - Then: chain critical path [#5](https://github.com/CosmasMandikonza/Vorqyn/issues/5) → [#6](https://github.com/CosmasMandikonza/Vorqyn/issues/6) → [#7](https://github.com/CosmasMandikonza/Vorqyn/issues/7), with [#13](https://github.com/CosmasMandikonza/Vorqyn/issues/13) chain UI/client integration coordinated with Lane B.
+  - Then: chain critical path [#5](https://github.com/CosmasMandikonza/Vorqyn/issues/5) → [#6](https://github.com/CosmasMandikonza/Vorqyn/issues/6) → [#7](https://github.com/CosmasMandikonza/Vorqyn/issues/7), with [#13](https://github.com/CosmasMandikonza/Vorqyn/issues/13) chain UI/client integration coordinated with Lane 2.
   - Shared or reallocated with explicit agreement: [#9](https://github.com/CosmasMandikonza/Vorqyn/issues/9) mission simulation, [#11](https://github.com/CosmasMandikonza/Vorqyn/issues/11) verifier, [#12](https://github.com/CosmasMandikonza/Vorqyn/issues/12) AI proposals, [#14](https://github.com/CosmasMandikonza/Vorqyn/issues/14) full mission integration.
-- **Lane B — Teammate / visual product, user experience and 3D world.**
+- **Lane 2 — Founder / visual product, 3D world, mission simulation and integration ownership.**
   - **After VQ-00 lands on main**, begin [VQ-02 / Issue #3](https://github.com/CosmasMandikonza/Vorqyn/issues/3): accessible light-led dual-theme site, demo + workspace entry.
   - Next, **after VQ-01 contract lands**, [VQ-07 / Issue #8](https://github.com/CosmasMandikonza/Vorqyn/issues/8): port 3D, air/land/sea representations, camera views, provenance labels.
   - Next, **after integrated state exists**, [VQ-14 / Issue #15](https://github.com/CosmasMandikonza/Vorqyn/issues/15): World Dive, Mission Fracture, Ghost Replay and economic handoff.
   - Shared UI area of [#4](https://github.com/CosmasMandikonza/Vorqyn/issues/4) mission builder, [#14](https://github.com/CosmasMandikonza/Vorqyn/issues/14) integration, [#16](https://github.com/CosmasMandikonza/Vorqyn/issues/16) QA and [#17](https://github.com/CosmasMandikonza/Vorqyn/issues/17) demo/release should be split into exclusive PR paths before work starts.
 
-**Why not start #1 and #3 simultaneously?** #1 is allowed to create the Next.js app skeleton and shared root package files. Starting #3 against the empty repo would likely lead to competing scaffolds and difficult merges. Work can be **assigned now**, but #3 coding should wait until #1 merges. While waiting, Lane B can read docs, establish independent ChatGPT context, build UI critique references and choose original/licensed assets—without committing files owned by #1.
+**Why not start #1 and #3 simultaneously?** #1 is allowed to create the Next.js app skeleton and shared root package files. Starting #3 against the empty repo would likely lead to competing scaffolds and difficult merges. Work can be **assigned now**, but #3 coding should wait until #1 merges. While waiting, Lane 2 can read docs, establish independent ChatGPT context, build UI critique references and choose original/licensed assets—without committing files owned by #1.
 
 These are **workstream recommendations**; neither person's GitHub issue is formally assigned until they claim it. Share this file so an absent teammate can act independently without a live meeting.
 
@@ -23,10 +25,10 @@ These are **workstream recommendations**; neither person's GitHub issue is forma
 
 | Code paths | Owner while ticket active | Rule |
 | --- | --- | --- |
-| root package files, workspace config, CI and app scaffolding | Lane A on #1 | Lane B must not scaffold overlapping root/app files until #1 merges |
-| packages/contracts/** | Lane A on #2 | Lane B reads frozen exports, no new local enum/reducer |
-| apps/web/**, packages/ui/** (visual shells, scene, inspector) | Lane B on #3/#8/#15 | Lane A changes only explicitly agreed integration boundary files |
-| programs/vorqyn/**, packages/chain-client/** | Lane A chain issues | Lane B uses typed client exports; doesn't invent Solana account semantics |
+| root package files, workspace config, CI and app scaffolding | Lane 1 on #1 | Lane 2 must not scaffold overlapping root/app files until #1 merges |
+| packages/contracts/** | Lane 1 on #2 | Lane 2 reads frozen exports, no new local enum/reducer |
+| apps/web/**, packages/ui/** (visual shells, scene, inspector) | Lane 2 on #3/#8/#15 | Lane 1 changes only explicitly agreed integration boundary files |
+| programs/vorqyn/**, packages/chain-client/** | Lane 1 chain issues | Lane 2 uses typed client exports; doesn't invent Solana account semantics |
 | services/mission/**, services/simulation/**, services/verifier/** | One named claim per issue | Before work starts, both lanes agree who owns these shared components |
 | docs/ARCHITECTURE.md, SOLANA_PROTOCOL.md and AGENTS.md | Integration owner | Proposed edits require PR review; do not silently rewrite truth |
 
@@ -65,7 +67,7 @@ Use paths that actually exist after #1; never blindly copy commands before scaff
 At the top of each GitHub issue, add a short comment when starting:
 
 ```text
-CLAIMED: Lane A or Lane B
+CLAIMED: Lane 1 or Lane 2
 Working branch: feat/vq-XX-short-title
 Base SHA: [SHA of main]
 Allowed paths: [list]
