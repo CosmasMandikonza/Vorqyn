@@ -367,6 +367,8 @@ function applyChainSubmitted(state: MissionProjection, e: MissionEvent): Handler
     submittedAtMs: e.occurredAtMs,
     ...(p.amountLamports !== undefined ? { amountLamports: p.amountLamports } : {}),
     ...(p.authorizedBy !== undefined ? { authorizedBy: p.authorizedBy } : {}),
+    ...(p.newPayoutWallet !== undefined ? { newPayoutWallet: p.newPayoutWallet } : {}),
+    ...(p.recipientWallet !== undefined ? { recipientWallet: p.recipientWallet } : {}),
   };
   return ok({});
 }
@@ -488,6 +490,11 @@ function applyEvidenceSubmitted(state: MissionProjection, e: MissionEvent): Hand
   const task = taskResult.value;
   if (task.status !== "executing")
     return err("illegal_transition", `task ${taskId} is ${task.status}; evidence arrives during executing`);
+  // Concern 1 (final review): the evidence object must claim the same task
+  // the event targets — otherwise evidence for task-y could be attached to
+  // (and later accepted for) task-x.
+  if (evidence.taskId !== taskId)
+    return err("validation_error", `evidence ${evidence.evidenceId} claims task ${evidence.taskId} but was submitted to ${taskId}`);
   if (evidence.assignmentVersion !== task.currentAssignmentVersion)
     return err("stale_assignment_version", `evidence for version ${evidence.assignmentVersion} but current is ${task.currentAssignmentVersion}`);
   const assignment = currentAssignment(task);
@@ -517,6 +524,8 @@ function applyEvidenceRejected(state: MissionProjection, e: MissionEvent): Handl
     return err("unknown_entity", `verdict references evidence ${verdict.evidenceId} that is not pending for ${taskId}`);
   const evidence = state.evidence[verdict.evidenceId];
   if (evidence === undefined) return err("unknown_entity", `evidence ${verdict.evidenceId} missing`);
+  if (evidence.taskId !== taskId)
+    return err("unknown_entity", `evidence ${verdict.evidenceId} belongs to ${evidence.taskId}, not ${taskId}`);
   if (evidence.assignmentVersion !== task.currentAssignmentVersion)
     return err("stale_assignment_version", `cannot judge version ${evidence.assignmentVersion} evidence against current ${task.currentAssignmentVersion}`);
 
@@ -568,6 +577,20 @@ function applyReassignmentAuthorized(state: MissionProjection, e: MissionEvent):
     return err("validation_error", `reassignment transaction ${p.transactionSignature} lacks amountLamports`);
   if (record.value.amountLamports !== p.quoteLamports)
     return err("validation_error", `reassignment quote ${p.quoteLamports} disagrees with chain record (${record.value.amountLamports})`);
+  // Concern 2 (final review): when the chain receipt records the payout
+  // wallet the program actually enacted, the off-chain event must claim the
+  // same wallet — an unanchored newOperatorId cannot silently diverge from
+  // on-chain truth. (Full operatorId<->wallet enforcement is the #5/VQ-03
+  // registry integration; see CHAIN_SEAM.md §5.)
+  if (
+    record.value.newPayoutWallet !== undefined &&
+    p.newPayoutWallet !== undefined &&
+    record.value.newPayoutWallet !== p.newPayoutWallet
+  )
+    return err(
+      "validation_error",
+      `reassignment claims wallet ${p.newPayoutWallet} but the chain enacted ${record.value.newPayoutWallet}`,
+    );
 
   if (p.quoteLamports > task.config.maxRewardLamports)
     return err("budget_exceeded", `reassignment quote ${p.quoteLamports} exceeds task budget ${task.config.maxRewardLamports}`);
@@ -615,6 +638,8 @@ function applyEvidenceAccepted(state: MissionProjection, e: MissionEvent): Handl
     return err("unknown_entity", `verdict references evidence ${verdict.evidenceId} that is not pending for ${taskId}`);
   const evidence = state.evidence[verdict.evidenceId];
   if (evidence === undefined) return err("unknown_entity", `evidence ${verdict.evidenceId} missing`);
+  if (evidence.taskId !== taskId)
+    return err("unknown_entity", `evidence ${verdict.evidenceId} belongs to ${evidence.taskId}, not ${taskId}`);
   if (evidence.assignmentVersion !== task.currentAssignmentVersion)
     return err("stale_assignment_version", `cannot accept version ${evidence.assignmentVersion} evidence against current ${task.currentAssignmentVersion}`);
 
