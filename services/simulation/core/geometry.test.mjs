@@ -16,7 +16,7 @@ import assert from "node:assert/strict";
 
 import { createScenarioKernel } from "./kernel.mjs";
 import { SCENARIO_BOUNDS, DRONE_ALTITUDE_BAND, ROV_DEPTH_BAND, ROBOT_ROLES } from "./scenario.mjs";
-import { distance3 } from "./enu.mjs";
+import { distance3, stepToward } from "./enu.mjs";
 
 const SEED = 555000;
 const STEPS = 400; // long enough to traverse multiple waypoint legs
