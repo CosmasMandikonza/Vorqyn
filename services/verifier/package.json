@@ -1,0 +1,22 @@
+{
+  "name": "@vorqyn/verifier",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "VORQYN deterministic task-evidence verifier (VQ-10 / #11): versioned evidence policies over normalized source telemetry, source-bound digests and signable attestations compatible with the VQ-06 on-chain claim path. Zero runtime dependencies beyond node:crypto and the shared contracts.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vorqyn/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.1.0",
+    "@types/node": "^22.10.0"
+  }
+}
