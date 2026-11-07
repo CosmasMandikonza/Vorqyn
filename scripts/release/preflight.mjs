@@ -212,13 +212,14 @@ try {
       "scripts/release/kernel-demo.mjs",
     ]);
     const built = checks.find((c) => c.id === "build")?.status === "PASS";
-    if (args.includes("--technical-only"))
-      record(
-        "browser",
-        "NOT RUN",
-        "--technical-only requested; no browser result is implied",
-      );
-    else if (
+    if (args.includes("--technical-only")) {
+      for (const id of ["browser", "judge-qa", "judge-qa-png-validation"])
+        record(
+          id,
+          "NOT RUN",
+          "--technical-only requested; no browser result is implied",
+        );
+    } else if (
       built &&
       existsSync(join(snapshot, "scripts/release/playwright.config.mjs"))
     ) {
@@ -281,6 +282,24 @@ try {
           );
         }
       }
+      // Separate fresh evidence namespace; never reuse the earlier release captures.
+      delete process.env.RELEASE_STAGE;
+      process.env.RELEASE_ARTIFACT_DIR = join(out, "judge-qa");
+      command("judge-qa", pnpm, [
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "../../scripts/release/judge-qa.config.mjs",
+      ]);
+      command("judge-qa-png-validation", process.execPath, [
+        "scripts/release/validate-judge-qa.mjs",
+        "--dir",
+        join(out, "judge-qa"),
+      ]);
+      process.env.RELEASE_ARTIFACT_DIR = out;
     } else
       record(
         "browser",

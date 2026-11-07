@@ -173,8 +173,12 @@ svg {
 .site-header {
   min-height: 100px;
   display: flex;
+  /* Reflow whole control groups when text/root zoom reduces available space. */
+  flex-wrap: wrap;
   align-items: center;
   gap: 40px;
+  row-gap: 12px;
+  padding-block: 16px;
   border-bottom: 1px solid var(--border-subtle);
 }
 .wordmark {
@@ -208,8 +212,11 @@ svg {
 }
 .header-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 24px;
+  max-width: 100%;
+  margin-left: auto;
 }
 .header-actions .button {
   font-size: 13px;
