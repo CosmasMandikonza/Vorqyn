@@ -44,7 +44,7 @@ function errorResponse(code: string, message: string, status: 400 | 405 | 413 | 
  */
 async function readBoundedBody(request: Request): Promise<string> {
   const declaredLength = request.headers.get("content-length");
-  if (declaredLength !== null && /^\\d+$/.test(declaredLength) &&
+  if (declaredLength !== null && /^\d+$/.test(declaredLength) &&
       Number(declaredLength) > LIMITS.maxBodyBytes) {
     throw new DemoRequestError("payload_too_large", "request body exceeds the 16 KiB limit", 413);
   }
