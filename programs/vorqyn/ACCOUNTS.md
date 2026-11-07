@@ -1,7 +1,7 @@
-# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04 + VQ-05)
+# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04 + VQ-05 + VQ-06)
 
 > Status: implemented and tested with **LiteSVM simulated execution**
-> (26 integration tests + 3 unit tests). **No devnet deployment has been
+> (39 integration tests + 3 unit tests). **No devnet deployment has been
 > performed and none is claimed.** Interface alignment:
 > `packages/contracts/CHAIN_SEAM.md` (DRAFT agreement with the VQ-01 owner).
 
@@ -47,9 +47,12 @@
 | `create_task(task_id, task_kind, budget_lamports)` | owner | ID rule; not expired; budget ≤ `remaining_lamports`; full budget reserved atomically; task PDA uniqueness makes duplicate IDs impossible |
 | `assign_task(task_id, operator, reward_lamports)` | owner | not expired; task `Unassigned` (double-assign rejected — reassignment is `authorize_reassignment`); reward ≤ task budget; `budget - reward` released back to remaining; version 0 → 1 |
 | `authorize_reassignment(task_id, expected_assignment_version, new_operator, reward_lamports)` (VQ-05) | owner | not expired; task `Assigned` **and** `paid_version` is None; `expected_assignment_version == current_assignment_version` (compare-and-set); `new_operator` ≠ default pubkey; quote ≤ task budget; raise topped up from remaining / cut released back; version +1 atomically; `evidence_digest`+`accepted_version` cleared (old operator's proof eligibility invalidated); emits `TaskReassigned` |
+| `verify_and_claim(task_id, expected_assignment_version, evidence_digest, policy_version, attestation_expiry)` (VQ-06) | verifier authority (co-signer; any payer may relay) | mission Active + not expired; attestation window valid; signer == `mission.verifier_authority`; digest non-zero; task `Assigned` + `paid_version` None (TWO independent one-time guards); version CAS (stale proofs from before a reassignment rejected); payout destination is program-controlled == `task.current_operator`; direct checked lamport move vault→operator (program-owned PDA — the system program cannot CPI-debit it); `funded` and `reserved` shrink together; task → `Paid` terminal state; emits `TaskPaid` (recipientWallet etc.) |
+| `close_mission()` (VQ-06) | owner | mission Active; `reserved == 0` OR mission expired (expiry/cancellation policy); full vault drain to `mission.owner` via direct lamports (zero-lamport vault GC'd); mission → `Closed` terminal; repeat close and ALL other mission instructions rejected afterwards |
 
-**Explicitly out of scope (later issues):** `verify_and_claim` payout,
-operator registry, AI delegate authority, close/refund transfers.
+**Explicitly out of scope (later issues):** operator registry,
+AI delegate authority. `verify_and_claim` is implemented (VQ-06); the
+evidence DIGEST producer is VQ-10 (typed fixture boundary until then).
 
 ## 3. Accounting invariants (all enforced with checked arithmetic)
 
@@ -77,15 +80,44 @@ No such instruction exists in VQ-04; funds can only ENTER the vault today.
 ## 5. Events
 
 `MissionInitialized`, `MissionFunded`, `TaskCreated`, `TaskAssigned`,
-`TaskReassigned` — emitted for the future TS client (VQ-12) and mirrored
-field-for-field with CHAIN_SEAM §6 receipt semantics. `TaskReassigned`
-carries the Finding-D bindings (`task_id`, new `assignment_version`,
-`reward_lamports` == receipt `amountLamports`) plus
-`new_payout_wallet` (IDL `newPayoutWallet`) — the CHAIN_SEAM §8 Q5
-answer for reassignment receipts: the enacted wallet is emitted by the
-program, so receipts are self-verifying. Its byte-exact emission is
-asserted in the test suite (discriminator + borsh payload matched
-against the program-log base64).
+`TaskReassigned`, `TaskPaid`, `MissionClosed` — emitted for the future
+TS client (VQ-12) and mirrored field-for-field with CHAIN_SEAM §6
+receipt semantics. `TaskReassigned` carries the Finding-D bindings
+(`task_id`, new `assignment_version`, `reward_lamports` == receipt
+`amountLamports`) plus `new_payout_wallet` (IDL `newPayoutWallet`);
+`TaskPaid` carries the same bindings plus `recipient_wallet` (IDL
+`recipientWallet`) — together the complete CHAIN_SEAM §8 Q5 answer:
+receipts are self-verifying for reassignment AND payout. Byte-exact
+emission of both events is asserted in the test suite (discriminator +
+borsh payload matched against the program-log base64).
+
+## 5b. Payout & close semantics (VQ-06) — trusted boundary and invariants
+
+- **TRUSTED VERIFIER BOUNDARY:** the chain validates AUTHORIZATION over
+  an opaque 32-byte digest co-signed live by `mission
+  .verifier_authority`. It does NOT validate physical/sensor truth —
+  the verifier authority owns that responsibility. The digest producer
+  is VQ-10; until it lands, digests are a typed fixture boundary.
+- **Live co-signing beats replayable attestations:** the verifier signs
+  the exact transaction (task, version, digest, policy, window), so an
+  approval cannot be replayed against another task or a later version;
+  the CAS on `expected_assignment_version` independently rejects proofs
+  from before a reassignment (stale ROV A proof → ROV B threat).
+- **One-time payout, defense in depth:** duplicates are rejected by TWO
+  independently sufficient guards (`TaskStatus::Paid` and
+  `paid_version`). Mutation checks confirm removing either single
+  guard still rejects repeats; both set atomically after the transfer.
+- **Money movement:** the vault is a program-owned PDA, so payouts and
+  refunds use direct checked lamport moves (the system program refuses
+  to CPI-debit non-system accounts — `ExternalAccountLamportSpend`).
+  `funded`/`reserved` shrink together on payout, preserving
+  `reserved + remaining == funded`; the vault always stays
+  rent-exempt. Close drains to zero and the vault account is GC'd.
+- **Claims after mission expiry are rejected** (SOLANA_PROTOCOL §6);
+  **close after expiry is the release path** — it refunds everything
+  including unclaimed reservations (documented expiry/cancellation
+  policy). Claims and every other instruction are rejected on Closed
+  missions.
 
 ## 5a. Reassignment semantics (VQ-05) — what the chain does and does NOT decide
 
@@ -126,7 +158,7 @@ against the program-log base64).
 # Agave CLI (cargo-build-sbf): https://release.anza.xyz/stable/install
 cd programs/vorqyn
 cargo build-sbf          # produces target/deploy/vorqyn.so (crate-local)
-cargo test               # 3 unit + 26 LiteSVM integration tests
+cargo test               # 3 unit + 39 LiteSVM integration tests
 cargo fmt --check && cargo clippy --all-targets -- -D warnings
 ```
 

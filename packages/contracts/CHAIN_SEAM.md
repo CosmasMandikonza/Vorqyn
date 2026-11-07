@@ -145,12 +145,16 @@ the program should emit/require the same fields in its events and IDL.**
    receipts can verify the enacted operator (§5). Contracts accept and
    cross-check these fields today; making them REQUIRED is blocked on this
    agreement, as is the operator-registry integration (VQ-03/VQ-04).
-   **Partially resolved by the VQ-05 owner (issue #6 / PR, 2026-11-07):
+   **Resolved by the VQ-05/VQ-06 owner (issues #6/#7 / PRs, 2026-11-07):
    YES for reassignment — `authorize_reassignment` emits
    `TaskReassigned { task_id, assignment_version (new),
    expected_assignment_version, previous_operator, new_payout_wallet
-   (IDL `newPayoutWallet`), reward_lamports, reserved_lamports }`, and
-   the receipt bindings of Finding D (`taskId`, `assignmentVersion`,
-   `amountLamports` == the quote) are all carried. Emission is asserted
-   byte-exact in the LiteSVM suite. `recipientWallet` on payouts stays
-   OPEN until VQ-06 implements `verify_and_claim`.**
+   (IDL `newPayoutWallet`), reward_lamports, reserved_lamports }`; and
+   YES for payout — `verify_and_claim` emits `TaskPaid { task_id,
+   assignment_version, recipient_wallet (IDL `recipientWallet`),
+   amount_lamports, vault_balance_lamports, evidence_digest,
+   policy_version }`. Both events carry the Finding-D receipt bindings
+   (`taskId`, `assignmentVersion`, `amountLamports`); both are asserted
+   byte-exact in the LiteSVM suite. Making the fields REQUIRED in
+   contracts validation can now proceed; the operator-registry
+   integration remains a VQ-03/VQ-04 dependency.**
