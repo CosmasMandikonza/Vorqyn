@@ -1,24 +1,50 @@
 /**
  * VORQYN lane-2 simulation kernel — local ENU frame primitives.
  *
- * Scope: VQ-08-PREP (#20) only. Pure, dependency-free.
+ * Scope: VQ-08-PREP (#20) + #24 world/simulator alignment. Pure, dependency-free.
  *
- * Frame convention (documented, tested in geometry.test.mjs):
- * - frameId: "ENU_PORT_LOCAL"
+ * Frame convention (authoritative source: assets/port-world/world.json,
+ * `vorqyn.port-world/1`; documented in
+ * services/simulation/integration/FRAME_CONTRACT.md and tested in
+ * geometry.test.mjs and integration/world-alignment.test.mjs):
+ * - frameId: "ENU_PORT-001_LOCAL" — the world PORT-001 local frame
+ * - origin: harbor-basin center at waterline (world.json frame.origin)
  * - +x = EAST  (metres)
- * - +y = NORTH (metres)
- * - +z = UP    (metres, 0 at the documented waterline datum of the
- *   scenario origin; underwater poses use negative z)
+ * - +y = NORTH (metres; land lies north of the basin)
+ * - +z = UP    (metres, 0 at the waterline datum, underwater negative;
+ *   quay deck surface at z = 4)
  * - Units: metres for position and distance, seconds for durations of motion,
  *   milliseconds for the integer simulator clock.
+ *
+ * The kernel emits ENU poses only. The glTF (Y-up) conversion for 3D
+ * rendering is defined here as a pure helper so the viewer boundary applies
+ * exactly one, tested conversion — never two, never inside the kernel.
  *
  * Only engine-independent IEEE-754 operations are used (+, -, *, /, sqrt,
  * abs, min, max) so pose integration is bit-reproducible for a fixed command
  * sequence on any conformant engine.
  */
 
-export const FRAME_ID = "ENU_PORT_LOCAL";
+export const FRAME_ID = "ENU_PORT-001_LOCAL";
 export const POSITION_UNITS = "m";
+
+/**
+ * The single canonical ENU -> glTF (Y-up) conversion, matching
+ * world.json.gltf_conversion.rule verbatim. Apply ONCE, at the 3D viewer
+ * boundary only. The scene root quaternion is identity (world.json), so no
+ * additional rotation may be stacked on top of this mapping.
+ */
+export const GLTF_CONVERSION_RULE = "gltf_x = enu_x; gltf_y = enu_z; gltf_z = -enu_y";
+
+/**
+ * Convert one ENU point to glTF-native Y-up coordinates.
+ * Pure mapping; the kernel itself never applies it (its observations stay
+ * ENU), and applying it twice is a viewer bug caught by
+ * integration/world-alignment.test.mjs.
+ */
+export function enuToGltfYUp(p) {
+  return { x: p.x, y: p.z, z: -p.y };
+}
 
 /** Euclidean length of a 3-vector. Math.sqrt is correctly rounded per IEEE-754. */
 export function norm3(v) {

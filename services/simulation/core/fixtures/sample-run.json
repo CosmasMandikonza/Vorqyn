@@ -1,16 +1,17 @@
 {
   "meta": {
     "purpose": "VQ-08-PREP deterministic sample output (internal fixture, not a shared contract)",
-    "scenarioId": "PORT-LOCAL-001",
+    "scenarioId": "PORT-001",
     "seed": 20261107,
     "stepMs": 500,
     "provenance": {
       "sourceKind": "SYNTHETIC_SIM",
-      "frame": "ENU_PORT_LOCAL (+x east, +y north, +z up; metres; z=0 waterline datum)",
+      "frame": "ENU_PORT-001_LOCAL — the authoritative assets/port-world/world.json frame (+x east, +y north, +z up; metres; origin harbor-basin center at waterline; z=0 waterline datum, quay deck z=4; issue #24 alignment)",
       "clock": "simulatorTimeMs only — fixed 500ms integer steps; no wall, service or chain clock appears anywhere in this document"
     },
     "honestyNotes": [
       "All values are synthetic fixture model outputs, not physical measurements.",
+      "Poses and routes are expressed in the authoritative world.json ENU frame; routes are the world-defined survey paths traversed ping-pong (no teleport).",
       "The optical-visibility fault changes measured quality01 values themselves (see faultDelta), not just a label.",
       "Stale and disconnected entries carry measured: null — frozen states are never dressed up as fresh readings.",
       "This kernel emits measurements only; evidence acceptance belongs to an external policy evaluator (VQ-10)."
@@ -150,34 +151,34 @@
         "robotId": "drone-01",
         "role": "aerial-drone",
         "pose": {
-          "x": -32,
-          "y": -80,
-          "z": 30
+          "x": -102.146179,
+          "y": 17.853821,
+          "z": 50.560987
         },
         "linkState": "connected",
-        "coverage01": 0.09375
+        "coverage01": 0.035714
       },
       {
         "robotId": "rover-01",
         "role": "ground-rover",
         "pose": {
-          "x": -90,
-          "y": -40,
-          "z": 0
+          "x": -140,
+          "y": 120,
+          "z": 4.05
         },
         "linkState": "connected",
-        "coverage01": 0.0625
+        "coverage01": 0.0375
       },
       {
         "robotId": "rov-01",
         "role": "underwater-rov",
         "pose": {
-          "x": -51.2,
-          "y": -20,
-          "z": -8
+          "x": 83.942338,
+          "y": -25.961559,
+          "z": -3.697117
         },
         "linkState": "connected",
-        "coverage01": 0.0625
+        "coverage01": 0
       }
     ]
   },
@@ -190,9 +191,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -120,
-            -80,
-            30
+            -40,
+            80,
+            55
           ],
           "wp": 1,
           "link": "connected",
@@ -203,16 +204,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.918181,
-              "cov": 0.03125,
+              "cov": 0.007143,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -150,
-            -40,
-            0
+            -160,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -223,16 +224,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.892616,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -80,
-            -20,
-            -8
+            60,
+            -10,
+            -2.5
           ],
           "wp": 1,
           "link": "connected",
@@ -243,12 +244,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.706076,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.636836,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -263,9 +264,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -118,
-            -80,
-            30
+            -41.412413,
+            78.587587,
+            54.899113
           ],
           "wp": 1,
           "link": "connected",
@@ -276,16 +277,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.915545,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -148.75,
-            -40,
-            0
+            -158.75,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -296,16 +297,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.878253,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -79.4,
-            -20,
-            -8
+            60.498799,
+            -10.332532,
+            -2.52494
           ],
           "wp": 1,
           "link": "connected",
@@ -316,12 +317,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.692125,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.63932,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -336,9 +337,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -116,
-            -80,
-            30
+            -42.824826,
+            77.175174,
+            54.798227
           ],
           "wp": 1,
           "link": "connected",
@@ -349,16 +350,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.928529,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -147.5,
-            -40,
-            0
+            -157.5,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -369,16 +370,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.885189,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -78.8,
-            -20,
-            -8
+            60.997597,
+            -10.665065,
+            -2.54988
           ],
           "wp": 1,
           "link": "connected",
@@ -389,12 +390,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.693139,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.64882,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -409,9 +410,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -114,
-            -80,
-            30
+            -44.237239,
+            75.762761,
+            54.69734
           ],
           "wp": 1,
           "link": "connected",
@@ -422,16 +423,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.928806,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -146.25,
-            -40,
-            0
+            -156.25,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -442,16 +443,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.878799,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -78.2,
-            -20,
-            -8
+            61.496396,
+            -10.997597,
+            -2.57482
           ],
           "wp": 1,
           "link": "connected",
@@ -462,12 +463,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.71875,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.62348,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -482,9 +483,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -112,
-            -80,
-            30
+            -45.649653,
+            74.350347,
+            54.596453
           ],
           "wp": 1,
           "link": "connected",
@@ -495,16 +496,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.930138,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -145,
-            -40,
-            0
+            -155,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -515,16 +516,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.894018,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -77.6,
-            -20,
-            -8
+            61.995195,
+            -11.33013,
+            -2.59976
           ],
           "wp": 1,
           "link": "connected",
@@ -535,12 +536,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.720423,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.654846,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -555,9 +556,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -110,
-            -80,
-            30
+            -47.062066,
+            72.937934,
+            54.495567
           ],
           "wp": 1,
           "link": "connected",
@@ -568,16 +569,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.920823,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -143.75,
-            -40,
-            0
+            -153.75,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -588,16 +589,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.866327,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -77,
-            -20,
-            -8
+            62.493994,
+            -11.662662,
+            -2.6247
           ],
           "wp": 1,
           "link": "connected",
@@ -608,12 +609,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.701959,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.618906,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -628,9 +629,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -108,
-            -80,
-            30
+            -48.474479,
+            71.525521,
+            54.39468
           ],
           "wp": 1,
           "link": "connected",
@@ -641,16 +642,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.932344,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -142.5,
-            -40,
-            0
+            -152.5,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -661,16 +662,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.869792,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -76.4,
-            -20,
-            -8
+            62.992792,
+            -11.995195,
+            -2.64964
           ],
           "wp": 1,
           "link": "connected",
@@ -681,12 +682,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.705593,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.649565,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -701,9 +702,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -106,
-            -80,
-            30
+            -49.886892,
+            70.113108,
+            54.293793
           ],
           "wp": 1,
           "link": "connected",
@@ -714,16 +715,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.911771,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -141.25,
-            -40,
-            0
+            -151.25,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -734,16 +735,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.876818,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -75.8,
-            -20,
-            -8
+            63.491591,
+            -12.327727,
+            -2.67458
           ],
           "wp": 1,
           "link": "connected",
@@ -754,12 +755,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.714947,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.610782,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -774,9 +775,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -104,
-            -80,
-            30
+            -51.299305,
+            68.700695,
+            54.192907
           ],
           "wp": 1,
           "link": "connected",
@@ -787,16 +788,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.905501,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -140,
-            -40,
-            0
+            -150,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -807,16 +808,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.868373,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -75.2,
-            -20,
-            -8
+            63.99039,
+            -12.66026,
+            -2.699519
           ],
           "wp": 1,
           "link": "connected",
@@ -827,12 +828,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.714601,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.606417,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -847,9 +848,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -102,
-            -80,
-            30
+            -52.711718,
+            67.288282,
+            54.09202
           ],
           "wp": 1,
           "link": "connected",
@@ -860,16 +861,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.928432,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -138.75,
-            -40,
-            0
+            -148.75,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -880,16 +881,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.893468,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -74.6,
-            -20,
-            -8
+            64.489188,
+            -12.992792,
+            -2.724459
           ],
           "wp": 1,
           "link": "connected",
@@ -900,12 +901,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.717718,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.638061,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -920,9 +921,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -100,
-            -80,
-            30
+            -54.124132,
+            65.875868,
+            53.991133
           ],
           "wp": 1,
           "link": "connected",
@@ -933,16 +934,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.920332,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -137.5,
-            -40,
-            0
+            -147.5,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -953,16 +954,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.871156,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -74,
-            -20,
-            -8
+            64.987987,
+            -13.325325,
+            -2.749399
           ],
           "wp": 1,
           "link": "connected",
@@ -973,12 +974,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.704138,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.644001,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -993,9 +994,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -98,
-            -80,
-            30
+            -55.536545,
+            64.463455,
+            53.890247
           ],
           "wp": 1,
           "link": "connected",
@@ -1006,16 +1007,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.932947,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -136.25,
-            -40,
-            0
+            -146.25,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -1026,16 +1027,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.870686,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -73.4,
-            -20,
-            -8
+            65.486786,
+            -13.657857,
+            -2.774339
           ],
           "wp": 1,
           "link": "connected",
@@ -1046,12 +1047,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.711141,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.624333,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             }
           }
@@ -1066,9 +1067,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -96,
-            -80,
-            30
+            -56.948958,
+            63.051042,
+            53.78936
           ],
           "wp": 1,
           "link": "connected",
@@ -1079,16 +1080,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.917238,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -135,
-            -40,
-            0
+            -145,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -1099,16 +1100,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.866932,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -72.8,
-            -20,
-            -8
+            65.985585,
+            -13.99039,
+            -2.799279
           ],
           "wp": 1,
           "link": "connected",
@@ -1119,12 +1120,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.702446,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.628782,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1139,9 +1140,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -94,
-            -80,
-            30
+            -58.361371,
+            61.638629,
+            53.688473
           ],
           "wp": 1,
           "link": "connected",
@@ -1152,16 +1153,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.922865,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -133.75,
-            -40,
-            0
+            -143.75,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -1172,16 +1173,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.879151,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -72.2,
-            -20,
-            -8
+            66.484383,
+            -14.322922,
+            -2.824219
           ],
           "wp": 1,
           "link": "connected",
@@ -1192,12 +1193,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.718635,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.623213,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1212,9 +1213,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -92,
-            -80,
-            30
+            -59.773784,
+            60.226216,
+            53.587587
           ],
           "wp": 1,
           "link": "connected",
@@ -1225,16 +1226,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.925722,
-              "cov": 0.03125,
+              "cov": 0.014286,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -132.5,
-            -40,
-            0
+            -142.5,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -1245,16 +1246,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.874057,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -71.6,
-            -20,
-            -8
+            66.983182,
+            -14.655455,
+            -2.849159
           ],
           "wp": 1,
           "link": "connected",
@@ -1265,12 +1266,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.693094,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.605097,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1285,9 +1286,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -90,
-            -80,
-            30
+            -61.186197,
+            58.813803,
+            53.4867
           ],
           "wp": 1,
           "link": "connected",
@@ -1298,16 +1299,16 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.926445,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -131.25,
-            -40,
-            0
+            -141.25,
+            160,
+            4.05
           ],
           "wp": 1,
           "link": "connected",
@@ -1318,16 +1319,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.889771,
-              "cov": 0.03125,
+              "cov": 0.0125,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -71,
-            -20,
-            -8
+            67.481981,
+            -14.987987,
+            -2.874099
           ],
           "wp": 1,
           "link": "connected",
@@ -1338,12 +1339,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.727736,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.633015,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1358,9 +1359,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -88,
-            -80,
-            30
+            -62.598611,
+            57.401389,
+            53.385814
           ],
           "wp": 1,
           "link": "connected",
@@ -1371,18 +1372,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.914093,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -130,
-            -40,
-            0
+            -140,
+            160,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1391,16 +1392,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.869466,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -70.4,
-            -20,
-            -8
+            67.980779,
+            -15.32052,
+            -2.899039
           ],
           "wp": 1,
           "link": "connected",
@@ -1411,12 +1412,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.69476,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.609324,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1431,9 +1432,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -86,
-            -80,
-            30
+            -64.011024,
+            55.988976,
+            53.284927
           ],
           "wp": 1,
           "link": "connected",
@@ -1444,18 +1445,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.905118,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -128.75,
-            -40,
-            0
+            -140,
+            158.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1464,16 +1465,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.88064,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -69.8,
-            -20,
-            -8
+            68.479578,
+            -15.653052,
+            -2.923979
           ],
           "wp": 1,
           "link": "connected",
@@ -1484,12 +1485,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.725825,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.612642,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1504,9 +1505,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -84,
-            -80,
-            30
+            -65.423437,
+            54.576563,
+            53.18404
           ],
           "wp": 1,
           "link": "connected",
@@ -1517,18 +1518,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.906348,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -127.5,
-            -40,
-            0
+            -140,
+            157.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1537,16 +1538,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.878551,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -69.2,
-            -20,
-            -8
+            68.978377,
+            -15.985585,
+            -2.948919
           ],
           "wp": 1,
           "link": "connected",
@@ -1557,12 +1558,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.726024,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.641899,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1577,9 +1578,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -82,
-            -80,
-            30
+            -66.83585,
+            53.16415,
+            53.083154
           ],
           "wp": 1,
           "link": "connected",
@@ -1590,18 +1591,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.914586,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -126.25,
-            -40,
-            0
+            -140,
+            156.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1610,16 +1611,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.88354,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -68.6,
-            -20,
-            -8
+            69.477175,
+            -16.318117,
+            -2.973859
           ],
           "wp": 1,
           "link": "connected",
@@ -1630,12 +1631,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.716272,
-              "cov": 0.03125,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.612415,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1650,9 +1651,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -80,
-            -80,
-            30
+            -68.248263,
+            51.751737,
+            52.982267
           ],
           "wp": 1,
           "link": "connected",
@@ -1663,18 +1664,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.913133,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -125,
-            -40,
-            0
+            -140,
+            155,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1683,16 +1684,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.870954,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -68,
-            -20,
-            -8
+            69.975974,
+            -16.650649,
+            -2.998799
           ],
           "wp": 1,
           "link": "connected",
@@ -1703,12 +1704,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.083214,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.615503,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1723,9 +1724,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -78,
-            -80,
-            30
+            -69.660676,
+            50.339324,
+            52.88138
           ],
           "wp": 1,
           "link": "connected",
@@ -1736,18 +1737,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.933264,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -123.75,
-            -40,
-            0
+            -140,
+            153.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1756,16 +1757,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.870304,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -67.4,
-            -20,
-            -8
+            70.474773,
+            -16.983182,
+            -3.023739
           ],
           "wp": 1,
           "link": "connected",
@@ -1776,12 +1777,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.08512,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.609432,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1796,9 +1797,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -76,
-            -80,
-            30
+            -71.07309,
+            48.92691,
+            52.780494
           ],
           "wp": 1,
           "link": "connected",
@@ -1809,18 +1810,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.910945,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -122.5,
-            -40,
-            0
+            -140,
+            152.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1829,16 +1830,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.876457,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -66.8,
-            -20,
-            -8
+            70.973572,
+            -17.315714,
+            -3.048679
           ],
           "wp": 1,
           "link": "connected",
@@ -1849,12 +1850,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.086036,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.611213,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1869,9 +1870,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -74,
-            -80,
-            30
+            -72.485503,
+            47.514497,
+            52.679607
           ],
           "wp": 1,
           "link": "connected",
@@ -1882,18 +1883,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.918898,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -121.25,
-            -40,
-            0
+            -140,
+            151.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1902,16 +1903,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.890758,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -66.2,
-            -20,
-            -8
+            71.47237,
+            -17.648247,
+            -3.073619
           ],
           "wp": 1,
           "link": "connected",
@@ -1922,12 +1923,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.086107,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.61064,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -1942,9 +1943,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -72,
-            -80,
-            30
+            -73.897916,
+            46.102084,
+            52.57872
           ],
           "wp": 1,
           "link": "connected",
@@ -1955,18 +1956,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.907639,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -120,
-            -40,
-            0
+            -140,
+            150,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -1975,16 +1976,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.871454,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -65.6,
-            -20,
-            -8
+            71.971169,
+            -17.980779,
+            -3.098558
           ],
           "wp": 1,
           "link": "connected",
@@ -1995,12 +1996,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084318,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.618006,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2015,9 +2016,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -70,
-            -80,
-            30
+            -75.310329,
+            44.689671,
+            52.477834
           ],
           "wp": 1,
           "link": "connected",
@@ -2028,18 +2029,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.913588,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -118.75,
-            -40,
-            0
+            -140,
+            148.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2048,16 +2049,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.891827,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -65,
-            -20,
-            -8
+            72.469968,
+            -18.313312,
+            -3.123498
           ],
           "wp": 1,
           "link": "connected",
@@ -2068,12 +2069,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084497,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.614489,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2088,9 +2089,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -68,
-            -80,
-            30
+            -76.722742,
+            43.277258,
+            52.376947
           ],
           "wp": 1,
           "link": "connected",
@@ -2101,18 +2102,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.92728,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -117.5,
-            -40,
-            0
+            -140,
+            147.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2121,16 +2122,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.887364,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -64.4,
-            -20,
-            -8
+            72.968766,
+            -18.645844,
+            -3.148438
           ],
           "wp": 1,
           "link": "connected",
@@ -2141,12 +2142,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.086776,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.654551,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2161,9 +2162,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -66,
-            -80,
-            30
+            -78.135155,
+            41.864845,
+            52.27606
           ],
           "wp": 1,
           "link": "connected",
@@ -2174,18 +2175,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.924071,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -116.25,
-            -40,
-            0
+            -140,
+            146.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2194,16 +2195,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.890213,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -63.8,
-            -20,
-            -8
+            73.467565,
+            -18.978377,
+            -3.173378
           ],
           "wp": 1,
           "link": "connected",
@@ -2214,12 +2215,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.085704,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.635147,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2234,9 +2235,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -64,
-            -80,
-            30
+            -79.547569,
+            40.452431,
+            52.175174
           ],
           "wp": 1,
           "link": "connected",
@@ -2247,18 +2248,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.916491,
-              "cov": 0.0625,
+              "cov": 0.021429,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -115,
-            -40,
-            0
+            -140,
+            145,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2267,16 +2268,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.881163,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -63.2,
-            -20,
-            -8
+            73.966364,
+            -19.310909,
+            -3.198318
           ],
           "wp": 1,
           "link": "connected",
@@ -2287,12 +2288,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084321,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.654087,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2307,9 +2308,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -62,
-            -80,
-            30
+            -80.959982,
+            39.040018,
+            52.074287
           ],
           "wp": 1,
           "link": "connected",
@@ -2320,18 +2321,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.909707,
-              "cov": 0.0625,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -113.75,
-            -40,
-            0
+            -140,
+            143.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2340,16 +2341,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.894024,
-              "cov": 0.03125,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -62.6,
-            -20,
-            -8
+            74.465163,
+            -19.643442,
+            -3.223258
           ],
           "wp": 1,
           "link": "connected",
@@ -2360,12 +2361,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084076,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.636273,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2380,9 +2381,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -60,
-            -80,
-            30
+            -82.372395,
+            37.627605,
+            51.9734
           ],
           "wp": 1,
           "link": "connected",
@@ -2393,18 +2394,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.932427,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -112.5,
-            -40,
-            0
+            -140,
+            142.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2413,16 +2414,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.884242,
-              "cov": 0.0625,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -62,
-            -20,
-            -8
+            74.963961,
+            -19.975974,
+            -3.248198
           ],
           "wp": 1,
           "link": "connected",
@@ -2433,12 +2434,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.086386,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.609029,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2453,9 +2454,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -58,
-            -80,
-            30
+            -83.784808,
+            36.215192,
+            51.872514
           ],
           "wp": 1,
           "link": "connected",
@@ -2466,18 +2467,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.927649,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -111.25,
-            -40,
-            0
+            -140,
+            141.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2486,16 +2487,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.891177,
-              "cov": 0.0625,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -61.4,
-            -20,
-            -8
+            75.46276,
+            -20.308507,
+            -3.273138
           ],
           "wp": 1,
           "link": "connected",
@@ -2506,12 +2507,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.08737,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.638522,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2526,9 +2527,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -56,
-            -80,
-            30
+            -85.197221,
+            34.802779,
+            51.771627
           ],
           "wp": 1,
           "link": "connected",
@@ -2539,18 +2540,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.92262,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -110,
-            -40,
-            0
+            -140,
+            140,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2559,16 +2560,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.894444,
-              "cov": 0.0625,
+              "cov": 0.025,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -60.8,
-            -20,
-            -8
+            75.961559,
+            -20.641039,
+            -3.298078
           ],
           "wp": 1,
           "link": "connected",
@@ -2579,12 +2580,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.08667,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.650039,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2599,9 +2600,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -54,
-            -80,
-            30
+            -86.609634,
+            33.390366,
+            51.67074
           ],
           "wp": 1,
           "link": "connected",
@@ -2612,18 +2613,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.907017,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -108.75,
-            -40,
-            0
+            -140,
+            138.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2632,16 +2633,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.873343,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -60.2,
-            -20,
-            -8
+            76.460357,
+            -20.973572,
+            -3.323018
           ],
           "wp": 1,
           "link": "connected",
@@ -2652,12 +2653,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.085905,
-              "cov": 0.03125,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.607407,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2672,9 +2673,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -52,
-            -80,
-            30
+            -88.022048,
+            31.977952,
+            51.569854
           ],
           "wp": 1,
           "link": "connected",
@@ -2685,18 +2686,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.905498,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -107.5,
-            -40,
-            0
+            -140,
+            137.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2705,16 +2706,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.876992,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -59.6,
-            -20,
-            -8
+            76.959156,
+            -21.306104,
+            -3.347958
           ],
           "wp": 1,
           "link": "connected",
@@ -2725,12 +2726,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.085173,
-              "cov": 0.0625,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.614431,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2745,9 +2746,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -50,
-            -80,
-            30
+            -89.434461,
+            30.565539,
+            51.468967
           ],
           "wp": 1,
           "link": "connected",
@@ -2758,18 +2759,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.919115,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -106.25,
-            -40,
-            0
+            -140,
+            136.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2778,16 +2779,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.883786,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -59,
-            -20,
-            -8
+            77.457955,
+            -21.638637,
+            -3.372898
           ],
           "wp": 1,
           "link": "connected",
@@ -2798,12 +2799,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.08336,
-              "cov": 0.0625,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.626723,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2818,9 +2819,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -48,
-            -80,
-            30
+            -90.846874,
+            29.153126,
+            51.36808
           ],
           "wp": 1,
           "link": "connected",
@@ -2831,18 +2832,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.924361,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -105,
-            -40,
-            0
+            -140,
+            135,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2851,16 +2852,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.867571,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -58.4,
-            -20,
-            -8
+            77.956754,
+            -21.971169,
+            -3.397838
           ],
           "wp": 1,
           "link": "connected",
@@ -2871,12 +2872,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084109,
-              "cov": 0.0625,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.641141,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2891,9 +2892,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -46,
-            -80,
-            30
+            -92.259287,
+            27.740713,
+            51.267194
           ],
           "wp": 1,
           "link": "connected",
@@ -2904,18 +2905,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.909786,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -103.75,
-            -40,
-            0
+            -140,
+            133.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2924,16 +2925,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.8696,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -57.8,
-            -20,
-            -8
+            78.455552,
+            -22.303702,
+            -3.422778
           ],
           "wp": 1,
           "link": "connected",
@@ -2944,12 +2945,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.084338,
-              "cov": 0.0625,
+              "cov": 0,
               "f": 0.12
             },
             "rov-01-sonar": {
               "q": 0.627587,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -2964,9 +2965,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -44,
-            -80,
-            30
+            -93.6717,
+            26.3283,
+            51.166307
           ],
           "wp": 1,
           "link": "connected",
@@ -2977,18 +2978,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.927915,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -102.5,
-            -40,
-            0
+            -140,
+            132.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -2997,16 +2998,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.891029,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -57.2,
-            -20,
-            -8
+            78.954351,
+            -22.636234,
+            -3.447718
           ],
           "wp": 1,
           "link": "connected",
@@ -3017,12 +3018,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.704528,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.628467,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3037,9 +3038,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -42,
-            -80,
-            30
+            -95.084113,
+            24.915887,
+            51.06542
           ],
           "wp": 1,
           "link": "connected",
@@ -3050,18 +3051,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.91462,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -101.25,
-            -40,
-            0
+            -140,
+            131.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3070,16 +3071,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.871926,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -56.6,
-            -20,
-            -8
+            79.45315,
+            -22.968766,
+            -3.472657
           ],
           "wp": 1,
           "link": "connected",
@@ -3090,12 +3091,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.728298,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.622754,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3110,9 +3111,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -42,
-            -80,
-            30
+            -95.084113,
+            24.915887,
+            51.06542
           ],
           "wp": 1,
           "link": "disconnected",
@@ -3123,18 +3124,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -100,
-            -40,
-            0
+            -140,
+            130,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3143,16 +3144,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.888781,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -56,
-            -20,
-            -8
+            79.951948,
+            -23.301299,
+            -3.497597
           ],
           "wp": 1,
           "link": "connected",
@@ -3163,12 +3164,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.692626,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.605106,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3183,9 +3184,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -42,
-            -80,
-            30
+            -95.084113,
+            24.915887,
+            51.06542
           ],
           "wp": 1,
           "link": "disconnected",
@@ -3196,18 +3197,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -98.75,
-            -40,
-            0
+            -140,
+            128.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3216,16 +3217,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.868639,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -55.4,
-            -20,
-            -8
+            80.450747,
+            -23.633831,
+            -3.522537
           ],
           "wp": 1,
           "link": "connected",
@@ -3236,12 +3237,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.727758,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.615168,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3256,9 +3257,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -42,
-            -80,
-            30
+            -95.084113,
+            24.915887,
+            51.06542
           ],
           "wp": 1,
           "link": "disconnected",
@@ -3269,18 +3270,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -97.5,
-            -40,
-            0
+            -140,
+            127.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3289,16 +3290,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.891007,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -54.8,
-            -20,
-            -8
+            80.949546,
+            -23.966364,
+            -3.547477
           ],
           "wp": 1,
           "link": "connected",
@@ -3309,12 +3310,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.69388,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.607498,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3329,9 +3330,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -42,
-            -80,
-            30
+            -95.084113,
+            24.915887,
+            51.06542
           ],
           "wp": 1,
           "link": "disconnected",
@@ -3342,18 +3343,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -96.25,
-            -40,
-            0
+            -140,
+            126.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3362,16 +3363,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.872618,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -54.2,
-            -20,
-            -8
+            81.448345,
+            -24.298896,
+            -3.572417
           ],
           "wp": 1,
           "link": "connected",
@@ -3382,12 +3383,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.702308,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.622257,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3402,9 +3403,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -40,
-            -80,
-            30
+            -96.496526,
+            23.503474,
+            50.964534
           ],
           "wp": 1,
           "link": "connected",
@@ -3415,18 +3416,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.920205,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -95,
-            -40,
-            0
+            -140,
+            125,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3435,16 +3436,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.876051,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -53.6,
-            -20,
-            -8
+            81.947143,
+            -24.631429,
+            -3.597357
           ],
           "wp": 1,
           "link": "connected",
@@ -3455,12 +3456,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.701743,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.648565,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3475,9 +3476,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -38,
-            -80,
-            30
+            -97.90894,
+            22.09106,
+            50.863647
           ],
           "wp": 1,
           "link": "connected",
@@ -3488,18 +3489,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.926623,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -93.75,
-            -40,
-            0
+            -140,
+            123.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3508,16 +3509,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.867861,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -53,
-            -20,
-            -8
+            82.445942,
+            -24.963961,
+            -3.622297
           ],
           "wp": 1,
           "link": "connected",
@@ -3528,12 +3529,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.69851,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.618542,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3548,9 +3549,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -38,
-            -80,
-            30
+            -97.90894,
+            22.09106,
+            50.863647
           ],
           "wp": 1,
           "link": "connected",
@@ -3561,18 +3562,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -93.75,
-            -40,
-            0
+            -140,
+            123.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": false,
           "staleness": "kernel-paused",
@@ -3581,16 +3582,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -53,
-            -20,
-            -8
+            82.445942,
+            -24.963961,
+            -3.622297
           ],
           "wp": 1,
           "link": "connected",
@@ -3601,12 +3602,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3621,9 +3622,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -38,
-            -80,
-            30
+            -97.90894,
+            22.09106,
+            50.863647
           ],
           "wp": 1,
           "link": "connected",
@@ -3634,18 +3635,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -93.75,
-            -40,
-            0
+            -140,
+            123.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": false,
           "staleness": "kernel-paused",
@@ -3654,16 +3655,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -53,
-            -20,
-            -8
+            82.445942,
+            -24.963961,
+            -3.622297
           ],
           "wp": 1,
           "link": "connected",
@@ -3674,12 +3675,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3694,9 +3695,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -38,
-            -80,
-            30
+            -97.90894,
+            22.09106,
+            50.863647
           ],
           "wp": 1,
           "link": "connected",
@@ -3707,18 +3708,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": null,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -93.75,
-            -40,
-            0
+            -140,
+            123.75,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": false,
           "staleness": "kernel-paused",
@@ -3727,16 +3728,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -53,
-            -20,
-            -8
+            82.445942,
+            -24.963961,
+            -3.622297
           ],
           "wp": 1,
           "link": "connected",
@@ -3747,12 +3748,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": null,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             }
           }
@@ -3767,9 +3768,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -36,
-            -80,
-            30
+            -99.321353,
+            20.678647,
+            50.762761
           ],
           "wp": 1,
           "link": "connected",
@@ -3780,18 +3781,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.93318,
-              "cov": 0.09375,
+              "cov": 0.028571,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -92.5,
-            -40,
-            0
+            -140,
+            122.5,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3800,16 +3801,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.883815,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -52.4,
-            -20,
-            -8
+            82.944741,
+            -25.296494,
+            -3.647237
           ],
           "wp": 1,
           "link": "connected",
@@ -3820,12 +3821,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.712658,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.614044,
-              "cov": 0.09375,
+              "cov": 0,
               "f": null
             }
           }
@@ -3840,9 +3841,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -34,
-            -80,
-            30
+            -100.733766,
+            19.266234,
+            50.661874
           ],
           "wp": 1,
           "link": "connected",
@@ -3853,18 +3854,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.908349,
-              "cov": 0.09375,
+              "cov": 0.035714,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -91.25,
-            -40,
-            0
+            -140,
+            121.25,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3873,16 +3874,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.891991,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -51.8,
-            -20,
-            -8
+            83.443539,
+            -25.629026,
+            -3.672177
           ],
           "wp": 1,
           "link": "connected",
@@ -3893,12 +3894,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.728731,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.61116,
-              "cov": 0.09375,
+              "cov": 0,
               "f": null
             }
           }
@@ -3913,9 +3914,9 @@
       "robots": {
         "drone-01": {
           "pose": [
-            -32,
-            -80,
-            30
+            -102.146179,
+            17.853821,
+            50.560987
           ],
           "wp": 1,
           "link": "connected",
@@ -3926,18 +3927,18 @@
           "sensors": {
             "drone-01-optical": {
               "q": 0.928354,
-              "cov": 0.09375,
+              "cov": 0.035714,
               "f": null
             }
           }
         },
         "rover-01": {
           "pose": [
-            -90,
-            -40,
-            0
+            -140,
+            120,
+            4.05
           ],
-          "wp": 1,
+          "wp": 2,
           "link": "connected",
           "fresh": true,
           "staleness": "none",
@@ -3946,16 +3947,16 @@
           "sensors": {
             "rover-01-optical": {
               "q": 0.867392,
-              "cov": 0.0625,
+              "cov": 0.0375,
               "f": null
             }
           }
         },
         "rov-01": {
           "pose": [
-            -51.2,
-            -20,
-            -8
+            83.942338,
+            -25.961559,
+            -3.697117
           ],
           "wp": 1,
           "link": "connected",
@@ -3966,12 +3967,12 @@
           "sensors": {
             "rov-01-optical": {
               "q": 0.705292,
-              "cov": 0.0625,
+              "cov": 0,
               "f": null
             },
             "rov-01-sonar": {
               "q": 0.624331,
-              "cov": 0.09375,
+              "cov": 0,
               "f": null
             }
           }

@@ -122,6 +122,8 @@ export function createScenarioKernel({ seed }) {
       robotIndex,
       pose: { ...fixture.waypoints[0] },
       waypointIndex: 0,
+      /** Ping-pong traversal direction: +1 outbound, -1 returning. */
+      routeDirection: 1,
       linkState: LINK_STATES.CONNECTED,
       /** Simulator time of the last fresh sample for this robot (null before first step). */
       lastFreshSampleSimMs: null,
@@ -480,7 +482,20 @@ export function createScenarioKernel({ seed }) {
     const { position, arrived } = stepToward(robot.pose, target, maxStepM);
     robot.pose = position;
     if (arrived) {
-      robot.waypointIndex = (robot.waypointIndex + 1) % robot.fixture.waypoints.length;
+      // World-aligned routes (#24) are out-and-back survey paths, traversed
+      // ping-pong: forward to the last waypoint, then reversed. A closed
+      // loop wrap-around would teleport the vehicle across the world, which
+      // the no-teleport invariant forbids.
+      if (robot.fixture.routeMode === "ping-pong") {
+        if (robot.waypointIndex === robot.fixture.waypoints.length - 1) {
+          robot.routeDirection = -1;
+        } else if (robot.waypointIndex === 0) {
+          robot.routeDirection = 1;
+        }
+        robot.waypointIndex += robot.routeDirection;
+      } else {
+        robot.waypointIndex = (robot.waypointIndex + 1) % robot.fixture.waypoints.length;
+      }
     }
   }
 

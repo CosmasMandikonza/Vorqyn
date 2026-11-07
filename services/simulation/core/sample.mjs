@@ -117,11 +117,12 @@ export function buildSampleRun() {
       stepMs: state.stepMs,
       provenance: {
         sourceKind: "SYNTHETIC_SIM",
-        frame: "ENU_PORT_LOCAL (+x east, +y north, +z up; metres; z=0 waterline datum)",
+        frame: "ENU_PORT-001_LOCAL — the authoritative assets/port-world/world.json frame (+x east, +y north, +z up; metres; origin harbor-basin center at waterline; z=0 waterline datum, quay deck z=4; issue #24 alignment)",
         clock: "simulatorTimeMs only — fixed 500ms integer steps; no wall, service or chain clock appears anywhere in this document",
       },
       honestyNotes: [
         "All values are synthetic fixture model outputs, not physical measurements.",
+        "Poses and routes are expressed in the authoritative world.json ENU frame; routes are the world-defined survey paths traversed ping-pong (no teleport).",
         "The optical-visibility fault changes measured quality01 values themselves (see faultDelta), not just a label.",
         "Stale and disconnected entries carry measured: null — frozen states are never dressed up as fresh readings.",
         "This kernel emits measurements only; evidence acceptance belongs to an external policy evaluator (VQ-10).",
