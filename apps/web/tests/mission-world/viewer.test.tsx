@@ -25,7 +25,7 @@ beforeEach(() => {
     matches: false, media: "", onchange: null,
     addListener() {}, removeListener() {},
     addEventListener() {}, removeEventListener() {}, dispatchEvent() {},
-  }) as MediaQueryList);
+  }) as unknown as MediaQueryList);
 });
 
 describe("/demo/mission page (SSR shell)", () => {
@@ -56,7 +56,7 @@ describe("/demo links to the world preview honestly", () => {
     render(<DemoPage />);
     const links = screen.getAllByRole("link", { name: /Explore the 3D world preview/i });
     expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute("href", "/demo/mission");
+    expect(links[0]!).toHaveAttribute("href", "/demo/mission");
   });
 });
 
