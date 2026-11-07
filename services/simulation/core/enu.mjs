@@ -37,7 +37,7 @@ export function distance3(a, b) {
  * kernel-level "no teleport" invariant.
  */
 export function stepToward(from, target, maxStepM) {
-  if (!(maxStepM >= 0)) {
+  if (!Number.isFinite(maxStepM) || maxStepM < 0) {
     throw new RangeError(`maxStepM must be a non-negative finite number, got ${maxStepM}`);
   }
   const dx = target.x - from.x;
