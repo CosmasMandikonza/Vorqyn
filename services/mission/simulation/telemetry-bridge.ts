@@ -46,6 +46,7 @@ import {
   type Result,
   type TelemetrySample,
 } from "../../../packages/contracts/src/index";
+import { FRAME_ID } from "../../simulation/demo/kernel-adapter.mjs";
 import type { DemoSnapshot } from "../../simulation/demo/kernel-adapter.d.mts";
 
 /** Journal schema tag for guest observation records (not a MissionEvent). */
@@ -123,12 +124,12 @@ export function normalizeSnapshotToTelemetry(
     };
   }
   const frameId = provenance.frameId;
-  if (typeof frameId !== "string" || !TELEMETRY_FRAME_PATTERN.test(frameId)) {
+  if (typeof frameId !== "string" || !TELEMETRY_FRAME_PATTERN.test(frameId) || frameId !== FRAME_ID) {
     return {
       ok: false,
       error: {
         code: "validation_error",
-        message: `snapshot frameId ${JSON.stringify(frameId ?? null)} does not satisfy the world frame contract`,
+        message: `snapshot frameId ${JSON.stringify(frameId ?? null)} is not the kernel world frame ${FRAME_ID}`,
       },
     };
   }
