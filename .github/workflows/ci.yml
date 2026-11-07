@@ -36,6 +36,12 @@ jobs:
       - name: Unit tests
         run: pnpm test
 
+      # The simulation core is dependency-free and not a pnpm workspace.
+      # Run its own direct Node tests so an unrelated pnpm success cannot
+      # masquerade as validation of robotic state, failure or replay logic.
+      - name: Deterministic simulation kernel tests
+        run: node --test services/simulation/core/*.test.mjs
+
       - name: Build
         run: pnpm build
 
