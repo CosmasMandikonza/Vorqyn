@@ -99,6 +99,10 @@ export default function WorkspacePage() {
                 inspect the planned structure.
               </p>
               <Button asChild>
+                <Link href="/workspace/create">Plan a local mission draft</Link>
+              </Button>
+              <p>Saved in this browser only · Not funded or launched.</p>
+              <Button asChild variant="secondary">
                 <a href="#templates">
                   View mission template{" "}
                   <span aria-hidden="true" className="arrow-icon arrow-down" />
