@@ -1,5 +1,7 @@
 # Development issue index — VORQYN
 
+> **Founder Lane 2 parallel execution note (November 7, 2026):** The original 17 VQ issues remain the full product roadmap. Two additional **preparation-only** GitHub issues were opened to let the founder run two independent ZCode sessions *alongside* Codex Issue #3, without taking the teammate's Lane 1 work: [#19 VQ-07-PREP port-world asset pack](https://github.com/CosmasMandikonza/Vorqyn/issues/19) (only `assets/port-world/**`) and [#20 VQ-08-PREP deterministic simulator kernel](https://github.com/CosmasMandikonza/Vorqyn/issues/20) (only `services/simulation/core/**`). Those are independent foundations for **original #8 and #9**, not substitutes for their full integration acceptance. The teammate independently owns Lane 1. [Current Notion playbook](https://app.notion.com/p/411011921112818a96ecf4d666127da1) has the current three-agent allocation.
+
 > **Verified planning state (Nov 6, 2026):** 17 open issues created; implementation, CI, devnet deployment and product demo are **not yet complete**. Every issue is an acceptance-based task for a bounded ZCode session and an independently reviewed PR. These links use the GitHub issue numbers assigned at creation.
 
 ## Start here
