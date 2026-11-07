@@ -1,10 +1,12 @@
-//! VORQYN mission escrow program — VQ-04 (issue #5).
+//! VORQYN mission escrow program — VQ-04 (issue #5) + VQ-05 (issue #6).
 //!
 //! Scope of THIS crate version: mission initialization, escrow funding,
-//! task creation with bounded reward reservation, and initial operator
-//! assignment. Payout (verify_and_claim), reassignment, delegated AI
-//! authority and refunds are deliberately NOT implemented here — they land
-//! in VQ-05/VQ-06 per docs/SOLANA_PROTOCOL.md §4.
+//! task creation with bounded reward reservation, initial operator
+//! assignment, and owner-authorized task reassignment with
+//! compare-and-set assignment versioning. Payout (verify_and_claim),
+//! delegated AI authority, operator registry and refunds are deliberately
+//! NOT implemented here — they land in VQ-06+ per docs/SOLANA_PROTOCOL.md
+//! §4.
 //!
 //! Interface alignment: packages/contracts/CHAIN_SEAM.md (draft agreement
 //! with the VQ-01 contracts owner):
@@ -14,8 +16,12 @@
 //!   lowercase `operatorId` string never appears on chain.
 //! - §4 PDAs: ["vorqyn:mission", owner, mission_id],
 //!   ["vorqyn:task", mission_pda, task_id], ["vorqyn:vault", mission_pda].
-//! - §1 assignment versions: 0 = unassigned, 1 on first assignment
-//!   (identical to the contracts reducer).
+//! - §1 assignment versions: 0 = unassigned, 1 on first assignment, +1 per
+//!   authorized reassignment (identical to the contracts reducer).
+//! - §5 reassignment is a compare-and-set on `expected_assignment_version`
+//!   and emits the enacted payout wallet (`new_payout_wallet`, IDL
+//!   `newPayoutWallet`) so off-chain receipts are self-verifying
+//!   (CHAIN_SEAM §8 open question 5 — answered YES for reassignment).
 //! - §7 money is integer lamports (u64) with checked arithmetic only.
 
 use anchor_lang::prelude::*;
@@ -134,6 +140,14 @@ pub enum VorqynError {
     TaskNotUnassigned,
     #[msg("mission has expired")]
     MissionExpired,
+    #[msg(
+        "expected assignment version does not match the current version (compare-and-set failed)"
+    )]
+    StaleAssignmentVersion,
+    #[msg("task is not in a reassignable state (must be Assigned and unpaid)")]
+    TaskNotReassignable,
+    #[msg("replacement operator payout wallet is invalid (default pubkey)")]
+    InvalidOperatorWallet,
     #[msg("vault balance change does not match the funded amount")]
     VaultBalanceMismatch,
     #[msg("signer does not own this mission")]
@@ -178,6 +192,27 @@ pub struct TaskAssigned {
     pub task_id: String,
     pub assignment_version: u64,
     pub operator: Pubkey,
+    pub reward_lamports: u64,
+    pub reserved_lamports: u64,
+}
+
+/// Emitted by `authorize_reassignment`. Field names mirror the CHAIN_SEAM
+/// §6 reassignment receipt: `task_id` + `assignment_version` (the NEW
+/// version) + `reward_lamports` (the quote == receipt amountLamports) are
+/// the Finding-D required bindings, and `new_payout_wallet` (IDL
+/// `newPayoutWallet`) answers CHAIN_SEAM §8 Q5 so receipts can verify the
+/// operator the program actually enacted.
+#[event]
+pub struct TaskReassigned {
+    pub mission_id: String,
+    pub task_id: String,
+    /// The version that was replaced (always >= 1: reassignment requires
+    /// an existing assignment).
+    pub expected_assignment_version: u64,
+    /// The newly enacted version (expected + 1) — the value receipts bind to.
+    pub assignment_version: u64,
+    pub previous_operator: Pubkey,
+    pub new_payout_wallet: Pubkey,
     pub reward_lamports: u64,
     pub reserved_lamports: u64,
 }
@@ -319,8 +354,9 @@ pub mod vorqyn {
 
     /// Initially assign a task to an operator's payout wallet. The agreed
     /// reward must not exceed the task budget; the difference is released
-    /// from reservation back to remaining. Reassignment (version > 1) is
-    /// VQ-05 scope and intentionally rejected here by the Unassigned check.
+    /// from reservation back to remaining. Reassignment of an already
+    /// assigned task is rejected here (TaskNotUnassigned) and handled
+    /// exclusively by `authorize_reassignment` with a compare-and-set.
     pub fn assign_task(
         ctx: Context<AssignTask>,
         task_id: String,
@@ -372,6 +408,125 @@ pub mod vorqyn {
             task_id: task.task_id.clone(),
             assignment_version: task.current_assignment_version,
             operator,
+            reward_lamports,
+            reserved_lamports: mission.reserved_lamports,
+        });
+        Ok(())
+    }
+
+    /// Owner-authorized reassignment of an unfinished task
+    /// (SOLANA_PROTOCOL.md §4.4; CHAIN_SEAM §5). Requires the caller to
+    /// state the assignment version they believe is current
+    /// (`expected_assignment_version`) — the on-chain compare-and-set: two
+    /// competing reassignments from the same version cannot both succeed.
+    ///
+    /// Eligibility: the task must be `Assigned` (version >= 1) and not yet
+    /// paid (`paid_version` is None). Workflow-level recoverability
+    /// (evidence_insufficient / recovery_pending in the contracts reducer)
+    /// is an off-chain policy layer — the chain enforces the authority and
+    /// money subset, the reducer enforces the mission-flow subset.
+    ///
+    /// Budget: `reward_lamports` (the quote) must not exceed the task
+    /// budget; a raise is topped up from the mission's unreserved
+    /// remaining funds, a cut is released back. The ledger invariant
+    /// `reserved + remaining == funded` holds before and after.
+    ///
+    /// Invalidation: any previously accepted proof eligibility for the old
+    /// version is cleared (`evidence_digest`/`accepted_version`), so VQ-06
+    /// payout can never pay the old operator for this task again.
+    pub fn authorize_reassignment(
+        ctx: Context<AuthorizeReassignment>,
+        task_id: String,
+        expected_assignment_version: u64,
+        new_operator: Pubkey,
+        reward_lamports: u64,
+    ) -> Result<()> {
+        // task_id is validated at creation; the PDA seeds constraint below
+        // guarantees the account matches the passed id byte-for-byte.
+        let _ = task_id;
+        require!(reward_lamports > 0, VorqynError::ZeroAmount);
+
+        let mission = &mut ctx.accounts.mission;
+        require_active_not_expired(mission.expiry)?;
+
+        let task = &mut ctx.accounts.task;
+        // Only one explicit allowlist of reassignable states: Assigned and
+        // unpaid. When VQ-06 adds evidence/payout task states, this is the
+        // single line that must be revisited (see ACCOUNTS.md §4).
+        require!(
+            task.status == TaskStatus::Assigned,
+            VorqynError::TaskNotReassignable
+        );
+        require!(
+            task.paid_version.is_none(),
+            VorqynError::TaskNotReassignable
+        );
+        require!(
+            expected_assignment_version == task.current_assignment_version,
+            VorqynError::StaleAssignmentVersion
+        );
+        require!(
+            new_operator != Pubkey::default(),
+            VorqynError::InvalidOperatorWallet
+        );
+        require!(
+            reward_lamports <= task.budget_lamports,
+            VorqynError::RewardExceedsTaskBudget
+        );
+
+        // Reservation transition (checked). A raise is topped up from
+        // remaining; a cut is released back. Either way the funded ledger
+        // invariant is preserved exactly.
+        let old_reward = task.reward_lamports;
+        if reward_lamports > old_reward {
+            let top_up = reward_lamports
+                .checked_sub(old_reward)
+                .ok_or(VorqynError::Overflow)?;
+            require!(
+                top_up <= mission.remaining_lamports,
+                VorqynError::RewardExceedsUnreservedFunds
+            );
+            mission.reserved_lamports = mission
+                .reserved_lamports
+                .checked_add(top_up)
+                .ok_or(VorqynError::Overflow)?;
+            mission.remaining_lamports = mission
+                .remaining_lamports
+                .checked_sub(top_up)
+                .ok_or(VorqynError::Overflow)?;
+        } else if reward_lamports < old_reward {
+            let release = old_reward
+                .checked_sub(reward_lamports)
+                .ok_or(VorqynError::Overflow)?;
+            mission.reserved_lamports = mission
+                .reserved_lamports
+                .checked_sub(release)
+                .ok_or(VorqynError::Overflow)?;
+            mission.remaining_lamports = mission
+                .remaining_lamports
+                .checked_add(release)
+                .ok_or(VorqynError::Overflow)?;
+        }
+
+        // Atomic swap + version increment: the old operator and any proof
+        // eligibility they held die with the old version.
+        task.current_assignment_version = task
+            .current_assignment_version
+            .checked_add(1)
+            .ok_or(VorqynError::Overflow)?;
+        let previous_operator = task.current_operator.unwrap_or_default();
+        task.current_operator = Some(new_operator);
+        task.reward_lamports = reward_lamports;
+        task.evidence_digest = None;
+        task.accepted_version = None;
+
+        emit!(TaskReassigned {
+            mission_id: mission.mission_id.clone(),
+            task_id: task.task_id.clone(),
+            expected_assignment_version,
+            assignment_version: task.current_assignment_version,
+            previous_operator,
+            new_payout_wallet: new_operator,
             reward_lamports,
             reserved_lamports: mission.reserved_lamports,
         });
@@ -511,6 +666,34 @@ pub struct CreateTask<'info> {
 #[derive(Accounts)]
 #[instruction(task_id: String)]
 pub struct AssignTask<'info> {
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [MISSION_SEED, owner.key().as_ref(), mission.mission_id.as_bytes()],
+        bump,
+        has_one = owner @ VorqynError::InvalidOwner,
+    )]
+    pub mission: Account<'info, Mission>,
+
+    #[account(
+        mut,
+        seeds = [TASK_SEED, mission.key().as_ref(), task_id.as_bytes()],
+        bump,
+        has_one = mission @ VorqynError::InvalidTaskAccount,
+    )]
+    pub task: Account<'info, Task>,
+
+    pub clock: Sysvar<'info, Clock>,
+}
+
+#[derive(Accounts)]
+#[instruction(task_id: String)]
+pub struct AuthorizeReassignment<'info> {
+    /// Only the mission owner may reassign (owner-signed path, P0 per
+    /// issue #6). The optional mission-scoped delegate is deliberately
+    /// NOT implemented — see ACCOUNTS.md §4.
     #[account(mut)]
     pub owner: Signer<'info>,
 
