@@ -1,23 +1,39 @@
 # Submission copy — current verified scope
 
-Use this wording only with the static-viewer contingency recording. Change it after a fresh integrated-main verification if new functionality merges. No portal field schema was visible without sign-in.
+> **Updated November 7, 2026 for merged main `81b47248`.** Use this version, rather than the earlier static-viewer description. Confirm any new devnet integration independently before adding settlement claims. No portal submission, public deployed demo, publicly hosted video or accepted receipt is asserted here.
 
-**Project:** VORQYN — Autonomous work. Accountable outcomes.
+**Project:** VORQYN — Autonomous Work. Accountable Outcomes.
 
-**Repository:** https://github.com/CosmasMandikonza/Vorqyn
+**Public source:** https://github.com/CosmasMandikonza/Vorqyn
 
-**Public demo / video:** Not supplied. Founder must deploy/record/upload and insert actual inspected links if required; do not submit these sentences as URLs.
+**Demo route after deployment:** `/demo/mission` (append to the *verified* deployed HTTPS origin; never represent localhost as a public URL)
 
-**What we built:** VORQYN explores how inspection teams can plan coordinated air, ground and underwater work in one fictional port. The current product includes an original interactive 3D world with calibrated camera stations and true-scale reference machines, a metadata-driven 2D fallback, and a five-step local mission planner. Independent browser-local briefs retain their selected regions, capabilities, acceptance thresholds and exact proposed lamport budgets through reload and editing. They are not authenticated company missions.
+## Short description — safe to paste today
 
-A separately executable deterministic synthetic kernel uses the same world frame, advances on an explicit simulator clock, models an optical visibility fault and preserves independent sensor observations, stale states and repeatable traces. At the checked release base, that kernel is not connected to the static viewer. Release tests and a terminal demonstration make the distinction inspectable rather than imply motion that does not exist.
+VORQYN explores a hard problem in autonomous operations: what happens when a mission spans independently operated drones, ground robots and underwater ROVs, and one robot's sensor data becomes unusable? Our hackathon prototype lets a judge explore a shared 3D storm-damaged port, run a real deterministic **synthetic** three-robot survey, inject an underwater optical-visibility fault through an actual simulation API, inspect the measured optical degradation alongside independent sonar, and replay the exact operation history. A separate five-step browser-local builder saves independent mission drafts with different regions, evidence criteria and budgets.
 
-**What remains:** Real devnet escrow, authorized reassignment, independent verification and payout have not been demonstrated. There are no runtime AI decisions or verified physical/SITL telemetry in this release. Browser-local planning is not secure tenant storage. API/playback integration is separately owned and must pass the real integration gate after merging.
+We also built validated shared mission/event contracts, assignment-version protections and a deterministic reducer that models how verified work and chain-confirmed payments *should* interact. We are building toward Solana-enforced escrow, authorized cross-operator reassignment and one-time payout; actual devnet transactions, independent evidence verdicts and runtime AI recovery are **not yet verified**. The current 3D observations are `SYNTHETIC_SIM`, not live robot telemetry.
 
-**Built with:** Next.js, React, TypeScript, Tailwind CSS, Three.js, React Three Fiber/Drei, browser storage/Web Locks, and a deterministic JavaScript synthetic kernel. See the locked dependencies and original asset/source notices.
+## What works and can be demonstrated
 
-**Learning:** Establishing a shared ENU world origin, keeping metres and altitude datums consistent, and applying the ENU-to-glTF transform exactly once are prerequisites for trustworthy physical visualization. Preserving provenance and clock distinctions matters as much as a polished image. Keeping exact decimal budget planning separate from actual funding avoids a misleading wallet facade.
+- Actual PORT-001 3D GLB world with true-scale drone/rover/ROV and accessible 2D/no-WebGL fallback.
+- Stateless, bounded `POST /api/demo/simulation` that runs the real deterministic kernel; actual synthetic robot motion, low-visibility fault, independent sonar measurements, timeline and reproducible replay.
+- Genuine local/browser-only distinct mission drafts (not authorized, funded or server-persisted).
+- Strict typed mission contracts, per-mission ordered events, version-bound task assignments, chain-confirmed-payment gating in a **pure reducer** with synthetic fixtures. No on-chain success is implied.
 
-**AI tooling disclosure:** OpenAI Codex and independently assigned ZCode agents assisted implementation, tests and release materials. Founder must confirm final tool/model names, human contributions and attributions in the actual form. Coding assistance is not a runtime AI coordinator.
+## What still requires proof
 
-**Business hypothesis:** Industrial inspection teams may benefit from clearer cross-operator planning, evidence review and accountable handoffs. No customers, revenue, measured savings, field deployment or safety certification are claimed.
+- Actual Solana devnet program IDs, transaction signatures, funded escrow/reassignment/payout account readbacks.
+- Independently executed policy/evidence verdicts and constrained runtime AI (coding-assistance models do not count).
+- Real hardware or SITL telemetry; authenticated multitenant company backend.
+- Public HTTPS deployment, signed-out video availability, accepted MLH submission.
+
+## Stack and learning
+
+Next.js, React, TypeScript, Tailwind, Three.js/React Three Fiber, a deterministic JavaScript simulation kernel, and versioned mission/event schemas. Solana/Anchor is the intended authorization and settlement layer, not an implemented live guarantee. The biggest technical learning: physical ENU coordinates and clock/provenance domains must be aligned before a simulated fault can be interpreted or replayed honestly.
+
+**AI coding transparency:** OpenAI Codex and ZCode agents assisted with implementation and tests. Select only the actual coding tools/models used in the MLH form. These are *development* tools, not a verified autonomous runtime AI operator.
+
+**Who it could help:** Infrastructure inspection companies and fleet operators coordinating work across different robot vendors. Commercial impact and customers remain hypotheses, not verified results.
+
+**Video and public demo:** Founder must record, upload and verify the actual publicly accessible links before final submission. Narration and capture runbook: [RECORDING_PLAN.md](RECORDING_PLAN.md), [SUBMISSION.md](SUBMISSION.md).
