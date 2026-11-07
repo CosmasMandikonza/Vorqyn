@@ -1,4 +1,3 @@
 
 > vorqyn@ lint /workspace/work/qa16-preflight-final/snapshot
 > eslint .
-
