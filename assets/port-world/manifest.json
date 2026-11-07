@@ -1,0 +1,134 @@
+{
+  "schema": "vorqyn.port-world.manifest/1",
+  "world_id": "PORT-001",
+  "generated_by": {
+    "tool": "assets/port-world/tools/generate.mjs",
+    "tool_sha256": "b20a03843f20b5f1ebdf94a1170f9b4ba480e2fc91841f1ca28727c835bf48f5",
+    "node": "v24.20.0",
+    "deterministic": true,
+    "note": "regenerate with: node tools/generate.mjs (from assets/port-world/)"
+  },
+  "generated_at_utc": "2026-11-07T11:02:08.171Z",
+  "files": [
+    {
+      "path": "models/port-world-high.glb",
+      "bytes": 808588,
+      "sha256": "f6840065f55c39eae7ae6d00389d24106e4a19f28d085e6dcf7cdc43e5002463",
+      "gltf": {
+        "triangles": 14882,
+        "vertices": 25570,
+        "primitives": 18,
+        "bounds_enu_m": {
+          "min": [
+            -300,
+            -200,
+            -13.8
+          ],
+          "max": [
+            300,
+            240,
+            35.699999999999996
+          ]
+        }
+      }
+    },
+    {
+      "path": "models/port-world-low.glb",
+      "bytes": 150988,
+      "sha256": "f468421176b15210643f0a9720fcea552ac559c272d647cabdce91c2cd1056ee",
+      "gltf": {
+        "triangles": 2458,
+        "vertices": 4578,
+        "primitives": 14,
+        "bounds_enu_m": {
+          "min": [
+            -300,
+            -200,
+            -13.8
+          ],
+          "max": [
+            300,
+            240,
+            35.699999999999996
+          ]
+        }
+      }
+    },
+    {
+      "path": "models/drone-ref.glb",
+      "bytes": 26244,
+      "sha256": "f180ecc55327bc9f7597a8fbd8dec8301eeb89950f9d60c024ff55dc2f01fbd8",
+      "gltf": {
+        "triangles": 416,
+        "vertices": 688,
+        "primitives": 4,
+        "bounds_enu_m": {
+          "min": [
+            -0.62,
+            -0.62,
+            0.03
+          ],
+          "max": [
+            0.62,
+            0.62,
+            0.28
+          ]
+        }
+      }
+    },
+    {
+      "path": "models/rover-ref.glb",
+      "bytes": 19516,
+      "sha256": "c528097c1a976a9103397db63ffa4f3e8f1337f2adeba28feb4a3093015aaf0c",
+      "gltf": {
+        "triangles": 292,
+        "vertices": 468,
+        "primitives": 4,
+        "bounds_enu_m": {
+          "min": [
+            -0.53,
+            -0.36,
+            0
+          ],
+          "max": [
+            0.53,
+            0.36,
+            0.81
+          ]
+        }
+      }
+    },
+    {
+      "path": "models/rov-ref.glb",
+      "bytes": 26476,
+      "sha256": "842c6b5873e149bded0c3a737200b3673c9fc4c1d7fb6eda1c373fabc6745220",
+      "gltf": {
+        "triangles": 392,
+        "vertices": 684,
+        "primitives": 5,
+        "bounds_enu_m": {
+          "min": [
+            -0.86,
+            -0.35500000000000004,
+            0.135
+          ],
+          "max": [
+            0.515,
+            0.35500000000000004,
+            0.78
+          ]
+        }
+      }
+    },
+    {
+      "path": "world.json",
+      "bytes": 10392,
+      "sha256": "e3d4f34d7c11614ed462828d0ac01bc952134c80318a4c68e721705cbbd2f0f4"
+    },
+    {
+      "path": "previews/plan-view.svg",
+      "bytes": 5315,
+      "sha256": "2b7dbeea7aa87826be3be93dbb9281e31edd6a4e886e1e1d9f213df2f4025a94"
+    }
+  ]
+}
