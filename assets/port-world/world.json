@@ -1,0 +1,599 @@
+{
+  "schema": "vorqyn.port-world/1",
+  "world_id": "PORT-001",
+  "name": "Kerameion Basin - storm-damaged industrial port (fictional template world)",
+  "frame": {
+    "type": "ENU_local",
+    "axes": {
+      "x": "east",
+      "y": "north",
+      "z": "up"
+    },
+    "units": "meter",
+    "origin": "harbor-basin center at waterline; land lies north (+y); world is fictional, no geographic parity claimed"
+  },
+  "waterline_z_m": 0,
+  "quay_deck_z_m": 4,
+  "seabed": {
+    "approx_min_z_m": -13.8,
+    "approx_max_z_m": -11.2
+  },
+  "bounds_enu_m": {
+    "min": [
+      -300,
+      -200,
+      -16
+    ],
+    "max": [
+      300,
+      240,
+      100
+    ]
+  },
+  "gltf_conversion": {
+    "gltf_up": "Y",
+    "rule": "gltf_x = enu_x; gltf_y = enu_z; gltf_z = -enu_y",
+    "root_rotation_quaternion_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "note": "geometry is authored in glTF-native Y-up by the generator; world.json stays authoritative in ENU"
+  },
+  "zones": [
+    {
+      "id": "aerial_survey",
+      "label": "Aerial survey region (drone)",
+      "kind": "airspace",
+      "box_enu_m": {
+        "min": [
+          -280,
+          -180,
+          15
+        ],
+        "max": [
+          280,
+          220,
+          90
+        ]
+      }
+    },
+    {
+      "id": "harbor_basin",
+      "label": "Harbor basin (open water, ROV transit)",
+      "kind": "water",
+      "box_enu_m": {
+        "min": [
+          -260,
+          -200,
+          -13
+        ],
+        "max": [
+          260,
+          40,
+          -0.5
+        ]
+      }
+    },
+    {
+      "id": "underwater_inspection",
+      "label": "Underwater inspection region (ROV)",
+      "kind": "water",
+      "box_enu_m": {
+        "min": [
+          40,
+          -150,
+          -12.5
+        ],
+        "max": [
+          220,
+          -40,
+          -0.5
+        ]
+      }
+    },
+    {
+      "id": "obstruction_zone",
+      "label": "Submerged obstruction zone (Pier C collapse, sunken cargo)",
+      "kind": "water",
+      "flags": {
+        "task_target": true,
+        "damaged": true
+      },
+      "box_enu_m": {
+        "min": [
+          120,
+          -120,
+          -12.5
+        ],
+        "max": [
+          220,
+          -60,
+          -0.5
+        ]
+      }
+    },
+    {
+      "id": "land_yard",
+      "label": "Storage yard and circulation (ground level)",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -260,
+          40,
+          3.5
+        ],
+        "max": [
+          260,
+          150,
+          8
+        ]
+      }
+    },
+    {
+      "id": "road_trunk",
+      "label": "Harbor trunk road",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -260,
+          150,
+          3.5
+        ],
+        "max": [
+          260,
+          170,
+          8
+        ]
+      }
+    },
+    {
+      "id": "road_branch",
+      "label": "Branch road to Pier A ramp",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -150,
+          44,
+          3.5
+        ],
+        "max": [
+          -130,
+          150,
+          8
+        ]
+      }
+    },
+    {
+      "id": "road_quay",
+      "label": "Quay service road",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -150,
+          44,
+          3.5
+        ],
+        "max": [
+          40,
+          60,
+          8
+        ]
+      }
+    },
+    {
+      "id": "pier_a_deck",
+      "label": "Pier A deck (intact)",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -147,
+          -80,
+          3.8
+        ],
+        "max": [
+          -133,
+          44,
+          6
+        ]
+      }
+    },
+    {
+      "id": "pier_b_deck",
+      "label": "Pier B deck (main, gantry crane)",
+      "kind": "land",
+      "box_enu_m": {
+        "min": [
+          -9,
+          -100,
+          3.8
+        ],
+        "max": [
+          9,
+          44,
+          6
+        ]
+      }
+    },
+    {
+      "id": "pier_c_deck",
+      "label": "Pier C deck (collapsed beyond y=-30)",
+      "kind": "land",
+      "flags": {
+        "damaged": true
+      },
+      "box_enu_m": {
+        "min": [
+          114,
+          -60,
+          3.8
+        ],
+        "max": [
+          126,
+          44,
+          6
+        ]
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "id": "port_datum",
+      "label": "Survey benchmark (quay)",
+      "role": "datum",
+      "position_enu_m": [
+        0,
+        44,
+        4
+      ]
+    },
+    {
+      "id": "drone_home",
+      "label": "Drone staging hover",
+      "role": "drone",
+      "position_enu_m": [
+        -40,
+        80,
+        55
+      ]
+    },
+    {
+      "id": "rover_home",
+      "label": "Rover staging point (trunk road)",
+      "role": "rover",
+      "position_enu_m": [
+        -160,
+        160,
+        4.05
+      ]
+    },
+    {
+      "id": "rov_home",
+      "label": "ROV launch point (Pier B waterside)",
+      "role": "rov",
+      "position_enu_m": [
+        60,
+        -10,
+        -2.5
+      ]
+    },
+    {
+      "id": "crane_boom_tip",
+      "label": "Gantry crane boom tip (storm-sagged)",
+      "role": "inspection",
+      "position_enu_m": [
+        0,
+        -126,
+        27.4
+      ]
+    },
+    {
+      "id": "obstruction_primary",
+      "label": "Sunken workboat (primary obstruction)",
+      "role": "inspection",
+      "position_enu_m": [
+        205,
+        -95,
+        -9.2
+      ]
+    },
+    {
+      "id": "pier_c_collapse",
+      "label": "Pier C collapse center",
+      "role": "inspection",
+      "position_enu_m": [
+        120,
+        -42,
+        -4
+      ]
+    }
+  ],
+  "routes": {
+    "rover": [
+      [
+        -160,
+        160,
+        4.05
+      ],
+      [
+        -140,
+        160,
+        4.05
+      ],
+      [
+        -140,
+        60,
+        4.05
+      ],
+      [
+        -140,
+        48,
+        4.05
+      ],
+      [
+        -140,
+        -20,
+        4.05
+      ],
+      [
+        -140,
+        -40,
+        4.05
+      ],
+      [
+        -140,
+        48,
+        4.05
+      ],
+      [
+        -20,
+        52,
+        4.05
+      ],
+      [
+        0,
+        48,
+        4.05
+      ],
+      [
+        0,
+        -30,
+        4.05
+      ]
+    ],
+    "rov": [
+      [
+        60,
+        -10,
+        -2.5
+      ],
+      [
+        90,
+        -30,
+        -4
+      ],
+      [
+        120,
+        -55,
+        -6
+      ],
+      [
+        150,
+        -75,
+        -8
+      ],
+      [
+        170,
+        -90,
+        -9
+      ]
+    ],
+    "drone_survey": [
+      [
+        -180,
+        -60,
+        45
+      ],
+      [
+        60,
+        -60,
+        45
+      ],
+      [
+        180,
+        -90,
+        45
+      ],
+      [
+        60,
+        -120,
+        45
+      ],
+      [
+        -180,
+        10,
+        45
+      ]
+    ]
+  },
+  "camera_targets": {
+    "AIR": {
+      "label": "Aerial overview",
+      "target_enu_m": [
+        0,
+        10,
+        15
+      ],
+      "distance_range_m": [
+        220,
+        480
+      ],
+      "height_range_m": [
+        90,
+        240
+      ],
+      "near_m": 1,
+      "far_m": 1500
+    },
+    "LAND": {
+      "label": "Yard / road ground view",
+      "target_enu_m": [
+        -140,
+        110,
+        10
+      ],
+      "distance_range_m": [
+        50,
+        160
+      ],
+      "height_range_m": [
+        18,
+        70
+      ],
+      "near_m": 0.5,
+      "far_m": 600
+    },
+    "UNDERWATER": {
+      "label": "Underwater obstruction view",
+      "target_enu_m": [
+        170,
+        -90,
+        -9
+      ],
+      "distance_range_m": [
+        12,
+        60
+      ],
+      "near_m": 0.2,
+      "far_m": 150
+    },
+    "FOLLOW": {
+      "label": "Per-vehicle chase camera (distance ranges per role)",
+      "by_role": {
+        "drone": {
+          "distance_range_m": [
+            6,
+            22
+          ],
+          "height_offset_range_m": [
+            2,
+            10
+          ],
+          "near_m": 0.3,
+          "far_m": 400
+        },
+        "rover": {
+          "distance_range_m": [
+            4,
+            14
+          ],
+          "height_offset_range_m": [
+            2,
+            6
+          ],
+          "near_m": 0.3,
+          "far_m": 300
+        },
+        "rov": {
+          "distance_range_m": [
+            3,
+            10
+          ],
+          "height_offset_range_m": [
+            1,
+            4
+          ],
+          "near_m": 0.2,
+          "far_m": 120
+        }
+      }
+    },
+    "INSPECT": {
+      "label": "Close inspection",
+      "targets": [
+        {
+          "anchor": "obstruction_primary",
+          "distance_range_m": [
+            2.5,
+            12
+          ],
+          "near_m": 0.15,
+          "far_m": 60
+        },
+        {
+          "anchor": "crane_boom_tip",
+          "distance_range_m": [
+            8,
+            30
+          ],
+          "near_m": 0.3,
+          "far_m": 120
+        }
+      ]
+    },
+    "RESET": {
+      "label": "Canonical cinematic 3/4 framing",
+      "target_enu_m": [
+        0,
+        20,
+        10
+      ],
+      "distance_m": 330,
+      "azimuth_deg": 215,
+      "elevation_deg": 32,
+      "near_m": 0.5,
+      "far_m": 1500
+    }
+  },
+  "environment": {
+    "sun": {
+      "azimuth_deg": 225,
+      "elevation_deg": 38
+    },
+    "note": "Scene daylight is a world/environment parameter. UI dark mode must NOT change physical simulation time of day (DESIGN_SYSTEM.md)."
+  },
+  "vehicle_reference_models": {
+    "drone": {
+      "file": "drone-ref.glb",
+      "nominal_dims_enu_m": {
+        "x": 1.24,
+        "y": 1.24,
+        "z": 0.25
+      },
+      "origin_convention": "ground contact",
+      "note": "quadcopter scale reference, NOT verified equipment"
+    },
+    "rover": {
+      "file": "rover-ref.glb",
+      "nominal_dims_enu_m": {
+        "x": 1.06,
+        "y": 0.72,
+        "z": 0.81
+      },
+      "origin_convention": "ground contact",
+      "note": "wheeled UGV scale reference, NOT verified equipment"
+    },
+    "rov": {
+      "file": "rov-ref.glb",
+      "nominal_dims_enu_m": {
+        "x": 1.38,
+        "y": 0.71,
+        "z": 0.65
+      },
+      "origin_convention": "geometric center (neutrally buoyant)",
+      "note": "observation-class ROV scale reference, NOT verified equipment"
+    }
+  },
+  "lod": {
+    "high": {
+      "max_triangles": 150000
+    },
+    "low": {
+      "max_triangles": 35000
+    },
+    "reference_models": {
+      "max_triangles": 3000
+    }
+  }
+}
