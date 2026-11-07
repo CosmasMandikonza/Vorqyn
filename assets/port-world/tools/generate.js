@@ -241,8 +241,9 @@ const MATERIALS = {
   asphalt:         { baseColor: [0.23, 0.23, 0.22, 1], rough: 0.95, metal: 0.0 },
   road_paint:      { baseColor: [0.85, 0.83, 0.75, 1], rough: 0.90, metal: 0.0 },
   hazard_ochre:    { baseColor: [0.55, 0.33, 0.09, 1], rough: 0.80, metal: 0.0 },
-  sediment_seabed: { baseColor: [0.40, 0.38, 0.31, 1], rough: 1.0,  metal: 0.0 },
-  water_surface:   { baseColor: [0.45, 0.82, 0.76, 0.35], rough: 0.10, metal: 0.0, alphaMode: "BLEND", doubleSided: true },
+  sediment_seabed: { baseColor: [0.30, 0.28, 0.23, 1], rough: 1.0,  metal: 0.0 },
+  water_surface:   { baseColor: [0.30, 0.62, 0.58, 0.42], rough: 0.10, metal: 0.0, alphaMode: "BLEND", doubleSided: true },
+  water_depth:     { baseColor: [0.10, 0.34, 0.34, 0.30], rough: 0.30, metal: 0.0, alphaMode: "BLEND", doubleSided: true, note: "stylized depth-absorption tint" },
   roof_panel:      { baseColor: [0.52, 0.55, 0.54, 1], rough: 0.50, metal: 0.4 },
   warehouse_wall:  { baseColor: [0.66, 0.63, 0.55, 1], rough: 0.90, metal: 0.1 },
   container_paint: { baseColor: [1, 1, 1, 1], rough: 0.65, metal: 0.25, vertexColor: true },
@@ -494,6 +495,7 @@ function buildPort(scene, lod) {
 
   /* --- Seabed & water --- */
   scene.grid("sediment_seabed", -300, 300, -200, 40, hi ? 48 : 24, hi ? 36 : 18, seabedHeight);
+  scene.flatQuad("water_depth", -300, 300, -200, 40, -1.6);
   scene.flatQuad("water_surface", -300, 300, -200, 40, 0.0);
 
   /* --- Land slab + quay wall --- */
@@ -586,20 +588,21 @@ function buildPort(scene, lod) {
   const rows = hi
     ? [
       // [cx, y, stack, yawDeg, colorIdx, damaged?]
+      // Yard rows stay WEST of the branch-road corridor x[-150,-130]
+      // (easternmost row center -158 + 6.1 m half-length = -151.9, clear).
       [-200, 70, 2, 0, 0], [-200, 90, 3, 0, 1], [-200, 110, 2, 0, 2],
       [-186, 70, 3, 0, 3], [-186, 90, 2, 0, 0], [-186, 110, 3, 0, 4],
       [-172, 70, 2, 0, 1], [-172, 90, 3, 0, 2], [-172, 110, 2, 0, 0],
       [-158, 70, 3, 0, 4], [-158, 90, 2, 0, 3], [-158, 110, 3, 0, 1],
-      [-144, 70, 2, 0, 2], [-144, 90, 3, 0, 0], [-144, 110, 2, 0, 4],
-      [-130, 70, 2, 0, 1], [-130, 90, 2, 0, 2], [-130, 110, 3, 0, 3],
-      // storm-scattered (SE corner of yard)
-      [-118, 128, 1, 24, 0, true], [-112, 138, 1, 42, 3, true], [-124, 140, 1, -18, 2, true],
-      [-136, 132, 1, 65, 1, true], [-114, 118, 1, -32, 4, true], [-128, 150, 1, 12, 0, true],
+      // storm-scattered (SE corner of yard). NOTE: kept clear of the branch-road
+      // corridor so the declared rover route stays traversable.
+      [-118, 128, 1, 24, 0, true], [-112, 138, 1, 42, 3, true], [-120, 140, 1, -18, 2, true],
+      [-104, 132, 1, 65, 1, true], [-114, 118, 1, -32, 4, true], [-122, 144, 1, 12, 0, true],
     ]
     : [
       [-200, 75, 2, 0, 0], [-186, 90, 2, 0, 1], [-172, 72, 2, 0, 2],
-      [-158, 100, 2, 0, 3], [-144, 78, 2, 0, 4], [-130, 95, 2, 0, 0],
-      [-118, 132, 1, 30, 3, true], [-130, 148, 1, -20, 1, true],
+      [-158, 100, 2, 0, 3],
+      [-118, 132, 1, 30, 3, true], [-112, 146, 1, -20, 1, true],
     ];
   for (const r of rows) {
     const [cx, cy, stack, yaw, ci, damaged] = r;

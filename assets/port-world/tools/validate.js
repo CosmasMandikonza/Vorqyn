@@ -114,6 +114,7 @@ function parseGlb(filePath) {
   });
 
   const meshEnuMin = [Infinity, Infinity, Infinity], meshEnuMax = [-Infinity, -Infinity, -Infinity];
+  res.primsByMaterial = [];
   (g.meshes || []).forEach((mesh) => {
     if (!mesh.primitives || mesh.primitives.length === 0) { res.errors.push("mesh with no primitives"); return; }
     mesh.primitives.forEach((prim) => {
@@ -133,6 +134,11 @@ function parseGlb(filePath) {
           meshEnuMin[k] = Math.min(meshEnuMin[k], eb.min[k]);
           meshEnuMax[k] = Math.max(meshEnuMax[k], eb.max[k]);
         }
+        res.primsByMaterial.push({
+          material: (g.materials[prim.material] || {}).name || "?",
+          enuBounds: eb,
+          posRef: { bufferView: posAcc.bufferView, byteOffset: posAcc.byteOffset || 0, count: posAcc.count },
+        });
       }
       if (posAcc.bufferView !== undefined) {
         const bv = g.bufferViews[posAcc.bufferView];
@@ -434,6 +440,49 @@ function main() {
   check(41, "no absolute filesystem paths embedded in data artifacts", absHit.length === 0, absHit.join(", "));
   check(42, "plan-view preview diagram present", fs.existsSync(path.join(ROOT, "previews", "plan-view.svg")) &&
     fs.statSync(path.join(ROOT, "previews", "plan-view.svg")).size > 500);
+
+  /* [13b] route-traversability: no container GEOMETRY (vertex-precise) inside
+     road corridors. Merged-primitive bboxes are too coarse; we scan the actual
+     POSITION vertices of container_paint primitives. */
+  const corridors = ["road_trunk", "road_branch", "road_quay"]
+    .map((id) => ({ id, box: zBox(id) }))
+    .filter((c) => !!c.box)
+    .map((c) => ({ ...c, min: [c.box.min[0] + 1, c.box.min[1] + 1, c.box.min[2]], max: [c.box.max[0] - 1, c.box.max[1] - 1, c.box.max[2]] }));
+  let roadBlocked = [];
+  for (const spec of glbSpec.filter((s) => s.kind === "world")) {
+    const r = parsed.get(spec.file);
+    if (!r || !r.primsByMaterial) continue;
+    for (const prim of r.primsByMaterial) {
+      if (prim.material !== "container_paint" || !prim.posRef) continue;
+      // bbox pre-filter per corridor
+      const active = corridors.filter((c) =>
+        prim.enuBounds.max[0] >= c.min[0] && prim.enuBounds.min[0] <= c.max[0] &&
+        prim.enuBounds.max[1] >= c.min[1] && prim.enuBounds.min[1] <= c.max[1] &&
+        prim.enuBounds.max[2] >= c.min[2] && prim.enuBounds.min[2] <= c.max[2]);
+      if (active.length === 0) continue;
+      const bv = r.json.bufferViews[prim.posRef.bufferView];
+      const base = (r.binFileOffset || 0) + bv.byteOffset + prim.posRef.byteOffset;
+      const n = prim.posRef.count;
+      for (let i = 0; i < n; i++) {
+        const gx = r.buf.readFloatLE(base + i * 12);
+        const gy = r.buf.readFloatLE(base + i * 12 + 4);
+        const gz = r.buf.readFloatLE(base + i * 12 + 8);
+        const e = [gx, -gz, gy]; // glTF -> ENU
+        for (const c of active) {
+          if (e[0] >= c.min[0] && e[0] <= c.max[0] && e[1] >= c.min[1] && e[1] <= c.max[1] && e[2] >= c.min[2] && e[2] <= c.max[2]) {
+            roadBlocked.push(`${spec.file}:${c.id}@(${e[0].toFixed(0)},${e[1].toFixed(0)},${e[2].toFixed(0)})`);
+            i = n; // one hit per primitive per file is enough detail
+            break;
+          }
+        }
+        if (roadBlocked.length > 8) break;
+      }
+      if (roadBlocked.length > 8) break;
+    }
+    if (roadBlocked.length > 8) break;
+  }
+  check(44, "declared rover road corridors are free of container geometry (vertex-precise)",
+    roadBlocked.length === 0, roadBlocked.join(", ") || "corridors clear");
 
   /* [14] optional determinism self-check */
   if (SELF_CHECK) {
