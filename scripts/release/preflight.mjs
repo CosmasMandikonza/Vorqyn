@@ -12,7 +12,12 @@ import {
 } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { aggregate, inspectCredentials, safePublicUrl } from "./lib.mjs";
+import {
+  aggregate,
+  environmentFindings,
+  inspectCredentials,
+  safePublicUrl,
+} from "./lib.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const args = process.argv.slice(2);
@@ -85,6 +90,7 @@ function command(id, executable, argv, cwd = snapshot) {
       command: [executable, ...argv],
       log: relative(out, log),
       durationMs: Date.now() - started,
+      exitCode: result.status,
     },
   );
 }
@@ -100,6 +106,7 @@ const pnpm = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 try {
   const sha = capture("git", ["rev-parse", "HEAD"]);
   if (!sha) throw new Error("A git checkout is required");
+  process.env.RELEASE_SOURCE_SHA = sha;
   report.source = {
     sha,
     workingTreeDirty: !!capture("git", ["status", "--porcelain"]),
@@ -143,6 +150,15 @@ try {
     "fresh-snapshot",
     existsSync(join(snapshot, "node_modules")) ? "FAIL" : "PASS",
     "isolated committed-source snapshot, no pre-existing node_modules",
+  );
+  const configFindings = environmentFindings(process.env);
+  record(
+    "environment-config",
+    configFindings.length ? "FAIL" : "PASS",
+    configFindings.length
+      ? "insecure/invalid environment names found; values omitted"
+      : "static world and local drafts need no external secrets; optional public config is valid",
+    { findings: configFindings },
   );
   const findings = inspectCredentials(snapshot, Object.keys(process.env));
   record(
@@ -189,6 +205,12 @@ try {
         "NOT RUN",
         "release tools are not committed in the archived source yet",
       );
+    command("narration", process.execPath, [
+      "scripts/release/check-narration.mjs",
+    ]);
+    command("kernel-recording-demo", process.execPath, [
+      "scripts/release/kernel-demo.mjs",
+    ]);
     const built = checks.find((c) => c.id === "build")?.status === "PASS";
     if (args.includes("--technical-only"))
       record(
@@ -200,6 +222,7 @@ try {
       built &&
       existsSync(join(snapshot, "scripts/release/playwright.config.mjs"))
     ) {
+      delete process.env.RELEASE_STAGE;
       command("browser", pnpm, [
         "--filter",
         "@vorqyn/web",
@@ -207,11 +230,16 @@ try {
         "playwright",
         "test",
         "--config",
-        "../../../scripts/release/playwright.config.mjs",
+        "../../scripts/release/playwright.config.mjs",
         "--project",
         "judge",
         "--project",
         "capture",
+      ]);
+      command("png-validation", process.execPath, [
+        "scripts/release/validate-captures.mjs",
+        "--dir",
+        join(out, "screenshots"),
       ]);
       // Pending integrations are real assertions. Their absence is BLOCKED, not a skipped/passing test.
       process.env.RELEASE_STAGE = "integration";
@@ -222,7 +250,7 @@ try {
         "playwright",
         "test",
         "--config",
-        "../../../scripts/release/playwright.config.mjs",
+        "../../scripts/release/playwright.config.mjs",
         "--project",
         "integration",
       ]);
@@ -248,6 +276,9 @@ try {
           integration.status = "BLOCKED";
           integration.detail =
             "upcoming integration absent; see actual failed assertions, not a pass";
+          console.log(
+            "BLOCKED integration-browser: missing upstream capabilities, raw assertions did not pass",
+          );
         }
       }
     } else

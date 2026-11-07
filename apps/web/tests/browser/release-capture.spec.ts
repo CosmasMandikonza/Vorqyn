@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -21,11 +21,20 @@ async function capture(
       dpr: devicePixelRatio,
     })),
   ).toEqual({ width, height, dpr: 1 });
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  const layout = await page.evaluate(() => ({
+    viewport: innerWidth,
+    document: document.documentElement.scrollWidth,
+    offenders: [...document.querySelectorAll('button, [role="group"]')]
+      .map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          text: el.textContent?.trim().slice(0, 100),
+          left: r.left,
+          right: r.right,
+        };
+      })
+      .filter((r) => r.right > innerWidth + 1 || r.left < -1),
+  }));
   mkdirSync(out, { recursive: true });
   const png = await page.screenshot({
     path: resolve(out, `${name}.png`),
@@ -33,6 +42,9 @@ async function capture(
     animations: "disabled",
   });
   const metadata = {
+    runId: JSON.parse(readFileSync(resolve(out, "../capture-run.json"), "utf8"))
+      .id,
+    layout,
     name,
     viewport: { width, height },
     deviceScaleFactor: 1,
@@ -48,6 +60,12 @@ async function capture(
     resolve(out, `${name}.json`),
     JSON.stringify(metadata, null, 2) + "\n",
   );
+  expect
+    .soft(
+      layout.document,
+      `${name}: horizontal overflow; see captured layout metadata`,
+    )
+    .toBeLessThanOrEqual(width);
 }
 for (const theme of ["light", "dark"])
   for (const { width, height } of [

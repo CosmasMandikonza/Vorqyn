@@ -9,6 +9,7 @@ const out =
   resolve(root, "../release-browser-results");
 const remote = process.env.RELEASE_TARGET_BASE_URL;
 export default defineConfig({
+  globalSetup: join(root, "scripts/release/prepare-browser.mjs"),
   testDir: join(root, "apps/web/tests/browser"),
   workers: 1,
   fullyParallel: false,

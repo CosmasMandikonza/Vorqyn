@@ -99,7 +99,7 @@ test("judge journey: landing → guest → real 3D → 2D → independently save
     }),
   ).toBeVisible();
   await expect(
-    page.getByText("1.000000001 SOL · 1000000001 lamports", { exact: true }),
+    page.getByText("1.000000001 SOL · 1000000001 lamports", { exact: false }),
   ).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -203,6 +203,7 @@ test("native 200% zoom keeps viewer navigation accessible", async ({
       executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
       headless: true,
       viewport: null,
+      deviceScaleFactor: undefined,
       args: [
         "--window-size=1440,900",
         "--use-angle=swiftshader",

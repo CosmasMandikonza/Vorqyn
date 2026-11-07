@@ -48,3 +48,19 @@ test("PNG signature and dimensions are checked rather than filename assumptions"
   writeFileSync(p, bytes);
   assert.deepEqual(pngSize(p), { width: 1329, height: 558 });
 });
+test("insecure environment configuration is flagged without secret values", async () => {
+  const { environmentFindings } = await import("./lib.mjs");
+  const results = environmentFindings({
+    NEXT_PUBLIC_SOLANA_CLUSTER: "mainnet-beta",
+    NEXT_PUBLIC_SOLANA_RPC_URL: "https://user:synthetic-test@host.test",
+  });
+  assert.equal(results.length, 2);
+  assert.equal(JSON.stringify(results).includes("synthetic-test"), false);
+  assert.deepEqual(
+    environmentFindings({
+      NEXT_PUBLIC_SOLANA_CLUSTER: "devnet",
+      NEXT_PUBLIC_SOLANA_RPC_URL: "https://api.devnet.solana.com",
+    }),
+    [],
+  );
+});

@@ -92,3 +92,35 @@ export function pngSize(path) {
     throw new Error("Invalid PNG signature");
   return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
 }
+
+export function environmentFindings(env) {
+  const findings = [];
+  if (
+    env.NEXT_PUBLIC_SOLANA_CLUSTER &&
+    env.NEXT_PUBLIC_SOLANA_CLUSTER !== "devnet"
+  )
+    findings.push({
+      name: "NEXT_PUBLIC_SOLANA_CLUSTER",
+      kind: "non-devnet configuration is prohibited for this prototype",
+    });
+  for (const [name, value] of Object.entries(env))
+    if (/^NEXT_PUBLIC_.*(?:RPC|API)_URL$/.test(name)) {
+      try {
+        const url = new URL(value);
+        if (
+          url.username ||
+          url.password ||
+          [...url.searchParams.keys()].some((key) =>
+            /token|secret|api.?key|password/i.test(key),
+          )
+        )
+          findings.push({
+            name,
+            kind: "credential-shaped URL would be public in the browser bundle",
+          });
+      } catch {
+        findings.push({ name, kind: "invalid public service URL" });
+      }
+    }
+  return findings;
+}

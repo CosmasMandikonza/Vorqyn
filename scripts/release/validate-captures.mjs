@@ -5,6 +5,7 @@ import { pngSize, sha256 } from "./lib.mjs";
 const index = process.argv.indexOf("--dir");
 if (index < 0) throw new Error("--dir <capture directory> is required");
 const root = resolve(process.argv[index + 1]);
+const run = JSON.parse(readFileSync(join(root, "../capture-run.json"), "utf8"));
 const results = [];
 for (const theme of ["light", "dark"])
   for (const [width, height] of [
@@ -37,6 +38,8 @@ for (const theme of ["light", "dark"])
           meta.viewport.height !== height ||
           meta.deviceScaleFactor !== 1 ||
           meta.fullPage !== false ||
+          meta.runId !== run.id ||
+          Date.parse(meta.capturedAt) < Date.parse(run.startedAt) ||
           meta.sha256 !== sha256(png)
         )
           throw new Error(
