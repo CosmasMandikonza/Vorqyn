@@ -35,19 +35,58 @@ function errorResponse(code: string, message: string, status: 400 | 405 | 413 | 
   });
 }
 
+/**
+ * Enforce the 16 KiB input cap while streaming, BEFORE buffering the entire
+ * body. request.text() alone would read arbitrary-sized uploads into memory
+ * before checking the length, making the declared cap ineffective against
+ * oversized guest requests. Content-Length is only an early hint: every
+ * streamed chunk is counted even if the header lies or is missing.
+ */
+async function readBoundedBody(request: Request): Promise<string> {
+  const declaredLength = request.headers.get("content-length");
+  if (declaredLength !== null && /^\\d+$/.test(declaredLength) &&
+      Number(declaredLength) > LIMITS.maxBodyBytes) {
+    throw new DemoRequestError("payload_too_large", "request body exceeds the 16 KiB limit", 413);
+  }
+  if (request.body === null) return "";
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > LIMITS.maxBodyBytes) {
+        // Never continue reading a hostile oversized upload.
+        void reader.cancel().catch(() => {});
+        throw new DemoRequestError("payload_too_large", "request body exceeds the 16 KiB limit", 413);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+
 export async function POST(request: Request): Promise<Response> {
-  // Bound the input BEFORE parsing: reject oversized bodies with 413 without
-  // allocating unbounded work. (The transfer layer may 413 earlier for its
-  // own limits; this is the contract-enforcing check.)
   let rawBody: string;
   try {
-    rawBody = await request.text();
-  } catch {
+    rawBody = await readBoundedBody(request);
+  } catch (error) {
+    if (error instanceof DemoRequestError) {
+      return errorResponse(error.code, error.message, error.status);
+    }
     return errorResponse("invalid_request", "could not read request body", 400);
-  }
-  const bodyBytes = new TextEncoder().encode(rawBody).length;
-  if (bodyBytes > LIMITS.maxBodyBytes) {
-    return errorResponse("payload_too_large", `request body ${bodyBytes} bytes exceeds limit ${LIMITS.maxBodyBytes} bytes`, 413);
   }
 
   try {
