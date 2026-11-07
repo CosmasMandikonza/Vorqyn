@@ -1,12 +1,16 @@
-//! VORQYN mission escrow program — VQ-04 (issue #5) + VQ-05 (issue #6).
+//! VORQYN mission escrow program — VQ-04 (#5) + VQ-05 (#6) + VQ-06 (#7).
 //!
 //! Scope of THIS crate version: mission initialization, escrow funding,
 //! task creation with bounded reward reservation, initial operator
-//! assignment, and owner-authorized task reassignment with
-//! compare-and-set assignment versioning. Payout (verify_and_claim),
-//! delegated AI authority, operator registry and refunds are deliberately
-//! NOT implemented here — they land in VQ-06+ per docs/SOLANA_PROTOCOL.md
-//! §4.
+//! assignment, owner-authorized reassignment with compare-and-set
+//! versioning, verifier-authorized single-use payout, and safe mission
+//! close/refund. Delegated AI authority and the operator registry are
+//! deliberately NOT implemented here — they stay off-chain policy per
+//! docs/SOLANA_PROTOCOL.md §3-§4.
+//!
+//! TRUSTED VERIFIER BOUNDARY: the program enforces authorization over an
+//! opaque evidence digest signed live by the mission's independent
+//! verifier authority. It does not validate physical/sensor truth.
 //!
 //! Interface alignment: packages/contracts/CHAIN_SEAM.md (draft agreement
 //! with the VQ-01 contracts owner):
@@ -21,7 +25,8 @@
 //! - §5 reassignment is a compare-and-set on `expected_assignment_version`
 //!   and emits the enacted payout wallet (`new_payout_wallet`, IDL
 //!   `newPayoutWallet`) so off-chain receipts are self-verifying
-//!   (CHAIN_SEAM §8 open question 5 — answered YES for reassignment).
+//!   (CHAIN_SEAM §8 open question 5 — answered YES for reassignment AND
+//!   payout: TaskPaid emits recipient_wallet, IDL recipientWallet).
 //! - §7 money is integer lamports (u64) with checked arithmetic only.
 
 use anchor_lang::prelude::*;
@@ -48,6 +53,9 @@ pub const VAULT_SEED: &[u8] = b"vorqyn:vault";
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, PartialEq, Eq, Debug, InitSpace)]
 pub enum MissionStatus {
     Active,
+    /// Terminal: close_mission drained the vault and refunded the owner.
+    /// Every mission instruction rejects Closed missions.
+    Closed,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, PartialEq, Eq, Debug, InitSpace)]
@@ -61,6 +69,9 @@ pub enum TaskKind {
 pub enum TaskStatus {
     Unassigned,
     Assigned,
+    /// Terminal: verify_and_claim paid this task's current assignment
+    /// exactly once. Paid tasks cannot be reassigned or claimed again.
+    Paid,
 }
 
 /// Escrow-holding mission aggregate (PDA: [MISSION_SEED, owner, mission_id]).
@@ -148,6 +159,22 @@ pub enum VorqynError {
     TaskNotReassignable,
     #[msg("replacement operator payout wallet is invalid (default pubkey)")]
     InvalidOperatorWallet,
+    #[msg("signer is not this mission's verifier authority")]
+    InvalidVerifier,
+    #[msg("task has already been paid for this or an earlier version")]
+    TaskAlreadyPaid,
+    #[msg("evidence digest is invalid (all-zero)")]
+    InvalidEvidenceDigest,
+    #[msg("payout destination does not match the assigned operator wallet")]
+    WrongPayoutWallet,
+    #[msg("task has no current assignment to pay")]
+    TaskNotClaimable,
+    #[msg("verifier attestation window has expired")]
+    AttestationExpired,
+    #[msg("mission is closed")]
+    MissionAlreadyClosed,
+    #[msg("mission cannot close while unexpired tasks hold reservations")]
+    MissionNotClosable,
     #[msg("vault balance change does not match the funded amount")]
     VaultBalanceMismatch,
     #[msg("signer does not own this mission")]
@@ -217,6 +244,32 @@ pub struct TaskReassigned {
     pub reserved_lamports: u64,
 }
 
+/// Emitted by `verify_and_claim` (VQ-06). `recipient_wallet` (IDL
+/// `recipientWallet`) is the assigned operator the program PAID — the
+/// CHAIN_SEAM §8 Q5 payout answer; the remaining fields are the Finding-D
+/// receipt bindings (taskId, assignmentVersion, amountLamports) plus the
+/// verifier-attested digest and policy version.
+#[event]
+pub struct TaskPaid {
+    pub mission_id: String,
+    pub task_id: String,
+    pub assignment_version: u64,
+    pub recipient_wallet: Pubkey,
+    pub amount_lamports: u64,
+    pub vault_balance_lamports: u64,
+    pub evidence_digest: [u8; 32],
+    pub policy_version: u64,
+}
+
+/// Emitted by `close_mission` (VQ-06): the owner received the vault's full
+/// remainder exactly once.
+#[event]
+pub struct MissionClosed {
+    pub mission_id: String,
+    pub owner: Pubkey,
+    pub refunded_lamports: u64,
+}
+
 // ---------------------------------------------------------------------------
 // Instructions
 // ---------------------------------------------------------------------------
@@ -265,7 +318,7 @@ pub mod vorqyn {
     pub fn fund_mission(ctx: Context<FundMission>, amount: u64) -> Result<()> {
         require!(amount > 0, VorqynError::ZeroAmount);
         let mission = &mut ctx.accounts.mission;
-        require_active_not_expired(mission.expiry)?;
+        require_open_mission(&mission.status, mission.expiry)?;
 
         let vault_info = ctx.accounts.vault.to_account_info();
         let pre_lamports = vault_info.lamports();
@@ -313,7 +366,7 @@ pub mod vorqyn {
         require!(budget_lamports > 0, VorqynError::ZeroAmount);
 
         let mission = &mut ctx.accounts.mission;
-        require_active_not_expired(mission.expiry)?;
+        require_open_mission(&mission.status, mission.expiry)?;
         require!(
             budget_lamports <= mission.remaining_lamports,
             VorqynError::RewardExceedsUnreservedFunds
@@ -369,7 +422,7 @@ pub mod vorqyn {
         require!(reward_lamports > 0, VorqynError::ZeroAmount);
 
         let mission = &mut ctx.accounts.mission;
-        require_active_not_expired(mission.expiry)?;
+        require_open_mission(&mission.status, mission.expiry)?;
 
         let task = &mut ctx.accounts.task;
         require!(
@@ -447,7 +500,7 @@ pub mod vorqyn {
         require!(reward_lamports > 0, VorqynError::ZeroAmount);
 
         let mission = &mut ctx.accounts.mission;
-        require_active_not_expired(mission.expiry)?;
+        require_open_mission(&mission.status, mission.expiry)?;
 
         let task = &mut ctx.accounts.task;
         // Only one explicit allowlist of reassignable states: Assigned and
@@ -532,6 +585,167 @@ pub mod vorqyn {
         });
         Ok(())
     }
+
+    /// Independent-verifier evidence claim and single-use payout
+    /// (SOLANA_PROTOCOL §4.5; issue #7). The verifier authority stored at
+    /// `initialize_mission` CO-SIGNS this exact transaction — a live
+    /// signature binds mission, task, operator, assignment version,
+    /// evidence digest, policy version and attestation window, and cannot
+    /// be replayed against another task.
+    ///
+    /// TRUSTED BOUNDARY (issue #7 checklist): the chain validates
+    /// AUTHORIZATION over a digest. It does not — and cannot — validate
+    /// that physical sensor observations are true; that responsibility
+    /// stays with the independent verifier authority. The digest itself is
+    /// an opaque 32-byte value produced off chain (VQ-10 supplies the real
+    /// deterministic verifier; until then it is a typed fixture boundary).
+    ///
+    /// The payout destination is PROGRAM-CONTROLLED: always the currently
+    /// assigned operator wallet, never a caller-supplied account. Exactly
+    /// one payment per task: `paid_version` + `TaskStatus::Paid` terminal
+    /// state, guarded by the assignment-version compare-and-set so a proof
+    /// from before a reassignment can never pay.
+    pub fn verify_and_claim(
+        ctx: Context<VerifyAndClaim>,
+        task_id: String,
+        expected_assignment_version: u64,
+        evidence_digest: [u8; 32],
+        policy_version: u64,
+        attestation_expiry: i64,
+    ) -> Result<()> {
+        // task_id is PDA-bound (seeds constraint); verifier signature
+        // binds every argument above.
+        let _ = task_id;
+
+        let mission = &mut ctx.accounts.mission;
+        require_open_mission(&mission.status, mission.expiry)?;
+        require!(
+            attestation_expiry == 0 || attestation_expiry > Clock::get()?.unix_timestamp,
+            VorqynError::AttestationExpired
+        );
+        require!(
+            ctx.accounts.verifier.key() == mission.verifier_authority,
+            VorqynError::InvalidVerifier
+        );
+        require!(
+            evidence_digest != [0u8; 32],
+            VorqynError::InvalidEvidenceDigest
+        );
+
+        let task = &mut ctx.accounts.task;
+        require!(
+            task.status == TaskStatus::Assigned,
+            VorqynError::TaskAlreadyPaid
+        );
+        require!(task.paid_version.is_none(), VorqynError::TaskAlreadyPaid);
+        require!(
+            expected_assignment_version == task.current_assignment_version,
+            VorqynError::StaleAssignmentVersion
+        );
+        let recipient = task.current_operator.ok_or(VorqynError::TaskNotClaimable)?;
+        require!(
+            ctx.accounts.payout_wallet.key() == recipient,
+            VorqynError::WrongPayoutWallet
+        );
+        let amount = task.reward_lamports;
+        require!(amount > 0, VorqynError::ZeroAmount);
+
+        // Escrow release: vault PDA -> assigned operator wallet. The vault
+        // is PROGRAM-owned, and the system program refuses to debit
+        // accounts it does not own (ExternalAccountLamportSpend) — so this
+        // uses the standard Anchor escrow pattern for program-owned PDA
+        // vaults: direct checked lamport moves. Safe because the program
+        // owns the vault, `amount <= reserved <= funded`, and the vault
+        // therefore always stays at or above its rent-exempt minimum.
+        let vault_info = ctx.accounts.vault.to_account_info();
+        let recipient_info = ctx.accounts.payout_wallet.to_account_info();
+        **vault_info.try_borrow_mut_lamports()? = vault_info
+            .lamports()
+            .checked_sub(amount)
+            .ok_or(VorqynError::Overflow)?;
+        **recipient_info.try_borrow_mut_lamports()? = recipient_info
+            .lamports()
+            .checked_add(amount)
+            .ok_or(VorqynError::Overflow)?;
+
+        // Ledger: funded and reserved shrink together, so
+        // `reserved + remaining == funded` keeps holding and the vault can
+        // never fall below its rent-exempt minimum (reserved <= funded and
+        // the vault holds funded + rent).
+        mission.reserved_lamports = mission
+            .reserved_lamports
+            .checked_sub(amount)
+            .ok_or(VorqynError::Overflow)?;
+        mission.funded_lamports = mission
+            .funded_lamports
+            .checked_sub(amount)
+            .ok_or(VorqynError::Overflow)?;
+
+        let paid_version = task.current_assignment_version;
+        task.evidence_digest = Some(evidence_digest);
+        task.accepted_version = Some(paid_version);
+        task.paid_version = Some(paid_version);
+        task.status = TaskStatus::Paid;
+
+        emit!(TaskPaid {
+            mission_id: mission.mission_id.clone(),
+            task_id: task.task_id.clone(),
+            assignment_version: paid_version,
+            recipient_wallet: recipient,
+            amount_lamports: amount,
+            vault_balance_lamports: vault_info.lamports(),
+            evidence_digest,
+            policy_version,
+        });
+        Ok(())
+    }
+
+    /// Safe mission close and refund (SOLANA_PROTOCOL §4.6; issue #7).
+    /// Allowed only when no unsettled reservation remains, OR after the
+    /// mission expired (the documented expiry/cancellation policy: expired
+    /// missions owe nothing further and unclaimed reservations return to
+    /// the owner). Refund destination is program-controlled (`mission
+    /// .owner`), the full vault balance transfers exactly once, and the
+    /// terminal `Closed` status makes repeats fail closed.
+    pub fn close_mission(ctx: Context<CloseMission>) -> Result<()> {
+        let mission = &mut ctx.accounts.mission;
+        require!(
+            mission.status == MissionStatus::Active,
+            VorqynError::MissionAlreadyClosed
+        );
+        let now = Clock::get()?.unix_timestamp;
+        let expired = mission.expiry != 0 && now >= mission.expiry;
+        require!(
+            mission.reserved_lamports == 0 || expired,
+            VorqynError::MissionNotClosable
+        );
+
+        // Full drain of the program-owned vault to the mission owner via
+        // direct lamport moves (same pattern as payout; draining to zero
+        // closes the vault account at the end of the transaction).
+        let vault_info = ctx.accounts.vault.to_account_info();
+        let refund = vault_info.lamports();
+        if refund > 0 {
+            let owner_info = ctx.accounts.owner.to_account_info();
+            **vault_info.try_borrow_mut_lamports()? = 0;
+            **owner_info.try_borrow_mut_lamports()? = owner_info
+                .lamports()
+                .checked_add(refund)
+                .ok_or(VorqynError::Overflow)?;
+        }
+
+        mission.funded_lamports = 0;
+        mission.remaining_lamports = 0;
+        mission.reserved_lamports = 0;
+        mission.status = MissionStatus::Closed;
+
+        emit!(MissionClosed {
+            mission_id: mission.mission_id.clone(),
+            owner: mission.owner,
+            refunded_lamports: refund,
+        });
+        Ok(())
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -570,7 +784,14 @@ pub fn credit_funding(
     Ok((funded, remaining))
 }
 
-fn require_active_not_expired(expiry: i64) -> Result<()> {
+/// Every mission operation requires an Active, unexpired mission. Claims
+/// are NOT exempt (SOLANA_PROTOCOL §6: expired tasks get no new claim);
+/// closing after expiry is the documented release path instead.
+fn require_open_mission(status: &MissionStatus, expiry: i64) -> Result<()> {
+    require!(
+        *status == MissionStatus::Active,
+        VorqynError::MissionAlreadyClosed
+    );
     if expiry != 0 {
         let now = Clock::get()?.unix_timestamp;
         require!(now < expiry, VorqynError::MissionExpired);
@@ -684,6 +905,71 @@ pub struct AssignTask<'info> {
         has_one = mission @ VorqynError::InvalidTaskAccount,
     )]
     pub task: Account<'info, Task>,
+
+    pub clock: Sysvar<'info, Clock>,
+}
+
+#[derive(Accounts)]
+#[instruction(task_id: String)]
+pub struct VerifyAndClaim<'info> {
+    /// Fee payer / relayer — anyone may submit a claim; the authority is
+    /// the verifier signature, not this signer.
+    #[account(mut)]
+    pub payer: Signer<'info>,
+
+    /// The independent verifier authority (SOLANA_PROTOCOL §3). Co-signs
+    /// the transaction; checked against `mission.verifier_authority`.
+    pub verifier: Signer<'info>,
+
+    /// Non-signing holder of the mission-owner pubkey, required only to
+    /// derive the mission PDA seeds. The PDA address itself pins the owner:
+    /// any other key would derive a different mission (ConstraintSeeds).
+    /// 'info is not unchecked-safe: the seeds + has_one constraints below
+    /// are the binding.
+    pub owner: UncheckedAccount<'info>,
+
+    #[account(
+        mut,
+        seeds = [MISSION_SEED, owner.key().as_ref(), mission.mission_id.as_bytes()],
+        bump,
+        has_one = owner @ VorqynError::InvalidOwner,
+    )]
+    pub mission: Account<'info, Mission>,
+
+    #[account(
+        mut,
+        seeds = [TASK_SEED, mission.key().as_ref(), task_id.as_bytes()],
+        bump,
+        has_one = mission @ VorqynError::InvalidTaskAccount,
+    )]
+    pub task: Account<'info, Task>,
+
+    #[account(mut, seeds = [VAULT_SEED, mission.key().as_ref()], bump)]
+    pub vault: UncheckedAccount<'info>,
+
+    /// Payout destination. NOT caller-chosen: the instruction requires
+    /// this key to equal the task's currently assigned operator wallet.
+    #[account(mut)]
+    pub payout_wallet: UncheckedAccount<'info>,
+
+    pub clock: Sysvar<'info, Clock>,
+}
+
+#[derive(Accounts)]
+pub struct CloseMission<'info> {
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [MISSION_SEED, owner.key().as_ref(), mission.mission_id.as_bytes()],
+        bump,
+        has_one = owner @ VorqynError::InvalidOwner,
+    )]
+    pub mission: Account<'info, Mission>,
+
+    #[account(mut, seeds = [VAULT_SEED, mission.key().as_ref()], bump)]
+    pub vault: UncheckedAccount<'info>,
 
     pub clock: Sysvar<'info, Clock>,
 }

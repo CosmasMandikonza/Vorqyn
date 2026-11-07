@@ -23,9 +23,12 @@ use {
 };
 
 use vorqyn::{
-    accounts::{AssignTask, AuthorizeReassignment, CreateTask, FundMission, InitializeMission},
-    instruction, Mission, MissionStatus, Task, TaskKind, TaskReassigned, TaskStatus, MISSION_SEED,
-    TASK_SEED, VAULT_SEED,
+    accounts::{
+        AssignTask, AuthorizeReassignment, CloseMission, CreateTask, FundMission,
+        InitializeMission, VerifyAndClaim,
+    },
+    instruction, Mission, MissionStatus, Task, TaskKind, TaskPaid, TaskReassigned, TaskStatus,
+    MISSION_SEED, TASK_SEED, VAULT_SEED,
 };
 
 const LAMPORTS: u64 = 1_000_000_000; // 1 SOL
@@ -39,7 +42,9 @@ struct TestEnv {
     svm: LiteSVM,
     owner: Keypair,
     operator: Keypair,
-    verifier: Pubkey,
+    /// Kept as a keypair: verify_and_claim requires the verifier authority
+    /// to CO-SIGN the claim transaction (VQ-06).
+    verifier: Keypair,
     mission: Pubkey,
     vault: Pubkey,
 }
@@ -145,11 +150,11 @@ fn setup() -> TestEnv {
     let mut svm = load_program();
     let owner = Keypair::new();
     let operator = Keypair::new();
-    let verifier = Keypair::new().pubkey();
+    let verifier = Keypair::new();
     svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
     svm.airdrop(&operator.pubkey(), LAMPORTS).unwrap();
 
-    let ix = init_mission_ix(&owner, "port-001", verifier, EXPIRY_FAR_FUTURE);
+    let ix = init_mission_ix(&owner, "port-001", verifier.pubkey(), EXPIRY_FAR_FUTURE);
     send(&mut svm, &owner, &[ix]).expect("initialize_mission should succeed");
 
     let mission = mission_pda(&owner.pubkey(), "port-001");
@@ -273,7 +278,7 @@ fn initialize_mission_creates_pda_and_vault_with_exact_costs() {
     } = setup();
     let state = mission_state(&svm, &mission);
     assert_eq!(state.owner, owner.pubkey());
-    assert_eq!(state.verifier_authority, verifier);
+    assert_eq!(state.verifier_authority, verifier.pubkey());
     assert_eq!(state.mission_id, "port-001");
     assert_eq!(
         (
@@ -347,7 +352,7 @@ fn initialize_rejects_replay_of_existing_mission_pda() {
     } = setup();
     // Re-initializing the same mission PDA (different expiry arg) must
     // fail: the account already exists.
-    let ix = init_mission_ix(&owner, "port-001", verifier, 0);
+    let ix = init_mission_ix(&owner, "port-001", verifier.pubkey(), 0);
     let tx = signed_tx(&mut svm, &owner, ix);
     assert_tx_fails(&mut svm, tx, "already in use");
 }
@@ -1423,6 +1428,777 @@ fn expired_mission_rejects_fund_create_assign_and_changes_nothing() {
         owner_before - lamports(&svm, &owner.pubkey()),
         3 * LITE_TX_FEE,
         "rejected transactions may only cost the fee payer the fees"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// verify_and_claim + close_mission (VQ-06 / issue #7)
+// ---------------------------------------------------------------------------
+
+/// Non-zero fixture digest — the real digests come from VQ-10's off-chain
+/// deterministic verifier; here they are an explicitly typed fixture.
+const DIGEST: [u8; 32] = [0x5au8; 32];
+
+/// Submit a claim signed by `payer` (fees) and `verifier` (authority).
+/// Returns the transaction logs for event-byte assertions.
+#[allow(clippy::too_many_arguments)] // wire-shape helper: one arg per instruction field
+fn claim_capture_logs(
+    svm: &mut LiteSVM,
+    payer: &Keypair,
+    verifier: &Keypair,
+    owner_pk: &Pubkey,
+    mission: Pubkey,
+    task_id: &str,
+    expected_version: u64,
+    digest: [u8; 32],
+    payout_wallet: Pubkey,
+) -> Result<Vec<String>, String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::VerifyAndClaim {
+            task_id: task_id.to_string(),
+            expected_assignment_version: expected_version,
+            evidence_digest: digest,
+            policy_version: 1,
+            attestation_expiry: 0,
+        }
+        .data(),
+        VerifyAndClaim {
+            payer: payer.pubkey(),
+            verifier: verifier.pubkey(),
+            owner: *owner_pk,
+            mission,
+            task: task_pda(&mission, task_id),
+            vault: vault_pda(&mission),
+            payout_wallet,
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let blockhash = svm.latest_blockhash();
+    let msg = Message::new_with_blockhash(&[ix], Some(&payer.pubkey()), &blockhash);
+    let tx =
+        VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[payer, verifier]).unwrap();
+    svm.send_transaction(tx)
+        .map(|meta| meta.logs)
+        .map_err(|err| format!("{err:?}"))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn claim(
+    svm: &mut LiteSVM,
+    payer: &Keypair,
+    verifier: &Keypair,
+    owner_pk: &Pubkey,
+    mission: Pubkey,
+    task_id: &str,
+    expected_version: u64,
+    payout_wallet: Pubkey,
+) -> Result<(), String> {
+    claim_capture_logs(
+        svm,
+        payer,
+        verifier,
+        owner_pk,
+        mission,
+        task_id,
+        expected_version,
+        DIGEST,
+        payout_wallet,
+    )
+    .map(|_| ())
+}
+
+fn close(svm: &mut LiteSVM, owner: &Keypair, mission: Pubkey) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::CloseMission {}.data(),
+        CloseMission {
+            owner: owner.pubkey(),
+            mission,
+            vault: vault_pda(&mission),
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    send(svm, owner, &[ix])
+}
+
+#[test]
+fn claim_pays_current_operator_exactly_once() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+    let vault_before = lamports(&svm, &vault);
+    let operator_before = lamports(&svm, &operator_pk);
+    let owner_before = lamports(&svm, &owner.pubkey());
+
+    let logs = claim_capture_logs(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        DIGEST,
+        operator_pk,
+    )
+    .expect("verifier-authorized claim should succeed");
+
+    // EXACT money movement: vault -reward, assigned operator +reward; the
+    // fee payer paid only the fee.
+    assert_eq!(lamports(&svm, &vault), vault_before - 400_000_000);
+    assert_eq!(lamports(&svm, &operator_pk), operator_before + 400_000_000);
+    // Claim transactions carry TWO signatures (payer + verifier).
+    assert_eq!(
+        owner_before - lamports(&svm, &owner.pubkey()),
+        2 * LITE_TX_FEE
+    );
+
+    // Terminal task state, one-time markers, stored digest.
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(task.status, TaskStatus::Paid);
+    assert_eq!(task.paid_version, Some(1));
+    assert_eq!(task.accepted_version, Some(1));
+    assert_eq!(task.evidence_digest, Some(DIGEST));
+    assert_eq!(
+        task.current_assignment_version, 1,
+        "claim never bumps version"
+    );
+
+    // Ledger: funded and reserved shrank together; invariant preserved.
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.reserved_lamports, 0);
+    assert_eq!(state.funded_lamports, 3 * LAMPORTS - 400_000_000);
+    assert_eq!(state.remaining_lamports, 3 * LAMPORTS - 400_000_000);
+    assert_eq!(
+        state.reserved_lamports + state.remaining_lamports,
+        state.funded_lamports
+    );
+
+    // Deterministic event (CHAIN_SEAM Q5 payout answer): recipientWallet +
+    // the Finding-D bindings, byte-exact against the program log.
+    let expected_event = TaskPaid {
+        mission_id: "port-001".to_string(),
+        task_id: "task-rs".to_string(),
+        assignment_version: 1,
+        recipient_wallet: operator_pk,
+        amount_lamports: 400_000_000,
+        vault_balance_lamports: vault_before - 400_000_000,
+        evidence_digest: DIGEST,
+        policy_version: 1,
+    };
+    let mut expected = TaskPaid::DISCRIMINATOR.to_vec();
+    expected_event
+        .serialize(&mut expected)
+        .expect("borsh-serializing the expected event cannot fail");
+    let encoded = BASE64.encode(&expected);
+    assert!(
+        logs.iter()
+            .any(|line| line == &format!("Program data: {encoded}")),
+        "TaskPaid must be emitted byte-for-byte, logs were: {logs:?}"
+    );
+}
+
+#[test]
+fn fund_reassign_claim_full_flow_pays_only_the_new_operator() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let old_operator = operator.pubkey();
+    let replacement = Keypair::new();
+    svm.airdrop(&replacement.pubkey(), LAMPORTS).unwrap();
+    let old_operator_before = lamports(&svm, &old_operator);
+    let replacement_before = lamports(&svm, &replacement.pubkey());
+
+    // The flagship scenario: evidence failure -> reassignment -> verified
+    // delivery -> payout lands on the replacement wallet only.
+    reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        replacement.pubkey(),
+        700_000_000,
+    )
+    .unwrap();
+    claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        2,
+        replacement.pubkey(),
+    )
+    .expect("claim for version 2 should pay the replacement");
+
+    assert_eq!(
+        lamports(&svm, &old_operator),
+        old_operator_before,
+        "old operator must receive nothing"
+    );
+    assert_eq!(
+        lamports(&svm, &replacement.pubkey()),
+        replacement_before + 700_000_000
+    );
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(task.paid_version, Some(2));
+    assert_eq!(task.current_assignment_version, 2);
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.reserved_lamports, 0);
+    assert_eq!(state.funded_lamports, 3 * LAMPORTS - 700_000_000);
+}
+
+#[test]
+fn repeat_claim_transfers_nothing() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+    claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .unwrap();
+    let vault_after = lamports(&svm, &vault);
+    let operator_after = lamports(&svm, &operator_pk);
+
+    // RPC-timeout-style retry with the same arguments: no second payment.
+    // (LiteSVM dedupes byte-identical transactions, so rotate the
+    // blockhash to make this a genuine second submission.)
+    svm.expire_blockhash();
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect_err("duplicate claim must be rejected");
+    assert!(
+        err.to_lowercase().contains("taskalreadypaid"),
+        "expected TaskAlreadyPaid, got: {err}"
+    );
+    assert_eq!(lamports(&svm, &vault), vault_after);
+    assert_eq!(lamports(&svm, &operator_pk), operator_after);
+}
+
+#[test]
+fn wrong_verifier_cannot_sign_claims() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier: _real_verifier,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+    let forged = Keypair::new();
+    let vault_before = lamports(&svm, &vault);
+
+    let err = claim(
+        &mut svm,
+        &owner,
+        &forged,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect_err("forged verifier must be rejected");
+    assert!(
+        err.to_lowercase().contains("invalidverifier"),
+        "expected InvalidVerifier, got: {err}"
+    );
+    assert_eq!(lamports(&svm, &vault), vault_before, "nothing paid");
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").status,
+        TaskStatus::Assigned
+    );
+}
+
+#[test]
+fn stale_proof_version_rejected_after_reassignment() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let old_operator = operator.pubkey();
+    let replacement = Keypair::new();
+    svm.airdrop(&replacement.pubkey(), LAMPORTS).unwrap();
+
+    // SOLANA_PROTOCOL §6: "Stale ROV A proof after reassignment to ROV B".
+    // The verifier's approval for version 1 cannot pay once version 2 is
+    // enacted, even if the verifier re-signs it.
+    reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        replacement.pubkey(),
+        400_000_000,
+    )
+    .unwrap();
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        old_operator,
+    )
+    .expect_err("claim bound to the replaced version must fail");
+    assert!(
+        err.to_lowercase().contains("staleassignmentversion"),
+        "expected StaleAssignmentVersion, got: {err}"
+    );
+    assert_eq!(
+        lamports(&svm, &old_operator),
+        LAMPORTS,
+        "old operator wallet untouched"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").paid_version,
+        None,
+        "task stays unpaid"
+    );
+}
+
+#[test]
+fn payout_destination_is_program_controlled() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+
+    // Wrong destination account: rejected.
+    let thief = Keypair::new();
+    svm.airdrop(&thief.pubkey(), LAMPORTS).unwrap();
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        thief.pubkey(),
+    )
+    .expect_err("caller-supplied destination must be rejected");
+    assert!(
+        err.to_lowercase().contains("wrongpayoutwallet"),
+        "expected WrongPayoutWallet, got: {err}"
+    );
+
+    // Anyone may RELAY a legitimate claim (here the old-operator-to-be
+    // pays the fees): funds still land on the assigned wallet.
+    let relay = Keypair::new();
+    svm.airdrop(&relay.pubkey(), LAMPORTS).unwrap();
+    claim(
+        &mut svm,
+        &relay,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect("relayed claim for the assigned wallet must succeed");
+    assert_eq!(
+        lamports(&svm, &operator_pk),
+        LAMPORTS + 400_000_000,
+        "assigned operator received the reward"
+    );
+}
+
+#[test]
+fn claim_rejects_zero_digest_and_stale_attestation() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+
+    let err = claim_capture_logs(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        [0u8; 32],
+        operator_pk,
+    )
+    .expect_err("all-zero digest must be rejected");
+    assert!(
+        err.to_lowercase().contains("invalidevidencedigest"),
+        "expected InvalidEvidenceDigest, got: {err}"
+    );
+
+    // Attestation whose validity window has already passed (the program
+    // reads the same Clock the test controls).
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 2,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: TEST_NOW + 10_000,
+    });
+    let err = claim_with_attestation_expiry(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        TEST_NOW + 5_000,
+    )
+    .expect_err("expired attestation window must be rejected");
+    assert!(
+        err.to_lowercase().contains("attestationexpired"),
+        "expected AttestationExpired, got: {err}"
+    );
+}
+
+/// claim_capture_logs with an explicit attestation expiry argument.
+fn claim_with_attestation_expiry(
+    svm: &mut LiteSVM,
+    payer: &Keypair,
+    verifier: &Keypair,
+    owner_pk: &Pubkey,
+    mission: Pubkey,
+    attestation_expiry: i64,
+) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::VerifyAndClaim {
+            task_id: "task-rs".to_string(),
+            expected_assignment_version: 1,
+            evidence_digest: DIGEST,
+            policy_version: 1,
+            attestation_expiry,
+        }
+        .data(),
+        VerifyAndClaim {
+            payer: payer.pubkey(),
+            verifier: verifier.pubkey(),
+            owner: *owner_pk,
+            mission,
+            task: task_pda(&mission, "task-rs"),
+            vault: vault_pda(&mission),
+            payout_wallet: task_state(svm, &mission, "task-rs")
+                .current_operator
+                .expect("assigned fixture"),
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let blockhash = svm.latest_blockhash();
+    let msg = Message::new_with_blockhash(&[ix], Some(&payer.pubkey()), &blockhash);
+    let tx =
+        VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[payer, verifier]).unwrap();
+    svm.send_transaction(tx)
+        .map(|_| ())
+        .map_err(|err| format!("{err:?}"))
+}
+
+#[test]
+fn claim_rejected_after_mission_expiry_and_after_close() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+
+    // Expired mission: claims are rejected (SOLANA_PROTOCOL §6); close
+    // after expiry is the release path instead.
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 3,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: EXPIRY_FAR_FUTURE,
+    });
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect_err("claim after mission expiry must be rejected");
+    assert!(
+        err.to_lowercase().contains("missionexpired"),
+        "expected MissionExpired, got: {err}"
+    );
+
+    // Un-expire the clock (back to the fixture time), settle the task, and
+    // close the mission; a claim against the Closed mission must reject.
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 3,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: TEST_NOW,
+    });
+    svm.expire_blockhash(); // the rejected claim above had identical bytes
+    claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .unwrap();
+    close(&mut svm, &owner, mission).unwrap();
+    svm.expire_blockhash();
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect_err("claim after close must be rejected");
+    assert!(
+        err.to_lowercase().contains("missionalreadyclosed"),
+        "expected MissionAlreadyClosed, got: {err}"
+    );
+}
+
+#[test]
+fn close_blocked_while_reservations_outstanding() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let owner_before = lamports(&svm, &owner.pubkey());
+    let vault_before = lamports(&svm, &vault);
+
+    let err = close(&mut svm, &owner, mission)
+        .expect_err("close with an outstanding reservation must be rejected");
+    assert!(
+        err.to_lowercase().contains("missionnotclosable"),
+        "expected MissionNotClosable, got: {err}"
+    );
+    assert_eq!(lamports(&svm, &vault), vault_before);
+    assert_eq!(
+        lamports(&svm, &owner.pubkey()),
+        owner_before - LITE_TX_FEE,
+        "only the fee was paid"
+    );
+    assert_eq!(mission_state(&svm, &mission).status, MissionStatus::Active);
+}
+
+#[test]
+fn close_refunds_unused_balance_exactly_once() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+    claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .unwrap();
+
+    let vault_total = lamports(&svm, &vault);
+    let owner_before = lamports(&svm, &owner.pubkey());
+    close(&mut svm, &owner, mission).expect("close with no obligations should succeed");
+
+    // Full vault remainder (including the original rent seed) to the
+    // owner, vault fully drained, mission terminal.
+    assert_eq!(
+        lamports(&svm, &owner.pubkey()),
+        owner_before + vault_total - LITE_TX_FEE
+    );
+    // Fully-drained zero-lamport accounts are garbage collected: the
+    // vault no longer exists at all.
+    assert!(svm.get_account(&vault).is_none());
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.status, MissionStatus::Closed);
+    assert_eq!(
+        (
+            state.funded_lamports,
+            state.remaining_lamports,
+            state.reserved_lamports
+        ),
+        (0, 0, 0)
+    );
+
+    // Second close is rejected (explicit repeat policy), and every
+    // mutating mission instruction fails closed afterwards. Rotate the
+    // blockhash so this is a genuine second close attempt, not a LiteSVM
+    // signature-dedup artifact.
+    svm.expire_blockhash();
+    let err = close(&mut svm, &owner, mission).expect_err("double close must be rejected");
+    assert!(
+        err.to_lowercase().contains("missionalreadyclosed"),
+        "expected MissionAlreadyClosed, got: {err}"
+    );
+    assert!(
+        fund(&mut svm, &owner, mission, vault, LAMPORTS / 2).is_err(),
+        "funding a closed mission must fail"
+    );
+    assert!(
+        create_task(&mut svm, &owner, mission, "task-late", 100_000).is_err(),
+        "creating tasks on a closed mission must fail"
+    );
+}
+
+#[test]
+fn close_after_expiry_releases_reserved_to_owner() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        vault,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let owner_before = lamports(&svm, &owner.pubkey());
+    let vault_total = lamports(&svm, &vault);
+
+    // Expired missions owe nothing further (documented expiry/cancellation
+    // policy): close refunds EVERYTHING, including the reserved reward.
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 4,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: EXPIRY_FAR_FUTURE,
+    });
+    close(&mut svm, &owner, mission).expect("close after expiry should release reserved funds");
+    assert_eq!(
+        lamports(&svm, &owner.pubkey()),
+        owner_before + vault_total - LITE_TX_FEE
+    );
+    assert!(
+        svm.get_account(&vault).is_none(),
+        "drained vault must be garbage collected"
+    );
+    assert_eq!(mission_state(&svm, &mission).status, MissionStatus::Closed);
+}
+
+#[test]
+fn paid_task_cannot_be_reassigned() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+    claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .unwrap();
+
+    // The VQ-05 forged-account guard, now end-to-end with a REAL paid task.
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        Keypair::new().pubkey(),
+        500_000_000,
+    )
+    .expect_err("paid task must not be reassignable");
+    assert!(
+        err.to_lowercase().contains("tasknotreassignable"),
+        "expected TaskNotReassignable, got: {err}"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").current_assignment_version,
+        1
     );
 }
 
