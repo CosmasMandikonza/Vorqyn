@@ -1,0 +1,19 @@
+
+> vorqyn@ test /workspace/work/vq02-clean
+> pnpm -r run test
+
+Scope: 2 of 3 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/vq02-clean/packages/contracts
+packages/contracts test:  Test Files  1 passed (1)
+packages/contracts test:       Tests  1 passed (1)
+packages/contracts test:    Start at  10:55:27
+packages/contracts test:    Duration  177ms (transform 59%, import 22%, worker 11%, tests 8%)
+packages/contracts test: Done
+apps/web test$ vitest run
+apps/web test:  RUN  v5.1.0 /workspace/work/vq02-clean/apps/web
+apps/web test:  Test Files  1 passed (1)
+apps/web test:       Tests  6 passed (6)
+apps/web test:    Start at  10:55:28
+apps/web test:    Duration  2.28s (environment 44%, tests 22%, import 13%, transform 12%, setup 8%)
+apps/web test: Done

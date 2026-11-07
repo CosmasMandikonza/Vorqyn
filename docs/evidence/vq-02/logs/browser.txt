@@ -1,0 +1,59 @@
+
+> @vorqyn/web@0.0.0 test:browser /workspace/work/vq02-clean/apps/web
+> playwright test
+
+[WebServer] (node:8333) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:8347) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 39 tests using 2 workers
+
+(node:8371) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:8372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/39] tests/browser/experience.spec.ts:18:7 › landing / light / 1440px
+[2/39] tests/browser/experience.spec.ts:18:7 › landing / light / 1280px
+[3/39] tests/browser/experience.spec.ts:18:7 › landing / light / 1024px
+[4/39] tests/browser/experience.spec.ts:18:7 › landing / light / 390px
+[5/39] tests/browser/experience.spec.ts:18:7 › landing / light / 320px
+[6/39] tests/browser/experience.spec.ts:18:7 › landing / dark / 1440px
+[7/39] tests/browser/experience.spec.ts:18:7 › landing / dark / 1280px
+[8/39] tests/browser/experience.spec.ts:18:7 › landing / dark / 1024px
+[9/39] tests/browser/experience.spec.ts:18:7 › landing / dark / 390px
+[10/39] tests/browser/experience.spec.ts:18:7 › landing / dark / 320px
+[11/39] tests/browser/experience.spec.ts:18:7 › demo / light / 1440px
+[12/39] tests/browser/experience.spec.ts:18:7 › demo / light / 1280px
+[13/39] tests/browser/experience.spec.ts:18:7 › demo / light / 1024px
+[14/39] tests/browser/experience.spec.ts:18:7 › demo / light / 390px
+[15/39] tests/browser/experience.spec.ts:18:7 › demo / light / 320px
+[16/39] tests/browser/experience.spec.ts:18:7 › demo / dark / 1440px
+[17/39] tests/browser/experience.spec.ts:18:7 › demo / dark / 1280px
+[18/39] tests/browser/experience.spec.ts:18:7 › demo / dark / 1024px
+[19/39] tests/browser/experience.spec.ts:18:7 › demo / dark / 390px
+[20/39] tests/browser/experience.spec.ts:18:7 › demo / dark / 320px
+[21/39] tests/browser/experience.spec.ts:18:7 › workspace / light / 1440px
+[22/39] tests/browser/experience.spec.ts:18:7 › workspace / light / 1280px
+[23/39] tests/browser/experience.spec.ts:18:7 › workspace / light / 1024px
+[24/39] tests/browser/experience.spec.ts:18:7 › workspace / light / 390px
+[25/39] tests/browser/experience.spec.ts:18:7 › workspace / light / 320px
+[26/39] tests/browser/experience.spec.ts:18:7 › workspace / dark / 1440px
+[27/39] tests/browser/experience.spec.ts:18:7 › workspace / dark / 1280px
+[28/39] tests/browser/experience.spec.ts:18:7 › workspace / dark / 1024px
+[29/39] tests/browser/experience.spec.ts:18:7 › workspace / dark / 390px
+[30/39] tests/browser/experience.spec.ts:18:7 › workspace / dark / 320px
+[31/39] tests/browser/experience.spec.ts:63:1 › hero CTAs, route navigation and native builder outline
+[32/39] tests/browser/experience.spec.ts:89:1 › theme survives navigation and reload and responds to system changes
+[33/39] tests/browser/experience.spec.ts:118:1 › keyboard mobile sheet traps focus, closes with Escape and follows links
+[34/39] tests/browser/experience.spec.ts:150:1 › skip link and reduced motion preserve immediate readable content
+[35/39] tests/browser/experience.spec.ts:170:1 › all internal link paths and anchor targets exist
+[36/39] tests/browser/experience.spec.ts:192:1 › missing route gives a useful 404 and no fabricated success
+[37/39] tests/browser/experience.spec.ts:206:1 › blocked fonts use readable fallbacks
+[38/39] tests/browser/experience.spec.ts:218:1 › native 200% browser zoom keeps navigation and primary actions usable
+[39/39] tests/browser/experience.spec.ts:267:1 › server-rendered routes remain readable with JavaScript disabled
+  39 passed (1.4m)
