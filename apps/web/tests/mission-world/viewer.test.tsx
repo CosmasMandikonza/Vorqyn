@@ -85,7 +85,7 @@ describe("2D fallback (no-WebGL / forced 2D)", () => {
   it("lists every zone from world.json with kind and damage flags", () => {
     renderFallback();
     for (const zone of realWorld.zones) {
-      const needle = zone.label.split("(")[0].trim();
+      const needle = zone.label.split("(")[0]!.trim();
       expect(screen.getAllByText(new RegExp(needle, "i")).length).toBeGreaterThan(0);
     }
     expect(screen.getByText(/Pier C deck \(collapsed beyond y=-30\)/i)).toBeVisible();
