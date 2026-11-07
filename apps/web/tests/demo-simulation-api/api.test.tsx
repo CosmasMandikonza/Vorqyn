@@ -377,6 +377,36 @@ describe("validation and kernel rejections", () => {
     await expectError(response, 413, "payload_too_large");
   });
 
+  it("rejects a malicious streaming body before reading the entire upload", async () => {
+    let pulls = 0;
+    // Twenty 8-KiB chunks would exceed the documented cap tenfold.
+    // The handler must stop after the third one, not await request.text()
+    // and buffer the whole request into server memory.
+    const stream = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulls += 1;
+        controller.enqueue(new Uint8Array(8192));
+        if (pulls === 20) controller.close();
+      },
+    });
+    const request = new Request(ROUTE, {
+      method: "POST",
+      body: stream,
+      duplex: "half",
+    } as RequestInit & { duplex: "half" });
+    await expectError(await POST(request), 413, "payload_too_large");
+    expect(pulls).toBeLessThan(20);
+  });
+
+  it("rejects a huge declared Content-Length without consuming the body", async () => {
+    const request = new Request(ROUTE, {
+      method: "POST",
+      headers: { "content-length": String(LIMITS.maxBodyBytes + 1) },
+      body: json({ schema: REQUEST_SCHEMA, operations: [] }),
+    });
+    await expectError(await POST(request), 413, "payload_too_large");
+  });
+
   it("non-POST methods answer with the typed error schema", async () => {
     const getResponse = await GET();
     expect(getResponse.status).toBe(405);
