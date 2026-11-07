@@ -1,0 +1,31 @@
+[package]
+name = "vorqyn"
+version = "0.1.0"
+description = "VORQYN mission escrow program - VQ-00 skeleton (no instructions implemented)"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "vorqyn"
+
+# Feature set mirrors the official Anchor 1.x program template
+# (cli/src/template.rs in the anchor repo). `anchor-debug`, `custom-heap`
+# and `custom-panic` are referenced by the #[program] macro's expanded
+# cfg() checks; omitting them fails clippy -D warnings via unexpected_cfgs.
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = "=1.2.2"
+
+# Registers the Solana SBF target_os value so host-side cargo check/clippy
+# do not flag cfg(target_os = "solana") emitted by Anchor macros.
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }

@@ -6,6 +6,18 @@ VORQYN is a proposed company-grade mission platform for independently operated a
 
 > **Status — November 6, 2026:** This repository has been initialized with product and engineering documentation. The app, smart contract, simulations, test infrastructure, and demo **have not yet been implemented**. The materials below are a specification, not evidence of a functioning product.
 
+## Local development (VQ-00 foundation)
+
+The monorepo foundation is scaffolded; product functionality is not implemented yet.
+
+- **Runtime:** Node `22.21.1` (see `.nvmrc`) and pnpm `10.34.5` (pinned via the root `packageManager` field; `corepack enable` prepares it automatically).
+- **Install:** `pnpm install` (committed lockfile; CI uses `--frozen-lockfile`).
+- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) runs the same scripts on every pull request.
+- **Web app:** `pnpm dev:web` serves an explicitly labeled placeholder page (`apps/web`). The branded shell is VQ-02.
+- **Shared contracts:** `packages/contracts` is scaffolding only; the real contracts and reducer are frozen in VQ-01 (#2).
+- **Anchor program:** `programs/vorqyn` is a no-op skeleton verified by `cargo fmt --check`, `cargo clippy` and `cargo check` in CI. The Anchor/Solana toolchain (`avm`, `anchor`, `solana` CLI, local validator) is **not** installed by pnpm; `anchor build`/`anchor test` become relevant from VQ-04 (#5) onward. Devnet/test keypairs only — never commit keys or secrets.
+- **Windows:** the team develops on Linux/macOS; Windows contributors should use WSL2 for the Node toolchain and must install Rust/Solana toolchains separately for Anchor work.
+
 ## What makes VORQYN special?
 
 A port needs to inspect access roads, aerial structures, and underwater obstructions after a storm. A drone surveys from above, a rover checks access, and an underwater ROV surveys beneath the docks. The ROV's optical evidence becomes unusable. Rather than declaring success, VORQYN rejects the result, compares qualified replacements, authorizes a sonar-capable operator under a limited on-chain budget, completes a new simulated inspection, and settles the accepted task **exactly once** on Solana devnet.
