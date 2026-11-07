@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:22.21.1-bookworm-slim
+FROM node:22.21.1-bookworm-slim AS build
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # Optional corporate/session CA stays out of image layers; ordinary hosts use
@@ -14,13 +14,17 @@ RUN --mount=type=secret,id=proxy_ca \
     rm -rf /tmp/pnpm-store && \
     pnpm --filter @vorqyn/web build && \
     chown -R node:node apps/web/.next
+
+FROM node:22.21.1-bookworm-slim AS runtime
+WORKDIR /app
 ARG VORQYN_BUILD_SHA
 LABEL org.opencontainers.image.source="https://github.com/CosmasMandikonza/Vorqyn" \
       org.opencontainers.image.revision="${VORQYN_BUILD_SHA}"
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000
-# Preserve workspace symlinks and actual external kernel/contract sources.
-# A single stage avoids duplicating this workspace on VFS Docker daemons.
-# This is a Node server image, not a static export or a Solana deployment.
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
+# Trace the real Node API/workspace imports; do not ship the development tree.
+COPY --from=build --chown=node:node /app/apps/web/.next/standalone ./
+COPY --from=build --chown=node:node /app/apps/web/public ./apps/web/public
+COPY --from=build --chown=node:node /app/apps/web/.next/static ./apps/web/.next/static
 USER node
 EXPOSE 3000
-CMD ["node", "apps/web/node_modules/next/dist/bin/next", "start", "apps/web", "--hostname", "0.0.0.0"]
+CMD ["node", "apps/web/server.js"]
