@@ -7,7 +7,15 @@ import { ToggleGroup } from "@base-ui/react/toggle-group";
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
-export function HaloSegmented({ value, onValueChange, disabled = false }: { value: string; onValueChange: (value: string) => void; disabled?: boolean }) {
+export function HaloSegmented({
+  value,
+  onValueChange,
+  disabled = false,
+}: {
+  value: string;
+  onValueChange: (value: string) => void;
+  disabled?: boolean;
+}) {
   const track = useRef<HTMLDivElement>(null);
   const items = useRef(new Map<string, HTMLButtonElement>());
   const [thumb, setThumb] = useState({ x: 0, width: 0 });
@@ -20,23 +28,51 @@ export function HaloSegmented({ value, onValueChange, disabled = false }: { valu
     const p = parent.getBoundingClientRect();
     setThumb({ x: a.left - p.left, width: a.width });
   }, [value]);
-  useLayoutEffect(() => { measure(); }, [measure]);
+  useLayoutEffect(() => {
+    measure();
+  }, [measure]);
   useLayoutEffect(() => {
     if (!track.current) return;
     const observer = new ResizeObserver(measure);
     observer.observe(track.current);
     return () => observer.disconnect();
   }, [measure]);
-  return <div className="halo-segmented" ref={track}>
-    <motion.span aria-hidden="true" className="halo-thumb" initial={false}
-      animate={{ x: thumb.x, width: thumb.width }}
-      transition={reducedMotion ? { duration: 0 } : { type: "spring", bounce: 0.12, damping: 34, stiffness: 420 }} />
-    <ToggleGroup aria-label="Color theme" className="halo-options" disabled={disabled} multiple={false} value={value ? [value] : []}
-      onValueChange={(next) => { if (next[0]) onValueChange(next[0]); }}>
-      {["light", "dark", "system"].map((item) => <Toggle key={item} value={item}
-        ref={(element) => { if (element) items.current.set(item, element); else items.current.delete(item); }}>
-        {item.charAt(0).toUpperCase() + item.slice(1)}
-      </Toggle>)}
-    </ToggleGroup>
-  </div>;
+  return (
+    <div className="halo-segmented" ref={track}>
+      <motion.span
+        aria-hidden="true"
+        className="halo-thumb"
+        initial={false}
+        animate={{ x: thumb.x, width: thumb.width }}
+        transition={
+          reducedMotion
+            ? { duration: 0 }
+            : { type: "spring", bounce: 0.12, damping: 34, stiffness: 420 }
+        }
+      />
+      <ToggleGroup
+        aria-label="Color theme"
+        className="halo-options"
+        disabled={disabled}
+        multiple={false}
+        value={value ? [value] : []}
+        onValueChange={(next) => {
+          if (next[0]) onValueChange(next[0]);
+        }}
+      >
+        {["light", "dark", "system"].map((item) => (
+          <Toggle
+            key={item}
+            value={item}
+            ref={(element) => {
+              if (element) items.current.set(item, element);
+              else items.current.delete(item);
+            }}
+          >
+            {item.charAt(0).toUpperCase() + item.slice(1)}
+          </Toggle>
+        ))}
+      </ToggleGroup>
+    </div>
+  );
 }

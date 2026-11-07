@@ -1,8 +1,8 @@
+import tseslint from "typescript-eslint";
 import next from "@next/eslint-plugin-next";
 import hooks from "eslint-plugin-react-hooks";
 
-export default [{
-  files: ["apps/web/**/*.{ts,tsx}"],
+export const frontendRules = {
   plugins: { "@next/next": next, "react-hooks": hooks },
   rules: {
     ...next.configs.recommended.rules,
@@ -10,5 +10,19 @@ export default [{
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
   },
-  settings: { next: { rootDir: "apps/web/" } },
-}];
+};
+
+export default tseslint.config(
+  { ignores: ["**/node_modules/**", "**/.next/**", "**/next-env.d.ts"] },
+  ...tseslint.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: { tsconfigRootDir: import.meta.dirname },
+    },
+  },
+  {
+    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
+    ...frontendRules,
+    settings: { next: { rootDir: import.meta.dirname } },
+  },
+);

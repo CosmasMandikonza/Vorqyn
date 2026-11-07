@@ -9,7 +9,17 @@ const clientSnapshot = () => true;
 const serverSnapshot = () => false;
 
 export function ThemeSelector() {
-  const mounted = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
+  const mounted = useSyncExternalStore(
+    subscribe,
+    clientSnapshot,
+    serverSnapshot,
+  );
   const { theme, setTheme } = useTheme();
-  return <HaloSegmented value={mounted ? theme ?? "system" : ""} disabled={!mounted} onValueChange={setTheme} />;
+  return (
+    <HaloSegmented
+      value={mounted ? (theme ?? "system") : ""}
+      disabled={!mounted}
+      onValueChange={setTheme}
+    />
+  );
 }
