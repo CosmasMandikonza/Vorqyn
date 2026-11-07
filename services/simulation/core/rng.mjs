@@ -72,7 +72,7 @@ function splitMix32Round(x) {
 }
 
 function toUint32(value) {
-  if (!Number.isFinite(value) || value < 0 || value > 4294967295) {
+  if (!Number.isInteger(value) || value < 0 || value > 4294967295) {
     throw new RangeError(`seed value must be an unsigned 32-bit integer, got ${value}`);
   }
   return value >>> 0;
