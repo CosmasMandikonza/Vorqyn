@@ -4,19 +4,19 @@
 
 VORQYN is a proposed company-grade mission platform for independently operated autonomous machines: a customer creates a mission, robots execute physical tasks in a shared 3D world, an AI mission coordinator proposes recovery when evidence fails, and a Solana program enforces task reassignment and accepted-work payments.
 
-> **Status — November 6, 2026:** This repository has been initialized with product and engineering documentation. The app, smart contract, simulations, test infrastructure, and demo **have not yet been implemented**. The materials below are a specification, not evidence of a functioning product.
+> **Verified status — November 7, 2026:** [Issue #1 foundation](https://github.com/CosmasMandikonza/Vorqyn/pull/18), [Issue #3 branded UI](https://github.com/CosmasMandikonza/Vorqyn/pull/23), [Issue #19 port-world asset pack](https://github.com/CosmasMandikonza/Vorqyn/pull/22), [Issue #20 deterministic synthetic simulator kernel](https://github.com/CosmasMandikonza/Vorqyn/pull/21) and [asset/simulator CI gates](https://github.com/CosmasMandikonza/Vorqyn/pull/25) have merged. The landing page, honest guest/company preview routes, model assets and synthetic tests **exist**; a real integrated mission viewer, authenticated company missions, evidence verifier, AI recovery and deployed Solana escrow/payout **do not yet exist**. This remains an early-stage prototype, not a functioning autonomous fleet or settled blockchain system. [Issue #24](https://github.com/CosmasMandikonza/Vorqyn/issues/24) tracks the mandatory world/simulator coordinate alignment before displaying real simulated trajectories.
 
-## Local development (VQ-00 foundation)
+## Local development and current feature boundaries
 
-The monorepo foundation is scaffolded; product functionality is not implemented yet.
+The monorepo now includes a functional **product-entry UI** and separately tested **preparatory** 3D/simulator modules. They are not yet connected into a playable end-to-end mission.
 
 - **Runtime:** Node `22.21.1` (see `.nvmrc`) and pnpm `10.34.5` (pinned via the root `packageManager` field; `corepack enable` prepares it automatically).
 - **Install:** `pnpm install` (committed lockfile; CI uses `--frozen-lockfile`).
-- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) runs the same scripts on every pull request.
-- **Web app:** `pnpm dev:web` serves an explicitly labeled placeholder page (`apps/web`). The branded shell is VQ-02.
+- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) runs these plus `node --test services/simulation/core/*.test.mjs` and `node assets/port-world/tools/validate.mjs --selfcheck` on every pull request.
+- **Web app:** `pnpm dev:web` serves the branded VQ-02 landing page and honest `/demo` and `/workspace` **preview** routes. These are not yet live telemetry, a mission builder or blockchain settlement. See [#8](https://github.com/CosmasMandikonza/Vorqyn/issues/8) and [#4](https://github.com/CosmasMandikonza/Vorqyn/issues/4) for integrations.
 - **Shared contracts:** `packages/contracts` is scaffolding only; the real contracts and reducer are frozen in VQ-01 (#2).
 - **Anchor program:** `programs/vorqyn` is a no-op skeleton verified by `cargo fmt --check`, `cargo clippy` and `cargo check` in CI. The Anchor/Solana toolchain (`avm`, `anchor`, `solana` CLI, local validator) is **not** installed by pnpm; `anchor build`/`anchor test` become relevant from VQ-04 (#5) onward. Devnet/test keypairs only — never commit keys or secrets.
-- **Windows:** the team develops on Linux/macOS; Windows contributors should use WSL2 for the Node toolchain and must install Rust/Solana toolchains separately for Anchor work.
+- **Windows:** WSL2 is recommended for a consistent Node/Solana environment. Some contributors also run the dependency-free simulation/asset validation under Windows Git Bash and Node; Anchor/validator installation must be verified separately per workstation.
 
 ## What makes VORQYN special?
 
