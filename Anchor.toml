@@ -1,0 +1,26 @@
+# Anchor workspace configuration - VQ-00 skeleton.
+#
+# The program ID below is an explicit placeholder: generate the real
+# keypair in VQ-04 (#5) and run `anchor keys sync` to replace it here
+# and in programs/vorqyn/src/lib.rs.
+#
+# The Anchor toolchain (avm/anchor + Solana CLI + local validator) is NOT
+# installed by pnpm. `anchor build` / `anchor test` are manual steps;
+# CI only runs cargo fmt/clippy/check on the program crate.
+
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+vorqyn = "11111111111111111111111111111111"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[test]
+startup_wait = 5000

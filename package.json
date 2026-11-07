@@ -1,0 +1,19 @@
+{
+  "name": "vorqyn",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=22.21.1 <23"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @vorqyn/web dev",
+    "lint": "eslint .",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "build": "pnpm -r run build"
+  },
+  "devDependencies": {
+    "eslint": "10.14.0",
+    "typescript-eslint": "8.72.1"
+  }
+}

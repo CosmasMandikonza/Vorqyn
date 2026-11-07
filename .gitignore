@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Builds
+dist/
+build/
+
+# Rust / Anchor
+target/
+.anchor/
+test-ledger/
+
+# Solana wallets and keypairs — never commit
+*.key
+*-keypair.json
+id.json
+
+# Environment (public template is tracked via !.env.example)
+.env
+.env.*
+!.env.example
+
+# Logs (including simulator logs)
+logs/
+*.log
+
+# Coverage / test output
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db

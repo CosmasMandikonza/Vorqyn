@@ -1,0 +1,19 @@
+[package]
+name = "vorqyn"
+version = "0.1.0"
+description = "VORQYN mission escrow program - VQ-00 skeleton (no instructions implemented)"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+default = []
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi-unnecessary-errors = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "=1.2.2"

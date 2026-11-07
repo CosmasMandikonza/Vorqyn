@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  app:
+    name: App and contracts (Node)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        # Reads the pinned pnpm version from the root packageManager field.
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+  program:
+    name: Anchor program skeleton (Rust)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: programs/vorqyn
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: programs/vorqyn
+
+      - name: Format check
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Check
+        run: cargo check
+
+      # NOTE: `anchor test` against a local validator is intentionally NOT
+      # part of CI yet (requires the Solana/avm toolchain and a devnet-style
+      # keypair policy). It becomes a required manual step from VQ-04 (#5);
+      # until then this job only verifies the skeleton compiles cleanly.
