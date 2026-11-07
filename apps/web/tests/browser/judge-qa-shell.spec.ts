@@ -27,6 +27,11 @@ async function evidence(
     height: innerHeight,
     dpr: devicePixelRatio,
     rootZoom: getComputedStyle(document.documentElement).zoom,
+    visualViewport: {
+      width: visualViewport!.width,
+      height: visualViewport!.height,
+      scale: visualViewport!.scale,
+    },
   }));
   expect(measured).toMatchObject({ ...viewport, dpr });
   await expect(page.locator("html")).toHaveClass(new RegExp(theme));
@@ -61,24 +66,61 @@ async function evidence(
       rect: el.getBoundingClientRect().toJSON(),
     })),
   }));
-  const name = `${label}-${theme}-${viewport.width}x${viewport.height}-dpr${dpr}`;
+  const native = dpr === 2;
+  const expectedPixels = native
+    ? {
+        width: Math.round(measured.visualViewport.width * dpr),
+        height: Math.round(measured.visualViewport.height * dpr),
+      }
+    : viewport;
+  const name = `${label}-${theme}-${expectedPixels.width}x${expectedPixels.height}${native ? `-css${viewport.width}x${viewport.height}` : ""}-dpr${dpr}`;
   mkdirSync(resolve(out, "screenshots"), { recursive: true });
-  const png = await page.screenshot({
-    path: resolve(out, "screenshots", `${name}.png`),
-    fullPage: false,
-    animations: "disabled",
-    // Native zoom uses a non-emulated window. Chromium/Playwright returns the
-    // layout viewport raster here; assert the actual IHDR instead of assuming
-    // that browser devicePixelRatio equals the screenshot sampling ratio.
-    scale: "device",
-  });
+  const screenshotOptions = native
+    ? {
+        method: "Page.captureScreenshot",
+        format: "png",
+        fromSurface: true,
+        captureBeyondViewport: false,
+        clip: null,
+      }
+    : {
+        method: "Playwright page.screenshot",
+        fullPage: false,
+        animations: "disabled",
+        scale: "device",
+      };
+  let png: Buffer;
+  if (native) {
+    // Playwright's default native-zoom clip crops the upper-left surface.
+    // Capture the whole actual browser surface without a clip or resize.
+    const cdp = await page.context().newCDPSession(page);
+    try {
+      const metrics = await cdp.send("Page.getLayoutMetrics");
+      expect({
+        width: metrics.layoutViewport.clientWidth,
+        height: metrics.layoutViewport.clientHeight,
+      }).toEqual(expectedPixels);
+      const result = await cdp.send("Page.captureScreenshot", {
+        format: "png",
+        fromSurface: true,
+        captureBeyondViewport: false,
+      });
+      png = Buffer.from(result.data, "base64");
+      writeFileSync(resolve(out, "screenshots", `${name}.png`), png);
+    } finally {
+      await cdp.detach();
+    }
+  } else
+    png = await page.screenshot({
+      path: resolve(out, "screenshots", `${name}.png`),
+      fullPage: false,
+      animations: "disabled",
+      scale: "device",
+    });
   expect(png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
   expect(png.subarray(12, 16).toString()).toBe("IHDR");
   const pixels = { width: png.readUInt32BE(16), height: png.readUInt32BE(20) };
-  expect(pixels).toEqual({
-    width: viewport.width,
-    height: viewport.height,
-  });
+  expect(pixels).toEqual(expectedPixels);
   const run = JSON.parse(
     readFileSync(resolve(out, "capture-run.json"), "utf8"),
   );
@@ -95,11 +137,7 @@ async function evidence(
         url: page.url(),
         theme,
         viewport: measured,
-        screenshotOptions: {
-          fullPage: false,
-          animations: "disabled",
-          scale: "device",
-        },
+        screenshotOptions,
         png: pixels,
         sha256: createHash("sha256").update(png).digest("hex"),
         layout,
@@ -381,8 +419,10 @@ async function operation(page: Page, name: string) {
       r.url().endsWith("/api/demo/simulation") &&
       r.request().method() === "POST",
   );
-  await page.getByRole("button", { name, exact: true }).click();
-  const res = await response;
+  const [res] = await Promise.all([
+    response,
+    page.getByRole("button", { name, exact: true }).click(),
+  ]);
   expect(res.status()).toBe(200);
   const data = await res.json();
   expect(data.sourceKind).toBe("SYNTHETIC_SIM");

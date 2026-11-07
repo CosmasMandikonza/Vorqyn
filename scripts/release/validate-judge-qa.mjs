@@ -120,23 +120,44 @@ const results = expected.map((item) => {
       meta.theme !== item.theme
     )
       throw new Error("Viewport/zoom/theme mismatch");
+    const native = dpr === 2;
+    const pixels = native
+      ? {
+          width: Math.round(meta.viewport.visualViewport.width * dpr),
+          height: Math.round(meta.viewport.visualViewport.height * dpr),
+        }
+      : { width, height };
     if (
-      meta.name !== `${item.label}-${item.theme}-${width}x${height}-dpr${dpr}`
+      native &&
+      (meta.viewport.visualViewport.width !== width ||
+        Math.floor(meta.viewport.visualViewport.height) !== height ||
+        meta.viewport.visualViewport.scale !== 1)
     )
-      throw new Error("Filename does not match actual viewport");
+      throw new Error("Native visual/layout viewport mismatch");
     if (
-      png.width !== width ||
-      png.height !== height ||
+      meta.name !==
+      `${item.label}-${item.theme}-${pixels.width}x${pixels.height}${native ? `-css${width}x${height}` : ""}-dpr${dpr}`
+    )
+      throw new Error("Filename does not match actual PNG and viewport");
+    if (
+      png.width !== pixels.width ||
+      png.height !== pixels.height ||
       meta.png.width !== png.width ||
       meta.png.height !== png.height
     )
       throw new Error("Actual PNG IHDR/viewport/DPR mismatch");
-    if (
-      meta.screenshotOptions.fullPage !== false ||
-      meta.screenshotOptions.scale !== "device" ||
-      meta.screenshotOptions.animations !== "disabled" ||
-      meta.sha256 !== sha256(file)
-    )
+    const options = meta.screenshotOptions;
+    const correctOptions = native
+      ? options.method === "Page.captureScreenshot" &&
+        options.format === "png" &&
+        options.fromSurface === true &&
+        options.captureBeyondViewport === false &&
+        options.clip === null
+      : options.method === "Playwright page.screenshot" &&
+        options.fullPage === false &&
+        options.scale === "device" &&
+        options.animations === "disabled";
+    if (!correctOptions || meta.sha256 !== sha256(file))
       throw new Error("Screenshot options/integrity mismatch");
     if (
       !meta.source.startsWith("real Chromium;") ||
