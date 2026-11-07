@@ -1,0 +1,328 @@
+{
+  "implementation_commit": "7b50de026c0589eec8c2ded4e052ca8388d24f99",
+  "environment": {
+    "node": "22.21.1",
+    "pnpm": "10.34.5",
+    "chromium": "156.0.8078.79"
+  },
+  "stats": {
+    "startTime": "2026-11-07T10:56:34.238Z",
+    "duration": 85899.39600000001,
+    "expected": 39,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "axe_audits": 31,
+  "axe_violations": 0,
+  "screenshots": [
+    "demo-dark-1024.png",
+    "demo-dark-1280.png",
+    "demo-dark-1440.png",
+    "demo-dark-320.png",
+    "demo-dark-390.png",
+    "demo-light-1024.png",
+    "demo-light-1280.png",
+    "demo-light-1440.png",
+    "demo-light-320.png",
+    "demo-light-390.png",
+    "demo-zoom-200.png",
+    "landing-dark-1024.png",
+    "landing-dark-1280.png",
+    "landing-dark-1440.png",
+    "landing-dark-320.png",
+    "landing-dark-390.png",
+    "landing-light-1024.png",
+    "landing-light-1280.png",
+    "landing-light-1440.png",
+    "landing-light-320.png",
+    "landing-light-390.png",
+    "landing-zoom-200.png",
+    "workspace-dark-1024.png",
+    "workspace-dark-1280.png",
+    "workspace-dark-1440.png",
+    "workspace-dark-320.png",
+    "workspace-dark-390.png",
+    "workspace-light-1024.png",
+    "workspace-light-1280.png",
+    "workspace-light-1440.png",
+    "workspace-light-320.png",
+    "workspace-light-390.png",
+    "workspace-zoom-200.png"
+  ],
+  "tests": [
+    {
+      "name": "landing / light / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / light / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / light / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / light / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / light / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / dark / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / dark / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / dark / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / dark / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "landing / dark / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / light / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / light / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / light / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / light / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / light / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / dark / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / dark / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / dark / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / dark / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "demo / dark / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / light / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / light / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / light / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / light / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / light / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / dark / 1440px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / dark / 1280px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / dark / 1024px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / dark / 390px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "workspace / dark / 320px",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "hero CTAs, route navigation and native builder outline",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "theme survives navigation and reload and responds to system changes",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "keyboard mobile sheet traps focus, closes with Escape and follows links",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "skip link and reduced motion preserve immediate readable content",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "all internal link paths and anchor targets exist",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "missing route gives a useful 404 and no fabricated success",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "blocked fonts use readable fallbacks",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "native 200% browser zoom keeps navigation and primary actions usable",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "server-rendered routes remain readable with JavaScript disabled",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    }
+  ]
+}

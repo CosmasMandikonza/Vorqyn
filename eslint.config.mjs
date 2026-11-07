@@ -1,5 +1,6 @@
 // @ts-check
 import tseslint from "typescript-eslint";
+import { frontendRules } from "./apps/web/eslint.config.mjs";
 
 /**
  * VORQYN root ESLint config (VQ-00 foundation).
@@ -22,6 +23,16 @@ export default tseslint.config(
     ],
   },
   ...tseslint.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: { tsconfigRootDir: import.meta.dirname },
+    },
+  },
+  {
+    files: ["apps/web/**/*.{ts,tsx}"],
+    ...frontendRules,
+    settings: { next: { rootDir: "apps/web/" } },
+  },
   {
     files: ["apps/web/**/*.{ts,tsx}"],
     languageOptions: {
