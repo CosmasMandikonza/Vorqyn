@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "earlierSourceSha": "0749f75b1f47bbd49ca710ca7958afc18a3651b7",
+  "correctedSourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "finding": "Manual review detected upper-left native-zoom screenshot clipping; matching PNG IHDR to integer CSS dimensions was insufficient.",
+  "earlierObserved": {
+    "png": [
+      1024,
+      406
+    ],
+    "cssLayout": [
+      1024,
+      406
+    ],
+    "browserDpr": 2,
+    "acceptedVisualEvidence": false
+  },
+  "actualFullSurfaceProbe": {
+    "png": [
+      2048,
+      813
+    ],
+    "cssLayout": [
+      1024,
+      406
+    ],
+    "cssVisualViewport": [
+      1024,
+      406.5
+    ],
+    "browserDpr": 2,
+    "cdpLayoutViewport": [
+      2048,
+      813
+    ]
+  },
+  "correction": {
+    "method": "Page.captureScreenshot",
+    "fromSurface": true,
+    "captureBeyondViewport": false,
+    "clip": null,
+    "postCaptureResize": false
+  },
+  "retention": "Earlier cropped native PNGs are excluded. Baseline CSS-root-zoom images remain genuine full 1440x900 captures."
+}

@@ -1,0 +1,23 @@
+{
+  "runId": "30b5623c-57cd-4879-a4f5-e993976acf08",
+  "layout": {
+    "viewport": 1440,
+    "document": 1440,
+    "offenders": []
+  },
+  "name": "viewer-inspect-light-1440x900",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "sha256": "ce9a36c1f27063a9fc05cd2edab4337faab8ef463ddd62fede211079216c004d",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "capturedAt": "2026-11-07T20:29:08.705Z"
+}

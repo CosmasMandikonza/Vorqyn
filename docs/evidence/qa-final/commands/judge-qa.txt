@@ -1,0 +1,745 @@
+[WebServer] (node:42316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:42328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 26 tests using 1 worker
+
+(node:42347) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% light (historical 89px reproduction)
+[2/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% dark (historical 89px reproduction)
+[3/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1440x900
+[4/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1024x900
+[5/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+  1) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+
+    Error: shell-mission-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-shared-rout-d1b9c-le-navigation-light-390x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-shared-rout-d1b9c-le-navigation-light-390x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-shared-rout-d1b9c-le-navigation-light-390x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:42680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+  2) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+
+    Error: shell-mission-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-shared-rout-bc778-le-navigation-light-320x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-shared-rout-bc778-le-navigation-light-320x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-shared-rout-bc778-le-navigation-light-320x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:42834) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[7/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1440x900
+[8/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1024x900
+[9/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+  3) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+
+    Error: shell-mission-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-shared-rout-99a3f-ble-navigation-dark-390x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-shared-rout-99a3f-ble-navigation-dark-390x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-shared-rout-99a3f-ble-navigation-dark-390x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:43064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+  4) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+
+    Error: shell-mission-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-shared-rout-edf13-ble-navigation-dark-320x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-shared-rout-edf13-ble-navigation-dark-320x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-shared-rout-edf13-ble-navigation-dark-320x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:43215) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[11/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 1440
+[12/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 2048
+[13/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 1440
+[14/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 2048
+[15/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1440x900
+[16/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+  5) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+
+    TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event "response"
+
+      415 |
+      416 | async function operation(page: Page, name: string) {
+    > 417 |   const response = page.waitForResponse(
+          |                         ^
+      418 |     (r) =>
+      419 |       r.url().endsWith("/api/demo/simulation") &&
+      420 |       r.request().method() === "POST",
+        at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--a8bce-nd-inspector-light-1024x900-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--a8bce-nd-inspector-light-1024x900-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--a8bce-nd-inspector-light-1024x900-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:44515) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[17/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+  6) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+
+    Error: journey-clean-uw-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7
+
+    Error: journey-follow-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-inspect-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-fault-uw-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7
+
+    Error: journey-fault-inspector-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7
+
+    Error: journey-replay-light-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--6f9dd-and-inspector-light-390x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--6f9dd-and-inspector-light-390x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--6f9dd-and-inspector-light-390x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:44690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[18/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+  7) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+
+    Error: Camera FOLLOW exceeds 320px
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    388.359375
+
+      477 |             `Camera ${name} exceeds ${size.width}px`,
+      478 |           )
+    > 479 |           .toBeLessThanOrEqual(size.width);
+          |            ^
+      480 |       }
+      481 |       await page
+      482 |         .getByRole("group", { name: "Camera station", exact: true })
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12
+
+    Error: journey-clean-uw-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7
+
+    Error: journey-follow-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-inspect-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-fault-uw-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7
+
+    Error: journey-fault-inspector-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7
+
+    Error: journey-replay-light-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--0bf6e-and-inspector-light-320x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--0bf6e-and-inspector-light-320x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--0bf6e-and-inspector-light-320x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:44842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[19/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1440x900
+[20/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+  8) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+
+    TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event "response"
+
+      415 |
+      416 | async function operation(page: Page, name: string) {
+    > 417 |   const response = page.waitForResponse(
+          |                         ^
+      418 |     (r) =>
+      419 |       r.url().endsWith("/api/demo/simulation") &&
+      420 |       r.request().method() === "POST",
+        at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--993d0-and-inspector-dark-1024x900-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--993d0-and-inspector-dark-1024x900-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--993d0-and-inspector-dark-1024x900-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:45054) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[21/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+  9) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+
+    Error: journey-clean-uw-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7
+
+    Error: journey-follow-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-inspect-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-fault-uw-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7
+
+    Error: journey-fault-inspector-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7
+
+    Error: journey-replay-dark-390x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--1fd9f--and-inspector-dark-390x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--1fd9f--and-inspector-dark-390x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--1fd9f--and-inspector-dark-390x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:45221) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[22/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+  10) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+
+    Error: Camera FOLLOW exceeds 320px
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    388.359375
+
+      477 |             `Camera ${name} exceeds ${size.width}px`,
+      478 |           )
+    > 479 |           .toBeLessThanOrEqual(size.width);
+          |            ^
+      480 |       }
+      481 |       await page
+      482 |         .getByRole("group", { name: "Camera station", exact: true })
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12
+
+    Error: journey-clean-uw-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7
+
+    Error: journey-follow-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-inspect-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9
+
+    Error: journey-fault-uw-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7
+
+    Error: journey-fault-inspector-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7
+
+    Error: journey-replay-dark-320x844-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    392
+
+      152 |       `${name}: document overflow; inspect measured offenders`,
+      153 |     )
+    > 154 |     .toBeLessThanOrEqual(viewport.width);
+          |      ^
+      155 |   return layout;
+      156 | }
+      157 |
+        at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)
+        at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7
+
+    Error Context: ../../../judge-qa/traces/judge-qa-shell-real-guest--12fe7--and-inspector-dark-320x844-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../judge-qa/traces/judge-qa-shell-real-guest--12fe7--and-inspector-dark-320x844-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../judge-qa/traces/judge-qa-shell-real-guest--12fe7--and-inspector-dark-320x844-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:45395) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[23/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 1440
+[24/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 390
+[25/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 1440
+[26/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 390
+  10 failed
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+  16 passed (5.0m)
+undefined
+/workspace/work/qa16-preflight-final/snapshot/apps/web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config ../../scripts/release/judge-qa.config.mjs

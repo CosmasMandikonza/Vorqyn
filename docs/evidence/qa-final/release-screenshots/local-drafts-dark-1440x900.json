@@ -1,0 +1,23 @@
+{
+  "runId": "30b5623c-57cd-4879-a4f5-e993976acf08",
+  "layout": {
+    "viewport": 1440,
+    "document": 1440,
+    "offenders": []
+  },
+  "name": "local-drafts-dark-1440x900",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "sha256": "baf48a351c977b5c6b64c226bdb3f7a261dd2a7ea107b0e332d56e0779cb7aa5",
+  "url": "http://127.0.0.1:3110/workspace/create",
+  "theme": "dark",
+  "capturedAt": "2026-11-07T20:29:34.316Z"
+}

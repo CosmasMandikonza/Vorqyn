@@ -1,0 +1,27 @@
+
+> vorqyn@ test /workspace/work/qa16
+> pnpm -r run test
+
+Scope: 2 of 3 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/qa16/packages/contracts
+packages/contracts test:  Test Files  6 passed (6)
+packages/contracts test:       Tests  90 passed (90)
+packages/contracts test:    Start at  20:08:56
+packages/contracts test:    Duration  1.83s (transform 53%, tests 21%, import 21%, worker 5%)
+packages/contracts test:     Isolate  6 workers spawned · ~169ms startup each (spawn + environment, per file)
+packages/contracts test:              at least ~843ms faster with isolate: false — reuses workers across files instead of one per file
+packages/contracts test: Done
+apps/web test$ vitest run
+apps/web test:  RUN  v5.1.0 /workspace/work/qa16/apps/web
+apps/web test: (node:32690) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+apps/web test: Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+apps/web test: (Use `node --trace-deprecation ...` to show where the warning was created)
+apps/web test:  Test Files  10 passed (10)
+apps/web test:       Tests  116 passed (116)
+apps/web test:    Start at  20:08:59
+apps/web test:    Duration  23.51s (environment 63%, tests 16%, setup 11%, transform 6%, import 3%)
+apps/web test: Environment  jsdom was created 10 times · 13.57s total, 63% of tracked time
+apps/web test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+apps/web test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+apps/web test: Done

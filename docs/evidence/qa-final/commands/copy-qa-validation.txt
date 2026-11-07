@@ -1,0 +1,51 @@
+{
+  "status": "FAIL",
+  "expected": 126,
+  "passed": 122,
+  "failed": [
+    {
+      "label": "journey-replay",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "dpr": 1,
+      "rootZoom": "1",
+      "status": "FAIL",
+      "reason": "Expected one capture; found 0"
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "dpr": 1,
+      "rootZoom": "1",
+      "status": "FAIL",
+      "reason": "Expected one capture; found 0"
+    },
+    {
+      "label": "journey-replay",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "dpr": 1,
+      "rootZoom": "1",
+      "status": "FAIL",
+      "reason": "Expected one capture; found 0"
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "dpr": 1,
+      "rootZoom": "1",
+      "status": "FAIL",
+      "reason": "Expected one capture; found 0"
+    },
+    {
+      "status": "FAIL",
+      "reason": "Unexpected/missing PNG or sidecar count"
+    }
+  ]
+}

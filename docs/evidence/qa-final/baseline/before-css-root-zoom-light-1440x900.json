@@ -1,0 +1,179 @@
+{
+  "name": "css-root-zoom-200-light-1440x900-dpr1",
+  "runId": "5b60b180-c7a9-4b33-bbd1-5733d850b584",
+  "commitSha": "979133305a8008182b4b3179f91a180ef657c9d7",
+  "capturedAt": "2026-11-07T20:02:02.131Z",
+  "source": "real Chromium; local production server; no response fixtures",
+  "url": "http://127.0.0.1:3110/",
+  "theme": "light",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1,
+    "rootZoom": "2"
+  },
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "sha256": "903b76a86beb6b0c6e61fa4193ce8f66ccbac4fc8ac6ae77b15a95596065b01d",
+  "layout": {
+    "documentWidth": 1529,
+    "viewportWidth": 1440,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "header-actions",
+        "name": null,
+        "text": "LightDarkSystemCreate Workspace",
+        "rect": {
+          "x": 824.0625,
+          "y": 34,
+          "width": 705,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 824.0625
+        }
+      },
+      {
+        "tag": "A",
+        "class": "button button-secondary",
+        "name": null,
+        "text": "Create Workspace",
+        "rect": {
+          "x": 1222.25,
+          "y": 34,
+          "width": 306.8125,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 1222.25
+        }
+      },
+      {
+        "tag": "SPAN",
+        "class": "arrow-icon",
+        "name": null,
+        "text": "",
+        "rect": {
+          "x": 1465.0625,
+          "y": 89,
+          "width": 24,
+          "height": 24,
+          "top": 89,
+          "right": 1489.0625,
+          "bottom": 113,
+          "left": 1465.0625
+        }
+      }
+    ],
+    "header": [
+      {
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 96,
+          "y": 0,
+          "width": 1248,
+          "height": 200,
+          "top": 0,
+          "right": 1344,
+          "bottom": 200,
+          "left": 96
+        }
+      },
+      {
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 96,
+          "y": 69,
+          "width": 287.109375,
+          "height": 60,
+          "top": 69,
+          "right": 383.109375,
+          "bottom": 129,
+          "left": 96
+        }
+      },
+      {
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 463.109375,
+          "y": 30.203125,
+          "width": 280.953125,
+          "height": 137.59375,
+          "top": 30.203125,
+          "right": 744.0625,
+          "bottom": 167.796875,
+          "left": 463.109375
+        }
+      },
+      {
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 824.0625,
+          "y": 34,
+          "width": 705,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 824.0625
+        }
+      },
+      {
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 824.0625,
+          "y": 47,
+          "width": 350.1875,
+          "height": 104,
+          "top": 47,
+          "right": 1174.25,
+          "bottom": 151,
+          "left": 824.0625
+        }
+      },
+      {
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 1222.25,
+          "y": 34,
+          "width": 306.8125,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 1222.25
+        }
+      },
+      {
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "sourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "source": "real Chromium; no theme init script or mocked storage",
+  "results": [
+    {
+      "width": 1440,
+      "theme": "dark",
+      "afterReloadAndRoute": "PASS",
+      "stored": "dark"
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "afterReloadAndRoute": "PASS",
+      "stored": "light"
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "afterReloadAndRoute": "PASS",
+      "stored": "dark"
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "afterReloadAndRoute": "PASS",
+      "stored": "light"
+    }
+  ],
+  "pageErrors": []
+}

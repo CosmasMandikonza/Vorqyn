@@ -1,0 +1,234 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/qa16-preflight-final/snapshot/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/playwright.config.mjs",
+      "--project",
+      "integration"
+    ],
+    "configFile": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/playwright.config.mjs",
+    "rootDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge",
+        "name": "judge",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-smoke.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "capture",
+        "name": "capture",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-capture.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-integration.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "integration",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "release-integration.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "integration"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/qa16-preflight-final/integration-playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/qa16-preflight-final/snapshot",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "release-integration.spec.ts",
+      "file": "release-integration.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "DEMO-01 actual transport: deterministic fault and stale observations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "integration",
+              "projectName": "integration",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 106,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:06.281Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "df5d29f4ff693200a890-5d812cd0f6a2250b46f3",
+          "file": "release-integration.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "DEMO-02 real browser playback must use actual transport, not fixtures",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "integration",
+              "projectName": "integration",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:06.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "df5d29f4ff693200a890-ca5a8df48f2f74001183",
+          "file": "release-integration.spec.ts",
+          "line": 82,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T20:30:04.146Z",
+    "duration": 5206.5599999999995,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

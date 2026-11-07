@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: blocked and unrun checks never aggregate to pass
+ok 1 - blocked and unrun checks never aggregate to pass
+  ---
+  duration_ms: 0.73398
+  type: 'test'
+  ...
+# Subtest: public URLs reject secrets, query tokens, examples and local servers
+ok 2 - public URLs reject secrets, query tokens, examples and local servers
+  ---
+  duration_ms: 0.217321
+  type: 'test'
+  ...
+# Subtest: credential scan identifies a test environment file without returning its value
+ok 3 - credential scan identifies a test environment file without returning its value
+  ---
+  duration_ms: 1.23215
+  type: 'test'
+  ...
+# Subtest: PNG signature and dimensions are checked rather than filename assumptions
+ok 4 - PNG signature and dimensions are checked rather than filename assumptions
+  ---
+  duration_ms: 2.439881
+  type: 'test'
+  ...
+# Subtest: insecure environment configuration is flagged without secret values
+ok 5 - insecure environment configuration is flagged without secret values
+  ---
+  duration_ms: 0.797616
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.6342

@@ -1,0 +1,92 @@
+{
+  "source": {
+    "sha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+    "workingTreeDirty": false,
+    "testedTree": "committed HEAD only; uncommitted edits and ignored environment files are excluded"
+  },
+  "technicalStatus": "FAIL",
+  "submissionStatus": "BLOCKED",
+  "browser": {
+    "release": {
+      "startTime": "2026-11-07T20:28:26.910Z",
+      "duration": 96007.716,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "integration": {
+      "startTime": "2026-11-07T20:30:04.146Z",
+      "duration": 5206.5599999999995,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "judgeQA": {
+      "startTime": "2026-11-07T20:30:10.484Z",
+      "duration": 298700.36600000004,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 10,
+      "flaky": 0
+    }
+  },
+  "originalPNG": {
+    "status": "PASS",
+    "expected": 46,
+    "passed": 46,
+    "failures": []
+  },
+  "judgeQAPNG": {
+    "status": "FAIL",
+    "expected": 126,
+    "passed": 122,
+    "failures": [
+      {
+        "label": "journey-replay",
+        "theme": "light",
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "status": "FAIL",
+        "reason": "Expected one capture; found 0"
+      },
+      {
+        "label": "journey-fallback",
+        "theme": "light",
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "status": "FAIL",
+        "reason": "Expected one capture; found 0"
+      },
+      {
+        "label": "journey-replay",
+        "theme": "dark",
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "status": "FAIL",
+        "reason": "Expected one capture; found 0"
+      },
+      {
+        "label": "journey-fallback",
+        "theme": "dark",
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "status": "FAIL",
+        "reason": "Expected one capture; found 0"
+      },
+      {
+        "status": "FAIL",
+        "reason": "Unexpected/missing PNG or sidecar count"
+      }
+    ]
+  }
+}

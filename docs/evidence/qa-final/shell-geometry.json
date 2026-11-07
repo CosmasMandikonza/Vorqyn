@@ -1,0 +1,463 @@
+{
+  "sourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "headerGeometryStatus": "PASS",
+  "captures": 66,
+  "results": [
+    {
+      "name": "css-root-zoom-200-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "mobile-menu-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-home-light-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-light-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-dark-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-light-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-mission-dark-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-draft-dark-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "css-root-zoom-200-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-workspace-light-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-dark-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-home-dark-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-light-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-demo-dark-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-demo-dark-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-workspace-dark-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-dark-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-home-light-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-draft-light-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-dark-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-draft-light-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-mission-light-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "mobile-menu-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-mission-light-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-light-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-demo-light-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-light-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-1440-demo-light-1440x813-css720x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-dark-1024x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "mobile-menu-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "mobile-menu-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-dark-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-home-dark-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-mission-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-home-dark-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-workspace-light-390x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-dark-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-draft-light-1440x900-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-workspace-light-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "shell-demo-light-320x844-dpr1",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-draft-dark-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-workspace-dark-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    },
+    {
+      "name": "native-200-2048-mission-dark-2048x813-css1024x406-dpr2",
+      "status": "PASS",
+      "bad": []
+    }
+  ],
+  "documentOverflow": [
+    {
+      "name": "shell-mission-dark-390x844-dpr1",
+      "document": 392,
+      "viewport": 390,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "halo-segmented bg-card/90 backdrop-blur-sm",
+          "name": "Camera station",
+          "text": "RESETAIRLANDUWINSPECTFOLLOW",
+          "rect": {
+            "x": 32,
+            "y": 1058.921875,
+            "width": 360.359375,
+            "height": 52,
+            "top": 1058.921875,
+            "right": 392.359375,
+            "bottom": 1110.921875,
+            "left": 32
+          }
+        }
+      ]
+    },
+    {
+      "name": "shell-mission-dark-320x844-dpr1",
+      "document": 392,
+      "viewport": 320,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "halo-segmented bg-card/90 backdrop-blur-sm",
+          "name": "Camera station",
+          "text": "RESETAIRLANDUWINSPECTFOLLOW",
+          "rect": {
+            "x": 32,
+            "y": 1174.015625,
+            "width": 360.359375,
+            "height": 52,
+            "top": 1174.015625,
+            "right": 392.359375,
+            "bottom": 1226.015625,
+            "left": 32
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "class": null,
+          "name": null,
+          "text": "FOLLOW",
+          "rect": {
+            "x": 318.171875,
+            "y": 1178.015625,
+            "width": 70.1875,
+            "height": 44,
+            "top": 1178.015625,
+            "right": 388.359375,
+            "bottom": 1222.015625,
+            "left": 318.171875
+          }
+        }
+      ]
+    },
+    {
+      "name": "shell-mission-light-320x844-dpr1",
+      "document": 392,
+      "viewport": 320,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "halo-segmented bg-card/90 backdrop-blur-sm",
+          "name": "Camera station",
+          "text": "RESETAIRLANDUWINSPECTFOLLOW",
+          "rect": {
+            "x": 32,
+            "y": 1174.015625,
+            "width": 360.359375,
+            "height": 52,
+            "top": 1174.015625,
+            "right": 392.359375,
+            "bottom": 1226.015625,
+            "left": 32
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "class": null,
+          "name": null,
+          "text": "FOLLOW",
+          "rect": {
+            "x": 318.171875,
+            "y": 1178.015625,
+            "width": 70.1875,
+            "height": 44,
+            "top": 1178.015625,
+            "right": 388.359375,
+            "bottom": 1222.015625,
+            "left": 318.171875
+          }
+        }
+      ]
+    },
+    {
+      "name": "shell-mission-light-390x844-dpr1",
+      "document": 392,
+      "viewport": 390,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "halo-segmented bg-card/90 backdrop-blur-sm",
+          "name": "Camera station",
+          "text": "RESETAIRLANDUWINSPECTFOLLOW",
+          "rect": {
+            "x": 32,
+            "y": 1058.921875,
+            "width": 360.359375,
+            "height": 52,
+            "top": 1058.921875,
+            "right": 392.359375,
+            "bottom": 1110.921875,
+            "left": 32
+          }
+        }
+      ]
+    }
+  ]
+}

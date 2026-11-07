@@ -1,0 +1,29 @@
+{
+  "runId": "30b5623c-57cd-4879-a4f5-e993976acf08",
+  "layout": {
+    "viewport": 390,
+    "document": 392,
+    "offenders": [
+      {
+        "text": "RESETAIRLANDUWINSPECTFOLLOW",
+        "left": 32,
+        "right": 392.359375
+      }
+    ]
+  },
+  "name": "viewer-uw-light-390x844",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 390,
+    "height": 844
+  },
+  "sha256": "8692a057cf4c49bd1ff21daa0ac95b8bbb31648b8a0c143395f40a7e7c55eb88",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "capturedAt": "2026-11-07T20:29:15.811Z"
+}

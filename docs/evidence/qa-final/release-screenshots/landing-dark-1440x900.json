@@ -1,0 +1,23 @@
+{
+  "runId": "30b5623c-57cd-4879-a4f5-e993976acf08",
+  "layout": {
+    "viewport": 1440,
+    "document": 1440,
+    "offenders": []
+  },
+  "name": "landing-dark-1440x900",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "sha256": "046c0c5647c6e62191193ea3db7671f065cb7b05bdc9e9f4046a33c846faeb39",
+  "url": "http://127.0.0.1:3110/",
+  "theme": "dark",
+  "capturedAt": "2026-11-07T20:29:32.687Z"
+}
