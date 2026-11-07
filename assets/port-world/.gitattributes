@@ -1,0 +1,4 @@
+# Byte-exact reproducibility: manifest sha256 validation requires stable line endings.
+* text=auto eol=lf
+*.glb binary
+*.png binary
