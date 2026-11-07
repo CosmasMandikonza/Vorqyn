@@ -39,6 +39,7 @@ declare_id!("AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc");
 // Seeds (CHAIN_SEAM.md §4)
 // ---------------------------------------------------------------------------
 
+pub const REGISTRY_SEED: &[u8] = b"vorqyn:verifier-registry";
 pub const MISSION_SEED: &[u8] = b"vorqyn:mission";
 pub const TASK_SEED: &[u8] = b"vorqyn:task";
 pub const VAULT_SEED: &[u8] = b"vorqyn:vault";
@@ -97,6 +98,31 @@ pub struct Mission {
     pub status: MissionStatus,
     /// Unix timestamp; 0 = no expiry.
     pub expiry: i64,
+    pub bump: u8,
+}
+
+/// Global, program-recognized trust root for verifier authorities
+/// (PDA: [REGISTRY_SEED] — a single account per deployment). Mission
+/// owners CANNOT define or override the verifier set: `initialize_mission`
+/// accepts only currently-registered verifier keys, and `verify_and_claim`
+/// RE-CHECKS registration at claim time so a revoked key cannot authorize
+/// payouts for missions created earlier. Registration, revocation and the
+/// authoritative policy version are admin-only (see ACCOUNTS.md §5c for
+/// who controls the admin and the deployment-order trust assumption).
+#[account]
+#[derive(InitSpace)]
+pub struct VerifierRegistry {
+    /// The independent registration authority. Set once at bootstrap by
+    /// the deploying party's signing wallet (first-mover bootstrap; the
+    /// deploy script must initialize the registry immediately after
+    /// program deployment — documented residual risk).
+    pub admin: Pubkey,
+    #[max_len(8)]
+    pub verifiers: Vec<Pubkey>,
+    /// Authoritative accepted evidence-policy version. Claims must quote
+    /// exactly this version; the policy DEFINITIONS live off chain
+    /// (VQ-10). Rotation is admin-only.
+    pub policy_version: u64,
     pub bump: u8,
 }
 
@@ -175,6 +201,16 @@ pub enum VorqynError {
     MissionAlreadyClosed,
     #[msg("mission cannot close while unexpired tasks hold reservations")]
     MissionNotClosable,
+    #[msg("verifier authority is not registered in the program's verifier registry")]
+    VerifierNotRegistered,
+    #[msg("verifier key is already registered")]
+    VerifierAlreadyRegistered,
+    #[msg("signer is not the verifier registry admin")]
+    NotRegistryAdmin,
+    #[msg("verifier key is invalid (default pubkey)")]
+    InvalidVerifierKey,
+    #[msg("claimed policy version does not match the registry's accepted policy version")]
+    PolicyVersionMismatch,
     #[msg("vault balance change does not match the funded amount")]
     VaultBalanceMismatch,
     #[msg("signer does not own this mission")]
@@ -270,6 +306,33 @@ pub struct MissionClosed {
     pub refunded_lamports: u64,
 }
 
+/// Registry lifecycle events (VQ-06 security correction): who the program
+/// recognizes as verifier authorities and which policy version is
+/// authoritative — auditable from transaction logs alone.
+#[event]
+pub struct RegistryInitialized {
+    pub admin: Pubkey,
+    pub policy_version: u64,
+}
+
+#[event]
+pub struct VerifierRegistered {
+    pub admin: Pubkey,
+    pub verifier: Pubkey,
+}
+
+#[event]
+pub struct VerifierRevoked {
+    pub admin: Pubkey,
+    pub verifier: Pubkey,
+}
+
+#[event]
+pub struct PolicyVersionSet {
+    pub admin: Pubkey,
+    pub policy_version: u64,
+}
+
 // ---------------------------------------------------------------------------
 // Instructions
 // ---------------------------------------------------------------------------
@@ -278,9 +341,88 @@ pub struct MissionClosed {
 pub mod vorqyn {
     use super::*;
 
+    /// Bootstrap the program's verifier registry (deployment-controlled:
+    /// the FIRST caller becomes the admin — the deploying party must run
+    /// this immediately after program deployment; see ACCOUNTS.md §5c).
+    /// Only the admin may register/revoke verifiers and rotate the policy
+    /// version. Missions may only appoint CURRENTLY registered verifiers.
+    pub fn initialize_verifier_registry(
+        ctx: Context<InitializeVerifierRegistry>,
+        policy_version: u64,
+    ) -> Result<()> {
+        require!(policy_version > 0, VorqynError::ZeroAmount);
+        let registry = &mut ctx.accounts.registry;
+        registry.admin = ctx.accounts.payer.key();
+        registry.verifiers = Vec::new();
+        registry.policy_version = policy_version;
+        registry.bump = ctx.bumps.registry;
+
+        emit!(RegistryInitialized {
+            admin: registry.admin,
+            policy_version,
+        });
+        Ok(())
+    }
+
+    /// Admin-only: register a verifier authority. Mission owners cannot
+    /// call this — the seeds/has_one constraints pin the registry and its
+    /// admin.
+    pub fn register_verifier(ctx: Context<RegistryAdmin>, verifier: Pubkey) -> Result<()> {
+        let registry = &mut ctx.accounts.registry;
+        require!(
+            verifier != Pubkey::default(),
+            VorqynError::InvalidVerifierKey
+        );
+        require!(
+            !registry.verifiers.contains(&verifier),
+            VorqynError::VerifierAlreadyRegistered
+        );
+        registry.verifiers.push(verifier);
+
+        emit!(VerifierRegistered {
+            admin: ctx.accounts.admin.key(),
+            verifier,
+        });
+        Ok(())
+    }
+
+    /// Admin-only: revoke a verifier. Revocation is IMMEDIATE for both
+    /// new missions (init rejected) and existing ones (claims re-check
+    /// registration), so a compromised key cannot authorize payouts.
+    pub fn revoke_verifier(ctx: Context<RegistryAdmin>, verifier: Pubkey) -> Result<()> {
+        let registry = &mut ctx.accounts.registry;
+        let index = registry
+            .verifiers
+            .iter()
+            .position(|v| *v == verifier)
+            .ok_or(VorqynError::VerifierNotRegistered)?;
+        registry.verifiers.swap_remove(index);
+
+        emit!(VerifierRevoked {
+            admin: ctx.accounts.admin.key(),
+            verifier,
+        });
+        Ok(())
+    }
+
+    /// Admin-only: rotate the authoritative accepted policy version
+    /// (definitions live off chain in VQ-10).
+    pub fn set_policy_version(ctx: Context<RegistryAdmin>, policy_version: u64) -> Result<()> {
+        require!(policy_version > 0, VorqynError::ZeroAmount);
+        ctx.accounts.registry.policy_version = policy_version;
+
+        emit!(PolicyVersionSet {
+            admin: ctx.accounts.admin.key(),
+            policy_version,
+        });
+        Ok(())
+    }
+
     /// Create the mission PDA and its escrow vault. The vault starts empty;
     /// funding happens exclusively through `fund_mission` so every lamport
-    /// in the vault is accounted for in `funded_lamports`.
+    /// in the vault is accounted for in `funded_lamports`. The verifier
+    /// authority MUST be currently registered in the program's verifier
+    /// registry (P0 security correction: owners cannot self-appoint).
     pub fn initialize_mission(
         ctx: Context<InitializeMission>,
         mission_id: String,
@@ -291,6 +433,13 @@ pub mod vorqyn {
         require!(expiry >= 0, VorqynError::InvalidExpiry);
         let now = Clock::get()?.unix_timestamp;
         require!(expiry == 0 || expiry > now, VorqynError::MissionExpired);
+        require!(
+            ctx.accounts
+                .registry
+                .verifiers
+                .contains(&verifier_authority),
+            VorqynError::VerifierNotRegistered
+        );
 
         let mission = &mut ctx.accounts.mission;
         mission.owner = ctx.accounts.owner.key();
@@ -619,13 +768,30 @@ pub mod vorqyn {
 
         let mission = &mut ctx.accounts.mission;
         require_open_mission(&mission.status, mission.expiry)?;
+        // P1 freshness: an attestation MUST carry a strictly-future expiry
+        // window — there is no "never expires" bypass (0 is rejected).
         require!(
-            attestation_expiry == 0 || attestation_expiry > Clock::get()?.unix_timestamp,
+            attestation_expiry > Clock::get()?.unix_timestamp,
             VorqynError::AttestationExpired
         );
         require!(
             ctx.accounts.verifier.key() == mission.verifier_authority,
             VorqynError::InvalidVerifier
+        );
+        // P0/P1 security correction: the verifier must STILL be registered
+        // (revocation is immediate for existing missions too), and the
+        // claimed policy version must equal the registry's authoritative
+        // accepted version.
+        require!(
+            ctx.accounts
+                .registry
+                .verifiers
+                .contains(&mission.verifier_authority),
+            VorqynError::VerifierNotRegistered
+        );
+        require!(
+            policy_version == ctx.accounts.registry.policy_version,
+            VorqynError::PolicyVersionMismatch
         );
         require!(
             evidence_digest != [0u8; 32],
@@ -804,10 +970,49 @@ fn require_open_mission(status: &MissionStatus, expiry: i64) -> Result<()> {
 // ---------------------------------------------------------------------------
 
 #[derive(Accounts)]
+pub struct InitializeVerifierRegistry<'info> {
+    /// Bootstrap payer becomes the registry admin (first-mover; the
+    /// deploying party must call this immediately after deployment).
+    #[account(mut)]
+    pub payer: Signer<'info>,
+
+    #[account(
+        init,
+        seeds = [REGISTRY_SEED],
+        bump,
+        payer = payer,
+        space = 8 + VerifierRegistry::INIT_SPACE
+    )]
+    pub registry: Account<'info, VerifierRegistry>,
+
+    pub system_program: Program<'info, System>,
+}
+
+/// Shared admin-gated registry mutation context (register/revoke/policy).
+#[derive(Accounts)]
+pub struct RegistryAdmin<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [REGISTRY_SEED],
+        bump,
+        has_one = admin @ VorqynError::NotRegistryAdmin,
+    )]
+    pub registry: Account<'info, VerifierRegistry>,
+}
+
+#[derive(Accounts)]
 #[instruction(mission_id: String)]
 pub struct InitializeMission<'info> {
     #[account(mut)]
     pub owner: Signer<'info>,
+
+    /// Program-recognized verifier trust root (read): the appointed
+    /// verifier must be registered here.
+    #[account(seeds = [REGISTRY_SEED], bump)]
+    pub registry: Account<'info, VerifierRegistry>,
 
     #[account(
         init,
@@ -935,6 +1140,12 @@ pub struct VerifyAndClaim<'info> {
         has_one = owner @ VorqynError::InvalidOwner,
     )]
     pub mission: Account<'info, Mission>,
+
+    /// Program-recognized verifier trust root (read): the mission's
+    /// verifier must still be registered, and policy_version is checked
+    /// against the registry's authoritative version.
+    #[account(seeds = [REGISTRY_SEED], bump)]
+    pub registry: Account<'info, VerifierRegistry>,
 
     #[account(
         mut,

@@ -68,6 +68,16 @@ escrow_vault = seeds ["vorqyn:vault",   mission_pda.as_bytes()]
   SHA-256 already frozen in contracts (`Evidence.digest`).
 - Chain client must translate `ChainTxStatus` (§6) from real RPC states —
   contracts never invent a `confirmed` that the chain did not report.
+- **Verifier registry (VQ-06 security correction, 2026-11-07):** the
+  program now carries a global verifier-registry PDA
+  (`["vorqyn:verifier-registry"]`). `initialize_mission` only accepts a
+  verifier CURRENTLY registered there (admin-controlled; bootstrap by the
+  deploying party), and `verify_and_claim` re-checks registration plus
+  requires the claim's `policy_version` to equal the registry's
+  authoritative version. Chain clients (VQ-12) must bootstrap the
+  registry before the first mission init and surface
+  `VerifierNotRegistered`/`PolicyVersionMismatch` as configuration
+  errors, not mission failures.
 
 **Operator/wallet chain-binding (final PR #37 review, concern 2 — PROPOSED,
 not frozen):** a confirmed reassignment receipt must carry enough

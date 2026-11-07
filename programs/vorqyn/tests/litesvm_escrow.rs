@@ -25,10 +25,10 @@ use {
 use vorqyn::{
     accounts::{
         AssignTask, AuthorizeReassignment, CloseMission, CreateTask, FundMission,
-        InitializeMission, VerifyAndClaim,
+        InitializeMission, InitializeVerifierRegistry, RegistryAdmin, VerifyAndClaim,
     },
     instruction, Mission, MissionStatus, Task, TaskKind, TaskPaid, TaskReassigned, TaskStatus,
-    MISSION_SEED, TASK_SEED, VAULT_SEED,
+    VerifierRegistry, MISSION_SEED, REGISTRY_SEED, TASK_SEED, VAULT_SEED,
 };
 
 const LAMPORTS: u64 = 1_000_000_000; // 1 SOL
@@ -45,6 +45,9 @@ struct TestEnv {
     /// Kept as a keypair: verify_and_claim requires the verifier authority
     /// to CO-SIGN the claim transaction (VQ-06).
     verifier: Keypair,
+    /// Registry admin (the "deploying party" in these tests): controls
+    /// verifier registration and the policy version.
+    admin: Keypair,
     mission: Pubkey,
     vault: Pubkey,
 }
@@ -137,6 +140,7 @@ fn init_mission_ix(
         .data(),
         InitializeMission {
             owner: owner.pubkey(),
+            registry: registry_pda(),
             mission,
             vault,
             system_program: system_program::ID,
@@ -146,13 +150,88 @@ fn init_mission_ix(
     )
 }
 
+fn registry_pda() -> Pubkey {
+    Pubkey::find_program_address(&[REGISTRY_SEED], &vorqyn::ID).0
+}
+
+fn registry_state(svm: &LiteSVM) -> VerifierRegistry {
+    let account = svm.get_account(&registry_pda()).unwrap();
+    let mut data: &[u8] = &account.data;
+    VerifierRegistry::try_deserialize(&mut data).unwrap()
+}
+
+/// Deployment-controlled bootstrap: the FIRST signer becomes the registry
+/// admin (in production the deploying party's wallet; here the test).
+fn bootstrap_registry(svm: &mut LiteSVM, policy_version: u64) -> Keypair {
+    let deployer = Keypair::new();
+    svm.airdrop(&deployer.pubkey(), 10 * LAMPORTS).unwrap();
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::InitializeVerifierRegistry { policy_version }.data(),
+        InitializeVerifierRegistry {
+            payer: deployer.pubkey(),
+            registry: registry_pda(),
+            system_program: system_program::ID,
+        }
+        .to_account_metas(None),
+    );
+    send(svm, &deployer, &[ix]).expect("registry bootstrap should succeed");
+    deployer
+}
+
+fn register_verifier(svm: &mut LiteSVM, admin: &Keypair, verifier: Pubkey) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::RegisterVerifier { verifier }.data(),
+        RegistryAdmin {
+            admin: admin.pubkey(),
+            registry: registry_pda(),
+        }
+        .to_account_metas(None),
+    );
+    send(svm, admin, &[ix])
+}
+
+fn revoke_verifier(svm: &mut LiteSVM, admin: &Keypair, verifier: Pubkey) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::RevokeVerifier { verifier }.data(),
+        RegistryAdmin {
+            admin: admin.pubkey(),
+            registry: registry_pda(),
+        }
+        .to_account_metas(None),
+    );
+    send(svm, admin, &[ix])
+}
+
+fn set_policy_version(
+    svm: &mut LiteSVM,
+    admin: &Keypair,
+    policy_version: u64,
+) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::SetPolicyVersion { policy_version }.data(),
+        RegistryAdmin {
+            admin: admin.pubkey(),
+            registry: registry_pda(),
+        }
+        .to_account_metas(None),
+    );
+    send(svm, admin, &[ix])
+}
+
 fn setup() -> TestEnv {
     let mut svm = load_program();
+    let admin = bootstrap_registry(&mut svm, 1);
     let owner = Keypair::new();
     let operator = Keypair::new();
     let verifier = Keypair::new();
     svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
     svm.airdrop(&operator.pubkey(), LAMPORTS).unwrap();
+    register_verifier(&mut svm, &admin, verifier.pubkey())
+        .expect("verifier registration should succeed");
 
     let ix = init_mission_ix(&owner, "port-001", verifier.pubkey(), EXPIRY_FAR_FUTURE);
     send(&mut svm, &owner, &[ix]).expect("initialize_mission should succeed");
@@ -164,6 +243,7 @@ fn setup() -> TestEnv {
         owner,
         operator,
         verifier,
+        admin,
         mission,
         vault,
     }
@@ -308,6 +388,7 @@ fn initialize_mission_creates_pda_and_vault_with_exact_costs() {
 #[test]
 fn initialize_rejects_invalid_mission_ids() {
     let mut svm = load_program();
+    bootstrap_registry(&mut svm, 1);
     let owner = Keypair::new();
     svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
 
@@ -334,6 +415,7 @@ fn initialize_rejects_invalid_mission_ids() {
 #[test]
 fn initialize_rejects_past_expiry() {
     let mut svm = load_program();
+    bootstrap_registry(&mut svm, 1);
     let owner = Keypair::new();
     svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
     let ix = init_mission_ix(&owner, "expired-001", Keypair::new().pubkey(), 1);
@@ -1132,6 +1214,7 @@ fn reassignment_rejects_unassigned_task_wrong_pda_and_foreign_mission_task() {
     let TestEnv {
         mut svm,
         owner,
+        verifier,
         mission,
         ..
     } = setup();
@@ -1183,12 +1266,7 @@ fn reassignment_rejects_unassigned_task_wrong_pda_and_foreign_mission_task() {
     // Foreign mission's task: mission and task do not belong together —
     // the task PDA derived from THIS mission cannot match the other
     // mission's real task account (seeds or has_one must fire).
-    let ix2 = init_mission_ix(
-        &owner,
-        "port-002",
-        Keypair::new().pubkey(),
-        EXPIRY_FAR_FUTURE,
-    );
+    let ix2 = init_mission_ix(&owner, "port-002", verifier.pubkey(), EXPIRY_FAR_FUTURE);
     send(&mut svm, &owner, &[ix2]).unwrap();
     let mission2 = mission_pda(&owner.pubkey(), "port-002");
     fund(
@@ -1321,13 +1399,16 @@ fn reassignment_rejects_already_paid_task() {
 #[test]
 fn expired_mission_rejects_fund_create_assign_and_changes_nothing() {
     let mut svm = load_program();
+    let admin = bootstrap_registry(&mut svm, 1);
     let owner = Keypair::new();
     let operator = Keypair::new();
     svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
+    let verifier = Keypair::new();
+    register_verifier(&mut svm, &admin, verifier.pubkey()).unwrap();
 
     // Live phase: init with a near-future expiry, fund, create one task.
     let expiry = TEST_NOW + 60_000;
-    let ix = init_mission_ix(&owner, "port-exp", Keypair::new().pubkey(), expiry);
+    let ix = init_mission_ix(&owner, "port-exp", verifier.pubkey(), expiry);
     send(&mut svm, &owner, &[ix]).expect("initialize before expiry should succeed");
     let mission = mission_pda(&owner.pubkey(), "port-exp");
     let vault = vault_pda(&mission);
@@ -1460,7 +1541,7 @@ fn claim_capture_logs(
             expected_assignment_version: expected_version,
             evidence_digest: digest,
             policy_version: 1,
-            attestation_expiry: 0,
+            attestation_expiry: EXPIRY_FAR_FUTURE,
         }
         .data(),
         VerifyAndClaim {
@@ -1468,6 +1549,7 @@ fn claim_capture_logs(
             verifier: verifier.pubkey(),
             owner: *owner_pk,
             mission,
+            registry: registry_pda(),
             task: task_pda(&mission, task_id),
             vault: vault_pda(&mission),
             payout_wallet,
@@ -1887,6 +1969,17 @@ fn claim_rejects_zero_digest_and_stale_attestation() {
         "expected InvalidEvidenceDigest, got: {err}"
     );
 
+    // P1 freshness: there is no "never expires" bypass — attestation
+    // expiry 0 (previously accepted as "no window") is now rejected.
+    let err =
+        claim_with_attestation_expiry(&mut svm, &owner, &verifier, &owner.pubkey(), mission, 0)
+            .expect_err("zero attestation expiry must be rejected");
+    assert!(
+        err.to_lowercase().contains("attestationexpired"),
+        "expected AttestationExpired for expiry=0, got: {err}"
+    );
+    svm.expire_blockhash();
+
     // Attestation whose validity window has already passed (the program
     // reads the same Clock the test controls).
     svm.set_sysvar(&anchor_lang::prelude::Clock {
@@ -1935,6 +2028,7 @@ fn claim_with_attestation_expiry(
             verifier: verifier.pubkey(),
             owner: *owner_pk,
             mission,
+            registry: registry_pda(),
             task: task_pda(&mission, "task-rs"),
             vault: vault_pda(&mission),
             payout_wallet: task_state(svm, &mission, "task-rs")
@@ -2257,3 +2351,296 @@ fn full_flow_preserves_exact_ledger_invariant() {
 // `funding_ledger_overflows_are_rejected` in src/lib.rs, which drives the
 // exact checked arithmetic `fund_mission` uses (3/4-of-MAX ledger + the
 // one-lamport-over fund).
+
+// ---------------------------------------------------------------------------
+// SECURITY (independent verifier authority) — failing-first for PR #48
+// ---------------------------------------------------------------------------
+
+/// P0 REPRODUCTION (fails against the pre-fix program): `initialize_mission`
+/// accepts any caller-supplied verifier_authority, so a mission owner can
+/// appoint a verifier key they control and later self-authorize payout by
+/// co-signing their own claim. The fix (verifier registry) must make this
+/// initialization FAIL with VerifierNotRegistered.
+#[test]
+fn mission_owner_cannot_appoint_an_unregistered_verifier() {
+    let mut svm = load_program();
+    bootstrap_registry(&mut svm, 1); // honest deployer initializes the registry
+    let owner = Keypair::new();
+    svm.airdrop(&owner.pubkey(), 10 * LAMPORTS).unwrap();
+
+    // Verifier key generated and controlled BY THE OWNER (never registered
+    // through any independent registry). Registration is admin-only, so
+    // the owner cannot add it either (proven in the admin tests below).
+    let owner_controlled_verifier = Keypair::new();
+
+    let ix = init_mission_ix(
+        &owner,
+        "port-selfauth",
+        owner_controlled_verifier.pubkey(),
+        EXPIRY_FAR_FUTURE,
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "VerifierNotRegistered");
+
+    // The flaw's full chain, for the record: with the pre-fix program this
+    // init SUCCEEDS and the owner-controlled key can later sign claims.
+    // (Reproduced on the pre-fix build: this test failed at the line above
+    // because the initialization went through.)
+}
+
+#[test]
+fn only_registry_admin_registers_revokes_and_rotates_policy() {
+    let mut svm = load_program();
+    let admin = bootstrap_registry(&mut svm, 1);
+    let owner = Keypair::new();
+    let operator = Keypair::new();
+    let attacker = Keypair::new();
+    for kp in [&owner, &operator, &attacker] {
+        svm.airdrop(&kp.pubkey(), LAMPORTS).unwrap();
+    }
+    let v_new = Keypair::new().pubkey();
+
+    // Non-admins (mission owner, operator, arbitrary attacker) cannot
+    // register verifiers — has_one = admin rejects them all.
+    for kp in [&owner, &operator, &attacker] {
+        let err = register_verifier(&mut svm, kp, v_new)
+            .expect_err("non-admin must not register verifiers");
+        assert!(
+            err.to_lowercase().contains("notregistryadmin"),
+            "expected NotRegistryAdmin, got: {err}"
+        );
+    }
+
+    // Admin validation rules: default key invalid, duplicates rejected.
+    let err = register_verifier(&mut svm, &admin, Pubkey::default())
+        .expect_err("default key must not be registrable");
+    assert!(
+        err.to_lowercase().contains("invalidverifierkey"),
+        "got: {err}"
+    );
+    register_verifier(&mut svm, &admin, v_new).unwrap();
+    svm.expire_blockhash(); // genuine second submission, not a dedup artifact
+    let err = register_verifier(&mut svm, &admin, v_new)
+        .expect_err("duplicate registration must be rejected");
+    assert!(
+        err.to_lowercase().contains("verifieralreadyregistered"),
+        "got: {err}"
+    );
+    assert!(registry_state(&svm).verifiers.contains(&v_new));
+
+    // Revocation of a non-member fails; admin revoke works.
+    let err = revoke_verifier(&mut svm, &admin, Keypair::new().pubkey())
+        .expect_err("revoking a non-registered key must fail");
+    assert!(
+        err.to_lowercase().contains("verifiernotregistered"),
+        "got: {err}"
+    );
+    revoke_verifier(&mut svm, &admin, v_new).unwrap();
+    assert!(!registry_state(&svm).verifiers.contains(&v_new));
+
+    // Policy rotation is admin-only.
+    let err = set_policy_version(&mut svm, &owner, 2)
+        .expect_err("non-admin must not rotate the policy version");
+    assert!(
+        err.to_lowercase().contains("notregistryadmin"),
+        "got: {err}"
+    );
+    set_policy_version(&mut svm, &admin, 2).unwrap();
+    assert_eq!(registry_state(&svm).policy_version, 2);
+}
+
+#[test]
+fn revoked_verifier_blocks_new_missions_and_existing_claims() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        admin,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_pk = operator.pubkey();
+
+    // Admin revokes the mission's verifier AFTER the mission exists…
+    revoke_verifier(&mut svm, &admin, verifier.pubkey()).unwrap();
+
+    // …existing claims signed by the revoked key are dead immediately.
+    let err = claim(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-rs",
+        1,
+        operator_pk,
+    )
+    .expect_err("revoked verifier must not authorize payouts");
+    assert!(
+        err.to_lowercase().contains("verifiernotregistered"),
+        "expected VerifierNotRegistered, got: {err}"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").paid_version,
+        None,
+        "task stays unpaid"
+    );
+
+    // …and NEW missions cannot appoint the revoked key either.
+    svm.airdrop(&owner.pubkey(), LAMPORTS).unwrap();
+    let ix = init_mission_ix(&owner, "port-next", verifier.pubkey(), EXPIRY_FAR_FUTURE);
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "VerifierNotRegistered");
+}
+
+#[test]
+fn policy_version_must_match_the_registry_and_rotation_takes_effect() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        verifier,
+        admin,
+        mission,
+        ..
+    } = setup();
+    fund(&mut svm, &owner, mission, vault_pda(&mission), 3 * LAMPORTS).unwrap();
+    create_task(&mut svm, &owner, mission, "task-a", LAMPORTS / 2).unwrap();
+    create_task(&mut svm, &owner, mission, "task-b", LAMPORTS / 2).unwrap();
+    let operator_pk = operator.pubkey();
+    assign_task(
+        &mut svm,
+        &owner,
+        mission,
+        "task-a",
+        operator_pk,
+        300_000_000,
+    )
+    .unwrap();
+    assign_task(
+        &mut svm,
+        &owner,
+        mission,
+        "task-b",
+        operator_pk,
+        300_000_000,
+    )
+    .unwrap();
+
+    // Claim quoting a policy version the registry does not accept: reject.
+    let err = claim_full(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-a",
+        1,
+        2, // registry accepts 1
+        EXPIRY_FAR_FUTURE,
+        operator_pk,
+    )
+    .expect_err("wrong policy version must be rejected");
+    assert!(
+        err.to_lowercase().contains("policyversionmismatch"),
+        "expected PolicyVersionMismatch, got: {err}"
+    );
+    assert_eq!(task_state(&svm, &mission, "task-a").paid_version, None);
+
+    // Correct version pays.
+    claim_full(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-a",
+        1,
+        1,
+        EXPIRY_FAR_FUTURE,
+        operator_pk,
+    )
+    .expect("matching policy version should pay");
+
+    // After admin rotation to 2, the old version is dead and 2 works.
+    set_policy_version(&mut svm, &admin, 2).unwrap();
+    svm.expire_blockhash();
+    let err = claim_full(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-b",
+        1,
+        1,
+        EXPIRY_FAR_FUTURE,
+        operator_pk,
+    )
+    .expect_err("pre-rotation policy version must now be rejected");
+    assert!(
+        err.to_lowercase().contains("policyversionmismatch"),
+        "got: {err}"
+    );
+    svm.expire_blockhash();
+    claim_full(
+        &mut svm,
+        &owner,
+        &verifier,
+        &owner.pubkey(),
+        mission,
+        "task-b",
+        1,
+        2,
+        EXPIRY_FAR_FUTURE,
+        operator_pk,
+    )
+    .expect("post-rotation policy version should pay");
+}
+
+/// Fully-parameterized claim (policy + attestation) for the security tests.
+#[allow(clippy::too_many_arguments)]
+fn claim_full(
+    svm: &mut LiteSVM,
+    payer: &Keypair,
+    verifier: &Keypair,
+    owner_pk: &Pubkey,
+    mission: Pubkey,
+    task_id: &str,
+    expected_version: u64,
+    policy_version: u64,
+    attestation_expiry: i64,
+    payout_wallet: Pubkey,
+) -> Result<(), String> {
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::VerifyAndClaim {
+            task_id: task_id.to_string(),
+            expected_assignment_version: expected_version,
+            evidence_digest: DIGEST,
+            policy_version,
+            attestation_expiry,
+        }
+        .data(),
+        VerifyAndClaim {
+            payer: payer.pubkey(),
+            verifier: verifier.pubkey(),
+            owner: *owner_pk,
+            mission,
+            registry: registry_pda(),
+            task: task_pda(&mission, task_id),
+            vault: vault_pda(&mission),
+            payout_wallet,
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let blockhash = svm.latest_blockhash();
+    let msg = Message::new_with_blockhash(&[ix], Some(&payer.pubkey()), &blockhash);
+    let tx =
+        VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[payer, verifier]).unwrap();
+    svm.send_transaction(tx)
+        .map(|_| ())
+        .map_err(|err| format!("{err:?}"))
+}

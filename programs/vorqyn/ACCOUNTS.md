@@ -1,7 +1,7 @@
 # VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04 + VQ-05 + VQ-06)
 
 > Status: implemented and tested with **LiteSVM simulated execution**
-> (39 integration tests + 3 unit tests). **No devnet deployment has been
+> (43 integration tests + 3 unit tests). **No devnet deployment has been
 > performed and none is claimed.** Interface alignment:
 > `packages/contracts/CHAIN_SEAM.md` (DRAFT agreement with the VQ-01 owner).
 
@@ -53,6 +53,47 @@
 **Explicitly out of scope (later issues):** operator registry,
 AI delegate authority. `verify_and_claim` is implemented (VQ-06); the
 evidence DIGEST producer is VQ-10 (typed fixture boundary until then).
+
+## 2a. Verifier registry (VQ-06 security correction — P0/P1)
+
+| Instruction | Signer | Key constraints |
+| --- | --- | --- |
+| `initialize_verifier_registry(policy_version)` | first mover (deployer) | one-time `init` of the global registry PDA `[vorqyn:verifier-registry]`; the signing payer becomes the admin; policy_version > 0 |
+| `register_verifier(verifier)` | registry admin | `has_one = admin`; rejects default key and duplicates; max 8 entries |
+| `revoke_verifier(verifier)` | registry admin | removes the key; IMMEDIATE effect for new missions AND existing claims |
+| `set_policy_version(v)` | registry admin | rotates the authoritative accepted policy version (definitions in VQ-10) |
+
+- `initialize_mission` now REQUIRES `verifier_authority ∈ registry
+  .verifiers` (P0: mission owners can no longer self-appoint a verifier
+  they control — reproduced failing-first, then fixed).
+- `verify_and_claim` RE-CHECKS registration at claim time (a revoked key
+  cannot authorize payouts for missions created earlier) and requires
+  `policy_version == registry.policy_version` (P1) and a STRICTLY-future
+  `attestation_expiry` (no "never expires" bypass; 0 is rejected).
+
+## 5c. Trust boundary: who controls verifier registration
+
+- **Registration authority = the registry admin**, set once at bootstrap
+  by the FIRST signer of `initialize_verifier_registry`. In production
+  that is the deploying party (Lane 1 / VORQYN), whose wallet key never
+  enters the repository. Mission owners, operators and AI delegates can
+  never register, revoke or rotate policy — enforced by `has_one = admin`
+  plus the registry PDA seeds.
+- **Remaining centralized trust assumptions (honest list):**
+  1. The deploying party controls the verifier set and policy version.
+     This is intentional for the hackathon: an independent HUMAN-reviewed
+     registration authority instead of per-mission self-appointment.
+  2. Bootstrap is first-mover: a frontrunner on a live cluster could
+     claim the registry before the deploy script. Mitigation: initialize
+     immediately after deployment (deploy-script step); a mainnet-grade
+     deployment would hard-code the admin key or use a multisig at
+     build time.
+  3. The program validates AUTHORIZATION over a digest; physical/sensor
+     truth remains the registered verifier's responsibility (unchanged).
+- **Independence guarantees (tested):** an owner-generated verifier key
+  fails mission init (`VerifierNotRegistered`); owners/operators/
+  attackers cannot call register/revoke/rotate (`NotRegistryAdmin`);
+  revocation kills both new missions and existing claims immediately.
 
 ## 3. Accounting invariants (all enforced with checked arithmetic)
 
