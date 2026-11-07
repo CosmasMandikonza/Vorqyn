@@ -159,10 +159,7 @@ export function normalizeSnapshotToTelemetry(
   const skipped: NormalizationOutcome["skipped"][number][] = [];
 
   for (const robot of robots) {
-    const robotId = (robot as Record<string, unknown> | null)?.robotId;
-    if (typeof robotId !== "string") {
-      return { ok: false, error: { code: "validation_error", message: "snapshot robot is missing robotId" } };
-    }
+    const robotId = robot.robotId;
     if (snapshot.kernelState === "paused") {
       skipped.push({
         robotId,
@@ -171,18 +168,9 @@ export function normalizeSnapshotToTelemetry(
       });
       continue;
     }
-    const fresh = (robot as Record<string, unknown>).fresh === true;
-    const linkDisconnected = (robot as Record<string, unknown>).linkState === "disconnected";
-    const poseView = (robot as Record<string, unknown>).pose as Record<string, unknown> | undefined;
-    if (!isRecord(poseView)) {
-      return { ok: false, error: { code: "validation_error", message: `robot ${robotId} has no pose` } };
-    }
-    const sensors = (robot as Record<string, unknown>).sensors as Array<Record<string, unknown>> | undefined;
-    if (!Array.isArray(sensors)) {
-      return { ok: false, error: { code: "validation_error", message: `robot ${robotId} has no sensor list` } };
-    }
+    const linkDisconnected = robot.linkState === "disconnected";
 
-    if (!fresh || linkDisconnected) {
+    if (!robot.fresh || linkDisconnected) {
       // Explicit link-down marker on the frozen last-authoritative pose.
       const candidate = {
         missionId: options.missionId,
@@ -192,7 +180,7 @@ export function normalizeSnapshotToTelemetry(
         receivedAtMs: receipt.value,
         frameId,
         sequence: snapshot.sequence,
-        position: { x: poseView.x, y: poseView.y, z: poseView.z },
+        position: { x: robot.pose.x, y: robot.pose.y, z: robot.pose.z },
         units: TELEMETRY_UNITS,
         quality: { status: "link_disconnected" as const, detail: "kernel-link-disconnected" },
       };
@@ -203,7 +191,7 @@ export function normalizeSnapshotToTelemetry(
     }
 
     // Fresh robot: collect its measured sensors.
-    const measured = sensors.filter((sensor) => isRecord(sensor.measured));
+    const measured = robot.sensors.filter((sensor) => sensor.measured !== null);
     if (measured.length === 0) {
       skipped.push({
         robotId,
@@ -213,15 +201,15 @@ export function normalizeSnapshotToTelemetry(
       continue;
     }
     const opticalFaulted = measured.some(
-      (sensor) =>
-        sensor.kind === "optical" &&
-        (sensor.measured as Record<string, unknown>).opticalVisibilityFactorApplied !== null,
+      (sensor) => sensor.kind === "optical" && sensor.measured?.opticalVisibilityFactorApplied !== null,
     );
-    const primary = (measured.find((sensor) => sensor.kind === "optical") ?? measured[0]) as Record<string, unknown>;
-    const primaryMeasured = primary.measured as Record<string, unknown>;
+    const primary = measured.find((sensor) => sensor.kind === "optical") ?? measured[0];
+    if (primary === undefined || primary.measured === null) {
+      return { ok: false, error: { code: "validation_error", message: `robot ${robotId} has no measurable primary sensor` } };
+    }
     const qualityMetric = {
-      kind: String(primary.sensorId),
-      value: primaryMeasured.quality01 as number,
+      kind: primary.sensorId,
+      value: primary.measured.quality01,
     };
     const candidate = {
       missionId: options.missionId,
@@ -231,7 +219,7 @@ export function normalizeSnapshotToTelemetry(
       receivedAtMs: receipt.value,
       frameId,
       sequence: snapshot.sequence,
-      position: { x: poseView.x, y: poseView.y, z: poseView.z },
+      position: { x: robot.pose.x, y: robot.pose.y, z: robot.pose.z },
       units: TELEMETRY_UNITS,
       quality: opticalFaulted
         ? { status: "degraded" as const, detail: "optical-visibility-fault-active" }

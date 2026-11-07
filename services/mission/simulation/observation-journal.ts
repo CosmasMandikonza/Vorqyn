@@ -24,6 +24,7 @@
 
 import {
   applyTelemetrySample,
+  canonicalJson,
   noteRejectedTelemetry,
   type Result,
   type TelemetrySample,
