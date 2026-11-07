@@ -261,45 +261,67 @@ export function PortViewer() {
       {state.phase === "ready" &&
         (webglAvailable && !force2D ? (
           <div className="relative">
-            {/* Keep the camera bar relative to the canvas only, not the
-                mobile inspector below it. Otherwise the bar covers the
-                inspector and disappears beneath the scene on small screens. */}
+            {/* The desktop inspector overlay lives INSIDE WorldCanvasFrame
+                (overflow-hidden, 62vh) so its absolute insets physically clip
+                to the canvas bounds — it can never reach the PlaybackBar
+                below (the 1024px Replay-interception defect from PR #43 QA).
+                The camera station bar is likewise bounded to the canvas
+                region, not the mobile inspector below it. */}
             <div className="relative">
               <div onPointerDownCapture={cancelDive} className={diveActive ? "contents" : undefined}>
-              <WorldCanvasFrame>
-                <PortSceneDynamic
-                  world={state.world}
-                  selectedId={selectedId}
-                  onSelect={setSelectedId}
-                  pose={pose}
-                  reducedMotion={reducedMotion}
-                  lowGpu={lowGpu.current}
-                  onContextLost={() => setContextLost(true)}
-                  onContextRestored={() => setContextLost(false)}
-                  liveRobots={liveRobots}
-                  sessionKernelState={
-                    playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null
-                  }
-                  followTarget={followTarget}
-                  ghostPaths={ghostVisible ? ghostPaths : null}
+                <WorldCanvasFrame>
+                  <PortSceneDynamic
+                    world={state.world}
+                    selectedId={selectedId}
+                    onSelect={setSelectedId}
+                    pose={pose}
+                    reducedMotion={reducedMotion}
+                    lowGpu={lowGpu.current}
+                    onContextLost={() => setContextLost(true)}
+                    onContextRestored={() => setContextLost(false)}
+                    liveRobots={liveRobots}
+                    sessionKernelState={
+                      playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null
+                    }
+                    followTarget={followTarget}
+                    ghostPaths={ghostVisible ? ghostPaths : null}
+                  />
+                  {/* Desktop inspector — clipped by the frame's own
+                      overflow-hidden; scrollable within the canvas bounds. */}
+                  <aside
+                    className="absolute top-3 right-3 bottom-16 hidden w-78 overflow-y-auto lg:block"
+                    data-testid="inspector-overlay"
+                  >
+                    <InspectorPanel
+                      world={state.world}
+                      pose={pose}
+                      mode={mode === "FOLLOW" ? "RESET" : mode}
+                      selectedId={selectedId}
+                      onSelect={setSelectedId}
+                      inspectIndex={inspectIndex}
+                      onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
+                      limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
+                      sensorRobot={selectedLive}
+                      compact
+                    />
+                  </aside>
+                </WorldCanvasFrame>
+                {diveActive && (
+                  <DiveChip
+                    dive={{ label: buildDiveLegs()[diveLegIndex]?.label ?? "" }}
+                    onSkip={() => {
+                      cancelDive();
+                      setMode("INSPECT");
+                    }}
+                  />
+                )}
+                <ViewModeBar
+                  mode={mode}
+                  onChange={setModeAndResetInspect}
+                  inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
+                  onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
+                  followEnabled={sessionActive && Boolean(selectedLive)}
                 />
-              </WorldCanvasFrame>
-              {diveActive && (
-                <DiveChip
-                  dive={{ label: buildDiveLegs()[diveLegIndex]?.label ?? "" }}
-                  onSkip={() => {
-                    cancelDive();
-                    setMode("INSPECT");
-                  }}
-                />
-              )}
-              <ViewModeBar
-                mode={mode}
-                onChange={setModeAndResetInspect}
-                inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
-                onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                followEnabled={sessionActive && Boolean(selectedLive)}
-              />
               </div>
               </div>
             {contextLost && (
@@ -341,23 +363,6 @@ export function PortViewer() {
                 sensorRobot={selectedLive}
               />
             </div>
-            <aside
-              className="absolute top-3 right-3 bottom-24 hidden w-78 overflow-y-auto lg:block"
-              data-testid="inspector-overlay"
-            >
-              <InspectorPanel
-                world={state.world}
-                pose={pose}
-                mode={mode === "FOLLOW" ? "RESET" : mode}
-                selectedId={selectedId}
-                onSelect={setSelectedId}
-                inspectIndex={inspectIndex}
-                onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
-                sensorRobot={selectedLive}
-                compact
-              />
-            </aside>
           </div>
         ) : (
           <div>

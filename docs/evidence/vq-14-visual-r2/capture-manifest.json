@@ -1,0 +1,59 @@
+{
+  "schema": "vorqyn.vq14-captures/2",
+  "sourceHeadSha": "8dadf76757d402722af5525e2f74283b14badccd",
+  "capturedAtUtc": "2026-11-07T22:01:02.664Z",
+  "captureTool": "docs/evidence/vq-14-visual-r2/tools/capture-r2.mjs",
+  "browser": "Playwright Chromium (deviceScaleFactor 1, fullPage false)",
+  "validation": "IHDR dimensions must equal the requested viewport; mismatches fail the run (exit 1)",
+  "note": "Supersedes vq-14-visual/capture-manifest.json whose entries 05/06/07/10 recorded 1344x559 canvas-frame crops under 1440x900 labels with ok:true — corrected here by strict IHDR validation.",
+  "captures": [
+    {
+      "file": "r2-desktop-running-light.png",
+      "expected": "1440x900",
+      "actual": "1440x900",
+      "ok": true,
+      "bytes": 160779,
+      "sha256": "90377f2b46739fe3af31799e4a6b8b8b9fb46f876f44ab4f630e44f3ea308d41"
+    },
+    {
+      "file": "r2-desktop-fault-uw-light.png",
+      "expected": "1440x900",
+      "actual": "1440x900",
+      "ok": true,
+      "bytes": 130373,
+      "sha256": "dc9b103366d2bd5afac4e5981d9dc1f90173525d4ff46e44736e52cc17e43faf"
+    },
+    {
+      "file": "r2-desktop-inspect-light.png",
+      "expected": "1440x900",
+      "actual": "1440x900",
+      "ok": true,
+      "bytes": 153327,
+      "sha256": "e48c84e9199e05ae17f799693d4619428d51608036f975511fab3e00ca8d8e2c"
+    },
+    {
+      "file": "r2-desktop-reset-dark.png",
+      "expected": "1440x900",
+      "actual": "1440x900",
+      "ok": true,
+      "bytes": 162031,
+      "sha256": "4898bb1a1a61e2a890d491f1350704094c7a53c5b0b52c0d4b8c17f73a28a6e5"
+    },
+    {
+      "file": "r2-mobile-390-light.png",
+      "expected": "390x844",
+      "actual": "390x844",
+      "ok": true,
+      "bytes": 52099,
+      "sha256": "d6f0a0ea1862018f343deda7afc0fe6d2a1141e7797d93f91d9281bb0d525147"
+    },
+    {
+      "file": "r2-mobile-320-light.png",
+      "expected": "320x844",
+      "actual": "320x844",
+      "ok": true,
+      "bytes": 43894,
+      "sha256": "c30a1e5bbaf224746427d6f86c0158ce9f94e9e479c372f7fd855d982c762798"
+    }
+  ]
+}

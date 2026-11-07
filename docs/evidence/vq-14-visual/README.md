@@ -1,3 +1,7 @@
+# VQ-14 visual signature evidence — CORRECTED SET IN vq-14-visual-r2
+
+> **Review correction (P1-B, 2026-11-07):** entries 05/06/07/10 recorded canvas-frame crops (1344x559) under 1440x900 labels with ok:true, and 03 was missing from the manifest. The authoritative, strictly IHDR-validated evidence set now lives in **docs/evidence/vq-14-visual-r2/** (fresh capture tooling included). This directory is retained as historical record; manifests have been corrected in place (honest ok flags, missing entry added).
+
 # VQ-14 visual signature evidence — World Dive, Mission Fracture, Ghost Replay
 
 Real browser captures (Playwright Chromium 158, production build, DSF 1,

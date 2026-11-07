@@ -113,9 +113,10 @@ export function PortScene(props: PortSceneProps) {
             underwater={underwater}
           />
         ))}
-        {props.ghostPaths?.pre && (
+        {props.ghostPaths?.pre?.segments.map((segment, si) => (
           <Line
-            points={props.ghostPaths.pre.points.map(
+            key={`ghost-pre-${si}`}
+            points={segment.points.map(
               (p) => [p[0], p[1] + 0.3, p[2]] as [number, number, number],
             )}
             color="#7bd9c6"
@@ -126,10 +127,11 @@ export function PortScene(props: PortSceneProps) {
             transparent
             opacity={0.8}
           />
-        )}
-        {props.ghostPaths?.post && (
+        ))}
+        {props.ghostPaths?.post?.segments.map((segment, si) => (
           <Line
-            points={props.ghostPaths.post.points.map(
+            key={`ghost-post-${si}`}
+            points={segment.points.map(
               (p) => [p[0], p[1] + 0.3, p[2]] as [number, number, number],
             )}
             color="#de9c7c"
@@ -137,7 +139,7 @@ export function PortScene(props: PortSceneProps) {
             transparent
             opacity={0.85}
           />
-        )}
+        ))}
         <ZoneFrames world={world} underwater={underwater} />
       </Suspense>
       <CameraRig

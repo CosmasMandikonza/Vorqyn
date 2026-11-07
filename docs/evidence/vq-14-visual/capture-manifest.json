@@ -13,22 +13,32 @@
     "ok": true
   },
   {
+    "name": "03-fracture-underwater-rov-light-1440.png",
+    "width": 1344,
+    "height": 559,
+    "ok": false,
+    "correction": "entry was missing from the original manifest; actual dimensions are a 1344x559 canvas-frame crop, NOT a 1440x900 viewport capture"
+  },
+  {
     "name": "05-ghost-overlay-light-1440.png",
     "width": 1344,
     "height": 559,
-    "ok": true
+    "ok": false,
+    "correction": "actual dimensions are a canvas-frame crop, not a full-viewport capture (P1-B review finding)"
   },
   {
     "name": "06-reset-dark-1440.png",
     "width": 1344,
     "height": 559,
-    "ok": true
+    "ok": false,
+    "correction": "actual dimensions are a canvas-frame crop, not a full-viewport capture (P1-B review finding)"
   },
   {
     "name": "07-inspect-dark-1440.png",
     "width": 1344,
     "height": 559,
-    "ok": true
+    "ok": false,
+    "correction": "actual dimensions are a canvas-frame crop, not a full-viewport capture (P1-B review finding)"
   },
   {
     "name": "08-mobile-390-light.png",

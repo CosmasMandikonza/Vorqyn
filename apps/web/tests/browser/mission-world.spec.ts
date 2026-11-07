@@ -119,3 +119,68 @@ test("World Dive button is hidden under prefers-reduced-motion", async ({ page }
   await page.waitForTimeout(4000);
   await expect(page.getByRole("button", { name: "World Dive", exact: true })).toHaveCount(0);
 });
+
+test("1024x900: inspector overlay never intercepts an ordinary Replay history click", async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.waitForTimeout(1500); // re-layout at the new viewport
+
+  // Journey to a faulted, replayable state.
+  await page.getByRole("button", { name: "Start synthetic survey" }).click();
+  await page.waitForTimeout(1500);
+  await page.getByRole("button", { name: "Run playback" }).click();
+  await page.waitForTimeout(5000);
+  await page.getByRole("button", { name: "Pause playback" }).click();
+  await page.getByRole("button", { name: "Inject underwater optical fault" }).click();
+  await page.waitForTimeout(1800);
+  await page.getByRole("button", { name: "Advance +1 step" }).click();
+  await page.waitForTimeout(1800);
+
+  // GEOMETRIC assertion: the desktop inspector overlay must not intersect
+  // the Replay history button's hit box at this viewport. This pins the
+  // layout contract that PR #43 QA found broken (intercepted click at
+  // ~(715.8, 461.9)) rather than relying on click success alone.
+  const geometry = await page.evaluate(() => {
+    const overlay = document.querySelector('[data-testid="inspector-overlay"]');
+    const replay = [...document.querySelectorAll("button")].find(
+      (b) => b.textContent?.trim() === "Replay history",
+    );
+    if (!overlay || !replay) return { missing: overlay ? "replay" : "both" };
+    const o = overlay.getBoundingClientRect();
+    const r = replay.getBoundingClientRect();
+    const intersects = !(
+      r.right <= o.left ||
+      r.left >= o.right ||
+      r.bottom <= o.top ||
+      r.top >= o.bottom
+    );
+    const hit = document.elementFromPoint(
+      r.left + r.width / 2,
+      r.top + r.height / 2,
+    );
+    return {
+      intersects,
+      hitIsReplayOrChild: hit === replay || replay.contains(hit ?? null),
+      overlayRight: Math.round(o.right),
+      replayRect: { left: Math.round(r.left), top: Math.round(r.top), right: Math.round(r.right), bottom: Math.round(r.bottom) },
+    };
+  });
+  expect(geometry.missing).toBeUndefined();
+  expect(geometry.intersects, `overlay intersects Replay button: ${JSON.stringify(geometry)}`).toBe(false);
+  expect(geometry.hitIsReplayOrChild).toBe(true);
+
+  // ORDINARY pointer click (no force, no DOM dispatch) — actionability
+  // checks enforce the real hit-target path.
+  await page.getByRole("button", { name: "Replay history", exact: true }).click();
+  await expect(page.getByTestId("replay-badge")).toContainText(/Replay identical/);
+
+  // Inspector overlay remains visible, scrollable and usable.
+  const overlay = page.locator('[data-testid="inspector-overlay"]');
+  await expect(overlay).toBeVisible();
+  const panel = overlay.locator('[data-testid="inspector-panel"]');
+  await expect(panel).toContainText(/kernel measurements/i);
+  const scrollState = await overlay.evaluate((el) => ({
+    scrollable: el.scrollHeight >= el.clientHeight,
+    clientHeight: el.clientHeight,
+  }));
+  expect(scrollState.clientHeight).toBeGreaterThan(200);
+});

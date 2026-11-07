@@ -108,9 +108,12 @@ describe("Ghost Replay paths (recorded observations only)", () => {
 
   it("both branches are finite scene-space points under the waterline", () => {
     const { pre, post } = buildGhostPaths(RUN.snapshots, "rov-01", 10);
-    for (const point of [...pre!.points, ...post!.points]) {
-      for (const axis of point) expect(Number.isFinite(axis)).toBe(true);
-      expect(point[1]).toBeLessThan(0); // underwater
+    const allSegments = [...pre!.segments, ...post!.segments];
+    for (const segment of allSegments) {
+      for (const point of segment.points) {
+        for (const axis of point) expect(Number.isFinite(axis)).toBe(true);
+        expect(point[1]).toBeLessThan(0); // underwater
+      }
     }
   });
 
@@ -130,5 +133,42 @@ describe("Ghost Replay paths (recorded observations only)", () => {
     const ghost = buildGhostPaths(RUN.snapshots, "replacement-rov-99", 10);
     expect(ghost.pre).toBeNull();
     expect(ghost.post).toBeNull();
+  });
+
+  it("splits segments where recorded observations are separated by a stale gap (no fabricated bridge)", () => {
+    // Synthesize the recorded run with a stale/disconnected hole: snapshots
+    // 5 and 6 become stale (kernel loses the link mid-run), then reconnect.
+    // The builder must NOT draw a straight bridge across the unsupported
+    // interval — the path splits into two segments at the hole.
+    const withHole = JSON.parse(JSON.stringify(RUN.snapshots)) as typeof RUN.snapshots;
+    for (const index of [5, 6]) {
+      const snap = withHole[index]!;
+      snap.robots = snap.robots.map((r) =>
+        r.robotId === "rov-01"
+          ? { ...r, fresh: false, staleness: "link-disconnected" as const, measuredNull: true }
+          : r,
+      );
+    }
+    // Widen the recorded time span so the reconnect is beyond the join gap.
+    withHole[7]!.simulatorTimeMs += 12000;
+    for (let i = 8; i < withHole.length; i += 1) withHole[i]!.simulatorTimeMs += 12000;
+
+    const ghost = buildGhostPaths(withHole, "rov-01", 10);
+    expect(ghost.pre).not.toBeNull();
+    // Pre-fault branch: fresh samples 1..4 then 7..9 → two segments with a
+    // suppressed bridge across the stale hole.
+    expect(ghost.pre!.segments).toHaveLength(2);
+    expect(ghost.pre!.suppressedBridges).toBeGreaterThanOrEqual(1);
+    // Each segment is internally time-contiguous (no invented motion inside).
+    for (const segment of ghost.pre!.segments) {
+      expect(segment.toSimMs - segment.fromSimMs).toBeLessThanOrEqual(2500);
+    }
+  });
+
+  it("keeps a single continuous segment when all fresh samples are contiguous", () => {
+    const ghost = buildGhostPaths(RUN.snapshots, "rov-01", 10);
+    // Pre-fault fresh samples (seq 1..10) are contiguous → exactly one segment.
+    expect(ghost.pre!.segments).toHaveLength(1);
+    expect(ghost.post!.segments).toHaveLength(1);
   });
 });
