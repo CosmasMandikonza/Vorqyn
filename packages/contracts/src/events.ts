@@ -18,6 +18,7 @@ import {
   asLamports,
   asMissionId,
   asSimulatorTimeMs,
+  asSolanaPublicKey,
   asTaskId,
   asTransactionSignature,
   CONTRACTS_SCHEMA_VERSION,
@@ -126,6 +127,10 @@ export interface TaskReassignmentAuthorizedPayload {
   readonly authorizedBy: AuthorizationActor;
   /** Chain transaction that enacted the reassignment (must be confirmed). */
   readonly transactionSignature: string;
+  /** Payout wallet the chain ENACTED for the new operator. When present it
+   * must equal the receipt's `newPayoutWallet` (concern 2, final review) —
+   * see CHAIN_SEAM.md §5 for the #5 coordination status. */
+  readonly newPayoutWallet?: string;
 }
 
 export interface TaskEvidenceAcceptedPayload {
@@ -154,6 +159,13 @@ export interface ChainTransactionSubmittedPayload {
    * used for funding accounting and payout cross-checks. */
   readonly amountLamports?: Lamports;
   readonly authorizedBy?: AuthorizationActor;
+  /** PROPOSED for #5 (concern 2, final review): payout wallet the program
+   * enacted for the new operator on a reassignment. Optional until #5
+   * agrees it is emitted; the reducer cross-checks it when present. */
+  readonly newPayoutWallet?: string;
+  /** PROPOSED for #5: payout recipient wallet; must equal the assigned
+   * operator's registered payout wallet (SOLANA_PROTOCOL.md §5). */
+  readonly recipientWallet?: string;
 }
 
 export interface ChainTransactionUpdatedPayload {
@@ -477,6 +489,14 @@ export function validateReassignmentPayload(raw: unknown): Result<TaskReassignme
     return err("validation_error", "authorizedBy must be 'owner' or 'delegate'");
   const signature = asTransactionSignature(String(obj.value.transactionSignature ?? ""));
   if (!signature.ok) return signature;
+  let newPayoutWallet: string | undefined;
+  if (obj.value.newPayoutWallet !== undefined) {
+    if (typeof obj.value.newPayoutWallet !== "string")
+      return err("validation_error", "newPayoutWallet must be a string");
+    const wallet = asSolanaPublicKey(obj.value.newPayoutWallet);
+    if (!wallet.ok) return wallet;
+    newPayoutWallet = wallet.value;
+  }
   return ok({
     taskId: taskId.value,
     expectedVersion: expectedVersion.value,
@@ -486,6 +506,7 @@ export function validateReassignmentPayload(raw: unknown): Result<TaskReassignme
     quoteLamports: quote.value,
     authorizedBy,
     transactionSignature: signature.value,
+    ...(newPayoutWallet !== undefined ? { newPayoutWallet } : {}),
   });
 }
 
@@ -536,6 +557,22 @@ export function validateChainSubmittedPayload(raw: unknown): Result<ChainTransac
     if (!amount.ok) return amount;
     amountLamports = amount.value;
   }
+  let newPayoutWallet: string | undefined;
+  if (obj.value.newPayoutWallet !== undefined) {
+    if (typeof obj.value.newPayoutWallet !== "string")
+      return err("validation_error", "newPayoutWallet must be a string");
+    const wallet = asSolanaPublicKey(obj.value.newPayoutWallet);
+    if (!wallet.ok) return wallet;
+    newPayoutWallet = wallet.value;
+  }
+  let recipientWallet: string | undefined;
+  if (obj.value.recipientWallet !== undefined) {
+    if (typeof obj.value.recipientWallet !== "string")
+      return err("validation_error", "recipientWallet must be a string");
+    const wallet = asSolanaPublicKey(obj.value.recipientWallet);
+    if (!wallet.ok) return wallet;
+    recipientWallet = wallet.value;
+  }
 
   // Finding D: money-moving and version-changing receipts must bind task,
   // assignment version and amount at submission time. A payout/reassignment
@@ -558,6 +595,8 @@ export function validateChainSubmittedPayload(raw: unknown): Result<ChainTransac
     ...(assignmentVersion !== undefined ? { assignmentVersion } : {}),
     ...(authorizedBy !== undefined ? { authorizedBy } : {}),
     ...(amountLamports !== undefined ? { amountLamports } : {}),
+    ...(newPayoutWallet !== undefined ? { newPayoutWallet } : {}),
+    ...(recipientWallet !== undefined ? { recipientWallet } : {}),
   });
 }
 

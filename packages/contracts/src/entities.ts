@@ -412,6 +412,14 @@ export interface ChainEventRecord {
   readonly amountLamports?: Lamports;
   /** Authorization provenance for reassignment transactions. */
   readonly authorizedBy?: AuthorizationActor;
+  /** PROPOSED for #5 (concern 2, final review): payout wallet the program
+   * enacted for the new operator on a reassignment. Optional until #5
+   * agrees the program emits it; the reducer cross-checks it against
+   * task.reassignmentAuthorized when both are present. */
+  readonly newPayoutWallet?: string;
+  /** PROPOSED for #5: payout recipient wallet; must equal the assigned
+   * operator's registered payout wallet (SOLANA_PROTOCOL.md §5). */
+  readonly recipientWallet?: string;
 }
 
 /** Idempotency-key carrier shared by mutating events (ARCHITECTURE.md §4). */

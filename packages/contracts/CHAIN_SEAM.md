@@ -69,6 +69,24 @@ escrow_vault = seeds ["vorqyn:vault",   mission_pda.as_bytes()]
 - Chain client must translate `ChainTxStatus` (§6) from real RPC states —
   contracts never invent a `confirmed` that the chain did not report.
 
+**Operator/wallet chain-binding (final PR #37 review, concern 2 — PROPOSED,
+not frozen):** a confirmed reassignment receipt must carry enough
+authoritative information to verify WHO the program actually assigned:
+
+- reassignment receipt: `newPayoutWallet` — the payout wallet the program
+  enacted for the new operator. The contracts package already accepts,
+  validates and stores this field, and the reducer rejects a
+  `task.reassignmentAuthorized` whose claimed wallet contradicts it.
+  **Proposal: the program emits it (event/IDL account field) so receipts
+  become self-verifying; until #5 agrees it remains optional.**
+- payout receipt: `recipientWallet` — must equal the assigned operator's
+  registered payout wallet (`OperatorRegistration`, §3). On-chain
+  enforcement of the recipient is already required by
+  SOLANA_PROTOCOL.md §5; emitting the field lets the off-chain ledger
+  reconcile it. Full operatorId ↔ wallet mapping enforcement is an
+  explicit integration dependency: #5 (program emits both fields) +
+  VQ-03/VQ-04 services (operator registry feeding the reducer).
+
 ## 6. Transaction receipt shape (proposed — matches `ChainEventRecord`)
 
 ```json
@@ -84,7 +102,9 @@ escrow_vault = seeds ["vorqyn:vault",   mission_pda.as_bytes()]
   "confirmedAtMs": 1762000008500,
   "slot": 251000002,
   "amountLamports": 1100000000,         // REQUIRED for funding/reassignment/payout
-  "authorizedBy": "owner"               // owner | delegate, reassignments only
+  "authorizedBy": "owner",              // owner | delegate, reassignments only
+  "newPayoutWallet": "<base58>",        // PROPOSED (concern 2): wallet enacted for the new operator (reassignment)
+  "recipientWallet": "<base58>"         // PROPOSED (concern 2): payout recipient == assigned operator's wallet (payout)
 }
 ```
 
@@ -120,3 +140,8 @@ the program should emit/require the same fields in its events and IDL.**
    payout receipts all carry `amountLamports` at submission, and
    reassignment/payout must also carry `taskId` + `assignmentVersion`.**
 4. Confirm `operatorId`-opaque + `payout_wallet`-on-chain split (§3).
+5. **(Final review, concern 2)** Confirm the program emits
+   `newPayoutWallet` on reassignments and `recipientWallet` on payouts so
+   receipts can verify the enacted operator (§5). Contracts accept and
+   cross-check these fields today; making them REQUIRED is blocked on this
+   agreement, as is the operator-registry integration (VQ-03/VQ-04).
