@@ -1,9 +1,11 @@
 // Resolve @playwright/test from apps/web (pnpm workspace) — see capture-r2.mjs.
+// From this tools/ dir the repository root is FOUR levels up, so the correct
+// specifier is "../../../../apps/web/package.json".
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 const requireFromWeb = createRequire(
-  join(dirname(fileURLToPath(import.meta.url)), "../../../apps/web/package.json"),
+  join(dirname(fileURLToPath(import.meta.url)), "../../../../apps/web/package.json"),
 );
 const { chromium } = requireFromWeb("@playwright/test");
 const browser = await chromium.launch();

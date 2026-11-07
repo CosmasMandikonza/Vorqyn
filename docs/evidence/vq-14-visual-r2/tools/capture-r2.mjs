@@ -1,12 +1,18 @@
-/* VQ-14 evidence capture v2 — corrected per CTO review P1-B.
+/* VQ-14 evidence capture v3 — corrected per CTO re-review P1-B.
    Captures FULL-VIEWPORT shots at the actual requested viewports (no frame
    clipping), validates every PNG's IHDR against the expected viewport
    dimensions, rejects mismatches (exit 1), and writes a manifest with
    source SHA, capture timestamp, image SHA-256 and actual dimensions.
 
-   Run: node capture-r2.mjs <sourceHeadSha>   (production build on :3000) */
+   Source provenance is DERIVED, not declared: the script runs
+   `git rev-parse HEAD` itself, refuses a dirty tracked worktree, and
+   refuses a build older than the newest tracked source file (stale-build
+   guard). An optional argv[2] must EQUAL the derived SHA or the run
+   aborts. Fixture disclosure: captures use ?fixture=1 (recorded kernel
+   response), labelled in each screenshot's on-page badges. */
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, statSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,8 +26,74 @@ const requireFromWeb = createRequire(join(WEB, "package.json"));
 const { chromium } = requireFromWeb("@playwright/test");
 
 const OUT = join(REPO, "docs/evidence/vq-14-visual-r2");
-const HEAD = process.argv[2] ?? "unknown";
-mkdirSync(OUT, { recursive: true });
+
+// ---- Source provenance: DERIVED, never declared (CTO re-review P1-B) ----
+// The manifest's sourceHeadSha comes from git itself; a caller-supplied
+// argument must match it or the run aborts. A dirty tracked worktree or a
+// stale production build also aborts — screenshots must show the recorded
+// source, not an unknown intermediate state.
+const HEAD = gitRevParseHead();
+const claimedSha = process.argv[2] ?? null;
+if (claimedSha !== null && claimedSha !== HEAD) {
+  console.error(
+    `ABORT: claimed source SHA ${claimedSha} != derived git HEAD ${HEAD}`,
+  );
+  process.exit(1);
+}
+if (!worktreeIsClean()) {
+  console.error(
+    "ABORT: git worktree is dirty — captures require a clean checkout of the recorded source",
+  );
+  process.exit(1);
+}
+const build = buildIdHashAndMtime();
+if (build.mtimeMs < newestTrackedSourceMtime()) {
+  console.error(
+    "ABORT: .next build is older than tracked source — run pnpm build before capturing",
+  );
+  process.exit(1);
+}
+// BUILD_ID provenance for the manifest: ties screenshots to the served bundle.
+const buildId = build.sha256;
+
+function gitRevParseHead() {
+  return execFileSync("git", ["rev-parse", "HEAD"], { cwd: REPO })
+    .toString()
+    .trim();
+}
+
+function worktreeIsClean() {
+  const status = execFileSync("git", ["status", "--porcelain"], { cwd: REPO })
+    .toString()
+    .trim();
+  return status.length === 0;
+}
+
+/** Newest mtime among tracked files under apps/web + docs (build-staleness guard). */
+function newestTrackedSourceMtime() {
+  const files = execFileSync("git", ["ls-files", "-z"], { cwd: REPO })
+    .toString()
+    .split("\0")
+    .filter((f) => f.endsWith(".ts") || f.endsWith(".tsx") || f.endsWith(".css") || f.endsWith(".json"));
+  let newest = 0;
+  for (const f of files) {
+    try {
+      newest = Math.max(newest, statSync(join(REPO, f)).mtimeMs);
+    } catch {
+      // deleted-in-worktree entries are irrelevant for a clean checkout
+    }
+  }
+  return newest;
+}
+
+function buildIdHashAndMtime() {
+  const p = join(WEB, ".next", "BUILD_ID");
+  const data = readFileSync(p);
+  return {
+    sha256: createHash("sha256").update(data).digest("hex"),
+    mtimeMs: statSync(p).mtimeMs,
+  };
+}
 
 function pngDimensions(file) {
   const buf = readFileSync(file);
@@ -150,6 +222,8 @@ for (const [name, expected] of Object.entries(expectedMap)) {
 const manifestDoc = {
   schema: "vorqyn.vq14-captures/2",
   sourceHeadSha: HEAD,
+  buildIdSha256: build.sha256,
+  worktreeClean: true,
   capturedAtUtc: capturedAt,
   captureTool: "docs/evidence/vq-14-visual-r2/tools/capture-r2.mjs",
   browser: "Playwright Chromium (deviceScaleFactor 1, fullPage false)",
