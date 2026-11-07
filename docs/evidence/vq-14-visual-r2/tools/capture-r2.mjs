@@ -11,7 +11,7 @@
    aborts. Fixture disclosure: captures use ?fixture=1 (recorded kernel
    response), labelled in each screenshot's on-page badges. */
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync, statSync, readdirSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
@@ -55,6 +55,7 @@ if (build.mtimeMs < newestTrackedSourceMtime()) {
 }
 // BUILD_ID provenance for the manifest: ties screenshots to the served bundle.
 const buildId = build.sha256;
+mkdirSync(OUT, { recursive: true });
 
 function gitRevParseHead() {
   return execFileSync("git", ["rev-parse", "HEAD"], { cwd: REPO })
@@ -222,7 +223,7 @@ for (const [name, expected] of Object.entries(expectedMap)) {
 const manifestDoc = {
   schema: "vorqyn.vq14-captures/2",
   sourceHeadSha: HEAD,
-  buildIdSha256: build.sha256,
+  buildIdSha256: buildId,
   worktreeClean: true,
   capturedAtUtc: capturedAt,
   captureTool: "docs/evidence/vq-14-visual-r2/tools/capture-r2.mjs",
