@@ -1,0 +1,9 @@
+{
+  "schema": "vorqyn.submission-status/1",
+  "repositoryUrl": "https://github.com/CosmasMandikonza/Vorqyn",
+  "deploymentUrl": null,
+  "videoUrl": null,
+  "submissionReceipt": null,
+  "solanaProof": null,
+  "note": "No deployment, produced video, verified devnet settlement or accepted submission is claimed. Null fields are blocked human/integration work, not receipts."
+}
