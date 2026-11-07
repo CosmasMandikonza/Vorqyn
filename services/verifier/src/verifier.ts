@@ -47,6 +47,10 @@ export interface EvidenceSubmission {
 
 /** The authority-side facts the verifier checks the submission against. */
 export interface VerificationContext {
+  /** The mission this evidence must belong to (PR #49 review finding 1). */
+  readonly expectedMissionId: MissionId;
+  /** The task this evidence must belong to (PR #49 review finding 1). */
+  readonly expectedTaskId: TaskId;
   /** The mission projection's CURRENT assignment version for the task. */
   readonly currentAssignmentVersion: number;
   /** From TaskConfig.acceptancePolicyId — which policy governs this task. */
@@ -127,6 +131,14 @@ export function verifyEvidence(
     reasons.push(
       `operator_mismatch:submitted=${submission.operatorId}:expected=${ctx.expectedOperatorId}`,
     );
+  if (submission.missionId !== ctx.expectedMissionId)
+    reasons.push(
+      `mission_mismatch:submitted=${submission.missionId}:expected=${ctx.expectedMissionId}`,
+    );
+  if (submission.taskId !== ctx.expectedTaskId)
+    reasons.push(
+      `task_mismatch:submitted=${submission.taskId}:expected=${ctx.expectedTaskId}`,
+    );
   for (const s of submission.samples) {
     if (s.missionId !== submission.missionId)
       reasons.push(`cross_mission_sample:${s.robotId}#${s.sequence}@${s.missionId}`);
@@ -147,7 +159,18 @@ export function verifyEvidence(
   const sensorRule = policy.sensors.find((r) => r.sensorId === submission.sensor);
   if (sensorRule === undefined) {
     reasons.push(`sensor_not_permitted:${submission.sensor}`);
-  } else if (!sensorRule.satisfiesOnItsOwn && sensorRule.requiresMetric !== undefined) {
+  } else {
+    // Modality must be SOURCE-BACKED: the declared sensor needs at least
+    // one sample carrying its authoritative backing metric kind — a bare
+    // caller-provided label never qualifies (PR #49 review finding 3).
+    const backing = sensorRule.backingMetricKind ?? sensorRule.requiresMetric?.kind;
+    if (backing === undefined) {
+      reasons.push(`sensor_rule_incomplete:${submission.sensor}`);
+    } else if (!submission.samples.some((s) => s.qualityMetric?.kind === backing)) {
+      reasons.push(`sensor_backing_missing:${submission.sensor}:kind=${backing}`);
+    }
+  }
+  if (sensorRule !== undefined && !sensorRule.satisfiesOnItsOwn && sensorRule.requiresMetric !== undefined) {
     const rule = sensorRule.requiresMetric;
     if (rule === undefined) {
       // No metric requirement recorded for a non-self-sufficient sensor is
@@ -172,6 +195,13 @@ export function verifyEvidence(
       }
     }
   }
+
+  // 4b. Capture freshness: the WHOLE capture must be recent relative to
+  //     the decision clock — internal consistency alone is not enough
+  //     (PR #49 review finding 2).
+  const captureAge = ctx.nowMs - submission.capturedAtMs;
+  if (captureAge < 0 || captureAge > policy.maxCaptureAgeMs)
+    reasons.push(`capture_stale:age_ms=${captureAge}:max=${policy.maxCaptureAgeMs}`);
 
   // 5. Freshness: every sample's source clock within the capture window.
   for (const s of submission.samples) {

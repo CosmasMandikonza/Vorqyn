@@ -23,6 +23,8 @@ interface SampleSpec {
   x: number;
   y: number;
   visibilityMetres?: number;
+  /** Sonar modality backing metric (authoritative source evidence). */
+  sonarQuality?: number;
   degraded?: boolean;
   sourceKind?: TelemetrySample["sourceKind"];
   missionId?: string;
@@ -45,6 +47,9 @@ export function synthSample(spec: SampleSpec): TelemetrySample {
     ...(spec.visibilityMetres !== undefined
       ? { qualityMetric: { kind: "visibility_m", value: spec.visibilityMetres } }
       : {}),
+    ...(spec.sonarQuality !== undefined
+      ? { qualityMetric: { kind: "sonar_ping", value: spec.sonarQuality } }
+      : {}),
   };
 }
 
@@ -61,10 +66,10 @@ export function rovAOpticalSamples(visibility = 0.4): TelemetrySample[] {
 /** ROV B sonar survey — no visibility dependency, same zone. */
 export function rovBSonarSamples(): TelemetrySample[] {
   return [
-    synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: CAPTURE_MS - 4_000, x: 3, y: 2 }),
-    synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: CAPTURE_MS - 3_000, x: 9, y: 3 }),
-    synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: CAPTURE_MS - 2_000, x: 15, y: 4 }),
-    synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: CAPTURE_MS - 1_000, x: 21, y: 5 }),
+    synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: CAPTURE_MS - 4_000, x: 3, y: 2, sonarQuality: 0.92 }),
+    synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: CAPTURE_MS - 3_000, x: 9, y: 3, sonarQuality: 0.90 }),
+    synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: CAPTURE_MS - 2_000, x: 15, y: 4, sonarQuality: 0.95 }),
+    synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: CAPTURE_MS - 1_000, x: 21, y: 5, sonarQuality: 0.93 }),
   ];
 }
 
@@ -96,6 +101,8 @@ export const SUBMISSION_ROV_B_V2: EvidenceSubmission = {
 
 /** Authority context while ROV A holds assignment version 1. */
 export const CTX_V1_ROV_A: VerificationContext = {
+  expectedMissionId: MISSION as VerificationContext["expectedMissionId"],
+  expectedTaskId: "task-sea-survey" as VerificationContext["expectedTaskId"],
   currentAssignmentVersion: 1,
   activePolicyId: "policy-sea-obstruction-sonar-1",
   expectedOperatorId: "operator-rov-a" as VerificationContext["expectedOperatorId"],
@@ -104,6 +111,8 @@ export const CTX_V1_ROV_A: VerificationContext = {
 
 /** Authority context after reassignment to ROV B at version 2. */
 export const CTX_V2_ROV_B: VerificationContext = {
+  expectedMissionId: MISSION as VerificationContext["expectedMissionId"],
+  expectedTaskId: "task-sea-survey" as VerificationContext["expectedTaskId"],
   currentAssignmentVersion: 2,
   activePolicyId: "policy-sea-obstruction-sonar-1",
   expectedOperatorId: "operator-rov-b" as VerificationContext["expectedOperatorId"],

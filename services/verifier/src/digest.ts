@@ -17,6 +17,7 @@ import type { EvidenceSubmission } from "./verifier";
 /** The exact byte payload that gets hashed — exported for tests and audit. */
 export function digestPayload(submission: EvidenceSubmission): string {
   return canonicalJson({
+    evidenceId: submission.evidenceId,
     missionId: submission.missionId,
     taskId: submission.taskId,
     assignmentVersion: submission.assignmentVersion,

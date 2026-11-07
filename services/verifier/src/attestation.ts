@@ -59,6 +59,22 @@ export function canonicalAttestationBytes(attestation: AcceptedAttestation): Uin
   return new TextEncoder().encode(canonicalJson(attestation));
 }
 
+/**
+ * Client-boundary conversion (PR #49 review finding 6): the attestation
+ * carries expiresAtMs (unix MILLISECONDS, contracts clock domain) while
+ * the Anchor program's `attestation_expiry` argument is unix SECONDS.
+ * The ONE conversion lives here — floor to whole seconds — and must be
+ * used by every chain client. Note the chain additionally requires the
+ * value to be strictly in the future AT EXECUTION TIME: flooring can make
+ * a marginally-fresh attestation stale, so callers should keep >=1s of
+ * headroom when minting attestations.
+ */
+export function toChainAttestationExpirySeconds(expiresAtMs: number): number {
+  if (!Number.isSafeInteger(expiresAtMs) || expiresAtMs <= 0)
+    throw new Error("expiresAtMs must be a positive safe integer (unix ms)");
+  return Math.floor(expiresAtMs / 1000);
+}
+
 export function signAttestation(
   attestation: AcceptedAttestation,
   privateKey: KeyObject,

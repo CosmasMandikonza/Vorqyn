@@ -35,6 +35,14 @@ describe("evidence digest", () => {
     expect(computeEvidenceDigest(replay)).not.toEqual(computeEvidenceDigest(SUBMISSION_ROV_B_V2));
   });
 
+  it("binds the evidence identity into the digest (PR #49 finding 5)", () => {
+    // Two otherwise-identical submissions with different evidence IDs are
+    // DIFFERENT evidence records and must never share a digest.
+    const renamed = { ...SUBMISSION_ROV_B_V2, evidenceId: "evid-rovb-v2-reissued" };
+    expect(computeEvidenceDigest(renamed)).not.toEqual(computeEvidenceDigest(SUBMISSION_ROV_B_V2));
+    expect(digestPayload(SUBMISSION_ROV_B_V2)).toContain('"evidenceId":"evid-rovb-v2"');
+  });
+
   it("payload is canonical (key order stable, no wall clock)", () => {
     expect(digestPayload(SUBMISSION_ROV_B_V2)).toEqual(digestPayload(SUBMISSION_ROV_B_V2));
     expect(digestPayload(SUBMISSION_ROV_B_V2)).not.toContain("receivedAtMs"); // receipt clock excluded — source-bound only

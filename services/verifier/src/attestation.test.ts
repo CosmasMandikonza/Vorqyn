@@ -7,6 +7,7 @@
 import { describe, expect, it } from "vitest";
 import {
   canonicalAttestationBytes,
+  toChainAttestationExpirySeconds,
   generateVerifierKeyPair,
   signAttestation,
   verifyAttestationSignature,
@@ -84,5 +85,19 @@ describe("accepted-attestation signing", () => {
     expect(verifyAttestationSignature(attestation, signature, verifier.publicKey)).toBe(true);
     expect(attestation.policyVersion).toBe(POLICY_SEA_OBSTRUCTION_1.policyVersion);
     expect(attestation.assignmentVersion).toBe(CTX_V2_ROV_B.currentAssignmentVersion);
+  });
+});
+
+describe("client-boundary ms → seconds conversion (PR #49 finding 6)", () => {
+  it("floors unix milliseconds to whole seconds for the chain argument", () => {
+    expect(toChainAttestationExpirySeconds(1_762_000_000_999)).toBe(1_762_000_000);
+    expect(toChainAttestationExpirySeconds(1_762_000_000_000)).toBe(1_762_000_000);
+    expect(toChainAttestationExpirySeconds(1_762_000_000_001)).toBe(1_762_000_000);
+  });
+
+  it("rejects non-integer or non-positive inputs", () => {
+    expect(() => toChainAttestationExpirySeconds(0)).toThrow();
+    expect(() => toChainAttestationExpirySeconds(1.5)).toThrow();
+    expect(() => toChainAttestationExpirySeconds(Number.NaN)).toThrow();
   });
 });

@@ -174,3 +174,49 @@ describe("measurement defences (never default-accept)", () => {
     expect(outcome.value.verdict.reasons).toContain("insufficient_samples:2<3");
   });
 });
+
+describe("review corrections (PR #49)", () => {
+  it("rejects a submission for a DIFFERENT mission or task than the authority context", () => {
+    // Failing-first pre-fix: a wholly-foreign submission sailed through
+    // the binding checks (only sample-vs-submission mismatch was caught).
+    const outcome = verifyEvidence(
+      { ...SUBMISSION_ROV_B_V2, missionId: "port-999" as typeof SUBMISSION_ROV_B_V2.missionId, taskId: "task-other" as typeof SUBMISSION_ROV_B_V2.taskId },
+      POLICY_SEA_OBSTRUCTION_1,
+      CTX_V2_ROV_B,
+    );
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons).toContain("mission_mismatch:submitted=port-999:expected=port-001");
+    expect(outcome.value.verdict.reasons).toContain("task_mismatch:submitted=task-other:expected=task-sea-survey");
+  });
+
+  it("rejects internally-consistent evidence captured long before the decision clock", () => {
+    // Failing-first pre-fix: freshness only measured capture-vs-sample;
+    // an ancient but internally consistent capture was accepted.
+    const ancient = { ...SUBMISSION_ROV_B_V2, capturedAtMs: (CTX_V2_ROV_B.nowMs - 10 * 60_000) as typeof SUBMISSION_ROV_B_V2.capturedAtMs,
+      samples: SUBMISSION_ROV_B_V2.samples.map((s) => ({ ...s, sourceTimestampMs: (s.sourceTimestampMs - 10 * 60_000) as typeof s.sourceTimestampMs })) };
+    const outcome = verifyEvidence(ancient, POLICY_SEA_OBSTRUCTION_1, CTX_V2_ROV_B);
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons.join(" ")).toMatch(/capture_stale:age_ms=600000:max=300000/);
+  });
+
+  it("rejects a sonar LABEL without sonar-backed source metrics", () => {
+    // Failing-first pre-fix: the caller-provided sensor string was the
+    // only modality signal — optical-only samples relabeled "sonar" paid.
+    const relabeled = SUBMISSION_ROV_B_V2.samples.map((s) => ({
+      ...s, qualityMetric: { kind: "visibility_m", value: 2.0 },
+    }));
+    const outcome = verifyEvidence(
+      { ...SUBMISSION_ROV_B_V2, sensor: "sonar", samples: relabeled },
+      POLICY_SEA_OBSTRUCTION_1,
+      CTX_V2_ROV_B,
+    );
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons).toContain("sensor_backing_missing:sonar:kind=sonar_ping");
+  });
+});

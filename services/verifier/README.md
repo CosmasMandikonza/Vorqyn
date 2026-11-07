@@ -14,7 +14,7 @@ claim path.
 | Versioned policies | `src/policy.ts` | typed sensor/origin/zone/freshness/sequence/volume rules; `policyVersion` must equal the on-chain verifier registry's authoritative version |
 | Deterministic verdicts | `src/verifier.ts` | fixed evaluation order; every rejection carries measured values (`visibility_m_below_min:worst=0.400:min=1.5`); missing data NEVER defaults to pass |
 | Source-bound digest | `src/digest.ts` | sha256 over canonical JSON of the full binding (identity tuple + sensor + origin + capture clock + every sample); tamper-sensitive, replay-sensitive |
-| Signable attestation | `src/attestation.ts` | ed25519 over canonical bytes; runtime-generated throwaway keys in tests, never committed |
+| Signable attestation | `src/attestation.ts` | ed25519 over canonical bytes; runtime-generated throwaway keys in tests, never committed; `toChainAttestationExpirySeconds()` is THE ms→s conversion for the chain boundary |
 | Fixtures | `src/fixtures.ts` | **explicitly synthetic** PORT-001 evidence sets (ROV A optical low-visibility, ROV B sonar) |
 
 ## The flagship split (issue #11, tested)
@@ -26,6 +26,23 @@ claim path.
 - The same sonar evidence under `policy-structural-certification-1` →
   **rejected** (`sensor_not_permitted:sonar`): sonar qualifies for
   obstruction mapping ONLY, never structural certification.
+
+## Review-hardened bindings (PR #49 review)
+
+- The verification context is **authoritative for mission AND task** — a
+  wholly foreign submission is rejected (`mission_mismatch` /
+  `task_mismatch`), not just internally inconsistent samples.
+- Freshness is two-layered: samples within the capture window AND the
+  **capture itself within `maxCaptureAgeMs` of the decision clock**
+  (`capture_stale`) — an internally consistent ancient capture is dead.
+- **Sensor modality is source-backed**: the declared `sensor` label
+  requires at least one sample carrying the policy's
+  `backingMetricKind` (`sonar_ping` / `visibility_m`); relabeled
+  evidence is rejected (`sensor_backing_missing`).
+- The digest binds **evidenceId** too — reissued records never alias.
+- Attestation↔chain conversion: `expiresAtMs` (unix **ms**) →
+  `attestation_expiry` (unix **s**) via `toChainAttestationExpirySeconds`
+  (floor; keep ≥1s headroom — the chain requires strictly-future).
 
 ## Trust boundary (read this before integrating)
 

@@ -41,6 +41,12 @@ export interface EvidenceSensorRule {
   readonly sensorId: string;
   readonly satisfiesOnItsOwn: boolean;
   readonly requiresMetric?: MetricRule;
+  /**
+   * Metric kind that AUTHORITATIVELY backs this sensor modality in the
+   * source records — a caller-provided `sensor` label alone never
+   * qualifies (PR #49 review: modality must be source-backed).
+   */
+  readonly backingMetricKind?: string;
 }
 
 export interface EvidencePolicy {
@@ -58,6 +64,9 @@ export interface EvidencePolicy {
   readonly maxSourceAgeMs: number;
   /** Max tolerated step between consecutive sample sequences. */
   readonly maxSequenceGap: number;
+  /** Max age of the CAPTURE relative to the decision clock (ms) — the
+   * whole capture must be fresh, not just internally consistent. */
+  readonly maxCaptureAgeMs: number;
 }
 
 /**
@@ -73,17 +82,23 @@ export const POLICY_SEA_OBSTRUCTION_1: EvidencePolicy = {
   policyVersion: 1,
   allowedOrigins: ["SYNTHETIC_SIM", "LIVE_SITL"],
   sensors: [
-    { sensorId: "sonar", satisfiesOnItsOwn: true },
+    {
+      sensorId: "sonar",
+      satisfiesOnItsOwn: true,
+      backingMetricKind: "sonar_ping",
+    },
     {
       sensorId: "optical",
       satisfiesOnItsOwn: false,
       requiresMetric: { kind: "visibility_m", minMetres: 1.5 },
+      backingMetricKind: "visibility_m",
     },
   ],
   zone: { centerX: 0, centerY: 0, radiusMetres: 80 },
   minSamples: 3,
   maxSourceAgeMs: 120_000,
   maxSequenceGap: 1,
+  maxCaptureAgeMs: 300_000,
 };
 
 /**
@@ -107,6 +122,7 @@ export const POLICY_STRUCTURAL_CERTIFICATION_1: EvidencePolicy = {
   minSamples: 3,
   maxSourceAgeMs: 120_000,
   maxSequenceGap: 1,
+  maxCaptureAgeMs: 300_000,
 };
 
 /** Active policy catalogue keyed by TaskConfig.acceptancePolicyId. */
