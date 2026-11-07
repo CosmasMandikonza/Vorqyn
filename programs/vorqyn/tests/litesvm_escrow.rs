@@ -677,6 +677,130 @@ fn assign_task_rejects_wrong_task_pda() {
 }
 
 // ---------------------------------------------------------------------------
+// Mission expiry (mid-life) — every mutating path must reject
+// ---------------------------------------------------------------------------
+
+/// Regression for the issue #5 edge case "expired mission": a mission that
+/// was live at init/fund/create time must refuse fund_mission, create_task
+/// AND assign_task once the Clock passes its expiry. initialize_mission's
+/// own past-expiry check is covered above; this pins the shared
+/// `require_active_not_expired` guard in the other three instructions.
+/// Boundary semantics: the mission expires AT the expiry timestamp
+/// (`now < expiry` is false when `now == expiry`).
+#[test]
+fn expired_mission_rejects_fund_create_assign_and_changes_nothing() {
+    let mut svm = load_program();
+    let owner = Keypair::new();
+    let operator = Keypair::new();
+    svm.airdrop(&owner.pubkey(), 100 * LAMPORTS).unwrap();
+
+    // Live phase: init with a near-future expiry, fund, create one task.
+    let expiry = TEST_NOW + 60_000;
+    let ix = init_mission_ix(&owner, "port-exp", Keypair::new().pubkey(), expiry);
+    send(&mut svm, &owner, &[ix]).expect("initialize before expiry should succeed");
+    let mission = mission_pda(&owner.pubkey(), "port-exp");
+    let vault = vault_pda(&mission);
+    fund(&mut svm, &owner, mission, vault, 2 * LAMPORTS).unwrap();
+    create_task(&mut svm, &owner, mission, "task-exp", LAMPORTS).unwrap();
+
+    // Snapshot everything the rejected instructions must leave untouched.
+    let ledger_before = {
+        let s = mission_state(&svm, &mission);
+        (s.funded_lamports, s.remaining_lamports, s.reserved_lamports)
+    };
+    let vault_before = lamports(&svm, &vault);
+    let owner_before = lamports(&svm, &owner.pubkey());
+
+    // Advance the wall clock to exactly the expiry instant.
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 1,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: expiry,
+    });
+
+    // fund_mission -> MissionExpired.
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::FundMission { amount: LAMPORTS }.data(),
+        FundMission {
+            owner: owner.pubkey(),
+            mission,
+            vault,
+            system_program: system_program::ID,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "MissionExpired");
+
+    // create_task -> MissionExpired, and no task account may come to exist.
+    let task_new = task_pda(&mission, "task-post-exp");
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::CreateTask {
+            task_id: "task-post-exp".to_string(),
+            task_kind: TaskKind::Air,
+            budget_lamports: LAMPORTS,
+        }
+        .data(),
+        CreateTask {
+            owner: owner.pubkey(),
+            mission,
+            task: task_new,
+            system_program: system_program::ID,
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "MissionExpired");
+    assert!(
+        svm.get_account(&task_new).is_none(),
+        "no task account may be created after expiry"
+    );
+
+    // assign_task -> MissionExpired.
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::AssignTask {
+            task_id: "task-exp".to_string(),
+            operator: operator.pubkey(),
+            reward_lamports: LAMPORTS / 2,
+        }
+        .data(),
+        AssignTask {
+            owner: owner.pubkey(),
+            mission,
+            task: task_pda(&mission, "task-exp"),
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "MissionExpired");
+
+    // Nothing moved: ledger identical, vault identical, pre-expiry task
+    // untouched, and the owner paid only the three failed-transaction fees.
+    let s = mission_state(&svm, &mission);
+    assert_eq!(
+        (s.funded_lamports, s.remaining_lamports, s.reserved_lamports),
+        ledger_before
+    );
+    assert_eq!(lamports(&svm, &vault), vault_before);
+    let task = task_state(&svm, &mission, "task-exp");
+    assert_eq!(task.status, TaskStatus::Unassigned);
+    assert_eq!(task.current_assignment_version, 0);
+    assert_eq!(task.current_operator, None);
+    assert_eq!(
+        owner_before - lamports(&svm, &owner.pubkey()),
+        3 * LITE_TX_FEE,
+        "rejected transactions may only cost the fee payer the fees"
+    );
+}
+
+// ---------------------------------------------------------------------------
 // Cross-cutting accounting invariants
 // ---------------------------------------------------------------------------
 
