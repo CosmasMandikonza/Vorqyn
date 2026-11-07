@@ -6,8 +6,8 @@
  * lockfile). Validates world.json, all GLB binaries, manifest integrity,
  * zone/anchor/camera sanity, waterline and scale assumptions.
  *
- *   node tools/validate.js              # validate committed artifacts
- *   node tools/validate.js --selfcheck  # additionally regenerate into a temp
+ *   node tools/validate.mjs              # validate committed artifacts
+ *   node tools/validate.mjs --selfcheck  # additionally regenerate into a temp
  *                                       # dir and byte-compare against committed
  *                                       # GLBs (determinism proof)
  *
@@ -19,15 +19,14 @@
  * (verified: `python` resolves to a Windows Store stub). Node >= 18 is already
  * required to build the project. Same standalone guarantees apply.
  */
-"use strict";
+import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import crypto from "node:crypto";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
-const crypto = require("crypto");
-const { execFileSync } = require("child_process");
-
-const ROOT = path.join(__dirname, "..");
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SELF_CHECK = process.argv.includes("--selfcheck");
 
 let pass = 0, fail = 0, warn = 0;
@@ -365,7 +364,7 @@ function main() {
   }
   check(35, "triangle budgets: high/low/reference",
     hi && lo && hi.tris <= W.lod.high.max_triangles && lo.tris <= W.lod.low.max_triangles &&
-    [...parsed.entries()].filter(([f, r]) => f.endsWith("-ref.glb")).every(([, r]) => r.tris <= W.lod.reference_models.max_triangles),
+    [...parsed.entries()].filter(([f]) => f.endsWith("-ref.glb")).every(([, r]) => r.tris <= W.lod.reference_models.max_triangles),
     `high=${hi && hi.tris}/${W.lod.high.max_triangles} low=${lo && lo.tris}/${W.lod.low.max_triangles}`);
   if (hi && lo && hi.enuBounds && lo.enuBounds) {
     const agree = hi.enuBounds.min.every((v, k) => Math.abs(v - lo.enuBounds.min[k]) <= 2.0) &&
@@ -489,9 +488,9 @@ function main() {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "vq-portworld-"));
     const toolsDir = path.join(tmp, "tools");
     fs.mkdirSync(toolsDir);
-    fs.copyFileSync(path.join(ROOT, "tools", "generate.js"), path.join(toolsDir, "generate.js"));
+    fs.copyFileSync(path.join(ROOT, "tools", "generate.mjs"), path.join(toolsDir, "generate.mjs"));
     try {
-      execFileSync(process.execPath, [path.join(toolsDir, "generate.js")], { cwd: tmp, stdio: "pipe" });
+      execFileSync(process.execPath, [path.join(toolsDir, "generate.mjs")], { cwd: tmp, stdio: "pipe" });
       let detOk = true, detDetail = [];
       for (const spec of glbSpec) {
         const a = crypto.createHash("sha256").update(fs.readFileSync(path.join(ROOT, "models", spec.file))).digest("hex");

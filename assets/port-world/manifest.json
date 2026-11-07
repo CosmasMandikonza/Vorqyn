@@ -2,18 +2,18 @@
   "schema": "vorqyn.port-world.manifest/1",
   "world_id": "PORT-001",
   "generated_by": {
-    "tool": "assets/port-world/tools/generate.js",
-    "tool_sha256": "a00b35448d41a6176c1ad93a2a97c7db69413b8334ce8d2c5f379d06d58afdc7",
+    "tool": "assets/port-world/tools/generate.mjs",
+    "tool_sha256": "b20a03843f20b5f1ebdf94a1170f9b4ba480e2fc91841f1ca28727c835bf48f5",
     "node": "v24.20.0",
     "deterministic": true,
-    "note": "regenerate with: node tools/generate.js (from assets/port-world/)"
+    "note": "regenerate with: node tools/generate.mjs (from assets/port-world/)"
   },
-  "generated_at_utc": "2026-11-07T10:55:22.919Z",
+  "generated_at_utc": "2026-11-07T11:02:08.171Z",
   "files": [
     {
       "path": "models/port-world-high.glb",
-      "bytes": 808584,
-      "sha256": "43790653e38f081d40f9a31c09aec49d5e05530c66c589d9ed3eaf41ec593ef4",
+      "bytes": 808588,
+      "sha256": "f6840065f55c39eae7ae6d00389d24106e4a19f28d085e6dcf7cdc43e5002463",
       "gltf": {
         "triangles": 14882,
         "vertices": 25570,
@@ -35,7 +35,7 @@
     {
       "path": "models/port-world-low.glb",
       "bytes": 150988,
-      "sha256": "c4c88f66b1512cf081c233714edfbc8764cb6ac25273770ffb5e51b1a1d980aa",
+      "sha256": "f468421176b15210643f0a9720fcea552ac559c272d647cabdce91c2cd1056ee",
       "gltf": {
         "triangles": 2458,
         "vertices": 4578,
@@ -57,7 +57,7 @@
     {
       "path": "models/drone-ref.glb",
       "bytes": 26244,
-      "sha256": "003cfd02b947d0fcbff014192b705d5a90184d014d24ad4c7b6d572ed053ccb8",
+      "sha256": "f180ecc55327bc9f7597a8fbd8dec8301eeb89950f9d60c024ff55dc2f01fbd8",
       "gltf": {
         "triangles": 416,
         "vertices": 688,
@@ -79,7 +79,7 @@
     {
       "path": "models/rover-ref.glb",
       "bytes": 19516,
-      "sha256": "08b17834d69e643e0458313c9d85337682ec411fd26811753a0b0442da97e117",
+      "sha256": "c528097c1a976a9103397db63ffa4f3e8f1337f2adeba28feb4a3093015aaf0c",
       "gltf": {
         "triangles": 292,
         "vertices": 468,
@@ -101,7 +101,7 @@
     {
       "path": "models/rov-ref.glb",
       "bytes": 26476,
-      "sha256": "23b2229298caae0edd56616ca766d29db1b548931104bb3c1645afb0370fbb80",
+      "sha256": "842c6b5873e149bded0c3a737200b3673c9fc4c1d7fb6eda1c373fabc6745220",
       "gltf": {
         "triangles": 392,
         "vertices": 684,

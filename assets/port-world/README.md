@@ -99,11 +99,11 @@ while remaining readable in murky water (near 0.15 m).
 
 ```bash
 cd assets/port-world
-node tools/validate.js --selfcheck   # 44 checks + byte-determinism proof
-node tools/generate.js               # deterministic regeneration of everything
+node tools/validate.mjs --selfcheck   # 44 checks + byte-determinism proof
+node tools/generate.mjs               # deterministic regeneration of everything
 ```
 
-`tools/generate.js` (Node stdlib only) deterministically emits the GLBs,
+`tools/generate.mjs` (Node stdlib only) deterministically emits the GLBs,
 `world.json`, `previews/plan-view.svg` and `manifest.json` (sha256 inventory).
 Re-running it twice produces byte-identical GLBs; the validator's
 `--selfcheck` proves this by regenerating into a temp dir and comparing
