@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "VORQYN shared mission/task/event contracts — scaffolding only until VQ-01 (#2) freezes the real contracts and reducer.",
+  "description": "VORQYN shared contracts: typed IDs/entities/events, deterministic mission reducer, telemetry envelope and committed fixtures (VQ-01, #2).",
   "exports": {
     ".": "./src/index.ts"
   },
