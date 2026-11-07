@@ -57,7 +57,7 @@ jobs:
         run: pnpm build
 
   program:
-    name: Anchor program skeleton (Rust)
+    name: Anchor escrow program (Rust + LiteSVM)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -65,9 +65,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dtolnay/rust-toolchain@stable
+      # The program targets the Anchor 1.2 MSRV (1.89.0), but the LiteSVM
+      # dev-dependency graph (agave 4.4 crates) requires >= 1.98.1; the
+      # crate's rust-toolchain.toml documents the same split.
+      - uses: dtolnay/rust-toolchain@1.98.1
         with:
           components: rustfmt, clippy
+
+      # cargo-build-sbf compiles the program to the BPF .so the LiteSVM
+      # integration tests execute (programs/vorqyn/ACCOUNTS.md §6).
+      - name: Install Agave CLI (cargo-build-sbf)
+        run: |
+          curl -LsSf https://release.anza.xyz/stable/install | sh
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -76,13 +86,20 @@ jobs:
       - name: Format check
         run: cargo fmt --check
 
+      # build-sbf must precede clippy/test: the integration tests embed the
+      # produced .so via include_bytes!.
+      - name: Build SBF program
+        run: cargo build-sbf
+
       - name: Clippy
         run: cargo clippy --all-targets -- -D warnings
 
-      - name: Check
-        run: cargo check
+      - name: Check under Anchor MSRV (1.89.0)
+        run: rustup toolchain install 1.89.0 --profile minimal && cargo +1.89.0 check
 
-      # NOTE: `anchor test` against a local validator is intentionally NOT
-      # part of CI yet (requires the Solana/avm toolchain and a devnet-style
-      # keypair policy). It becomes a required manual step from VQ-04 (#5);
-      # until then this job only verifies the skeleton compiles cleanly.
+      - name: Tests (unit + LiteSVM integration)
+        run: cargo test
+
+      # NOTE: devnet deployment is intentionally NOT part of CI — no
+      # keypair handling here. When VQ-06+ deploys, signatures are recorded
+      # as PR evidence, never as CI output.
