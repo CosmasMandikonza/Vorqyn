@@ -73,13 +73,21 @@ export default function DemoPage() {
           run. The illustration does not require WebGL. No fault trigger, wallet
           approval or settlement action is available yet.
         </p>
-        <a
-          className="text-link"
-          href="https://github.com/CosmasMandikonza/Vorqyn/issues/8"
-        >
-          Track the 3D mission-world implementation{" "}
-          <span aria-hidden="true" className="arrow-icon" />
-        </a>
+        <div className="cta-row">
+          <Button asChild variant="primary">
+            <Link href="/demo/mission">
+              Explore the 3D world preview{" "}
+              <span aria-hidden="true" className="arrow-icon" />
+            </Link>
+          </Button>
+          <a
+            className="text-link"
+            href="https://github.com/CosmasMandikonza/Vorqyn/issues/8"
+          >
+            Track the 3D mission-world implementation{" "}
+            <span aria-hidden="true" className="arrow-icon" />
+          </a>
+        </div>
       </details>
       <section className="route-bottom" aria-labelledby="demo-next">
         <div>

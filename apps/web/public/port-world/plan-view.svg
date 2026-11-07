@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="736" viewBox="0 0 1024 736" font-family="monospace">
+<rect width="1024" height="736" fill="#F5F3EC"/>
+<rect x="32" y="320" width="960" height="384" fill="#9DC9C2"/>
+<rect x="32" y="0" width="960" height="320" fill="#E7E2D2"/>
+<rect x="96" y="112" width="832" height="32" fill="#3B3B3A"/>
+<rect x="272" y="144" width="32" height="169.60000000000002" fill="#3B3B3A"/>
+<rect x="272" y="288" width="304" height="25.6" fill="#3B3B3A"/>
+<rect x="176" y="144" width="176" height="144" fill="#D8D2C0"/>
+<rect x="256" y="48" width="160" height="64" fill="#A8A296" stroke="#536D6C"/>
+<rect x="448" y="48" width="160" height="64" fill="#A8A296" stroke="#AE413D" stroke-dasharray="6 4"/>
+<rect x="640" y="48" width="160" height="64" fill="#A8A296" stroke="#536D6C"/>
+<rect x="276.8" y="320" width="22.400000000000002" height="192" fill="#B9B4A5" stroke="#536D6C"/>
+<rect x="497.6" y="320" width="28.8" height="224" fill="#B9B4A5" stroke="#536D6C"/>
+<rect x="694.4000000000001" y="320" width="19.200000000000003" height="112" fill="#B9B4A5" stroke="#536D6C"/>
+<rect x="694.4000000000001" y="432" width="19.200000000000003" height="48" fill="#B9B4A5" stroke="#536D6C" stroke-dasharray="7 5"/>
+<rect x="497.6" y="486.40000000000003" width="28.8" height="35.2" fill="none" stroke="#B65B41" stroke-width="2"/>
+<line x1="512" y1="521.6" x2="512" y2="588.8000000000001" stroke="#B65B41" stroke-width="3"/>
+<circle cx="752" cy="496" r="6" fill="#AE413D"/>
+<circle cx="776" cy="520" r="6" fill="#AE413D"/>
+<circle cx="732.8000000000001" cy="540.8000000000001" r="6" fill="#AE413D"/>
+<circle cx="840" cy="536" r="6" fill="#AE413D"/>
+<circle cx="708.8000000000001" cy="475.20000000000005" r="6" fill="#AE413D"/>
+<rect x="64" y="32" width="896" height="640" fill="none" stroke="#B7DBFF" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="70" y="48" font-size="12" fill="#B7DBFF">aerial_survey</text>
+<rect x="96" y="320" width="832" height="384" fill="none" stroke="#7BD9C6" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="102" y="336" font-size="12" fill="#7BD9C6">harbor_basin</text>
+<rect x="576" y="448" width="288" height="176" fill="none" stroke="#7BD9C6" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="582" y="464" font-size="12" fill="#7BD9C6">underwater_inspection</text>
+<rect x="704" y="480" width="160" height="96" fill="none" stroke="#7BD9C6" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="710" y="496" font-size="12" fill="#7BD9C6">obstruction_zone</text>
+<rect x="96" y="144" width="832" height="176" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="102" y="160" font-size="12" fill="#B65B41">land_yard</text>
+<rect x="96" y="112" width="832" height="32" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="102" y="128" font-size="12" fill="#B65B41">road_trunk</text>
+<rect x="272" y="144" width="32" height="169.60000000000002" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="278" y="160" font-size="12" fill="#B65B41">road_branch</text>
+<rect x="272" y="288" width="304" height="25.6" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="278" y="304" font-size="12" fill="#B65B41">road_quay</text>
+<rect x="276.8" y="313.6" width="22.400000000000002" height="198.4" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="282.8" y="329.6" font-size="12" fill="#B65B41">pier_a_deck</text>
+<rect x="497.6" y="313.6" width="28.8" height="230.4" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="503.6" y="329.6" font-size="12" fill="#B65B41">pier_b_deck</text>
+<rect x="694.4000000000001" y="313.6" width="19.200000000000003" height="166.4" fill="none" stroke="#B65B41" stroke-width="2" stroke-dasharray="10 6" opacity="0.9"/>
+<text x="700.4000000000001" y="329.6" font-size="12" fill="#B65B41">pier_c_deck</text>
+<circle cx="512" cy="313.6" r="4" fill="#193B3B"/>
+<text x="519" y="307.6" font-size="11" fill="#193B3B">port_datum</text>
+<circle cx="448" cy="256" r="4" fill="#193B3B"/>
+<text x="455" y="250" font-size="11" fill="#193B3B">drone_home</text>
+<circle cx="256" cy="128" r="4" fill="#193B3B"/>
+<text x="263" y="122" font-size="11" fill="#193B3B">rover_home</text>
+<circle cx="608" cy="400" r="4" fill="#193B3B"/>
+<text x="615" y="394" font-size="11" fill="#193B3B">rov_home</text>
+<circle cx="512" cy="585.6" r="4" fill="#193B3B"/>
+<text x="519" y="579.6" font-size="11" fill="#193B3B">crane_boom_tip</text>
+<circle cx="840" cy="536" r="4" fill="#193B3B"/>
+<text x="847" y="530" font-size="11" fill="#193B3B">obstruction_primary</text>
+<circle cx="704" cy="451.20000000000005" r="4" fill="#193B3B"/>
+<text x="711" y="445.20000000000005" font-size="11" fill="#193B3B">pier_c_collapse</text>
+<text x="964" y="30" font-size="16" fill="#193B3B">N ^</text>
+<line x1="30" y1="706" x2="190" y2="706" stroke="#193B3B" stroke-width="2"/>
+<text x="30" y="698" font-size="12" fill="#193B3B">100 m</text>
+<text x="30" y="26" font-size="13" fill="#536D6C">PORT-001 Kerameion Basin - generated plan view (ENU, north up)</text>
+</svg>
