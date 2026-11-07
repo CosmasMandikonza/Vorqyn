@@ -1,0 +1,1786 @@
+{
+ "schema": "vorqyn.demo-sim/response/1",
+ "scenarioId": "PORT-001",
+ "seed": 20261107,
+ "sourceKind": "SYNTHETIC_SIM",
+ "frameId": "ENU_PORT-001_LOCAL",
+ "positionUnits": "m",
+ "stepMs": 500,
+ "operations": [
+  {
+   "op": "step",
+   "count": 10
+  },
+  {
+   "op": "command",
+   "command": {
+    "type": "injectOpticalVisibilityFault",
+    "robotId": "rov-01",
+    "severity": "severe",
+    "durationMs": 9000,
+    "idempotencyKey": "guest-optical-1"
+   }
+  },
+  {
+   "op": "step",
+   "count": 3
+  }
+ ],
+ "snapshots": [
+  {
+   "sequence": 1,
+   "simulatorTimeMs": 500,
+   "stepIndex": 1,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -40,
+      "y": 80,
+      "z": 55
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.918181,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 140,
+        "coverage01": 0.007143
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -160,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.892616,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 60,
+      "y": -10,
+      "z": -2.5
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.706076,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.636836,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 2,
+   "simulatorTimeMs": 1000,
+   "stepIndex": 2,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -41.412413,
+      "y": 78.587587,
+      "z": 54.899113
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.915545,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -158.75,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.878253,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 60.498799,
+      "y": -10.332532,
+      "z": -2.52494
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.692125,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.63932,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 3,
+   "simulatorTimeMs": 1500,
+   "stepIndex": 3,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -42.824826,
+      "y": 77.175174,
+      "z": 54.798227
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.928529,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -157.5,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.885189,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 60.997597,
+      "y": -10.665065,
+      "z": -2.54988
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.693139,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.64882,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 4,
+   "simulatorTimeMs": 2000,
+   "stepIndex": 4,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -44.237239,
+      "y": 75.762761,
+      "z": 54.69734
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.928806,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -156.25,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.878799,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 61.496396,
+      "y": -10.997597,
+      "z": -2.57482
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.71875,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.62348,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 5,
+   "simulatorTimeMs": 2500,
+   "stepIndex": 5,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -45.649653,
+      "y": 74.350347,
+      "z": 54.596453
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.930138,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -155,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.894018,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 61.995195,
+      "y": -11.33013,
+      "z": -2.59976
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.720423,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.654846,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 6,
+   "simulatorTimeMs": 3000,
+   "stepIndex": 6,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -47.062066,
+      "y": 72.937934,
+      "z": 54.495567
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.920823,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -153.75,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.866327,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 62.493994,
+      "y": -11.662662,
+      "z": -2.6247
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.701959,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.618906,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 7,
+   "simulatorTimeMs": 3500,
+   "stepIndex": 7,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -48.474479,
+      "y": 71.525521,
+      "z": 54.39468
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.932344,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -152.5,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.869792,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 62.992792,
+      "y": -11.995195,
+      "z": -2.64964
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.705593,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.649565,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 8,
+   "simulatorTimeMs": 4000,
+   "stepIndex": 8,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -49.886892,
+      "y": 70.113108,
+      "z": 54.293793
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.911771,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -151.25,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.876818,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 63.491591,
+      "y": -12.327727,
+      "z": -2.67458
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.714947,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.610782,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 9,
+   "simulatorTimeMs": 4500,
+   "stepIndex": 9,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -51.299305,
+      "y": 68.700695,
+      "z": 54.192907
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.905501,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -150,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.868373,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 63.99039,
+      "y": -12.66026,
+      "z": -2.699519
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.714601,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.606417,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 10,
+   "simulatorTimeMs": 5000,
+   "stepIndex": 10,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -52.711718,
+      "y": 67.288282,
+      "z": 54.09202
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.928432,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -148.75,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.893468,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 64.489188,
+      "y": -12.992792,
+      "z": -2.724459
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.717718,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.638061,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 11,
+   "simulatorTimeMs": 5500,
+   "stepIndex": 11,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -54.124132,
+      "y": 65.875868,
+      "z": 53.991133
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.920332,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -147.5,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.871156,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 64.987987,
+      "y": -13.325325,
+      "z": -2.749399
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": {
+      "faultId": "fault-rov-01-1",
+      "kind": "optical-visibility",
+      "severity": "severe",
+      "startedAtSimMs": 5000,
+      "expiresAtSimMs": 14000
+     },
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.084497,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": 0.12
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.644001,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 12,
+   "simulatorTimeMs": 6000,
+   "stepIndex": 12,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -55.536545,
+      "y": 64.463455,
+      "z": 53.890247
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.932947,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -146.25,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.870686,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 65.486786,
+      "y": -13.657857,
+      "z": -2.774339
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": {
+      "faultId": "fault-rov-01-1",
+      "kind": "optical-visibility",
+      "severity": "severe",
+      "startedAtSimMs": 5000,
+      "expiresAtSimMs": 14000
+     },
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.085337,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": 0.12
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.624333,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  },
+  {
+   "sequence": 13,
+   "simulatorTimeMs": 6500,
+   "stepIndex": 13,
+   "kernelState": "running",
+   "appliedStepMs": 500,
+   "robots": [
+    {
+     "robotId": "drone-01",
+     "role": "aerial-drone",
+     "pose": {
+      "x": -56.948958,
+      "y": 63.051042,
+      "z": 53.78936
+     },
+     "waypointIndex": 1,
+     "speedMps": 4,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "drone-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.917238,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 2,
+        "modelCellsTotal": 140,
+        "coverage01": 0.014286
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rover-01",
+     "role": "ground-rover",
+     "pose": {
+      "x": -145,
+      "y": 160,
+      "z": 4.05
+     },
+     "waypointIndex": 1,
+     "speedMps": 2.5,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": null,
+     "sensors": [
+      {
+       "sensorId": "rover-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.866932,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 1,
+        "modelCellsTotal": 80,
+        "coverage01": 0.0125
+       }
+      }
+     ]
+    },
+    {
+     "robotId": "rov-01",
+     "role": "underwater-rov",
+     "pose": {
+      "x": 65.985585,
+      "y": -13.99039,
+      "z": -2.799279
+     },
+     "waypointIndex": 1,
+     "speedMps": 1.2,
+     "linkState": "connected",
+     "fresh": true,
+     "staleness": "none",
+     "staleSinceSimMs": null,
+     "activeOpticalFault": {
+      "faultId": "fault-rov-01-1",
+      "kind": "optical-visibility",
+      "severity": "severe",
+      "startedAtSimMs": 5000,
+      "expiresAtSimMs": 14000
+     },
+     "sensors": [
+      {
+       "sensorId": "rov-01-optical",
+       "kind": "optical",
+       "measured": {
+        "quality01": 0.084294,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": 0.12
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      },
+      {
+       "sensorId": "rov-01-sonar",
+       "kind": "sonar",
+       "measured": {
+        "quality01": 0.628782,
+        "qualityUnits": "unitless_0_to_1_fixture_model",
+        "opticalVisibilityFactorApplied": null
+       },
+       "coverage": {
+        "modelCellsVisited": 0,
+        "modelCellsTotal": 15,
+        "coverage01": 0
+       }
+      }
+     ]
+    }
+   ],
+   "provenance": {
+    "sourceKind": "SYNTHETIC_SIM",
+    "scenarioId": "PORT-001",
+    "seed": 20261107,
+    "frameId": "ENU_PORT-001_LOCAL",
+    "positionUnits": "m",
+    "simulatorClock": "fixed-step-simulator-time"
+   }
+  }
+ ],
+ "commandResults": [
+  {
+   "operationIndex": 1,
+   "ok": true,
+   "duplicate": false,
+   "result": {
+    "ok": true,
+    "duplicate": false,
+    "fault": {
+     "faultId": "fault-rov-01-1",
+     "robotId": "rov-01",
+     "kind": "optical-visibility",
+     "severity": "severe",
+     "opticalQualityFactor": 0.12,
+     "durationMs": 9000,
+     "startedAtSimMs": 5000,
+     "startedAtStep": 10,
+     "expiresAtSimMs": 14000,
+     "clearedAtSimMs": null,
+     "endState": "active"
+    }
+   }
+  }
+ ],
+ "state": {
+  "kernelState": "running",
+  "stepIndex": 13,
+  "simulatorTimeMs": 6500,
+  "sequence": 13,
+  "scenarioId": "PORT-001",
+  "seed": 20261107,
+  "stepMs": 500,
+  "robots": [
+   {
+    "robotId": "drone-01",
+    "role": "aerial-drone",
+    "pose": {
+     "x": -56.948958,
+     "y": 63.051042,
+     "z": 53.78936
+    },
+    "waypointIndex": 1,
+    "linkState": "connected",
+    "activeOpticalFault": null,
+    "faultHistory": []
+   },
+   {
+    "robotId": "rover-01",
+    "role": "ground-rover",
+    "pose": {
+     "x": -145,
+     "y": 160,
+     "z": 4.05
+    },
+    "waypointIndex": 1,
+    "linkState": "connected",
+    "activeOpticalFault": null,
+    "faultHistory": []
+   },
+   {
+    "robotId": "rov-01",
+    "role": "underwater-rov",
+    "pose": {
+     "x": 65.985585,
+     "y": -13.99039,
+     "z": -2.799279
+    },
+    "waypointIndex": 1,
+    "linkState": "connected",
+    "activeOpticalFault": {
+     "faultId": "fault-rov-01-1",
+     "robotId": "rov-01",
+     "kind": "optical-visibility",
+     "severity": "severe",
+     "opticalQualityFactor": 0.12,
+     "durationMs": 9000,
+     "startedAtSimMs": 5000,
+     "startedAtStep": 10,
+     "expiresAtSimMs": 14000,
+     "clearedAtSimMs": null,
+     "endState": "active"
+    },
+    "faultHistory": []
+   }
+  ]
+ }
+}
