@@ -138,6 +138,40 @@ test("sequence strictly increases; time advances exactly one step while running 
   assert.equal(previousSeq, log.length);
 });
 
+test("read-only observation, command and replay accessors cannot rewrite kernel history", () => {
+  const kernel = createScenarioKernel({ seed: SEED });
+  kernel.step(2);
+  const command = kernel.issueCommand({ type: "pause", idempotencyKey: "immutable-history-1" });
+  assert.equal(command.ok, true);
+  const observations = kernel.getObservationLog();
+  const audit = kernel.getCommandAuditLog();
+  const trace = kernel.getRunTrace();
+  assert.deepEqual([observations.length, audit.length, trace.length], [2, 1, 2]);
+
+  for (const [label, records] of [["observations", observations], ["audit", audit], ["trace", trace]]) {
+    assert.equal(Object.isFrozen(records), true, `${label} accessor returns an immutable array`);
+    assert.throws(() => records.push({ forged: true }), TypeError, `${label} cannot append fabricated history`);
+    assert.throws(() => records.splice(0, 1), TypeError, `${label} cannot erase recorded history`);
+  }
+
+  assert.deepEqual([kernel.getObservationLog().length, kernel.getCommandAuditLog().length, kernel.getRunTrace().length], [2, 1, 2]);
+  kernel.issueCommand({ type: "resume", idempotencyKey: "immutable-history-2" });
+  kernel.step();
+  assert.equal(kernel.getObservationLog().length, 3, "future observations remain recorded");
+  assert.equal(kernel.getCommandAuditLog().length, 2, "future commands remain recorded");
+  assert.equal(kernel.getRunTrace().length, 4, "future operations remain recorded");
+  assert.equal(observations.length, 2, "prior immutable snapshot remains a stable snapshot");
+  const replayed = replayScenario({ seed: SEED, trace: kernel.getRunTrace() });
+  assert.deepEqual(replayed.getObservationLog(), kernel.getObservationLog(), "immutable tape remains replayable");
+});
+
+test("PRNG and scenario seeds reject fractional or out-of-range input", () => {
+  for (const seed of [1.25, -1, 4294967296, NaN, Infinity, -Infinity]) {
+    assert.throws(() => createScenarioKernel({ seed }), RangeError);
+    assert.throws(() => createRng(seed), RangeError);
+  }
+});
+
 function collectMeasurements(log, sensorId) {
   const out = [];
   for (const snapshot of log) {
