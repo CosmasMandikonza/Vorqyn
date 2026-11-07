@@ -10,8 +10,39 @@
  * demonstrate determinism.
  */
 import type { DemoPlaybackApi } from "./demo-sim/useDemoPlayback";
+import { FaultTimeline } from "./FaultTimeline";
+import type { FaultSeries } from "./fault-series";
+import type { GhostPath } from "./ghost-paths";
 
-export function PlaybackBar({ playback }: { playback: DemoPlaybackApi }) {
+export function PlaybackBar({
+  playback,
+  faultSeries,
+  viewIndex,
+  onSelectIndex,
+  ghost = null,
+  dive = null,
+}: {
+  playback: DemoPlaybackApi;
+  /** Recorded-measurement series for the fracture timeline (rov-01). */
+  faultSeries?: FaultSeries;
+  viewIndex?: number;
+  onSelectIndex?: (index: number) => void;
+  /** Ghost-replay offer, present once the kernel fault exists in the log. */
+  ghost?: {
+    visible: boolean;
+    onToggle: () => void;
+    pre: GhostPath | null;
+    post: GhostPath | null;
+  } | null;
+  /** World Dive camera-journey offer (camera-only; no simulated events). */
+  dive?: {
+    available: boolean;
+    active: boolean;
+    legLabel: string;
+    onStart: () => void;
+    onSkip: () => void;
+  } | null;
+}) {
   const { phase, playing, error, notice, replayIdentical, transportKind } = playback;
   const snapshot = playback.latestSnapshot;
   const simClock = snapshot?.simulatorTimeMs ?? playback.response?.state.simulatorTimeMs ?? null;
@@ -50,6 +81,29 @@ export function PlaybackBar({ playback }: { playback: DemoPlaybackApi }) {
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
+        {/* World Dive is a camera journey over the static world — it needs no
+            kernel session, so it is offered in idle phase too (unless the
+            visitor prefers reduced motion, in which case it is hidden). */}
+        {dive?.available && (
+          dive.active ? (
+            <button
+              type="button"
+              className="button button-primary !min-h-11"
+              onClick={dive.onSkip}
+            >
+              World Dive · {dive.legLabel} — skip
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="button button-secondary !min-h-11"
+              onClick={dive.onStart}
+              title="Optional choreographed camera journey: aerial overview → rover route → underwater inspection. Any interaction cancels it."
+            >
+              World Dive
+            </button>
+          )
+        )}
         {phase === "idle" && (
           <button
             type="button"
@@ -160,15 +214,49 @@ export function PlaybackBar({ playback }: { playback: DemoPlaybackApi }) {
               </span>
             </div>
           )}
+          {faultSeries && snapshotCount > 1 && (
+            <FaultTimeline
+              series={faultSeries}
+              viewIndex={viewIndex ?? -1}
+              onSelectIndex={(index) => onSelectIndex?.(index)}
+            />
+          )}
+          {ghost && ghost.pre && ghost.post && (
+            <div className="mt-3 flex flex-wrap items-center gap-2" data-testid="ghost-legend">
+              <button
+                type="button"
+                aria-pressed={ghost.visible}
+                onClick={ghost.onToggle}
+                className={`rounded-sm border px-2.5 py-1.5 font-mono text-[11px] transition-colors ${
+                  ghost.visible
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-transparent text-foreground hover:bg-muted"
+                }`}
+              >
+                Ghost replay: recorded paths {ghost.visible ? "shown" : "hidden"}
+              </button>
+              <span className="badge border-success bg-card font-mono text-[10px] text-muted-foreground">
+                ┄ pre-fault · sim t {ghost.pre.fromSimMs}–{ghost.pre.toSimMs} ms · seq {ghost.pre.fromSequence}–
+                {ghost.pre.toSequence}
+              </span>
+              <span className="badge border-primary bg-card font-mono text-[10px] text-muted-foreground">
+                — post-fault · sim t {ghost.post.fromSimMs}–{ghost.post.toSimMs} ms · seq {ghost.post.fromSequence}–
+                {ghost.post.toSequence}
+              </span>
+              <span className="font-mono text-[10px] text-muted-foreground">
+                Both branches are recorded kernel observations — no replacement robot; recovery
+                reassignment is not simulated in this demo.
+              </span>
+            </div>
+          )}
           <p className="mt-2 font-mono text-[10px] leading-relaxed text-muted-foreground">
             Run/Pause controls visual playback only — the kernel advances solely when
             step operations are sent. Simulator time ({playback.response?.stepMs ?? 500} ms/step) is
             independent of wall time. No evidence verdicts, AI decisions or
-            blockchain actions exist in this fixture-free demo path.
+            blockchain actions exist in this demo path.
           </p>
         </>
       )}
-
       {(error || notice) && (
         <p
           role={error ? "alert" : "status"}

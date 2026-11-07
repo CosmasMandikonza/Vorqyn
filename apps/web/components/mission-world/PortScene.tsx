@@ -17,6 +17,7 @@ import { enuToScene, type SceneVec3 } from "./enu";
 import { MACHINES, type MachineSpec } from "./machines";
 import { anchorById, zoneById, type PortWorld, type PortWorldZone } from "./world-data";
 import { demoPoseToScene, type DemoRobotView } from "./demo-sim/contract";
+import type { GhostPaths as GhostPathsType } from "./ghost-paths";
 
 const HIGH_URL = "/port-world/port-world-high.glb";
 const LOW_URL = "/port-world/port-world-low.glb";
@@ -47,6 +48,8 @@ export interface PortSceneProps {
   sessionKernelState: string | null;
   /** Scene-space pose the FOLLOW camera tracks (null = not following). */
   followTarget: SceneVec3 | null;
+  /** Recorded pre/post-fault ROV paths (Issue #15 Ghost Replay). */
+  ghostPaths: GhostPathsType | null;
 }
 
 export function PortScene(props: PortSceneProps) {
@@ -110,6 +113,31 @@ export function PortScene(props: PortSceneProps) {
             underwater={underwater}
           />
         ))}
+        {props.ghostPaths?.pre && (
+          <Line
+            points={props.ghostPaths.pre.points.map(
+              (p) => [p[0], p[1] + 0.3, p[2]] as [number, number, number],
+            )}
+            color="#7bd9c6"
+            lineWidth={1.6}
+            dashed
+            dashSize={1.6}
+            gapSize={1}
+            transparent
+            opacity={0.8}
+          />
+        )}
+        {props.ghostPaths?.post && (
+          <Line
+            points={props.ghostPaths.post.points.map(
+              (p) => [p[0], p[1] + 0.3, p[2]] as [number, number, number],
+            )}
+            color="#de9c7c"
+            lineWidth={2}
+            transparent
+            opacity={0.85}
+          />
+        )}
         <ZoneFrames world={world} underwater={underwater} />
       </Suspense>
       <CameraRig

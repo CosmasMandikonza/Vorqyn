@@ -1,0 +1,45 @@
+[
+  {
+    "name": "01-worlddive-midflight-light-1440.png",
+    "width": 1440,
+    "height": 900,
+    "expected": "1440x900",
+    "ok": true
+  },
+  {
+    "name": "04-fracture-timeline-light-1440.png",
+    "width": 1440,
+    "height": 900,
+    "ok": true
+  },
+  {
+    "name": "05-ghost-overlay-light-1440.png",
+    "width": 1344,
+    "height": 559,
+    "ok": true
+  },
+  {
+    "name": "06-reset-dark-1440.png",
+    "width": 1344,
+    "height": 559,
+    "ok": true
+  },
+  {
+    "name": "07-inspect-dark-1440.png",
+    "width": 1344,
+    "height": 559,
+    "ok": true
+  },
+  {
+    "name": "08-mobile-390-light.png",
+    "width": 390,
+    "height": 844,
+    "ok": true
+  },
+  {
+    "name": "09-mobile-320-light.png",
+    "width": 320,
+    "height": 844,
+    "ok": true
+  }
+]
