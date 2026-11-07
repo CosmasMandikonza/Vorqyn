@@ -4,6 +4,10 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Manual trigger: allows running the identical checks from a fork when the
+  # upstream repository's Actions are unavailable (e.g. the billing-locked
+  # runner incident documented on PR #18).
+  workflow_dispatch:
 
 jobs:
   app:
