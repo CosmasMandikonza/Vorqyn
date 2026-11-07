@@ -1,21 +1,37 @@
 "use client";
 
 /**
- * PORT-001 interactive world preview (VQ-07-VIEW / Issue #27).
+ * PORT-001 interactive world preview with synthetic survey playback
+ * (VQ-07-VIEW #27 + DEMO-02 #33).
  *
  * Renders the merged, hash-verified GLB asset pack with named camera stations
- * from world.json. Static anchor fixtures only — see labels.ts for the honest
- * scope statements rendered by this component.
+ * from world.json, and — when a VQ-DEMO-SIM/1 session is running — moves the
+ * machines along their actual kernel-observed poses. Static anchor fixtures
+ * only when no session exists; see labels.ts for the honest scope statements.
  */
 import { useProgress } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Fallback2D } from "./Fallback2D";
 import { InspectorPanel } from "./InspectorPanel";
-import { HONESTY_BADGE, LIMITATIONS_TEXT } from "./labels";
+import { PlaybackBar } from "./PlaybackBar";
+import {
+  cameraOffset,
+  addVec,
+  type SceneVec3,
+} from "./enu";
+import { HONESTY_BADGE, PLAYBACK_BADGE, LIMITATIONS_TEXT, PLAYBACK_LIMITATIONS_TEXT } from "./labels";
 import { poseForMode, type CameraPose, type ViewMode } from "./camera-presets";
 import { fetchWorld, type PortWorld } from "./world-data";
+import { MACHINES } from "./machines";
+import { demoPoseToScene, type DemoRobotView } from "./demo-sim/contract";
+import {
+  httpDemoTransport,
+  type DemoTransport,
+} from "./demo-sim/client";
+import { fixtureDemoTransport, FIXTURE_TRANSPORT_QUERY_PARAM } from "./demo-sim/fixture";
+import { useDemoPlayback } from "./demo-sim/useDemoPlayback";
 
 /** R3F Canvas itself must never render during SSR. */
 const PortSceneDynamic = dynamic(() => import("./PortScene").then((m) => m.PortScene), { ssr: false });
@@ -24,6 +40,8 @@ type ViewerState =
   | { phase: "loading-world" }
   | { phase: "world-error"; message: string }
   | { phase: "ready"; world: PortWorld };
+
+type UiViewMode = ViewMode | "FOLLOW";
 
 function hasWebGL(): boolean {
   try {
@@ -44,7 +62,7 @@ function detectLowGPU(): boolean {
 
 export function PortViewer() {
   const [state, setState] = useState<ViewerState>({ phase: "loading-world" });
-  const [mode, setMode] = useState<ViewMode>("RESET");
+  const [mode, setMode] = useState<UiViewMode>("RESET");
   const [inspectIndex, setInspectIndex] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>("drone");
   const [webglAvailable, setWebglAvailable] = useState(true);
@@ -52,6 +70,19 @@ export function PortViewer() {
   const [contextLost, setContextLost] = useState(false);
   const reducedMotion = useReducedMotion() ?? false;
   const lowGpu = useRef(false);
+
+  // Opt-in recorded-fixture transport (labelled in the UI); the default is
+  // always the real VQ-DEMO-SIM/1 HTTP endpoint owned by Issue #32.
+  const [fixtureMode] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).has(FIXTURE_TRANSPORT_QUERY_PARAM),
+  );
+  const transport: DemoTransport = useMemo(
+    () => (fixtureMode ? fixtureDemoTransport : httpDemoTransport),
+    [fixtureMode],
+  );
+  const playback = useDemoPlayback({ transportKind: fixtureMode ? "fixture" : "http", transport });
 
   useEffect(() => {
     setWebglAvailable(hasWebGL());
@@ -77,14 +108,43 @@ export function PortViewer() {
     };
   }, []);
 
-  const pose: CameraPose | null =
-    state.phase === "ready" ? poseForMode(mode, state.world, inspectIndex) : null;
+  const sessionActive = playback.response !== null;
+  const liveRobots: DemoRobotView[] | null = playback.latestSnapshot?.robots ?? null;
+  const selectedMachine = MACHINES.find((m) => m.id === selectedId) ?? null;
+  const selectedLive =
+    liveRobots?.find((r) => r.robotId === selectedMachine?.robotId) ?? null;
+
+  const pose: CameraPose | null = useMemo(() => {
+    if (state.phase !== "ready") return null;
+    if (mode === "FOLLOW") {
+      if (!selectedMachine || !selectedLive) return null;
+      const target = demoPoseToScene(selectedLive.pose);
+      const byRole = state.world.camera_targets.FOLLOW?.by_role?.[selectedMachine.id];
+      const distance = byRole ? (byRole.distance_range_m[0] + byRole.distance_range_m[1]) / 2 : 12;
+      const offset = cameraOffset(215, 22, distance);
+      return {
+        position: addVec(target, offset) as SceneVec3,
+        target,
+        near_m: byRole?.near_m ?? 0.2,
+        far_m: byRole?.far_m ?? 400,
+        min_distance_m: byRole?.distance_range_m[0] ?? 2,
+        max_distance_m: byRole?.distance_range_m[1] ?? 30,
+        underwater: target[1] < 0,
+        derivation: `FOLLOW station (world.json FOLLOW.${selectedMachine.id} ranges) — camera tracks the selected machine's kernel-observed pose`,
+      };
+    }
+    return poseForMode(mode, state.world, inspectIndex);
+  }, [state, mode, inspectIndex, selectedMachine, selectedLive]);
+
+  // FOLLOW target: the rig continuously tracks the machine's live pose.
+  const followTarget: SceneVec3 | null =
+    mode === "FOLLOW" && selectedLive ? demoPoseToScene(selectedLive.pose) : null;
 
   const cycleInspect = useCallback(() => {
     setInspectIndex((index) => index + 1);
   }, []);
 
-  const setModeAndResetInspect = useCallback((next: ViewMode) => {
+  const setModeAndResetInspect = useCallback((next: UiViewMode) => {
     setMode(next);
     setInspectIndex(0);
   }, []);
@@ -100,9 +160,16 @@ export function PortViewer() {
     <div className="relative">
       {/* Honesty strip is always rendered, in every state. */}
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <p className="badge bg-card font-mono" data-testid="honesty-badge">
-          {HONESTY_BADGE}
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="badge bg-card font-mono" data-testid="honesty-badge">
+            {sessionActive ? PLAYBACK_BADGE : HONESTY_BADGE}
+          </p>
+          {fixtureMode && (
+            <p className="badge border-warning bg-card font-mono text-warning" data-testid="fixture-badge">
+              FIXTURE PLAYBACK · recorded kernel response
+            </p>
+          )}
+        </div>
         {state.phase === "ready" && (
           <button
             type="button"
@@ -128,6 +195,19 @@ export function PortViewer() {
         </div>
       )}
 
+      {state.phase === "ready" && playback.phase === "unavailable" && (
+        <div className="notice" role="alert">
+          <strong>Synthetic survey API unavailable.</strong> {playback.error?.message} The
+          static world preview below remains fully usable; playback controls are
+          disabled until the simulation API responds.
+          <div className="mt-3">
+            <button type="button" className="button button-secondary" onClick={playback.start}>
+              Retry simulation API
+            </button>
+          </div>
+        </div>
+      )}
+
       {state.phase === "ready" &&
         (webglAvailable && !force2D ? (
           <div className="relative">
@@ -136,25 +216,29 @@ export function PortViewer() {
                 inspector and disappears beneath the scene on small screens. */}
             <div className="relative">
               <WorldCanvasFrame>
-              <PortSceneDynamic
-                world={state.world}
+                <PortSceneDynamic
+                  world={state.world}
+                  selectedId={selectedId}
+                  onSelect={setSelectedId}
+                  pose={pose}
+                  reducedMotion={reducedMotion}
+                  lowGpu={lowGpu.current}
+                  onContextLost={() => setContextLost(true)}
+                  onContextRestored={() => setContextLost(false)}
+                  liveRobots={liveRobots}
+                  sessionKernelState={
+                    playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null
+                  }
+                  followTarget={followTarget}
+                />
+              </WorldCanvasFrame>
+              <ViewModeBar
                 mode={mode}
-                inspectIndex={inspectIndex}
-                selectedId={selectedId}
-                onSelect={setSelectedId}
-                pose={pose}
-                reducedMotion={reducedMotion}
-                lowGpu={lowGpu.current}
-                onContextLost={() => setContextLost(true)}
-                onContextRestored={() => setContextLost(false)}
+                onChange={setModeAndResetInspect}
+                inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
+                onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
+                followEnabled={sessionActive && Boolean(selectedLive)}
               />
-            </WorldCanvasFrame>
-            <ViewModeBar
-              mode={mode}
-              onChange={setModeAndResetInspect}
-              inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
-              onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-            />
             </div>
             {contextLost && (
               <div className="notice" role="alert">
@@ -172,16 +256,20 @@ export function PortViewer() {
                 </div>
               </div>
             )}
+            <div className="mt-4">
+              <PlaybackBar playback={playback} />
+            </div>
             <div className="mt-4 lg:hidden">
               <InspectorPanel
                 world={state.world}
                 pose={pose}
-                mode={mode}
+                mode={mode === "FOLLOW" ? "RESET" : mode}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
                 inspectIndex={inspectIndex}
                 onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={LIMITATIONS_TEXT}
+                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
+                sensorRobot={selectedLive}
               />
             </div>
             <aside
@@ -191,24 +279,34 @@ export function PortViewer() {
               <InspectorPanel
                 world={state.world}
                 pose={pose}
-                mode={mode}
+                mode={mode === "FOLLOW" ? "RESET" : mode}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
                 inspectIndex={inspectIndex}
                 onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={LIMITATIONS_TEXT}
+                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
+                sensorRobot={selectedLive}
                 compact
               />
             </aside>
           </div>
         ) : (
-          <Fallback2D
-            world={state.world}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-            mode={mode}
-            reason={force2D ? "2D map requested." : "A WebGL-capable browser is required for the 3D preview."}
-          />
+          <div>
+            <Fallback2D
+              world={state.world}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              mode={mode === "FOLLOW" ? "RESET" : mode}
+              reason={force2D ? "2D map requested." : "A WebGL-capable browser is required for the 3D preview."}
+              liveRobots={liveRobots}
+              kernelState={playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null}
+              simulatorTimeMs={playback.latestSnapshot?.simulatorTimeMs ?? playback.response?.state.simulatorTimeMs ?? null}
+              sequence={playback.latestSnapshot?.sequence ?? null}
+            />
+            <div className="mt-4">
+              <PlaybackBar playback={playback} />
+            </div>
+          </div>
         ))}
     </div>
   );
@@ -292,19 +390,32 @@ function ViewModeBar({
   onChange,
   inspectAnchor,
   onCycleInspect,
+  followEnabled,
 }: {
-  mode: ViewMode;
-  onChange: (mode: ViewMode) => void;
+  mode: UiViewMode;
+  onChange: (mode: UiViewMode) => void;
   inspectAnchor?: string;
   onCycleInspect?: () => void;
+  followEnabled: boolean;
 }) {
-  const modes: ViewMode[] = ["RESET", "AIR", "LAND", "UNDERWATER", "INSPECT"];
+  const modes: UiViewMode[] = ["RESET", "AIR", "LAND", "UNDERWATER", "INSPECT", "FOLLOW"];
   return (
     <div className="absolute bottom-3 left-3 z-10 flex flex-wrap items-center gap-2">
       <div className="halo-segmented bg-card/90 backdrop-blur-sm" role="group" aria-label="Camera station">
         <div className="halo-options">
           {modes.map((m) => (
-            <button key={m} type="button" aria-pressed={mode === m} onClick={() => onChange(m)}>
+            <button
+              key={m}
+              type="button"
+              aria-pressed={mode === m}
+              disabled={m === "FOLLOW" && !followEnabled}
+              title={
+                m === "FOLLOW" && !followEnabled
+                  ? "Available while a synthetic survey session is producing observations"
+                  : undefined
+              }
+              onClick={() => onChange(m)}
+            >
               {m === "UNDERWATER" ? "UW" : m}
             </button>
           ))}

@@ -2,13 +2,15 @@
 
 /**
  * Accessible 2D fallback for the world preview: real zone list, machine
- * selection and camera-station text derived from world.json — no black
- * screen, no lost orientation, no invented activity.
+ * selection, camera-station text and — during a synthetic survey — the
+ * kernel's observed robot state as text. No black screen, no lost
+ * orientation, no invented activity.
  */
 import { VIEW_MODES, type ViewMode } from "./camera-presets";
 import { MACHINES } from "./machines";
 import { SOURCE_LABEL } from "./labels";
 import { anchorById, type PortWorld } from "./world-data";
+import type { DemoRobotView } from "./demo-sim/contract";
 
 export function Fallback2D({
   world,
@@ -16,12 +18,20 @@ export function Fallback2D({
   onSelect,
   mode,
   reason,
+  liveRobots = null,
+  kernelState = null,
+  simulatorTimeMs = null,
+  sequence = null,
 }: {
   world: PortWorld;
   selectedId: string | null;
   onSelect: (id: string) => void;
   mode: ViewMode;
   reason: string;
+  liveRobots?: DemoRobotView[] | null;
+  kernelState?: string | null;
+  simulatorTimeMs?: number | null;
+  sequence?: number | null;
 }) {
   const machine = MACHINES.find((m) => m.id === selectedId) ?? null;
   const anchor = machine ? anchorById(world, machine.anchorId) : null;
@@ -30,8 +40,35 @@ export function Fallback2D({
     <div data-testid="fallback-2d">
       <div className="notice" role="status">
         <strong>2D fallback.</strong> {reason} Everything below is read from the
-        same world.json the 3D view uses — orientation and machine data stay accurate.
+        same world.json and kernel observations the 3D view uses — orientation,
+        machine state and source labels stay accurate.
       </div>
+
+      {liveRobots && liveRobots.length > 0 && (
+        <section aria-label="Observed robot state" className="notice mt-4 bg-card" data-testid="fallback-robots">
+          <p className="eyebrow text-muted-foreground">
+            Observed robots · SYNTHETIC_SIM · sim t {simulatorTimeMs} ms · seq {sequence} · kernel {kernelState}
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {liveRobots.map((robot) => {
+              const optical = robot.sensors.find((s) => s.kind === "optical");
+              const sonar = robot.sensors.find((s) => s.kind === "sonar");
+              return (
+                <li key={robot.robotId} className="border-b border-border pb-1.5 font-mono text-[11px]">
+                  <span className="text-foreground">{robot.robotId}</span>{" "}
+                  <span className="text-muted-foreground">
+                    pose ENU ({robot.pose.x}, {robot.pose.y}, {robot.pose.z}) m ·{" "}
+                    {robot.fresh ? "fresh" : `stale (${robot.staleness})`} · {robot.linkState}
+                    {robot.activeOpticalFault ? ` · FAULT ${robot.activeOpticalFault.severity}` : ""}
+                    {optical?.measured ? ` · optical q ${optical.measured.quality01.toFixed(3)}` : " · optical —"}
+                    {sonar?.measured ? ` · sonar q ${sonar.measured.quality01.toFixed(3)}` : ""}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
       <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <figure className="m-0">

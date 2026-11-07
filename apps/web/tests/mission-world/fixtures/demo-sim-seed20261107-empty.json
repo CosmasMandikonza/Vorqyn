@@ -1,0 +1,62 @@
+{
+ "schema": "vorqyn.demo-sim/response/1",
+ "scenarioId": "PORT-001",
+ "seed": 20261107,
+ "sourceKind": "SYNTHETIC_SIM",
+ "frameId": "ENU_PORT-001_LOCAL",
+ "positionUnits": "m",
+ "stepMs": 500,
+ "operations": [],
+ "snapshots": [],
+ "commandResults": [],
+ "state": {
+  "kernelState": "running",
+  "stepIndex": 0,
+  "simulatorTimeMs": 0,
+  "sequence": 0,
+  "scenarioId": "PORT-001",
+  "seed": 20261107,
+  "stepMs": 500,
+  "robots": [
+   {
+    "robotId": "drone-01",
+    "role": "aerial-drone",
+    "pose": {
+     "x": -40,
+     "y": 80,
+     "z": 55
+    },
+    "waypointIndex": 0,
+    "linkState": "connected",
+    "activeOpticalFault": null,
+    "faultHistory": []
+   },
+   {
+    "robotId": "rover-01",
+    "role": "ground-rover",
+    "pose": {
+     "x": -160,
+     "y": 160,
+     "z": 4.05
+    },
+    "waypointIndex": 0,
+    "linkState": "connected",
+    "activeOpticalFault": null,
+    "faultHistory": []
+   },
+   {
+    "robotId": "rov-01",
+    "role": "underwater-rov",
+    "pose": {
+     "x": 60,
+     "y": -10,
+     "z": -2.5
+    },
+    "waypointIndex": 0,
+    "linkState": "connected",
+    "activeOpticalFault": null,
+    "faultHistory": []
+   }
+  ]
+ }
+}
