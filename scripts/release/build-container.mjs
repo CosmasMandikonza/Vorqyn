@@ -7,6 +7,7 @@ import {
   openSync,
   closeSync,
   writeFileSync,
+  readFileSync,
 } from "node:fs";
 import { resolve, dirname, relative, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -68,7 +69,9 @@ try {
   ])
     delete env[name];
   const docker = ["--host=unix:///var/run/docker.sock"];
+  report.phase = "daemon";
   run("docker", [...docker, "info", "--format", "{{.ServerVersion}}"], { env });
+  report.phase = "build";
   const log = openSync(join(out, "build.txt"), "w");
   const command = [
     ...docker,
@@ -123,8 +126,18 @@ try {
     throw new Error("Image revision label mismatch");
   report.status = "PASS";
 } catch (error) {
-  report.status = "BLOCKED";
+  const buildLog = existsSync(join(out, "build.txt"))
+    ? readFileSync(join(out, "build.txt"), "utf8")
+    : "";
+  report.status =
+    report.phase === "daemon" ||
+    /ENOSPC|no space left on device/i.test(buildLog)
+      ? "BLOCKED"
+      : "FAIL";
   report.reason = error.message;
+  if (/ENOSPC|no space left on device/i.test(buildLog))
+    report.reason =
+      "Docker build exceeded available filesystem capacity (ENOSPC); no public deployment occurred";
   process.exitCode = 2;
 }
 report.finishedAt = new Date().toISOString();
