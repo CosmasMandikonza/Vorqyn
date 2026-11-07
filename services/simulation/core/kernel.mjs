@@ -650,17 +650,21 @@ export function createScenarioKernel({ seed }) {
     });
   }
 
+  // Return immutable snapshots of the log arrays, never the live mutable
+  // storage. Individual records are already deeply frozen when recorded.
+  // A consumer must not be able to splice, append or reorder authoritative
+  // observation/audit/replay history through a read-only accessor.
   function getObservationLog() {
-    return observationLog;
+    return Object.freeze([...observationLog]);
   }
 
   function getCommandAuditLog() {
-    return commandAudit;
+    return Object.freeze([...commandAudit]);
   }
 
   /** The ordered step/command tape that replayScenario executes. */
   function getRunTrace() {
-    return runTrace;
+    return Object.freeze([...runTrace]);
   }
 
   return deepFreeze({
