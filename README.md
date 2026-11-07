@@ -4,30 +4,30 @@
 
 VORQYN is a proposed company-grade mission platform for independently operated autonomous machines: a customer creates a mission, robots execute physical tasks in a shared 3D world, an AI mission coordinator proposes recovery when evidence fails, and a Solana program enforces task reassignment and accepted-work payments.
 
-> **Verified status — November 7, 2026:** [Issue #1 foundation](https://github.com/CosmasMandikonza/Vorqyn/pull/18), [Issue #3 branded UI](https://github.com/CosmasMandikonza/Vorqyn/pull/23), [Issue #19 port-world asset pack](https://github.com/CosmasMandikonza/Vorqyn/pull/22), [Issue #20 deterministic synthetic simulator kernel](https://github.com/CosmasMandikonza/Vorqyn/pull/21) and [asset/simulator CI gates](https://github.com/CosmasMandikonza/Vorqyn/pull/25) have merged. The landing page, honest guest/company preview routes, model assets and synthetic tests **exist**; a real integrated mission viewer, authenticated company missions, evidence verifier, AI recovery and deployed Solana escrow/payout **do not yet exist**. This remains an early-stage prototype, not a functioning autonomous fleet or settled blockchain system. [Issue #24](https://github.com/CosmasMandikonza/Vorqyn/issues/24) tracks the mandatory world/simulator coordinate alignment before displaying real simulated trajectories.
+> **Verified build status — November 7, 2026 (merged main):** VORQYN has a real interactive PORT-001 3D viewer and a deterministic, bounded server-side **synthetic** simulation API. A guest can start a survey, watch drone/rover/underwater ROV poses from actual kernel observations, inject a simulated underwater optical-visibility fault, inspect independent sonar measurements and replay the identical trace ([3D playback PR #38](https://github.com/CosmasMandikonza/Vorqyn/pull/38), [API PR #35](https://github.com/CosmasMandikonza/Vorqyn/pull/35)). The local browser-only mission draft builder ([PR #30](https://github.com/CosmasMandikonza/Vorqyn/pull/30)), original port assets, world-aligned kernel, and typed event contracts/reducer ([PR #37](https://github.com/CosmasMandikonza/Vorqyn/pull/37)) are also merged. **Not yet verified:** authenticated company mission persistence, runtime AI recovery, independent evidence verifier, real physical/SITL telemetry, deployed Solana escrow/reassignment/payout, public demo/video, or accepted submission. Canonical chain events in test fixtures are synthetic examples, **not devnet transactions**. Do not present this prototype as a deployed autonomous fleet or as completed financial settlement.
 
 ## Local development and current feature boundaries
 
-The monorepo now includes a functional **product-entry UI** and separately tested **preparatory** 3D/simulator modules. They are not yet connected into a playable end-to-end mission.
+The monorepo contains a **working guest synthetic mission journey** at `/demo/mission` and a separate browser-local mission planner. The guest 3D viewer is connected to the actual stateless `POST /api/demo/simulation` endpoint, but it is **not** connected to a persisted company mission, real hardware, independent evidence approval, runtime AI operator, or Solana financial authority.
 
 - **Runtime:** Node `22.21.1` (see `.nvmrc`) and pnpm `10.34.5` (pinned via the root `packageManager` field; `corepack enable` prepares it automatically).
 - **Install:** `pnpm install` (committed lockfile; CI uses `--frozen-lockfile`).
-- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) runs these plus `node --test services/simulation/core/*.test.mjs` and `node assets/port-world/tools/validate.mjs --selfcheck` on every pull request.
-- **Web app:** `pnpm dev:web` serves the branded VQ-02 landing page and honest `/demo` and `/workspace` **preview** routes. These are not yet live telemetry, a mission builder or blockchain settlement. See [#8](https://github.com/CosmasMandikonza/Vorqyn/issues/8) and [#4](https://github.com/CosmasMandikonza/Vorqyn/issues/4) for integrations.
-- **Shared contracts:** `packages/contracts` is scaffolding only; the real contracts and reducer are frozen in VQ-01 (#2).
+- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) also runs the core synthetic kernel, world-coordinate integration tests, asset validator, and Rust scaffold. Release tooling and browser checks are documented in [docs/release/README.md](docs/release/README.md); its prior 320px failures and remaining external submission blockers must not be reported as passing.
+- **Web app:** `pnpm dev:web` serves the landing page, `/demo/mission` guest synthetic 3D playback with fault/replay controls and 2D fallback, and `/workspace/create` browser-local planning drafts. Both interfaces prominently disclose their limitations. No blockchain transaction or live hardware read is implied; see [#8](https://github.com/CosmasMandikonza/Vorqyn/issues/8), [#9](https://github.com/CosmasMandikonza/Vorqyn/issues/9), and [#4](https://github.com/CosmasMandikonza/Vorqyn/issues/4) for remaining integration.
+- **Shared contracts:** `packages/contracts` now contains validated IDs, exact lamports, source-aware telemetry, versioned mission events, pure deterministic reducer and two replay fixtures ([PR #37](https://github.com/CosmasMandikonza/Vorqyn/pull/37)). The proposed Solana PDA/IDL agreement in `CHAIN_SEAM.md` remains a **draft** pending Anchor-owner agreement; fixtures are not actual devnet history.
 - **Anchor program:** `programs/vorqyn` is a no-op skeleton verified by `cargo fmt --check`, `cargo clippy` and `cargo check` in CI. The Anchor/Solana toolchain (`avm`, `anchor`, `solana` CLI, local validator) is **not** installed by pnpm; `anchor build`/`anchor test` become relevant from VQ-04 (#5) onward. Devnet/test keypairs only — never commit keys or secrets.
 - **Windows:** WSL2 is recommended for a consistent Node/Solana environment. Some contributors also run the dependency-free simulation/asset validation under Windows Git Bash and Node; Anchor/validator installation must be verified separately per workstation.
 
 ## What makes VORQYN special?
 
-A port needs to inspect access roads, aerial structures, and underwater obstructions after a storm. A drone surveys from above, a rover checks access, and an underwater ROV surveys beneath the docks. The ROV's optical evidence becomes unusable. Rather than declaring success, VORQYN rejects the result, compares qualified replacements, authorizes a sonar-capable operator under a limited on-chain budget, completes a new simulated inspection, and settles the accepted task **exactly once** on Solana devnet.
+A port needs to inspect access roads, aerial structures, and underwater obstructions after a storm. In the **implemented synthetic demo**, a drone surveys from above, a rover checks access, and an underwater ROV surveys beneath the docks. A genuine kernel command injects a low-visibility fault: optical sensor measurements degrade, while independent sonar readings remain observable. The operator can inspect source-labelled poses, a fault timeline and repeatable replay in one 3D world (or text-based 2D fallback). **Planned, not yet completed:** independent evidence rejection, AI replacement matching, owner-authorized reassignment, and single-use payout enforced by a real Solana program.
 
-**The core interaction:** observe → fail → explain → recover → verify → settle → replay. All seven steps must be causally linked and independently inspectable. A polished animation or demo-only wallet notification does not substitute for the actual state transitions.
+**Target end-to-end interaction:** observe → fail → explain → recover → verify → settle → replay. **Implemented guest subset:** observe → synthetic optical fault → inspect sensor measurements → replay. The remaining real financial/evidence transitions must be independently inspectable before the project claims a complete recovery loop.
 
 ## Two product entry points
 
-- **Explore Demo:** instant, no account or wallet required; guided, self-explanatory port mission, with controls to inspect a real recorded or live simulated failure and view confirmed devnet activity.
-- **Create Mission:** company workspace for creating a *different* mission using supported environment templates, selecting machine capabilities, acceptance criteria, participants, and budget. The initial builder may be intentionally constrained; it must not be a form that secretly replays the same hardcoded mission.
+- **Explore Demo:** instant, no account or wallet required; real kernel-driven synthetic three-machine port survey at `/demo/mission`, with optical-fault command, source-aware sensor inspector, camera stations and deterministic replay. **No actual devnet transaction is shown by this route.**
+- **Create Mission:** `/workspace/create` saves genuinely different local drafts with selected zones, machine capabilities, acceptance criteria and exact proposed budgets. Data stays in the current browser; there is **no authenticated organization, secure server persistence, funded escrow or real mission launch** yet.
 
 Long-term customers may include infrastructure inspection providers, port operators, and robotics contractors. Enterprise mission-management subscriptions are the leading business hypothesis; marketplace fees and developer APIs are future hypotheses, **not validated demand or existing revenue**.
 
@@ -37,7 +37,7 @@ Primary objective: **Top 3 Overall — $1,000 microgrant per selected team** at 
 
 **Why Solana is necessary here:** separate operators hold task rights under a shared escrow; a failed task cannot be paid as completed; scoped authorities can reassign unfinished work; verified evidence is bound to an assignment version; and the correct operator can claim once without the application freely reallocating customer funds. The chain enforces financial and authorization state, **not** robot stabilization or physical truth.
 
-## Product architecture (planned, not implemented)
+## Product architecture (partially implemented; full authority path remains planned)
 
 ```text
            Visitors                         Companies
@@ -85,7 +85,7 @@ Shared team references:
 - [Notion — Product, Business & Technical Blueprint](https://app.notion.com/p/41001192111281d9b342c1f5b3d3fda5)
 - [Notion — Shared AI Engineering Workflow](https://app.notion.com/p/410011921112819e8667c455ac342e89)
 
-**Start the implementation here:** [VQ-00 / GitHub issue #1](https://github.com/CosmasMandikonza/Vorqyn/issues/1). [View the complete issue backlog](docs/ISSUE_INDEX.md).
+**Current implementation status:** [completed PRs](https://github.com/CosmasMandikonza/Vorqyn/pulls?q=is%3Apr+is%3Amerged) and [remaining original-issue backlog](docs/ISSUE_INDEX.md). The public repo is a hackathon prototype, not a production physical-robot or payments product.
 
 ## Workflow for the two developers
 
