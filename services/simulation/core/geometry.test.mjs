@@ -21,6 +21,17 @@ import { distance3, stepToward } from "./enu.mjs";
 const SEED = 555000;
 const STEPS = 400; // long enough to traverse multiple waypoint legs
 
+test("stepToward rejects non-finite and negative displacement budgets", () => {
+  const origin = { x: 0, y: 0, z: 0 };
+  const target = { x: 5, y: 0, z: 0 };
+  for (const maxStep of [NaN, Infinity, -Infinity, -1]) {
+    assert.throws(() => stepToward(origin, target, maxStep), RangeError);
+  }
+  const stationary = stepToward(origin, target, 0);
+  assert.equal(stationary.movedM, 0);
+  assert.deepEqual(stationary.position, origin);
+});
+
 function runLong() {
   const kernel = createScenarioKernel({ seed: SEED });
   kernel.step(STEPS);
