@@ -1,0 +1,136 @@
+{
+  "name": "shell-demo-dark-1024x900-dpr1",
+  "runId": "c292f989-02a8-4d8b-8319-24cbd087d1ca",
+  "commitSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "capturedAt": "2026-11-07T20:30:57.811Z",
+  "source": "real Chromium; local production server; no response fixtures",
+  "url": "http://127.0.0.1:3110/demo",
+  "theme": "dark",
+  "viewport": {
+    "width": 1024,
+    "height": 900,
+    "dpr": 1,
+    "rootZoom": "1",
+    "visualViewport": {
+      "width": 1024,
+      "height": 900,
+      "scale": 1
+    }
+  },
+  "screenshotOptions": {
+    "method": "Playwright page.screenshot",
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "png": {
+    "width": 1024,
+    "height": 900
+  },
+  "sha256": "15b81ef47bd069c52537b41b35ddb01297846af547d2cc85f10c17c070cd2441",
+  "layout": {
+    "documentWidth": 1024,
+    "viewportWidth": 1024,
+    "offenders": [],
+    "header": [
+      {
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 0,
+          "width": 928,
+          "height": 100,
+          "top": 0,
+          "right": 976,
+          "bottom": 100,
+          "left": 48
+        }
+      },
+      {
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 34.5,
+          "width": 143.5625,
+          "height": 30,
+          "top": 34.5,
+          "right": 191.5625,
+          "bottom": 64.5,
+          "left": 48
+        }
+      },
+      {
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 287.578125,
+          "y": 26.296875,
+          "width": 202.15625,
+          "height": 46.390625,
+          "top": 26.296875,
+          "right": 489.734375,
+          "bottom": 72.6875,
+          "left": 287.578125
+        }
+      },
+      {
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 585.75,
+          "y": 23.5,
+          "width": 390.25,
+          "height": 52,
+          "top": 23.5,
+          "right": 976,
+          "bottom": 75.5,
+          "left": 585.75
+        }
+      },
+      {
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 585.75,
+          "y": 23.5,
+          "width": 175.09375,
+          "height": 52,
+          "top": 23.5,
+          "right": 760.84375,
+          "bottom": 75.5,
+          "left": 585.75
+        }
+      },
+      {
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 776.84375,
+          "y": 26.75,
+          "width": 199.15625,
+          "height": 45.5,
+          "top": 26.75,
+          "right": 976,
+          "bottom": 72.25,
+          "left": 776.84375
+        }
+      },
+      {
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    ]
+  }
+}

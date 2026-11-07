@@ -1,0 +1,46 @@
+{
+  "status": "FAIL",
+  "finding": "Replay history pointer center intercepted by inspector",
+  "sourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "source": "real Chromium; actual API; after Start and one step; no forced click",
+  "viewport": {
+    "width": 1024,
+    "height": 900,
+    "dpr": 1
+  },
+  "scroll": {
+    "x": 0,
+    "y": 667
+  },
+  "replay": {
+    "x": 642.875,
+    "y": 438.375,
+    "width": 145.890625,
+    "height": 47,
+    "top": 438.375,
+    "right": 788.765625,
+    "bottom": 485.375,
+    "left": 642.875
+  },
+  "overlay": {
+    "x": 652,
+    "y": -184.21875,
+    "width": 312,
+    "height": 676.6875,
+    "top": -184.21875,
+    "right": 964,
+    "bottom": 492.46875,
+    "left": 652
+  },
+  "center": {
+    "x": 715.8203125,
+    "y": 461.875
+  },
+  "hit": {
+    "tag": "P",
+    "text": "Fixture-model measurements only (unitless 0..1). These are NOT evidence verdicts — evaluation belong",
+    "insideInspector": true
+  },
+  "pointerBlocked": true
+}

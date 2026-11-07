@@ -1,0 +1,169 @@
+{
+  "name": "journey-fault-uw-dark-320x844-dpr1",
+  "runId": "c292f989-02a8-4d8b-8319-24cbd087d1ca",
+  "commitSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+  "capturedAt": "2026-11-07T20:34:56.799Z",
+  "source": "real Chromium; local production server; no response fixtures",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "dark",
+  "viewport": {
+    "width": 320,
+    "height": 844,
+    "dpr": 1,
+    "rootZoom": "1",
+    "visualViewport": {
+      "width": 320,
+      "height": 844,
+      "scale": 1
+    }
+  },
+  "screenshotOptions": {
+    "method": "Playwright page.screenshot",
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "747fa173dabe5ce18979684a97d63ea31d789b1c793bd03dfb5e0377e3f0f9ae",
+  "layout": {
+    "documentWidth": 392,
+    "viewportWidth": 320,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "halo-segmented bg-card/90 backdrop-blur-sm",
+        "name": "Camera station",
+        "text": "RESETAIRLANDUWINSPECTFOLLOW",
+        "rect": {
+          "x": 12,
+          "y": 631.609375,
+          "width": 360.359375,
+          "height": 52,
+          "top": 631.609375,
+          "right": 372.359375,
+          "bottom": 683.609375,
+          "left": 12
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": null,
+        "name": null,
+        "text": "FOLLOW",
+        "rect": {
+          "x": 298.171875,
+          "y": 635.609375,
+          "width": 70.1875,
+          "height": 44,
+          "top": 635.609375,
+          "right": 368.359375,
+          "bottom": 679.609375,
+          "left": 298.171875
+        }
+      }
+    ],
+    "header": [
+      {
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 0,
+          "y": -560,
+          "width": 280,
+          "height": 80,
+          "top": -560,
+          "right": 280,
+          "bottom": -480,
+          "left": 0
+        }
+      },
+      {
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 0,
+          "y": -535.5,
+          "width": 126.5,
+          "height": 30,
+          "top": -535.5,
+          "right": 126.5,
+          "bottom": -505.5,
+          "left": 0
+        }
+      },
+      {
+        "class": "desktop-nav",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "class": "header-actions",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "class": "halo-segmented",
+        "display": "inline-flex",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "class": "button button-secondary",
+        "display": "inline-flex",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "class": "button button-secondary menu-trigger",
+        "display": "flex",
+        "rect": {
+          "x": 193.984375,
+          "y": -543.5,
+          "width": 86.015625,
+          "height": 46,
+          "top": -543.5,
+          "right": 280,
+          "bottom": -497.5,
+          "left": 193.984375
+        }
+      }
+    ]
+  }
+}

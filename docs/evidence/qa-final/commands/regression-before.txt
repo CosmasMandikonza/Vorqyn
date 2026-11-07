@@ -1,0 +1,62 @@
+[WebServer] (node:26775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:26787) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 1 test using 1 worker
+
+(node:26806) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:37:1 › shared header fits at CSS root zoom 200% (historical 89px reproduction)
+  1) [judge-qa] › tests/browser/judge-qa-shell.spec.ts:37:1 › shared header fits at CSS root zoom 200% (historical 89px reproduction)
+
+    Error: css-root-zoom-200-light-1440x900-dpr1: document overflow; inspect measured offenders
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1440
+    Received:    1529
+
+      31 |   expect(run.sourceSha).toMatch(/^[a-f0-9]{40}$/);
+      32 |   writeFileSync(resolve(out,"screenshots",`${name}.json`),JSON.stringify({name,runId:run.id,commitSha:run.sourceSha,capturedAt:new Date().toISOString(),source:"real Chromium; local production server; no response fixtures",url:page.url(),theme,viewport:measured,screenshotOptions:{fullPage:false,animations:"disabled",scale:"device"},png:pixels,sha256:createHash("sha256").update(png).digest("hex"),layout},null,2)+"\n");
+    > 33 |   expect.soft(layout.documentWidth,`${name}: document overflow; inspect measured offenders`).toBeLessThanOrEqual(viewport.width);
+         |                                                                                              ^
+      34 |   return layout;
+      35 | }
+      36 |
+        at evidence (/workspace/work/qa16/apps/web/tests/browser/judge-qa-shell.spec.ts:33:94)
+        at /workspace/work/qa16/apps/web/tests/browser/judge-qa-shell.spec.ts:40:14
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1440
+    Received:    1529.0625
+
+      40 |   const data=await evidence(page,"css-root-zoom-200","light",{width:1440,height:900});
+      41 |   const actions=data.header.find(el=>el.class==="header-actions")!;
+    > 42 |   expect(actions.rect.right).toBeLessThanOrEqual(1440);
+         |                              ^
+      43 |   for (const name of ["Light","Dark","System"]) await expect(page.locator("header").getByRole("button",{name,exact:true})).toBeVisible();
+      44 |   await expect(page.locator("header").getByRole("link",{name:/Create Workspace/})).toBeVisible();
+      45 | });
+        at /workspace/work/qa16/apps/web/tests/browser/judge-qa-shell.spec.ts:42:30
+
+    Error Context: ../../../qa16-regression-before/traces/judge-qa-shell-shared-head-48414-storical-89px-reproduction--judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../qa16-regression-before/traces/judge-qa-shell-shared-head-48414-storical-89px-reproduction--judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../qa16-regression-before/traces/judge-qa-shell-shared-head-48414-storical-89px-reproduction--judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [judge-qa] › tests/browser/judge-qa-shell.spec.ts:37:1 › shared header fits at CSS root zoom 200% (historical 89px reproduction)
+undefined
+/workspace/work/qa16/apps/web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config ../../scripts/release/judge-qa.config.mjs

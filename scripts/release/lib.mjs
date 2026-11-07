@@ -88,8 +88,15 @@ export function inspectCredentials(root, names = []) {
 }
 export function pngSize(path) {
   const b = readFileSync(path);
-  if (b.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a")
-    throw new Error("Invalid PNG signature");
+  if (
+    b.length < 33 ||
+    b.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a" ||
+    b.readUInt32BE(8) !== 13 ||
+    b.subarray(12, 16).toString() !== "IHDR" ||
+    b.readUInt32BE(16) === 0 ||
+    b.readUInt32BE(20) === 0
+  )
+    throw new Error("Invalid PNG signature or IHDR dimensions");
   return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
 }
 

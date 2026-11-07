@@ -1,0 +1,1544 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/qa16-preflight-final/snapshot/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/judge-qa.config.mjs"
+    ],
+    "configFile": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/judge-qa.config.mjs",
+    "rootDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/judge-qa/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge-qa",
+        "name": "judge-qa",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "judge-qa*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/qa16-preflight-final/judge-qa/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "judge-qa",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "judge-qa*.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          },
+          "actionTimeout": 10000,
+          "navigationTimeout": 30000
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "judge-qa"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/qa16-preflight-final/judge-qa/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/qa16-preflight-final/snapshot",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "judge-qa-shell.spec.ts",
+      "file": "judge-qa-shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "shared header fits at CSS root zoom 200% light (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3271,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:12.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1de4da06ed72bd01a1c8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared header fits at CSS root zoom 200% dark (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:16.360Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-6e7dac4b54b605d1fd37",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared routes and accessible navigation light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7016,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:17.869Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-424f9df38afc2cbbee6d",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:24.910Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-9546229d4c885ccc42b0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5933,
+                  "error": {
+                    "message": "Error: shell-mission-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: shell-mission-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: shell-mission-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:30.858Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-d1b9c-le-navigation-light-390x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-d1b9c-le-navigation-light-390x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4842c2183fccd2773e76",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7406,
+                  "error": {
+                    "message": "Error: shell-mission-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: shell-mission-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: shell-mission-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:37.493Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-bc778-le-navigation-light-320x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-bc778-le-navigation-light-320x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-a28b71153870b8f19465",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:45.854Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1881d5d14ef278a45d88",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:30:55.293Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c5191f73af357b23ebb5",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5674,
+                  "error": {
+                    "message": "Error: shell-mission-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: shell-mission-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: shell-mission-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:01.703Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-99a3f-ble-navigation-dark-390x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-99a3f-ble-navigation-dark-390x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-96a86c460ba23ec73828",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6729,
+                  "error": {
+                    "message": "Error: shell-mission-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: shell-mission-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: shell-mission-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:256:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:08.045Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-edf13-ble-navigation-dark-320x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-shared-rout-edf13-ble-navigation-dark-320x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c104d9e6d9559116243b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9292,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:15.722Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-e6529b37eff327bde6d8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7100,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:25.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-2b317622111a611160cf",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8141,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:32.443Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f87d5241d697ef8c91c6",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9902,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:40.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1737f27e5fa8754d66c0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:31:50.574Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-958487ca8ee1598f4dc0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1024x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 29057,
+                  "error": {
+                    "message": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"",
+                    "stack": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"\n    at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 25,
+                      "line": 417
+                    },
+                    "snippet": " \u001b[90m 415 |\u001b[39m\n \u001b[90m 416 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m operation(page\u001b[33m:\u001b[39m \u001b[33mPage\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m string) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 417 |\u001b[39m   \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mwaitForResponse(\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 418 |\u001b[39m     (r) \u001b[33m=>\u001b[39m\n \u001b[90m 419 |\u001b[39m       r\u001b[33m.\u001b[39murl()\u001b[33m.\u001b[39mendsWith(\u001b[32m\"/api/demo/simulation\"\u001b[39m) \u001b[33m&&\u001b[39m\n \u001b[90m 420 |\u001b[39m       r\u001b[33m.\u001b[39mrequest()\u001b[33m.\u001b[39mmethod() \u001b[33m===\u001b[39m \u001b[32m\"POST\"\u001b[39m\u001b[33m,\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 25,
+                        "line": 417
+                      },
+                      "message": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"\n\n  415 |\n  416 | async function operation(page: Page, name: string) {\n> 417 |   const response = page.waitForResponse(\n      |                         ^\n  418 |     (r) =>\n  419 |       r.url().endsWith(\"/api/demo/simulation\") &&\n  420 |       r.request().method() === \"POST\",\n    at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:32:22.449Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--a8bce-nd-inspector-light-1024x900-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--a8bce-nd-inspector-light-1024x900-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 25,
+                    "line": 417
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-0c1001f699b2d1172806",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16501,
+                  "error": {
+                    "message": "Error: journey-clean-uw-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: journey-clean-uw-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-clean-uw-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-follow-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-inspect-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-uw-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-inspector-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-replay-light-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:32:52.551Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--6f9dd-and-inspector-light-390x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--6f9dd-and-inspector-light-390x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-3f9f0b6810611e12aff8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15060,
+                  "error": {
+                    "message": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m",
+                    "stack": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 12,
+                      "line": 479
+                    },
+                    "snippet": " \u001b[90m 477 |\u001b[39m             \u001b[32m`Camera ${name} exceeds ${size.width}px`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 478 |\u001b[39m           )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 479 |\u001b[39m           \u001b[33m.\u001b[39mtoBeLessThanOrEqual(size\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 480 |\u001b[39m       }\n \u001b[90m 481 |\u001b[39m       \u001b[36mawait\u001b[39m page\n \u001b[90m 482 |\u001b[39m         \u001b[33m.\u001b[39mgetByRole(\u001b[32m\"group\"\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m\"Camera station\"\u001b[39m\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 12,
+                        "line": 479
+                      },
+                      "message": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m\n\n  477 |             `Camera ${name} exceeds ${size.width}px`,\n  478 |           )\n> 479 |           .toBeLessThanOrEqual(size.width);\n      |            ^\n  480 |       }\n  481 |       await page\n  482 |         .getByRole(\"group\", { name: \"Camera station\", exact: true })\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-clean-uw-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-follow-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-inspect-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-uw-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-inspector-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-replay-light-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:33:10.328Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--0bf6e-and-inspector-light-320x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--0bf6e-and-inspector-light-320x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 12,
+                    "line": 479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-948e763248283a4f39dd",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:33:26.611Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-ce5284f709e5c3c77207",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1024x900",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30355,
+                  "error": {
+                    "message": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"",
+                    "stack": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"\n    at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 25,
+                      "line": 417
+                    },
+                    "snippet": " \u001b[90m 415 |\u001b[39m\n \u001b[90m 416 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m operation(page\u001b[33m:\u001b[39m \u001b[33mPage\u001b[39m\u001b[33m,\u001b[39m name\u001b[33m:\u001b[39m string) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 417 |\u001b[39m   \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mwaitForResponse(\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 418 |\u001b[39m     (r) \u001b[33m=>\u001b[39m\n \u001b[90m 419 |\u001b[39m       r\u001b[33m.\u001b[39murl()\u001b[33m.\u001b[39mendsWith(\u001b[32m\"/api/demo/simulation\"\u001b[39m) \u001b[33m&&\u001b[39m\n \u001b[90m 420 |\u001b[39m       r\u001b[33m.\u001b[39mrequest()\u001b[33m.\u001b[39mmethod() \u001b[33m===\u001b[39m \u001b[32m\"POST\"\u001b[39m\u001b[33m,\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 25,
+                        "line": 417
+                      },
+                      "message": "TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event \"response\"\n\n  415 |\n  416 | async function operation(page: Page, name: string) {\n> 417 |   const response = page.waitForResponse(\n      |                         ^\n  418 |     (r) =>\n  419 |       r.url().endsWith(\"/api/demo/simulation\") &&\n  420 |       r.request().method() === \"POST\",\n    at operation (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:417:25)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:548:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:33:55.322Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--993d0-and-inspector-dark-1024x900-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--993d0-and-inspector-dark-1024x900-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 25,
+                    "line": 417
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-eb62e898dc1c0d1e1169",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16019,
+                  "error": {
+                    "message": "Error: journey-clean-uw-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: journey-clean-uw-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 6,
+                      "line": 154
+                    },
+                    "snippet": " \u001b[90m 152 |\u001b[39m       \u001b[32m`${name}: document overflow; inspect measured offenders`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 153 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 154 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(viewport\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 155 |\u001b[39m   \u001b[36mreturn\u001b[39m layout\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m }\n \u001b[90m 157 |\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-clean-uw-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-follow-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-inspect-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-uw-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-inspector-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-replay-dark-390x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:34:26.920Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--1fd9f--and-inspector-dark-390x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--1fd9f--and-inspector-dark-390x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 6,
+                    "line": 154
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-7104cf2ec741884069d2",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14806,
+                  "error": {
+                    "message": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m",
+                    "stack": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                      "column": 12,
+                      "line": 479
+                    },
+                    "snippet": " \u001b[90m 477 |\u001b[39m             \u001b[32m`Camera ${name} exceeds ${size.width}px`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 478 |\u001b[39m           )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 479 |\u001b[39m           \u001b[33m.\u001b[39mtoBeLessThanOrEqual(size\u001b[33m.\u001b[39mwidth)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 480 |\u001b[39m       }\n \u001b[90m 481 |\u001b[39m       \u001b[36mawait\u001b[39m page\n \u001b[90m 482 |\u001b[39m         \u001b[33m.\u001b[39mgetByRole(\u001b[32m\"group\"\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m\"Camera station\"\u001b[39m\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 12,
+                        "line": 479
+                      },
+                      "message": "Error: Camera FOLLOW exceeds 320px\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m388.359375\u001b[39m\n\n  477 |             `Camera ${name} exceeds ${size.width}px`,\n  478 |           )\n> 479 |           .toBeLessThanOrEqual(size.width);\n      |            ^\n  480 |       }\n  481 |       await page\n  482 |         .getByRole(\"group\", { name: \"Camera station\", exact: true })\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:479:12"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-clean-uw-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:489:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-follow-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-inspect-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:502:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-uw-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:532:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-fault-inspector-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:536:7"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                        "column": 6,
+                        "line": 154
+                      },
+                      "message": "Error: journey-replay-dark-320x844-dpr1: document overflow; inspect measured offenders\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  152 |       `${name}: document overflow; inspect measured offenders`,\n  153 |     )\n> 154 |     .toBeLessThanOrEqual(viewport.width);\n      |      ^\n  155 |   return layout;\n  156 | }\n  157 |\n    at evidence (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:154:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts:562:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:34:44.125Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--12fe7--and-inspector-dark-320x844-judge-qa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/judge-qa/traces/judge-qa-shell-real-guest--12fe7--and-inspector-dark-320x844-judge-qa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/judge-qa-shell.spec.ts",
+                    "column": 12,
+                    "line": 479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4e273b8511a22afa006f",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2719,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:34:59.997Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c9eac884821103d3b86a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1802,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:35:03.048Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-30753ed343d6c628862b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:35:04.872Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f4cda780c9308d07eb1a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1859,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:35:07.182Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-b2c99550d1ecdc751e07",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T20:30:10.484Z",
+    "duration": 298700.36600000004,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}

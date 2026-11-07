@@ -1,0 +1,530 @@
+[
+  {
+    "label": "normal-1440x900",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "rootZoom": "1",
+    "documentWidth": 1440,
+    "elements": [
+      {
+        "tag": "HEADER",
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 0,
+          "width": 1344,
+          "height": 100,
+          "top": 0,
+          "right": 1392,
+          "bottom": 100,
+          "left": 48
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 34.5,
+          "width": 143.5625,
+          "height": 30,
+          "top": 34.5,
+          "right": 191.5625,
+          "bottom": 64.5,
+          "left": 48
+        }
+      },
+      {
+        "tag": "NAV",
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 743.59375,
+          "y": 26.296875,
+          "width": 210.15625,
+          "height": 46.390625,
+          "top": 26.296875,
+          "right": 953.75,
+          "bottom": 72.6875,
+          "left": 743.59375
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 993.75,
+          "y": 23.5,
+          "width": 398.25,
+          "height": 52,
+          "top": 23.5,
+          "right": 1392,
+          "bottom": 75.5,
+          "left": 993.75
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 993.75,
+          "y": 23.5,
+          "width": 175.09375,
+          "height": 52,
+          "top": 23.5,
+          "right": 1168.84375,
+          "bottom": 75.5,
+          "left": 993.75
+        }
+      },
+      {
+        "tag": "A",
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 1192.84375,
+          "y": 26.75,
+          "width": 199.15625,
+          "height": 45.5,
+          "top": 26.75,
+          "right": 1392,
+          "bottom": 72.25,
+          "left": 1192.84375
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "inline-flex",
+        "rect": {
+          "x": 48,
+          "y": 3804.5,
+          "width": 143.5625,
+          "height": 30,
+          "top": 3804.5,
+          "right": 191.5625,
+          "bottom": 3834.5,
+          "left": 48
+        }
+      }
+    ]
+  },
+  {
+    "label": "css-root-zoom-200-1440x900",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "rootZoom": "2",
+    "documentWidth": 1529,
+    "elements": [
+      {
+        "tag": "HEADER",
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 96,
+          "y": 0,
+          "width": 1248,
+          "height": 200,
+          "top": 0,
+          "right": 1344,
+          "bottom": 200,
+          "left": 96
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 96,
+          "y": 69,
+          "width": 287.109375,
+          "height": 60,
+          "top": 69,
+          "right": 383.109375,
+          "bottom": 129,
+          "left": 96
+        }
+      },
+      {
+        "tag": "NAV",
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 463.109375,
+          "y": 30.203125,
+          "width": 280.953125,
+          "height": 137.59375,
+          "top": 30.203125,
+          "right": 744.0625,
+          "bottom": 167.796875,
+          "left": 463.109375
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 824.0625,
+          "y": 34,
+          "width": 705,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 824.0625
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 824.0625,
+          "y": 47,
+          "width": 350.1875,
+          "height": 104,
+          "top": 47,
+          "right": 1174.25,
+          "bottom": 151,
+          "left": 824.0625
+        }
+      },
+      {
+        "tag": "A",
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 1222.25,
+          "y": 34,
+          "width": 306.8125,
+          "height": 130,
+          "top": 34,
+          "right": 1529.0625,
+          "bottom": 164,
+          "left": 1222.25
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "inline-flex",
+        "rect": {
+          "x": 96,
+          "y": 9819,
+          "width": 287.109375,
+          "height": 60,
+          "top": 9819,
+          "right": 383.109375,
+          "bottom": 9879,
+          "left": 96
+        }
+      }
+    ]
+  },
+  {
+    "label": "native-200-window-1440",
+    "viewport": {
+      "width": 720,
+      "height": 406
+    },
+    "dpr": 2,
+    "rootZoom": "1",
+    "documentWidth": 720,
+    "elements": [
+      {
+        "tag": "HEADER",
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 24,
+          "y": 0,
+          "width": 672,
+          "height": 84,
+          "top": 0,
+          "right": 696,
+          "bottom": 84,
+          "left": 24
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 24,
+          "y": 26.5,
+          "width": 143.5546875,
+          "height": 30,
+          "top": 26.5,
+          "right": 167.5546875,
+          "bottom": 56.5,
+          "left": 24
+        }
+      },
+      {
+        "tag": "NAV",
+        "class": "desktop-nav",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "header-actions",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "halo-segmented",
+        "display": "inline-flex",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "A",
+        "class": "button button-secondary",
+        "display": "inline-flex",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": "button button-secondary menu-trigger",
+        "display": "flex",
+        "rect": {
+          "x": 562.640625,
+          "y": 15.5,
+          "width": 133.359375,
+          "height": 52,
+          "top": 15.5,
+          "right": 696,
+          "bottom": 67.5,
+          "left": 562.640625
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "inline-flex",
+        "rect": {
+          "x": 24,
+          "y": 4104.125,
+          "width": 143.5546875,
+          "height": 30,
+          "top": 4104.125,
+          "right": 167.5546875,
+          "bottom": 4134.125,
+          "left": 24
+        }
+      }
+    ]
+  },
+  {
+    "label": "native-200-window-2048",
+    "viewport": {
+      "width": 1024,
+      "height": 406
+    },
+    "dpr": 2,
+    "rootZoom": "1",
+    "documentWidth": 1024,
+    "elements": [
+      {
+        "tag": "HEADER",
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 0,
+          "width": 928,
+          "height": 100,
+          "top": 0,
+          "right": 976,
+          "bottom": 100,
+          "left": 48
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": 34.5,
+          "width": 143.5546875,
+          "height": 30,
+          "top": 34.5,
+          "right": 191.5546875,
+          "bottom": 64.5,
+          "left": 48
+        }
+      },
+      {
+        "tag": "NAV",
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 359.609375,
+          "y": 26.296875,
+          "width": 202.1484375,
+          "height": 46.3984375,
+          "top": 26.296875,
+          "right": 561.7578125,
+          "bottom": 72.6953125,
+          "left": 359.609375
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 585.7578125,
+          "y": 23.5,
+          "width": 390.2421875,
+          "height": 52,
+          "top": 23.5,
+          "right": 976,
+          "bottom": 75.5,
+          "left": 585.7578125
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 585.7578125,
+          "y": 23.5,
+          "width": 175.09375,
+          "height": 52,
+          "top": 23.5,
+          "right": 760.8515625,
+          "bottom": 75.5,
+          "left": 585.7578125
+        }
+      },
+      {
+        "tag": "A",
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 776.8515625,
+          "y": 26.75,
+          "width": 199.1484375,
+          "height": 45.5,
+          "top": 26.75,
+          "right": 976,
+          "bottom": 72.25,
+          "left": 776.8515625
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      {
+        "tag": "A",
+        "class": "wordmark",
+        "display": "inline-flex",
+        "rect": {
+          "x": 48,
+          "y": 3974.734375,
+          "width": 143.5546875,
+          "height": 30,
+          "top": 3974.734375,
+          "right": 191.5546875,
+          "bottom": 4004.734375,
+          "left": 48
+        }
+      }
+    ]
+  }
+]

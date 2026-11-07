@@ -1,0 +1,296 @@
+{
+  "schema": "vorqyn.release-preflight/1",
+  "startedAt": "2026-11-07T20:27:08.394Z",
+  "source": {
+    "sha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+    "workingTreeDirty": false,
+    "testedTree": "committed HEAD only; uncommitted edits and ignored environment files are excluded"
+  },
+  "checks": [
+    {
+      "id": "node-version",
+      "status": "PASS",
+      "detail": "observed 22.21.1; required 22.21.1"
+    },
+    {
+      "id": "pnpm-version",
+      "status": "PASS",
+      "detail": "observed 10.34.5; required 10.34.5"
+    },
+    {
+      "id": "fresh-snapshot",
+      "status": "PASS",
+      "detail": "isolated committed-source snapshot, no pre-existing node_modules"
+    },
+    {
+      "id": "environment-config",
+      "status": "PASS",
+      "detail": "static world and local drafts need no external secrets; optional public config is valid",
+      "findings": []
+    },
+    {
+      "id": "credential-hygiene",
+      "status": "PASS",
+      "detail": "no supported credential patterns found; heuristic scan, not a security guarantee",
+      "findings": []
+    },
+    {
+      "id": "install",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "log": "commands/install.txt",
+      "durationMs": 2325,
+      "exitCode": 0
+    },
+    {
+      "id": "lint",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "lint"
+      ],
+      "log": "commands/lint.txt",
+      "durationMs": 3889,
+      "exitCode": 0
+    },
+    {
+      "id": "typecheck",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "log": "commands/typecheck.txt",
+      "durationMs": 8444,
+      "exitCode": 0
+    },
+    {
+      "id": "unit",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "log": "commands/unit.txt",
+      "durationMs": 17243,
+      "exitCode": 0
+    },
+    {
+      "id": "build",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "log": "commands/build.txt",
+      "durationMs": 43828,
+      "exitCode": 0
+    },
+    {
+      "id": "simulation-core",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/core/determinism.test.mjs",
+        "services/simulation/core/evidence-thresholds.test.mjs",
+        "services/simulation/core/fault.test.mjs",
+        "services/simulation/core/geometry.test.mjs",
+        "services/simulation/core/input-validation.test.mjs",
+        "services/simulation/core/lifecycle.test.mjs",
+        "services/simulation/core/provenance.test.mjs",
+        "services/simulation/core/sample.test.mjs"
+      ],
+      "log": "commands/simulation-core.txt",
+      "durationMs": 608,
+      "exitCode": 0
+    },
+    {
+      "id": "world-coordinates",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/integration/world-alignment.test.mjs"
+      ],
+      "log": "commands/world-coordinates.txt",
+      "durationMs": 124,
+      "exitCode": 0
+    },
+    {
+      "id": "world-assets",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "assets/port-world/tools/validate.mjs",
+        "--selfcheck"
+      ],
+      "log": "commands/world-assets.txt",
+      "durationMs": 159,
+      "exitCode": 0
+    },
+    {
+      "id": "release-tools",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "scripts/release/lib.test.mjs"
+      ],
+      "log": "commands/release-tools.txt",
+      "durationMs": 91,
+      "exitCode": 0
+    },
+    {
+      "id": "narration",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/check-narration.mjs"
+      ],
+      "log": "commands/narration.txt",
+      "durationMs": 26,
+      "exitCode": 0
+    },
+    {
+      "id": "kernel-recording-demo",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/kernel-demo.mjs"
+      ],
+      "log": "commands/kernel-recording-demo.txt",
+      "durationMs": 28,
+      "exitCode": 0
+    },
+    {
+      "id": "browser",
+      "status": "FAIL",
+      "detail": "exit 1",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "../../scripts/release/playwright.config.mjs",
+        "--project",
+        "judge",
+        "--project",
+        "capture"
+      ],
+      "log": "commands/browser.txt",
+      "durationMs": 97089,
+      "exitCode": 1
+    },
+    {
+      "id": "png-validation",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/validate-captures.mjs",
+        "--dir",
+        "/workspace/work/qa16-preflight-final/screenshots"
+      ],
+      "log": "commands/png-validation.txt",
+      "durationMs": 72,
+      "exitCode": 0
+    },
+    {
+      "id": "integration-browser",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "../../scripts/release/playwright.config.mjs",
+        "--project",
+        "integration"
+      ],
+      "log": "commands/integration-browser.txt",
+      "durationMs": 6277,
+      "exitCode": 0
+    },
+    {
+      "id": "judge-qa",
+      "status": "FAIL",
+      "detail": "exit 1",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "../../scripts/release/judge-qa.config.mjs"
+      ],
+      "log": "commands/judge-qa.txt",
+      "durationMs": 299985,
+      "exitCode": 1
+    },
+    {
+      "id": "judge-qa-png-validation",
+      "status": "FAIL",
+      "detail": "exit 1",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/validate-judge-qa.mjs",
+        "--dir",
+        "/workspace/work/qa16-preflight-final/judge-qa"
+      ],
+      "log": "commands/judge-qa-png-validation.txt",
+      "durationMs": 157,
+      "exitCode": 1
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "public-demo-url",
+      "status": "BLOCKED",
+      "detail": "no verified public deployment URL; local server is not deployment proof"
+    },
+    {
+      "id": "public-video",
+      "status": "BLOCKED",
+      "detail": "no produced, inspected and public demo video supplied"
+    },
+    {
+      "id": "submission-receipt",
+      "status": "BLOCKED",
+      "detail": "human must sign in, submit and retain the actual portal receipt"
+    },
+    {
+      "id": "solana-proof",
+      "status": "BLOCKED",
+      "detail": "no verified deployed devnet escrow/reassignment/payout evidence supplied; use contingency script"
+    }
+  ],
+  "technicalStatus": "FAIL",
+  "submissionStatus": "BLOCKED",
+  "artifacts": "/workspace/work/qa16-preflight-final",
+  "finishedAt": "2026-11-07T20:35:09.527Z"
+}

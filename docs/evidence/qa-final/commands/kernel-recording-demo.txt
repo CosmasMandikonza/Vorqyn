@@ -1,0 +1,29 @@
+OFFLINE KERNEL DEMONSTRATION · SYNTHETIC_SIM · not web playback, physical telemetry, evidence verification or payment
+[
+  {
+    "sequence": 2,
+    "simulatorTimeMs": 1000,
+    "sourceKind": "SYNTHETIC_SIM",
+    "frameId": "ENU_PORT-001_LOCAL",
+    "rovPoseENU": {
+      "x": 60.498799,
+      "y": -10.332532,
+      "z": -2.52494
+    },
+    "opticalQuality01": 0.692125,
+    "sonarQuality01": 0.63932
+  },
+  {
+    "sequence": 4,
+    "simulatorTimeMs": 2000,
+    "sourceKind": "SYNTHETIC_SIM",
+    "frameId": "ENU_PORT-001_LOCAL",
+    "rovPoseENU": {
+      "x": 61.496396,
+      "y": -10.997597,
+      "z": -2.57482
+    },
+    "opticalQuality01": 0.08625,
+    "sonarQuality01": 0.62348
+  }
+]

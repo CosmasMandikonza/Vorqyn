@@ -1,0 +1,857 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/qa16-preflight-final/snapshot/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/playwright.config.mjs",
+      "--project",
+      "judge",
+      "--project",
+      "capture"
+    ],
+    "configFile": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/playwright.config.mjs",
+    "rootDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/qa16-preflight-final/snapshot/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge",
+        "name": "judge",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-smoke.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "capture",
+        "name": "capture",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-capture.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "release-integration.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "judge",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "release-smoke.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "judge"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/qa16-preflight-final/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "capture",
+        "testDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "release-capture.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "capture"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/qa16-preflight-final/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/qa16-preflight-final/snapshot",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "release-smoke.spec.ts",
+      "file": "release-smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "judge journey: landing → guest → real 3D → 2D → independently saved local draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:28.784Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-441047423b905feb3d3c",
+          "file": "release-smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "no WebGL preserves real metadata, machine selection and source labels",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1514,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:40.389Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-81a2125e0868abc98104",
+          "file": "release-smoke.spec.ts",
+          "line": 107,
+          "column": 1
+        },
+        {
+          "title": "failed metadata is an explicit error, never an infinite successful loader",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:41.958Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-28f7244ebfc3945bbdb2",
+          "file": "release-smoke.spec.ts",
+          "line": 137,
+          "column": 1
+        },
+        {
+          "title": "failed GLB is recoverable through actual 2D fallback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:43.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-e2a0a825d0b5e3a790cf",
+          "file": "release-smoke.spec.ts",
+          "line": 155,
+          "column": 1
+        },
+        {
+          "title": "keyboard, reduced motion, selection and theme changes keep static source truth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:46.175Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-028299c23ad71161c0eb",
+          "file": "release-smoke.spec.ts",
+          "line": 169,
+          "column": 1
+        },
+        {
+          "title": "native 200% zoom keeps viewer navigation accessible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge",
+              "projectName": "judge",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4919,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:49.970Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2e80557cab9ead5b9844-06637e422824a94cf7cc",
+          "file": "release-smoke.spec.ts",
+          "line": 197,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-capture.spec.ts",
+      "file": "release-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "genuine captures light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:28:55.391Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-f8f76c3b6b44066be11c",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "genuine captures light 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8344,
+                  "error": {
+                    "message": "Error: viewer-reset-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: viewer-reset-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                      "column": 6,
+                      "line": 68
+                    },
+                    "snippet": " \u001b[90m 66 |\u001b[39m       \u001b[32m`${name}: horizontal overflow; see captured layout metadata`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 67 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 68 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(width)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m theme \u001b[36mof\u001b[39m [\u001b[32m\"light\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"dark\"\u001b[39m])\n \u001b[90m 71 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m { width\u001b[33m,\u001b[39m height } \u001b[36mof\u001b[39m ["
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-reset-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-uw-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-inspect-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: mobile-inspector-light-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:29:10.046Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-light-390x844-capture/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-light-390x844-capture/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                    "column": 6,
+                    "line": 68
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-ab630f66cf6275447f04",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "genuine captures light 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9033,
+                  "error": {
+                    "message": "Error: viewer-reset-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: viewer-reset-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                      "column": 6,
+                      "line": 68
+                    },
+                    "snippet": " \u001b[90m 66 |\u001b[39m       \u001b[32m`${name}: horizontal overflow; see captured layout metadata`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 67 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 68 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(width)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m theme \u001b[36mof\u001b[39m [\u001b[32m\"light\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"dark\"\u001b[39m])\n \u001b[90m 71 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m { width\u001b[33m,\u001b[39m height } \u001b[36mof\u001b[39m ["
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-reset-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-uw-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-inspect-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: mobile-inspector-light-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:29:19.072Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-light-320x844-capture/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-light-320x844-capture/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                    "column": 6,
+                    "line": 68
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-e18b5fda31e10f9c0416",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "genuine captures dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13836,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:29:29.166Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-711a3cefd73ad4c74755",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "genuine captures dark 390x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8553,
+                  "error": {
+                    "message": "Error: viewer-reset-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: viewer-reset-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                      "column": 6,
+                      "line": 68
+                    },
+                    "snippet": " \u001b[90m 66 |\u001b[39m       \u001b[32m`${name}: horizontal overflow; see captured layout metadata`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 67 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 68 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(width)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m theme \u001b[36mof\u001b[39m [\u001b[32m\"light\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"dark\"\u001b[39m])\n \u001b[90m 71 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m { width\u001b[33m,\u001b[39m height } \u001b[36mof\u001b[39m ["
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-reset-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-uw-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-inspect-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: mobile-inspector-dark-390x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m390\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:29:43.403Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-dark-390x844-capture/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-dark-390x844-capture/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                    "column": 6,
+                    "line": 68
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-36214a33979069988a48",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "genuine captures dark 320x844",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "capture",
+              "projectName": "capture",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9625,
+                  "error": {
+                    "message": "Error: viewer-reset-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m",
+                    "stack": "Error: viewer-reset-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9",
+                    "location": {
+                      "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                      "column": 6,
+                      "line": 68
+                    },
+                    "snippet": " \u001b[90m 66 |\u001b[39m       \u001b[32m`${name}: horizontal overflow; see captured layout metadata`\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 67 |\u001b[39m     )\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 68 |\u001b[39m     \u001b[33m.\u001b[39mtoBeLessThanOrEqual(width)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 69 |\u001b[39m }\n \u001b[90m 70 |\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m theme \u001b[36mof\u001b[39m [\u001b[32m\"light\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"dark\"\u001b[39m])\n \u001b[90m 71 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m { width\u001b[33m,\u001b[39m height } \u001b[36mof\u001b[39m ["
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-reset-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-uw-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: viewer-inspect-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:117:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                        "column": 6,
+                        "line": 68
+                      },
+                      "message": "Error: mobile-inspector-dark-320x844: horizontal overflow; see captured layout metadata\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m320\u001b[39m\nReceived:    \u001b[31m392\u001b[39m\n\n  66 |       `${name}: horizontal overflow; see captured layout metadata`,\n  67 |     )\n> 68 |     .toBeLessThanOrEqual(width);\n     |      ^\n  69 | }\n  70 | for (const theme of [\"light\", \"dark\"])\n  71 |   for (const { width, height } of [\n    at capture (/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:68:6)\n    at /workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts:143:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T20:29:52.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-dark-320x844-capture/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/workspace/work/qa16-preflight-final/traces/release-capture-genuine-captures-dark-320x844-capture/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/workspace/work/qa16-preflight-final/snapshot/apps/web/tests/browser/release-capture.spec.ts",
+                    "column": 6,
+                    "line": 68
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "08564b3fe9734dd80c63-541677b7936df4da7832",
+          "file": "release-capture.spec.ts",
+          "line": 76,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T20:28:26.910Z",
+    "duration": 96007.716,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

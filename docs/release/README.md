@@ -2,6 +2,8 @@
 
 This directory is the release entry point for [Issue #34](https://github.com/CosmasMandikonza/Vorqyn/issues/34). It supplies executable verification and materials; it is not a claim of a deployed app, produced video, real chain settlement or accepted submission. See [the observed evidence and findings](../evidence/release/README.md).
 
+For the later merged API/playback and shared-shell audit under Issue #16, use [JUDGE_QA.md](JUDGE_QA.md) and its new evidence namespace. The older packet below records its original SHA; its absent-integration results are historical. The preflight now also runs the strict judge-QA matrix and capture validator.
+
 ## 1. Reproduce on Linux or Windows through WSL2
 
 Use the selected, reviewed **committed SHA**, not an agent's unmerged working edits. Required tools: Git, tar, Node **22.21.1**, pnpm **10.34.5** and Chromium/Playwright. The Node/pnpm pins come from `.nvmrc` and `packageManager`. No app dependencies or root scripts are added by this work.
