@@ -131,7 +131,11 @@ export function PortViewer() {
       {state.phase === "ready" &&
         (webglAvailable && !force2D ? (
           <div className="relative">
-            <WorldCanvasFrame>
+            {/* Keep the camera bar relative to the canvas only, not the
+                mobile inspector below it. Otherwise the bar covers the
+                inspector and disappears beneath the scene on small screens. */}
+            <div className="relative">
+              <WorldCanvasFrame>
               <PortSceneDynamic
                 world={state.world}
                 mode={mode}
@@ -151,6 +155,7 @@ export function PortViewer() {
               inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
               onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
             />
+            </div>
             {contextLost && (
               <div className="notice" role="alert">
                 The 3D context was interrupted by the browser or graphics driver.
