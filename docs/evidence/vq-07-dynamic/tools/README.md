@@ -9,6 +9,7 @@ Run from `apps/web/` (package resolution) with the production server on
   POSTs to /api/demo/simulation, logging every request/response and the
   resulting kernel state; produces the fault-degradation and replay-
   determinism evidence. No fixture param.
+- `capture-mobile.mjs` — 390/844 and 320/700 viewport captures (14–16).
 - `capture-a11y-zoom.mjs` — keyboard traversal order + 200% zoom proxy
   (captures 22–23).
 - `find-overflow.mjs` — horizontal-overflow element scanner used to prove
