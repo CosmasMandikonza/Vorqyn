@@ -30,7 +30,7 @@
 
 import { createScenarioConfig, ROBOT_ROLES, SENSOR_KINDS } from "./scenario.mjs";
 import { deriveSeed, createSymmetricNoise } from "./rng.mjs";
-import { FRAME_ID, POSITION_UNITS, stepToward, planGridIndexOf, distance3 } from "./enu.mjs";
+import { FRAME_ID, POSITION_UNITS, stepToward, planGridIndexOf } from "./enu.mjs";
 
 export const SOURCE_KIND_SYNTHETIC_SIM = "SYNTHETIC_SIM";
 
@@ -60,6 +60,23 @@ const COMMAND_TYPES = Object.freeze([
   "disconnectTelemetry",
   "reconnectTelemetry",
 ]);
+
+/**
+ * Strict per-command field schemas. Unknown or missing fields are rejected:
+ * a caller can never smuggle in fields this kernel does not own — e.g. an
+ * attempted `sourceKind` override, which would try to forge provenance.
+ */
+const COMMAND_FIELD_SCHEMAS = Object.freeze({
+  pause: Object.freeze({ required: Object.freeze(["type", "idempotencyKey"]) }),
+  resume: Object.freeze({ required: Object.freeze(["type", "idempotencyKey"]) }),
+  stop: Object.freeze({ required: Object.freeze(["type", "idempotencyKey"]) }),
+  injectOpticalVisibilityFault: Object.freeze({
+    required: Object.freeze(["type", "idempotencyKey", "robotId", "severity", "durationMs"]),
+  }),
+  clearOpticalVisibilityFault: Object.freeze({ required: Object.freeze(["type", "idempotencyKey", "robotId"]) }),
+  disconnectTelemetry: Object.freeze({ required: Object.freeze(["type", "idempotencyKey", "robotId"]) }),
+  reconnectTelemetry: Object.freeze({ required: Object.freeze(["type", "idempotencyKey", "robotId"]) }),
+});
 
 /** Typed rejection for invalid commands (returned, not thrown). */
 class KernelInputError extends Error {
@@ -192,6 +209,7 @@ export function createScenarioKernel({ seed }) {
   }
 
   function dispatchCommand(command, type) {
+    validateCommandFields(command, type);
     // Idempotency check happens before state validation so a retried
     // command that is now (correctly) invalid as a re-application still
     // resolves to its original outcome exactly once.
@@ -217,6 +235,24 @@ export function createScenarioKernel({ seed }) {
         return applySetLink(command, keyScope, LINK_STATES.CONNECTED);
       default:
         return failure("unknown_command", `unhandled command type: ${type}`);
+    }
+  }
+
+  function validateCommandFields(command, type) {
+    const schema = COMMAND_FIELD_SCHEMAS[type];
+    const present = new Set(Object.keys(command));
+    for (const field of schema.required) {
+      if (!present.has(field)) {
+        throw new KernelInputError("invalid_command_fields", `command ${type} is missing required field: ${field}`);
+      }
+    }
+    for (const field of present) {
+      if (!schema.required.includes(field)) {
+        throw new KernelInputError(
+          "invalid_command_fields",
+          `command ${type} has unexpected field: ${field}; allowed fields: ${schema.required.join(", ")}`,
+        );
+      }
     }
   }
 

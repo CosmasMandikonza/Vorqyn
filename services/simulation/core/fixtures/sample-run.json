@@ -1,0 +1,3982 @@
+{
+  "meta": {
+    "purpose": "VQ-08-PREP deterministic sample output (internal fixture, not a shared contract)",
+    "scenarioId": "PORT-LOCAL-001",
+    "seed": 20261107,
+    "stepMs": 500,
+    "provenance": {
+      "sourceKind": "SYNTHETIC_SIM",
+      "frame": "ENU_PORT_LOCAL (+x east, +y north, +z up; metres; z=0 waterline datum)",
+      "clock": "simulatorTimeMs only — fixed 500ms integer steps; no wall, service or chain clock appears anywhere in this document"
+    },
+    "honestyNotes": [
+      "All values are synthetic fixture model outputs, not physical measurements.",
+      "The optical-visibility fault changes measured quality01 values themselves (see faultDelta), not just a label.",
+      "Stale and disconnected entries carry measured: null — frozen states are never dressed up as fresh readings.",
+      "This kernel emits measurements only; evidence acceptance belongs to an external policy evaluator (VQ-10)."
+    ]
+  },
+  "commandOutcomes": [
+    {
+      "label": "injectOpticalVisibilityFault",
+      "ok": true,
+      "duplicate": false,
+      "failure": null,
+      "faultId": "fault-rov-01-1"
+    },
+    {
+      "label": "injectOpticalVisibilityFault (duplicate retry)",
+      "ok": true,
+      "duplicate": true,
+      "failure": null,
+      "faultId": "fault-rov-01-1"
+    },
+    {
+      "label": "disconnectTelemetry drone-01",
+      "ok": true,
+      "duplicate": false,
+      "failure": null,
+      "faultId": null
+    },
+    {
+      "label": "reconnectTelemetry drone-01",
+      "ok": true,
+      "duplicate": false,
+      "failure": null,
+      "faultId": null
+    },
+    {
+      "label": "pause",
+      "ok": true,
+      "duplicate": false,
+      "failure": null,
+      "faultId": null
+    },
+    {
+      "label": "resume",
+      "ok": true,
+      "duplicate": false,
+      "failure": null,
+      "faultId": null
+    },
+    {
+      "label": "fault on aerial drone (wrong role)",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "fault_target_invalid",
+        "message": "optical visibility fault applies only to the underwater role (underwater-rov), got role aerial-drone"
+      },
+      "faultId": null
+    },
+    {
+      "label": "unknown robot",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "unknown_robot",
+        "message": "unknown robotId: \"rov-99\" (known: drone-01, rover-01, rov-01)"
+      },
+      "faultId": null
+    },
+    {
+      "label": "unknown severity",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "invalid_fault_severity",
+        "message": "severity must be one of moderate, severe, got \"tidal\""
+      },
+      "faultId": null
+    },
+    {
+      "label": "out-of-bounds duration",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "invalid_fault_duration",
+        "message": "durationMs must be an integer between 1000 and 120000, got 999999"
+      },
+      "faultId": null
+    },
+    {
+      "label": "resume while running",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "invalid_transition",
+        "message": "resume is only valid while paused (state: running)"
+      },
+      "faultId": null
+    },
+    {
+      "label": "forged provenance field",
+      "ok": false,
+      "duplicate": false,
+      "failure": {
+        "code": "invalid_command_fields",
+        "message": "command pause has unexpected field: sourceKind; allowed fields: type, idempotencyKey"
+      },
+      "faultId": null
+    }
+  ],
+  "staleWindow": {
+    "fromSequence": 40,
+    "toSequence": 46
+  },
+  "faultDelta": {
+    "optical": {
+      "cleanSamples": 31,
+      "faultedSamples": 18,
+      "cleanMeanQuality01": 0.709733,
+      "faultedMeanQuality01": 0.085193,
+      "meanDelta01": 0.62454
+    },
+    "sonar": {
+      "cleanSamples": 31,
+      "faultedSamples": 18,
+      "cleanMeanQuality01": 0.62515,
+      "faultedMeanQuality01": 0.626346
+    },
+    "interpretation": "Optical mean drops by the fixture factor (severe = 0.12); sonar stays at its own fixture baseline, confirming the fault is optical-modality-only and measured, not labelled."
+  },
+  "finalState": {
+    "kernelState": "running",
+    "simulatorTimeMs": 24500,
+    "stepIndex": 49,
+    "sequence": 52,
+    "robots": [
+      {
+        "robotId": "drone-01",
+        "role": "aerial-drone",
+        "pose": {
+          "x": -32,
+          "y": -80,
+          "z": 30
+        },
+        "linkState": "connected",
+        "coverage01": 0.09375
+      },
+      {
+        "robotId": "rover-01",
+        "role": "ground-rover",
+        "pose": {
+          "x": -90,
+          "y": -40,
+          "z": 0
+        },
+        "linkState": "connected",
+        "coverage01": 0.0625
+      },
+      {
+        "robotId": "rov-01",
+        "role": "underwater-rov",
+        "pose": {
+          "x": -51.2,
+          "y": -20,
+          "z": -8
+        },
+        "linkState": "connected",
+        "coverage01": 0.0625
+      }
+    ]
+  },
+  "observations": [
+    {
+      "seq": 1,
+      "tMs": 500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -120,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.918181,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -150,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.892616,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -80,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.706076,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.636836,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 2,
+      "tMs": 1000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -118,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.915545,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -148.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.878253,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -79.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.692125,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.63932,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 3,
+      "tMs": 1500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -116,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.928529,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -147.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.885189,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -78.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.693139,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.64882,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 4,
+      "tMs": 2000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -114,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.928806,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -146.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.878799,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -78.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.71875,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.62348,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 5,
+      "tMs": 2500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -112,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.930138,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -145,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.894018,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -77.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.720423,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.654846,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 6,
+      "tMs": 3000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -110,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.920823,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -143.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.866327,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -77,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.701959,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.618906,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 7,
+      "tMs": 3500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -108,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.932344,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -142.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.869792,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -76.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.705593,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.649565,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 8,
+      "tMs": 4000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -106,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.911771,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -141.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.876818,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -75.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.714947,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.610782,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 9,
+      "tMs": 4500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -104,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.905501,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -140,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.868373,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -75.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.714601,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.606417,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 10,
+      "tMs": 5000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -102,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.928432,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -138.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.893468,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -74.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.717718,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.638061,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 11,
+      "tMs": 5500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -100,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.920332,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -137.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.871156,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -74,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.704138,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.644001,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 12,
+      "tMs": 6000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -98,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.932947,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -136.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.870686,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -73.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.711141,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.624333,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 13,
+      "tMs": 6500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -96,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.917238,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -135,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.866932,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -72.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.702446,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.628782,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 14,
+      "tMs": 7000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -94,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.922865,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -133.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.879151,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -72.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.718635,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.623213,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 15,
+      "tMs": 7500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -92,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.925722,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -132.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.874057,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -71.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.693094,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.605097,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 16,
+      "tMs": 8000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -90,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.926445,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -131.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.889771,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -71,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.727736,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.633015,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 17,
+      "tMs": 8500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -88,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.914093,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -130,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.869466,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -70.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.69476,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.609324,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 18,
+      "tMs": 9000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -86,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.905118,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -128.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.88064,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -69.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.725825,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.612642,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "tMs": 9500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -84,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.906348,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -127.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.878551,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -69.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.726024,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.641899,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 20,
+      "tMs": 10000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -82,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.914586,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -126.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.88354,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -68.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.716272,
+              "cov": 0.03125,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.612415,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "tMs": 10500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -80,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.913133,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -125,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.870954,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -68,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.083214,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.615503,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 22,
+      "tMs": 11000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -78,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.933264,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -123.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.870304,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -67.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.08512,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.609432,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "tMs": 11500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -76,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.910945,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -122.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.876457,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -66.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.086036,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.611213,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 24,
+      "tMs": 12000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -74,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.918898,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -121.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.890758,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -66.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.086107,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.61064,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "tMs": 12500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -72,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.907639,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -120,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.871454,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -65.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084318,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.618006,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 26,
+      "tMs": 13000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -70,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.913588,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -118.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.891827,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -65,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084497,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.614489,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "tMs": 13500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -68,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.92728,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -117.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.887364,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -64.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.086776,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.654551,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 28,
+      "tMs": 14000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -66,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.924071,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -116.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.890213,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -63.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.085704,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.635147,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "tMs": 14500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -64,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.916491,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -115,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.881163,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -63.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084321,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.654087,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 30,
+      "tMs": 15000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -62,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.909707,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -113.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.894024,
+              "cov": 0.03125,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -62.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084076,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.636273,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 31,
+      "tMs": 15500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -60,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.932427,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -112.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.884242,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -62,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.086386,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.609029,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 32,
+      "tMs": 16000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -58,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.927649,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -111.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.891177,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -61.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.08737,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.638522,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "tMs": 16500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -56,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.92262,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -110,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.894444,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -60.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.08667,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.650039,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 34,
+      "tMs": 17000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -54,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.907017,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -108.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.873343,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -60.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.085905,
+              "cov": 0.03125,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.607407,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 35,
+      "tMs": 17500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -52,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.905498,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -107.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.876992,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -59.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.085173,
+              "cov": 0.0625,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.614431,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 36,
+      "tMs": 18000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -50,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.919115,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -106.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.883786,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -59,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.08336,
+              "cov": 0.0625,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.626723,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 37,
+      "tMs": 18500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -48,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.924361,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -105,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.867571,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -58.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084109,
+              "cov": 0.0625,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.641141,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 38,
+      "tMs": 19000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -46,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.909786,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -103.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.8696,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -57.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": "severe",
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.084338,
+              "cov": 0.0625,
+              "f": 0.12
+            },
+            "rov-01-sonar": {
+              "q": 0.627587,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 39,
+      "tMs": 19500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -44,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.927915,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -102.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.891029,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -57.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.704528,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.628467,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 40,
+      "tMs": 20000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -42,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.91462,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -101.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.871926,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -56.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.728298,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.622754,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 41,
+      "tMs": 20500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -42,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "disconnected",
+          "fresh": false,
+          "staleness": "link-disconnected",
+          "staleSince": 20000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -100,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.888781,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -56,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.692626,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.605106,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 42,
+      "tMs": 21000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -42,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "disconnected",
+          "fresh": false,
+          "staleness": "link-disconnected",
+          "staleSince": 20000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -98.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.868639,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -55.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.727758,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.615168,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 43,
+      "tMs": 21500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -42,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "disconnected",
+          "fresh": false,
+          "staleness": "link-disconnected",
+          "staleSince": 20000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -97.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.891007,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -54.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.69388,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.607498,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 44,
+      "tMs": 22000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -42,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "disconnected",
+          "fresh": false,
+          "staleness": "link-disconnected",
+          "staleSince": 20000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -96.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.872618,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -54.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.702308,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.622257,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 45,
+      "tMs": 22500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -40,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.920205,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -95,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.876051,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -53.6,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.701743,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.648565,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 46,
+      "tMs": 23000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -38,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.926623,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -93.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.867861,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -53,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.69851,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.618542,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 47,
+      "tMs": 23000,
+      "state": "paused",
+      "dMs": 0,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -38,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -93.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -53,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 48,
+      "tMs": 23000,
+      "state": "paused",
+      "dMs": 0,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -38,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -93.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -53,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 49,
+      "tMs": 23000,
+      "state": "paused",
+      "dMs": 0,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -38,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": null,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -93.75,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -53,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": false,
+          "staleness": "kernel-paused",
+          "staleSince": 23000,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": null,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 50,
+      "tMs": 23500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -36,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.93318,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -92.5,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.883815,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -52.4,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.712658,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.614044,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 51,
+      "tMs": 24000,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -34,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.908349,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -91.25,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.891991,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -51.8,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.728731,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.61116,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "seq": 52,
+      "tMs": 24500,
+      "state": "running",
+      "dMs": 500,
+      "robots": {
+        "drone-01": {
+          "pose": [
+            -32,
+            -80,
+            30
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "drone-01-optical": {
+              "q": 0.928354,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        },
+        "rover-01": {
+          "pose": [
+            -90,
+            -40,
+            0
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rover-01-optical": {
+              "q": 0.867392,
+              "cov": 0.0625,
+              "f": null
+            }
+          }
+        },
+        "rov-01": {
+          "pose": [
+            -51.2,
+            -20,
+            -8
+          ],
+          "wp": 1,
+          "link": "connected",
+          "fresh": true,
+          "staleness": "none",
+          "staleSince": null,
+          "fault": null,
+          "sensors": {
+            "rov-01-optical": {
+              "q": 0.705292,
+              "cov": 0.0625,
+              "f": null
+            },
+            "rov-01-sonar": {
+              "q": 0.624331,
+              "cov": 0.09375,
+              "f": null
+            }
+          }
+        }
+      }
+    }
+  ]
+}
