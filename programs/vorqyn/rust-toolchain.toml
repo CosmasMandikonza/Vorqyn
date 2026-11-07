@@ -1,0 +1,10 @@
+# Toolchain for building AND testing this crate.
+#
+# The program itself targets the Anchor 1.2.x MSRV (rust-version = 1.89.0
+# in Cargo.toml, verified with `cargo +1.89.0 check`), but the LiteSVM
+# dev-dependency tree resolves agave 4.4 crates whose rust-version requires
+# >= 1.98.1, so the test toolchain is pinned here accordingly.
+[toolchain]
+channel = "1.98.1"
+components = ["rustfmt", "clippy"]
+profile = "minimal"

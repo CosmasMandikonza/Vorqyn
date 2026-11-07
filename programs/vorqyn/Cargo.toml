@@ -1,8 +1,9 @@
 [package]
 name = "vorqyn"
 version = "0.1.0"
-description = "VORQYN mission escrow program - VQ-00 skeleton (no instructions implemented)"
+description = "VORQYN mission escrow program - VQ-04: mission init, escrow funding, task reservation and assignment"
 edition = "2021"
+rust-version = "1.89.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
@@ -24,6 +25,15 @@ custom-panic = []
 
 [dependencies]
 anchor-lang = "=1.2.2"
+
+# LiteSVM integration tests (dev-dependency set from the official Anchor 1.x
+# litesvm template; versions aligned with anchor-lang 1.2.x's solana crates).
+[dev-dependencies]
+litesvm = "0.15.0"
+solana-message = "4"
+solana-transaction = "4"
+solana-signer = "3"
+solana-keypair = "3"
 
 # Registers the Solana SBF target_os value so host-side cargo check/clippy
 # do not flag cfg(target_os = "solana") emitted by Anchor macros.

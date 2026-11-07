@@ -13,7 +13,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-vorqyn = "11111111111111111111111111111111"
+vorqyn = "AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc"
 
 [registry]
 url = "https://api.apr.dev"
