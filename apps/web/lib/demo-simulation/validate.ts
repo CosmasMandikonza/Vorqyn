@@ -56,7 +56,7 @@ export function validateParsedRequest(payload: unknown): DemoSimRequest {
     }
   }
 
-  let seed = DEFAULT_DEMO_SEED;
+  let seed: number = DEFAULT_DEMO_SEED;
   if (payload.seed !== undefined) {
     const value = payload.seed;
     if (typeof value !== "number" || !Number.isInteger(value) || value < 0 || value > 4294967295) {
@@ -115,7 +115,10 @@ export function validateParsedRequest(payload: unknown): DemoSimRequest {
       // Field-level validation is delegated to the kernel's own strict
       // per-command schemas (unknown command fields, bad ids, bad targets
       // etc. are kernel rejections -> HTTP 422 in execute.ts).
-      return { op: "command", command };
+      // `{ ...command, type }` re-serializes the command exactly as sent
+      // (type is already present, so key order is preserved).
+      const validatedCommand: { type: string; [key: string]: unknown } = { ...command, type };
+      return { op: "command", command: validatedCommand };
     }
     throw new DemoRequestError("unknown_operation", `operations[${index}].op is not a supported operation: ${JSON.stringify(op ?? null)}`);
   });

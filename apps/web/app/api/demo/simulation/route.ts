@@ -28,7 +28,7 @@ import { parseAndValidateRequest } from "@/lib/demo-simulation/validate";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function errorResponse(code: string, message: string, status: 400 | 405 | 413 | 422): Response {
+function errorResponse(code: string, message: string, status: 400 | 405 | 413 | 422 | 500): Response {
   return new Response(JSON.stringify({ schema: ERROR_SCHEMA, error: { code, message } }), {
     status,
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },

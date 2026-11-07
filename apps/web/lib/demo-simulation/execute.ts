@@ -25,7 +25,7 @@ import {
   STEP_MS,
   KernelStoppedError,
 } from "../../../../services/simulation/demo/kernel-adapter.mjs";
-import { DemoKernelRejection, type DemoCommandResultView, type DemoOperation, type DemoSimResponse } from "./contract";
+import { DemoKernelRejection, RESPONSE_SCHEMA, type DemoCommandResultView, type DemoOperation, type DemoSimResponse } from "./contract";
 
 interface ExecuteOptions {
   seed: number;
@@ -41,6 +41,9 @@ export function executeDemoSimulation({ seed, operations }: ExecuteOptions): Dem
 
   for (let index = 0; index < operations.length; index += 1) {
     const operation = operations[index];
+    if (operation === undefined) {
+      throw new DemoKernelRejection("invalid_request", `operations[${index}] is missing`, index);
+    }
     if (operation.op === "step") {
       try {
         kernel.step(operation.count);
@@ -77,7 +80,7 @@ export function executeDemoSimulation({ seed, operations }: ExecuteOptions): Dem
   }
 
   return {
-    schema: "vorqyn.demo-sim/response/1",
+    schema: RESPONSE_SCHEMA,
     scenarioId: SCENARIO_ID,
     seed,
     sourceKind: SOURCE_KIND_SYNTHETIC_SIM,

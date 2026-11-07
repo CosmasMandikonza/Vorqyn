@@ -415,10 +415,16 @@ describe("statelessness and isolation", () => {
     expect(bodyA.seed).toBe(111);
     expect(bodyB.seed).toBe(222);
     // A is faulted, B is clean — no bleed in either direction.
-    const rovA = ((bodyA.snapshots as Array<Record<string, unknown>>)[2].robots as Array<Record<string, unknown>>).find((r) => r.robotId === "rov-01") as Record<string, unknown>;
+    const snapshotsA = bodyA.snapshots as Array<Record<string, unknown>>;
+    const snapshotsB = bodyB.snapshots as Array<Record<string, unknown>>;
+    expect(snapshotsA).toHaveLength(3);
+    expect(snapshotsB).toHaveLength(3);
+    const snapshotA3 = snapshotsA[2] as Record<string, unknown>;
+    const snapshotB3 = snapshotsB[2] as Record<string, unknown>;
+    const rovA = (snapshotA3.robots as Array<Record<string, unknown>>).find((r) => r.robotId === "rov-01") as Record<string, unknown>;
     const opticalA = (rovA.sensors as Array<Record<string, unknown>>).find((s) => s.sensorId === "rov-01-optical") as Record<string, unknown>;
     expect((opticalA.measured as Record<string, unknown>).quality01).toBeLessThan(0.09);
-    const rovB = ((bodyB.snapshots as Array<Record<string, unknown>>)[2].robots as Array<Record<string, unknown>>).find((r) => r.robotId === "rov-01") as Record<string, unknown>;
+    const rovB = (snapshotB3.robots as Array<Record<string, unknown>>).find((r) => r.robotId === "rov-01") as Record<string, unknown>;
     const opticalB = (rovB.sensors as Array<Record<string, unknown>>).find((s) => s.sensorId === "rov-01-optical") as Record<string, unknown>;
     expect((opticalB.measured as Record<string, unknown>).quality01).toBeGreaterThan(0.69);
 
