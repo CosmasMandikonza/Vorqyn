@@ -107,26 +107,29 @@ describe("P0 geometry evidence — established ground truth (green today)", () =
     expect(transit[0]).toEqual({ x: 60, y: -10, z: -2.5 }); // ROV home, harbour basin
   });
 
-  it("documents the measured inversion for the review record", () => {
+  it("documents the corrected geometry alignment for the review record", () => {
     const measured = {
       worldBox: { x: [box.min[0], box.max[0]], y: [box.min[1], box.max[1]] },
       worldCentre: worldCenter,
       circumscribedRadiusM: Number(circumscribedRadius.toFixed(3)),
       policyZone: POLICY_SEA_OBSTRUCTION_1.zone,
+      policyVersion: POLICY_SEA_OBSTRUCTION_1.policyVersion,
       surveyPoses: surveyPoses.length,
       inWorldZone: inWorldZone.length,
       inPolicyCircle: inPolicyCircle.length,
       nearestSurveySampleToPolicyCentreM: Number(Math.min(...surveyPoses.map((p) => distanceFromPolicyCentre(p.x, p.y))).toFixed(3)),
       farthestSurveySampleFromWorldCentreM: Number(Math.max(...inWorldZone.map((p) => Math.hypot(p.x - worldCenter.x, p.y - worldCenter.y))).toFixed(3)),
     };
-    // The policy centre sits 192.35 m from the real obstruction centre —
-    // the 80 m policy circle cannot contain ANY genuine obstruction sample.
-    expect(POLICY_SEA_OBSTRUCTION_1.zone.centerX).not.toBe(worldCenter.x);
+    // Durable alignment check: the policy zone is anchored to the world
+    // obstruction centre and sized to cover the whole declared box.
+    expect(POLICY_SEA_OBSTRUCTION_1.zone.centerX).toBe(worldCenter.x);
+    expect(POLICY_SEA_OBSTRUCTION_1.zone.centerY).toBe(worldCenter.y);
+    expect(POLICY_SEA_OBSTRUCTION_1.zone.radiusMetres).toBeGreaterThanOrEqual(circumscribedRadius);
     console.log("[GEOMETRY-EVIDENCE]", JSON.stringify(measured));
   });
 });
 
-describe("P0 geometry evidence — the policy must match the world (RED until Omar's one-line zone correction)", () => {
+describe("P0 geometry evidence — the policy must match the world (v2 zone correction applied)", () => {
   it("POLICY_SEA_OBSTRUCTION_1.zone covers the world obstruction zone", () => {
     // centre inside the box, and every box corner within the policy radius
     const centreInside =
@@ -188,13 +191,16 @@ describe("P0 geometry evidence — the policy must match the world (RED until Om
     }));
   });
 
-  it("a transit-only prefix INSIDE the wrong policy circle is falsely accepted today (P0 false-accept proof)", async () => {
-    // The first ~20 transit records lie within 80 m of the origin — inside
-    // the misconfigured policy circle but in the OPEN HARBOUR BASIN, nowhere
-    // near the submerged obstruction. Today the verifier accepts them as a
-    // completed obstruction survey; after the zone correction they must be
-    // rejected as outside_zone.
+  it("harbour-transit prefix outside the obstruction box is REJECTED with outside_zone (never accepted as survey)", async () => {
+    // Transit preconditions are anchored to the AUTHORITATIVE WORLD BOX:
+    // every prefix pose lies in the open harbour basin, OUTSIDE the
+    // obstruction rectangle — regardless of any policy circle.
     const transitPrefix = journal.records.slice(0, 20);
+    for (const record of transitPrefix) {
+      const pose = record.snapshot.robots.find((robot) => robot.robotId === ROV)?.pose;
+      expect(pose).toBeDefined();
+      expect(insideWorldBox(pose!.x, pose!.y), "transit samples must lie outside the obstruction box").toBe(false);
+    }
     const mapping = makeEvidenceClockMapping({ captureEpochBaseMs: FIXTURE_EPOCH_BASE_MS, seed: SEED, scenarioId: "PORT-001" });
     expect(mapping.ok).toBe(true);
     if (!mapping.ok) return;
@@ -207,10 +213,6 @@ describe("P0 geometry evidence — the policy must match the world (RED until Om
     });
     expect(capture.ok).toBe(true);
     if (!capture.ok) return;
-    for (const sample of capture.value.samples) {
-      const d = Math.hypot(sample.position.x - POLICY_SEA_OBSTRUCTION_1.zone.centerX, sample.position.y - POLICY_SEA_OBSTRUCTION_1.zone.centerY);
-      expect(d, "transit-prefix sample inside the WRONG policy circle (false-accept precondition)").toBeLessThanOrEqual(POLICY_SEA_OBSTRUCTION_1.zone.radiusMetres);
-    }
     const outcome = evaluateCapture(
       capture.value,
       { evidenceId: "ev-geo-transit-prefix", taskId: PORT_001.seaTaskId, assignmentVersion: 1, operatorId: PORT_001.seaOperator, sensor: "sonar" },
@@ -226,8 +228,8 @@ describe("P0 geometry evidence — the policy must match the world (RED until Om
     );
     expect(outcome.ok).toBe(true);
     if (!outcome.ok) return;
-    // CORRECT end state (red today): the transit prefix must NOT satisfy
-    // the obstruction survey policy.
+    // CORRECT end state under the v2 policy: harbour transit must NOT
+    // satisfy the obstruction survey policy (rejected for geography).
     expect(outcome.value.verdict.accepted, "false-accept proven: transit passes the wrong zone").toBe(false);
     console.log("[GEOMETRY-EVIDENCE] TRANSIT-PREFIX VERDICT", JSON.stringify({
       accepted: outcome.value.verdict.accepted,

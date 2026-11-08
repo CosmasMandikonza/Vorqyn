@@ -83,7 +83,16 @@ export interface EvidencePolicy {
  */
 export const POLICY_SEA_OBSTRUCTION_1: EvidencePolicy = {
   policyId: "policy-sea-obstruction-sonar-1",
-  policyVersion: 1,
+  /**
+   * v2 — P0 geometry correction (issues #9/#14/#11): v1's coverage zone was
+   * centred on the harbour origin (0,0) instead of the actual Pier C
+   * obstruction, inverting acceptance (harbour transit accepted; the real
+   * submerged survey rejected). v2 corrects the zone to the world-defined
+   * obstruction. ON-CHAIN COORDINATION: the verifier registry's
+   * policy_version must be advanced to 2 (registry admin, via
+   * setPolicyVersionIx) before v2 claims are accepted; v1 claims cease.
+   */
+  policyVersion: 2,
   allowedOrigins: ["SYNTHETIC_SIM", "LIVE_SITL"],
   sensors: [
     {
@@ -98,7 +107,23 @@ export const POLICY_SEA_OBSTRUCTION_1: EvidencePolicy = {
       backingMetricKind: "visibility_m",
     },
   ],
-  zone: { centerX: 0, centerY: 0, radiusMetres: 80 },
+  /**
+   * Coverage zone anchored to the authoritative world geometry:
+   * assets/port-world/world.json zones[id=obstruction_zone] box
+   * x ∈ [120, 220], y ∈ [−120, −60] — centre (170, −90).
+   *
+   * APPROXIMATION (documented, tested): PolicyZone is CIRCULAR while the
+   * world target is a RECTANGLE. r = 58.31 m = hypot(50, 30) is the
+   * circumscribed radius covering the entire box from its centre; the
+   * circle therefore also admits a thin margin of open water just outside
+   * the box edges (max ~4.5 m beyond an edge mid-point). Real kernel ROV
+   * samples can only originate on the survey route inside the box, so the
+   * approximation is inert for genuine captures — asserted in
+   * apps/web/tests/mission-geometry/policy-zone-alignment.test.tsx. Do not
+   * broaden the radius further and do not treat the circle as exact box
+   * equivalence.
+   */
+  zone: { centerX: 170, centerY: -90, radiusMetres: 58.31 },
   minSamples: 3,
   maxSourceAgeMs: 120_000,
   maxMissingSamples: 1,

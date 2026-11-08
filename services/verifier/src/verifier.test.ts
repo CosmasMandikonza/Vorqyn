@@ -73,7 +73,7 @@ describe("binding defences (stale / forged / mismatched)", () => {
   });
 
   it("rejects evidence from another mission (cross-mission contamination)", () => {
-    const foreign = synthSample({ robotId: "rov-x-99", sequence: 50, sourceTimestampMs: 1_762_000_000_000 - 1_000, x: 1, y: 1, missionId: "port-999" });
+    const foreign = synthSample({ robotId: "rov-x-99", sequence: 50, sourceTimestampMs: 1_762_000_000_000 - 1_000, x: 150, y: -75, missionId: "port-999" });
     const outcome = verifyEvidence(
       { ...SUBMISSION_ROV_B_V2, samples: [...SUBMISSION_ROV_B_V2.samples, foreign] },
       POLICY_SEA_OBSTRUCTION_1,
@@ -123,9 +123,9 @@ describe("measurement defences (never default-accept)", () => {
   it("rejects out-of-order timestamps and sequence gaps/duplicates", () => {
     // 40 -> 43 is a gap; the two #43s duplicate AND reverse time order.
     const cap = 1_762_000_000_000;
-    const gapped = synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: cap - 1_000, x: 1, y: 1 });
-    const dupLate = synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: cap - 800, x: 2, y: 2 });
-    const dupEarly = synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: cap - 900, x: 3, y: 3 });
+    const gapped = synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: cap - 1_000, x: 150, y: -75 });
+    const dupLate = synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: cap - 800, x: 160, y: -82 });
+    const dupEarly = synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: cap - 900, x: 168, y: -88 });
     const outcome = verifyEvidence(
       // Input order matters for the stable sort: this sorts to
       // [40, 43@-800, 43@-900] — the trailing #43 moves TIME BACKWARD.
@@ -230,9 +230,9 @@ describe("CTO review corrections (PR #49)", () => {
     // consecutive samples only.
     const strict = { ...POLICY_SEA_OBSTRUCTION_1, maxMissingSamples: 0 };
     const withGap = [
-      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
-      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, sonarQuality: 0.9 }),
-      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 150, y: -75, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 160, y: -82, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 168, y: -88, sonarQuality: 0.9 }),
     ];
     const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: withGap }, strict, CTX_V2_ROV_B);
     expect(outcome.ok).toBe(true);
@@ -244,9 +244,9 @@ describe("CTO review corrections (PR #49)", () => {
   it("P1-A positive: maxMissingSamples:1 tolerates exactly one missing sequence", () => {
     const tolerant = { ...POLICY_SEA_OBSTRUCTION_1, maxMissingSamples: 1 };
     const withGap = [
-      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
-      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, sonarQuality: 0.9 }),
-      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 150, y: -75, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 160, y: -82, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 168, y: -88, sonarQuality: 0.9 }),
     ];
     const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: withGap }, tolerant, CTX_V2_ROV_B);
     expect(outcome.ok).toBe(true);
@@ -259,9 +259,9 @@ describe("CTO review corrections (PR #49)", () => {
     // backing sample; minSamples counted ALL samples regardless of
     // modality, so this mixed submission was accepted.
     const mixed = [
-      synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
-      synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, visibilityMetres: 2.0 }),
-      synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, visibilityMetres: 2.1 }),
+      synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 150, y: -75, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 160, y: -82, visibilityMetres: 2.0 }),
+      synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 168, y: -88, visibilityMetres: 2.1 }),
     ];
     const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: mixed }, POLICY_SEA_OBSTRUCTION_1, CTX_V2_ROV_B);
     expect(outcome.ok).toBe(true);

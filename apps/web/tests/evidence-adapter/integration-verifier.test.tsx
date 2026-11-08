@@ -101,11 +101,28 @@ const OPTICAL_SCOPE = ["rov-01"]; // the sea task's survey robot
 
 describe("flagship integration — sonar evidence accepted under the shipped policy", () => {
   it("accepts a real clean-window sonar capture for the currently assigned operator", () => {
+    // Survey the ACTUAL world obstruction (v2 zone at (170, -90)): the ROV
+    // route runs into the obstruction box; only in-box records form the
+    // survey subset — harbour transit is excluded by box membership, never
+    // silently dropped.
     const { snapshots } = runKernel((k) => {
-      k.step(6); // ROV inside the policy zone near its route start
+      k.step(230); // full outbound leg ends at the obstruction centre (170, -90)
     });
+    const inBox = snapshots.filter((snapshot) => {
+      const pose = snapshot.robots.find((r) => r.robotId === "rov-01")?.pose;
+      return pose !== undefined && pose.x >= 120 && pose.x <= 220 && pose.y >= -120 && pose.y <= -60;
+    });
+    expect(inBox.length).toBeGreaterThanOrEqual(POLICY_SEA_OBSTRUCTION_1.minSamples);
     const journal = journalFromSnapshots(MISSION_ID, snapshots);
-    const capture = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING });
+    const capture = buildEvidenceCapture({
+      journal,
+      modality: "sonar",
+      clockMapping: DEMO_MAPPING,
+      records: journal.records.filter((record) => {
+        const pose = record.snapshot.robots.find((r) => r.robotId === "rov-01")?.pose;
+        return pose !== undefined && pose.x >= 120 && pose.x <= 220 && pose.y >= -120 && pose.y <= -60;
+      }),
+    });
     expect(capture.ok).toBe(true);
     if (!capture.ok) return;
 
@@ -202,8 +219,11 @@ describe("flagship integration — the optical fault in the correct evidence voc
   });
 
   it("accepts the same optical survey when visibility clears the bar (clean window, calibrated)", () => {
+    // Survey the actual obstruction leg under clean water: the calibrated
+    // optical quality clears the 1.5 m bar and every sample lies inside the
+    // world obstruction box (v2 zone).
     const { snapshots } = runKernel((k) => {
-      k.step(6); // pre-fault, clean water
+      k.step(230); // full outbound leg: in-box survey through (170, -90)
     });
     const journal = journalFromSnapshots(MISSION_ID, snapshots);
     const capture = buildEvidenceCapture({
@@ -211,6 +231,10 @@ describe("flagship integration — the optical fault in the correct evidence voc
       modality: "optical",
       clockMapping: DEMO_MAPPING,
       calibration: TEST_CALIBRATION,
+      records: journal.records.filter((record) => {
+        const pose = record.snapshot.robots.find((r) => r.robotId === "rov-01")?.pose;
+        return pose !== undefined && pose.x >= 120 && pose.x <= 220 && pose.y >= -120 && pose.y <= -60;
+      }),
       robotIds: OPTICAL_SCOPE,
     });
     expect(capture.ok).toBe(true);
