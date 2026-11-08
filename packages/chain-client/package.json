@@ -9,15 +9,18 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run && node scripts/check-browser-bundle.mjs",
+    "check:browser": "node scripts/check-browser-bundle.mjs"
   },
   "dependencies": {
     "@solana/web3.js": "^1.95.0",
-    "@vorqyn/contracts": "workspace:*"
+    "@vorqyn/contracts": "workspace:*",
+    "@noble/hashes": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "typescript": "5.9.3",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "esbuild": "^0.25.0"
   }
 }

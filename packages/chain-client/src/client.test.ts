@@ -17,7 +17,12 @@ import {
   toChainAttestationExpirySeconds,
   transition,
 } from "./lifecycle";
-import { initializeMissionIx, verifyAndClaimIx } from "./instructions";
+import { fundMissionIx, initializeMissionIx, verifyAndClaimIx } from "./instructions";
+import { sha256 } from "@noble/hashes/sha2.js";
+
+function ixDiscriminatorForTest(name: string): Uint8Array {
+  return sha256(new TextEncoder().encode(`global:${name}`)).subarray(0, 8);
+}
 import { explorerTxUrl } from "./config";
 
 import fixtures from "./fixtures-chain.json";
@@ -177,10 +182,9 @@ describe("truthful transaction lifecycle", () => {
 });
 
 describe("instruction builders", () => {
-  it("initialize_mission carries the Anchor discriminator + borsh args", async () => {
-    const { createHash } = await import("node:crypto");
+  it("initialize_mission carries the Anchor discriminator + borsh args", () => {
     const ix = initializeMissionIx(OWNER, "port-001", OWNER, 4_102_444_800);
-    const disc = createHash("sha256").update("global:initialize_mission", "utf8").digest().subarray(0, 8);
+    const disc = ixDiscriminatorForTest("initialize_mission");
     expect(Array.from(ix.data.subarray(0, 8))).toEqual(Array.from(disc));
     expect(ix.keys.length).toBe(6);
   });
@@ -196,6 +200,15 @@ describe("instruction builders", () => {
     expect(ix.keys.length).toBe(9);
     expect(ix.keys[1]?.isSigner).toBe(true); // verifier co-signs
     expect(ix.keys[7]?.isWritable).toBe(true); // payout wallet is credited
+  });
+});
+
+describe("lamport argument validation (review finding 3)", () => {
+  it("rejects unsafe numbers before serialization", () => {
+    expect(() => fundMissionIx(OWNER, new PublicKey(MISSION_PDA), 1.5)).toThrow(/unsafe lamport/);
+    expect(() => fundMissionIx(OWNER, new PublicKey(MISSION_PDA), 2 ** 53)).toThrow(/unsafe lamport/);
+    expect(() => fundMissionIx(OWNER, new PublicKey(MISSION_PDA), 3_000_000_000)).not.toThrow();
+    expect(() => fundMissionIx(OWNER, new PublicKey(MISSION_PDA), 3_000_000_000n)).not.toThrow();
   });
 });
 

@@ -7,7 +7,7 @@
  * instruction), not merely self-consistently computed here.
  */
 
-import { createHash } from "node:crypto";
+import { sha256 } from "@noble/hashes/sha2.js";
 import {
   PublicKey,
   SystemProgram,
@@ -18,8 +18,15 @@ import {
 import { registryPda, missionPda, taskPda, vaultPda } from "./pdas";
 import { PROGRAM_ID } from "./config";
 
+/**
+ * Anchor instruction discriminator: sha256("global:<name>")[:8]. Uses
+ * @noble/hashes (browser-safe, audited) — the package entrypoint must stay
+ * free of Node-only builtins because the web app bundles it directly.
+ * Correctness is pinned by the Rust fixtures and the local-validator E2E,
+ * NOT by an IDL generation step (see README — definitions are handwritten).
+ */
 function ixDiscriminator(name: string): Uint8Array {
-  return createHash("sha256").update(`global:${name}`, "utf8").digest().subarray(0, 8);
+  return sha256(new TextEncoder().encode(`global:${name}`)).subarray(0, 8);
 }
 
 // --- borsh writers ---------------------------------------------------------
@@ -28,6 +35,11 @@ class Writer {
   readonly parts: Uint8Array[] = [];
   u8(v: number): void { this.parts.push(new Uint8Array([v & 0xff])); }
   u64(v: bigint | number): void {
+    // Unsafe JS numbers must be rejected BEFORE serialization — a float or
+    // an integer beyond 2^53-1 would silently corrupt lamport amounts
+    // (review finding 3: validate consistently, never coerce).
+    if (typeof v === "number" && !Number.isSafeInteger(v))
+      throw new Error(`unsafe lamport value rejected: ${v} (pass a bigint for >2^53-1)`);
     const n = BigInt(v);
     if (n < 0n || n > 0xffff_ffff_ffff_ffffn) throw new Error("u64 out of range");
     const out = new Uint8Array(8);
@@ -155,7 +167,7 @@ export function initializeMissionIx(
   });
 }
 
-export function fundMissionIx(owner: PublicKey, missionAddress: PublicKey, amountLamports: number): TransactionInstruction {
+export function fundMissionIx(owner: PublicKey, missionAddress: PublicKey, amountLamports: number | bigint): TransactionInstruction {
   const w = new Writer();
   w.u64(amountLamports);
   return new TransactionInstruction({
@@ -170,7 +182,7 @@ export function fundMissionIx(owner: PublicKey, missionAddress: PublicKey, amoun
   });
 }
 
-export interface CreateTaskArgs { taskId: string; taskKind: "Air" | "Land" | "Sea"; budgetLamports: number }
+export interface CreateTaskArgs { taskId: string; taskKind: "Air" | "Land" | "Sea"; budgetLamports: number | bigint }
 
 export function createTaskIx(owner: PublicKey, missionAddress: PublicKey, args: CreateTaskArgs): TransactionInstruction {
   const task = taskPda(missionAddress, args.taskId);
@@ -192,7 +204,7 @@ export function createTaskIx(owner: PublicKey, missionAddress: PublicKey, args: 
   });
 }
 
-export interface AssignTaskArgs { taskId: string; operator: PublicKey; rewardLamports: number }
+export interface AssignTaskArgs { taskId: string; operator: PublicKey; rewardLamports: number | bigint }
 
 export function assignTaskIx(owner: PublicKey, missionAddress: PublicKey, args: AssignTaskArgs): TransactionInstruction {
   const task = taskPda(missionAddress, args.taskId);
@@ -213,7 +225,7 @@ export function assignTaskIx(owner: PublicKey, missionAddress: PublicKey, args: 
   });
 }
 
-export interface AuthorizeReassignmentArgs { taskId: string; expectedAssignmentVersion: number; newOperator: PublicKey; rewardLamports: number }
+export interface AuthorizeReassignmentArgs { taskId: string; expectedAssignmentVersion: number; newOperator: PublicKey; rewardLamports: number | bigint }
 
 export function authorizeReassignmentIx(owner: PublicKey, missionAddress: PublicKey, args: AuthorizeReassignmentArgs): TransactionInstruction {
   const task = taskPda(missionAddress, args.taskId);

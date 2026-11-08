@@ -26,6 +26,19 @@ the recorded run (LOCALNET — no devnet claim until deployment happens).
 
 ## Status
 
+- **Instruction definitions are HANDWRITTEN, not generated from an Anchor
+  IDL** (no avm/anchor CLI in this environment — nothing about IDL
+  generation is claimed or invented). Their consistency with the deployed
+  program artifact is verified two ways that do not depend on an IDL:
+  (a) account codecs are pinned byte-for-byte by Rust `try_serialize`
+  fixtures, and (b) the local-validator E2E executes every instruction
+  against the actual compiled `.so` — a wrong discriminator or account
+  order fails on-chain. When the team generates the official IDL at
+  deployment, this package's internals can swap without changing its
+  public surface.
+- The browser entrypoint is bundling-verified: `pnpm test` includes an
+  esbuild browser-platform bundle check that fails on any `node:` builtin
+  (sha256 comes from `@noble/hashes`, audited and browser-safe).
 - Program id = shared placeholder; devnet deployment is the release gate.
 - Wallet/settlement UI integration is Lane 2 (apps/web) — this package is
   the Lane 1 client surface they consume.
