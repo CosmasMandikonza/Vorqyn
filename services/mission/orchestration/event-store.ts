@@ -233,7 +233,6 @@ const hydrators = new WeakMap<MissionEventStore, () => Promise<void>>();
 async function hydrateStoreFromStorageImpl(
   storage: MissionEventLogStorage,
   buckets: Map<string, MissionBucket>,
-  limits: MissionEventStoreLimits,
 ): Promise<void> {
   const missionIds = await storage.listMissions();
   for (const missionId of missionIds) {
@@ -481,7 +480,7 @@ export function createMissionEventStore(options: {
     },
   };
 
-  hydrators.set(store, () => hydrateStoreFromStorageImpl(storage, buckets, limits));
+  hydrators.set(store, () => hydrateStoreFromStorageImpl(storage, buckets));
 
   return store;
 }
