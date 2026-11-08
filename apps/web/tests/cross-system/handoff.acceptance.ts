@@ -1,7 +1,11 @@
 /** Read-only presentation checks on the real pending owner module. Existing contract fixture signatures are NOT RPC receipts. */
 import { beforeAll, expect, it } from "vitest";
 import { resolve } from "node:path";
-import { buildPort001Script, PORT_001 } from "@vorqyn/contracts";
+import {
+  buildPort001Script,
+  FIXTURE_SIG_PAYOUT_SEA,
+  PORT_001,
+} from "@vorqyn/contracts";
 import { scenario } from "./scenario";
 const load = () =>
   import(
@@ -103,4 +107,29 @@ it("a canonical payout fixture without a recipient wallet never invents one from
   );
   expect(payout.state).toBe("confirmed");
   expect(payout.confirmation).not.toHaveProperty("recipientWallet");
+});
+it("a later rejected observation cannot erase an earlier recorded confirmed payment with a no-funds-moved claim", () => {
+  // Canonical fixture history only, NOT actual RPC or balance observations.
+  const events = buildPort001Script();
+  const last = events.at(-1)!;
+  const updates = ["unknown", "rejected"].map((status, index) => ({
+    schemaVersion: 1,
+    eventId: `evt-qa-observation-gap-${index}`,
+    missionId: context.missionId,
+    sequence: last.sequence + index + 1,
+    kind: "chain.transactionUpdated",
+    occurredAtMs: last.occurredAtMs + 100 + index,
+    observedAtMs: last.observedAtMs + 100 + index,
+    payload: { transactionSignature: FIXTURE_SIG_PAYOUT_SEA, status },
+  }));
+  const result = handoff.projectEconomicHandoff(
+    [...events, ...updates],
+    context,
+  );
+  expect(result.audit).toHaveLength(0);
+  expect(result.derivedFromEventCount).toBe(events.length + 2);
+  const payout = result.stages.find(
+    (s: { id: string }) => s.id === "payout-confirmation",
+  );
+  expect(payout.detail.toLowerCase()).not.toContain("no funds moved");
 });
