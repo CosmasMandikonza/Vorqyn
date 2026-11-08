@@ -38,7 +38,7 @@ const report = {
     status: "FAIL",
     sourceSha: "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
     report: "docs/evidence/qa-final/README.md",
-    note: "This hosting smoke does not clear camera overflow or 1024px Replay interception. Fresh full QA awaits the viewer owner's merged fix.",
+    note: "Historical failures remain preserved. This hosting smoke cannot clear them; consult the separately executed merged-main strict QA follow-up.",
   },
 };
 let browser;
@@ -108,6 +108,7 @@ try {
         dpr: devicePixelRatio,
       }));
       expect(viewport).toEqual({ width: 1440, height: 900, dpr: 1 });
+      await expect(p.locator("html")).toHaveClass(/light/);
       mkdirSync(join(out, "screenshots"), { recursive: true });
       const png = await p.screenshot({
         path: join(out, "screenshots", `${name}-light-1440x900.png`),
@@ -254,7 +255,8 @@ try {
         { op: "step", count: 4 },
       ]);
       expect(maximum.status()).toBe(200);
-      const maxData = await maximum.json();
+      const maximumBody = await maximum.body();
+      const maxData = JSON.parse(maximumBody.toString("utf8"));
       expect(maxData.snapshots).toHaveLength(400);
       expect(maxData.snapshots.at(-1).simulatorTimeMs).toBe(200000);
       const detail = {
@@ -271,6 +273,7 @@ try {
         malformedJson: malformed.status(),
         getMethod: method.status(),
         maximumStepsAccepted: 400,
+        maximumResponseBytes: maximumBody.length,
         perIpRateLimit:
           "NOT IMPLEMENTED by this route; trace bounds are not an incoming request quota",
       };
@@ -280,9 +283,55 @@ try {
       );
       return detail;
     });
+    await check("source-bound-observation-trace-api", async () => {
+      const data = {
+        schema: "vorqyn.demo-sim/request/1",
+        seed: 20261107,
+        operations: [{ op: "step", count: 2 }],
+      };
+      const request = () =>
+        context.request.post("/api/demo/observations", { data });
+      const first = await request();
+      expect(first.status()).toBe(200);
+      expect(first.headers()["cache-control"]).toContain("no-store");
+      const trace = await first.json();
+      expect(trace.schema).toBe("vorqyn.guest-trace/response/1");
+      expect(trace.sourceKind).toBe("SYNTHETIC_SIM");
+      expect(trace.journal.recordsAccepted).toBe(2);
+      expect(trace.clockDomains.chain).toBeNull();
+      expect(trace.clockDomains.receipt).toContain("not UTC");
+      expect(await (await request()).json()).toEqual(trace);
+      const paged = await context.request.post(
+        "/api/demo/observations?afterSequence=1&limit=1",
+        { data },
+      );
+      expect(paged.status()).toBe(200);
+      const pageData = await paged.json();
+      expect(pageData.trace.records).toHaveLength(1);
+      expect(pageData.trace.records[0].sequence).toBe(2);
+      return {
+        schema: trace.schema,
+        sourceKind: trace.sourceKind,
+        clockDomains: trace.clockDomains,
+        records: trace.journal.recordsAccepted,
+        repeatedTraceIdentical: true,
+        pagingSequence: pageData.trace.records[0].sequence,
+      };
+    });
     await check("real-browser-fault-replay-and-2d", async () => {
       await page.goto("/demo/mission");
       await expect(page.getByTestId("loading-veil")).toHaveCount(0);
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await page
+        .getByRole("button", { name: "World Dive", exact: true })
+        .click();
+      const skip = page.getByRole("button", { name: /World Dive.*skip/ });
+      await expect(skip).toBeVisible();
+      await skip.click();
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await expect(
+        page.getByRole("button", { name: "World Dive", exact: true }),
+      ).toHaveCount(0);
       const operation = async (name) => {
         const [r] = await Promise.all([
           page.waitForResponse(
@@ -300,6 +349,8 @@ try {
       };
       await operation("Start synthetic survey");
       await operation("Advance +1 step");
+      await operation("Advance +1 step");
+      await operation("Advance +1 step");
       const inspector = page
         .locator('[data-testid="inspector-panel"]:visible')
         .first();
@@ -311,6 +362,7 @@ try {
         .getByRole("button", { name: "FOLLOW", exact: true })
         .click();
       await operation("Inject underwater optical fault");
+      await operation("Advance +1 step");
       const faulted = await operation("Advance +1 step");
       await expect(inspector).toContainText(
         "Active optical-visibility fault: severe",
@@ -322,6 +374,21 @@ try {
         );
       await page.waitForTimeout(600);
       await capture(page, "fault-follow");
+      const ghost = page.getByRole("button", {
+        name: /Ghost replay: recorded paths hidden/,
+      });
+      await ghost.click();
+      await expect(
+        page.getByRole("button", {
+          name: /Ghost replay: recorded paths shown/,
+        }),
+      ).toHaveAttribute("aria-pressed", "true");
+      await expect(page.getByTestId("playback-bar")).toContainText(
+        "no simulated recovery",
+      );
+      await page.getByTestId("world-canvas-frame").scrollIntoViewIfNeeded();
+      await page.waitForTimeout(600);
+      await capture(page, "ghost-recorded-paths");
       const replay = await operation("Replay history");
       expect(replay.snapshots).toEqual(faulted.snapshots);
       await expect(page.getByTestId("replay-badge")).toContainText(
@@ -343,6 +410,9 @@ try {
       return {
         actualPost: true,
         replayIdentical: true,
+        worldDiveInterrupted: true,
+        reducedMotionHidesDive: true,
+        ghostPathsAreRecordedOnly: true,
         sourceKind: "SYNTHETIC_SIM",
       };
     });
@@ -351,6 +421,10 @@ try {
       c.setDefaultTimeout(15000);
       try {
         const p = await c.newPage();
+        p.on("pageerror", (e) => errors.push(e.message));
+        p.on("console", (m) => {
+          if (m.type() === "error") errors.push(m.text());
+        });
         await p.addInitScript(() => {
           localStorage.setItem("vorqyn-theme", "light");
           const get = HTMLCanvasElement.prototype.getContext;
@@ -376,6 +450,9 @@ try {
           "pose ENU",
         ])
           await expect(p.getByTestId("fallback-robots")).toContainText(text);
+        await expect(p.getByTestId("fallback-robots")).toContainText(
+          "sim t 500 ms",
+        );
         await p.getByTestId("fallback-robots").scrollIntoViewIfNeeded();
         await capture(p, "no-webgl");
         return "Actual context creation disabled; real API observations retained as text";
