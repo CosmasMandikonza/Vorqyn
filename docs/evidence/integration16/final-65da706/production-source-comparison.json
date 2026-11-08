@@ -1,0 +1,19 @@
+{
+  "pinnedReviewedMainSha": "65da706f9cb45a09385f13b060c6af7410ab4da5",
+  "browserHarnessSha": "4c7f712160ff7c19f2dd3d4003301ccb5d28ac18",
+  "productionPaths": [
+    "apps/web/components",
+    "apps/web/app",
+    "apps/web/lib",
+    "services",
+    "packages",
+    "programs",
+    "assets",
+    "pnpm-lock.yaml",
+    "package.json",
+    ".github"
+  ],
+  "changedPaths": [],
+  "status": "PASS",
+  "scope": "Actual tested local production bytes equal pinned reviewed main; later merges and remote deployment SHA are not certified"
+}

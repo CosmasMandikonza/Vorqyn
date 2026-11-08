@@ -1,0 +1,1521 @@
+{
+  "schema": "vorqyn.judge-qa-captures/1",
+  "sourceSha": "4c7f712160ff7c19f2dd3d4003301ccb5d28ac18",
+  "status": "PASS",
+  "expected": 126,
+  "results": [
+    {
+      "label": "css-root-zoom-200",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-home",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-demo",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-mission",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-draft",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-follow",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-replay",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "no-webgl",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-home",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-demo",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-mission",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-draft",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-follow",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-replay",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "light",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-home",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-demo",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-mission",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-draft",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "mobile-menu",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-follow",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-replay",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "no-webgl",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-home",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-demo",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-mission",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-draft",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "mobile-menu",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-follow",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-replay",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "light",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "native-200-1440-home",
+      "theme": "light",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-demo",
+      "theme": "light",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-mission",
+      "theme": "light",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-workspace",
+      "theme": "light",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-draft",
+      "theme": "light",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-2048-home",
+      "theme": "light",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-demo",
+      "theme": "light",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-mission",
+      "theme": "light",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-workspace",
+      "theme": "light",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-draft",
+      "theme": "light",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "css-root-zoom-200",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-home",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-demo",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-mission",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-draft",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-follow",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-replay",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "no-webgl",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440
+    },
+    {
+      "label": "shell-home",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-demo",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-mission",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-draft",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-follow",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-replay",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "dark",
+      "width": 1024,
+      "height": 900,
+      "status": "PASS",
+      "png": {
+        "width": 1024,
+        "height": 900
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "shell-home",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-demo",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-mission",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-draft",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "mobile-menu",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-follow",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-replay",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "no-webgl",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390
+    },
+    {
+      "label": "shell-home",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-demo",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-mission",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-workspace",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "shell-draft",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "mobile-menu",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-clean-uw",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-follow",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-inspect",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fault-uw",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fault-inspector",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-replay",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "journey-fallback",
+      "theme": "dark",
+      "width": 320,
+      "height": 844,
+      "status": "PASS",
+      "png": {
+        "width": 320,
+        "height": 844
+      },
+      "documentWidth": 320
+    },
+    {
+      "label": "native-200-1440-home",
+      "theme": "dark",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-demo",
+      "theme": "dark",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-mission",
+      "theme": "dark",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-workspace",
+      "theme": "dark",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-1440-draft",
+      "theme": "dark",
+      "width": 720,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 1440,
+        "height": 813
+      },
+      "documentWidth": 720
+    },
+    {
+      "label": "native-200-2048-home",
+      "theme": "dark",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-demo",
+      "theme": "dark",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-mission",
+      "theme": "dark",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-workspace",
+      "theme": "dark",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    },
+    {
+      "label": "native-200-2048-draft",
+      "theme": "dark",
+      "width": 1024,
+      "height": 406,
+      "status": "PASS",
+      "png": {
+        "width": 2048,
+        "height": 813
+      },
+      "documentWidth": 1024
+    }
+  ],
+  "visualQuality": "NOT RUN by validator; inspect images separately. Layout failures remain in Playwright results."
+}

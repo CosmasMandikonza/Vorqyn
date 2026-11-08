@@ -1,0 +1,44 @@
+{
+  "schema": "vorqyn.final-gate-verdict/3",
+  "pinnedReviewedMainSha": "65da706f9cb45a09385f13b060c6af7410ab4da5",
+  "browserHarnessSha": "4c7f712160ff7c19f2dd3d4003301ccb5d28ac18",
+  "recordedAt": "2026-11-08T14:14:48.376333+00:00",
+  "laterMergesCertified": false,
+  "verdict": {
+    "honestSyntheticRecording": "GO",
+    "authenticatedRecoveryVerifierWalletDevnet": "NO-GO",
+    "productComplete": false,
+    "initialSubmissionHeldForP2": false
+  },
+  "results": {
+    "workspacePass": 421,
+    "inheritedValidatorSkippedNotRun": 1,
+    "localBrowserPass": 34,
+    "localBrowserFail": 0,
+    "strictPngPass": 126,
+    "wholeCameraPass": 32,
+    "originalBoundariesPass": 20,
+    "qaToolPass": 12,
+    "mergedAdapterPass": 9,
+    "mergedStoreAndFixtureDriverPass": 27,
+    "chainAcceptancePass": 4,
+    "chainAcceptanceFail": 1,
+    "chainFailurePriority": "P2",
+    "currentHandoffCandidatePass": 6,
+    "currentHandoffCandidateFail": 1,
+    "recoveryCandidatePass": 7,
+    "recoveryCandidateFail": 3,
+    "freshPublicFunctionalPass": 9
+  },
+  "publicOrigin": "https://vorqynweb-production.up.railway.app",
+  "remoteDeploymentSha": null,
+  "blocked": [
+    "Full observation/authority orchestration driver beyond canonical fixtures",
+    "Recovery cross-mission and catalogue corrections",
+    "Handoff contradictory no-funds-moved claim after prior confirmed payment",
+    "Authenticated verifier and wallet authority",
+    "Actual devnet program/account/transaction receipts",
+    "Produced public video and inspected MLH receipt"
+  ],
+  "note": "Counts overlap. No owner implementation edits or merges by QA."
+}

@@ -1,0 +1,4 @@
+
+> vorqyn@ lint /workspace/work/integration16
+> eslint .
+

@@ -6,7 +6,7 @@
 
 **Public demo:** https://vorqynweb-production.up.railway.app/ — signed-out functional smoke **9/9 PASS**, November 8, 2026. `/demo/mission` and `/workspace/create` are accessible. Remote deployment SHA remains unverified; founder/Omar must retain the hosting build record. No video URL or MLH receipt is supplied.
 
-**Reviewed product main:** `0504a703e77a5d34a3698267df260f6f6e21804b`, after merged #56/#57/#58. Fresh frozen installation and [main Node + Rust CI](https://github.com/CosmasMandikonza/Vorqyn/actions/runs/42486911782) passed. [Independent current QA and candidate failures](../evidence/integration16/ACCEPTANCE_STATUS.md) distinguish component tests from integrated or authenticated proof. Open #51/#53/#54 are not incorporated into these product claims.
+**Reviewed product main:** `65da706f9cb45a09385f13b060c6af7410ab4da5`, after merged #56/#57/#58/#54. Fresh frozen installation and [main Node + Rust CI](https://github.com/CosmasMandikonza/Vorqyn/actions/runs/42487137784) passed. [Independent current QA and candidate failures](../evidence/integration16/ACCEPTANCE_STATUS.md) distinguish component tests from integrated or authenticated proof. Open #51/#53 are not incorporated into these product claims.
 
 ## Short description
 

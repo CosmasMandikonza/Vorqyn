@@ -1,0 +1,156 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T14:04:28.900Z",
+  "sourceSha": "d671f871b461ca1e1c2c0154c353ebff76a93f48",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16",
+  "targetSha": "d671f871b461ca1e1c2c0154c353ebff76a93f48",
+  "targetDirty": false,
+  "scope": "Current checkout; existing boundaries and pending connection acceptance",
+  "checks": [
+    {
+      "id": "frozen-install",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "log": "frozen-install.txt"
+    },
+    {
+      "id": "qa-tooling",
+      "status": "PASS",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "scripts/integration/tooling.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "qa-tooling.txt",
+      "stats": {
+        "total": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cancelled": 0
+      },
+      "scope": "QA-tool negative fixtures and historical evidence validation only; not product/chain acceptance"
+    },
+    {
+      "id": "existing-boundaries",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "tests/cross-system/boundaries.test.tsx",
+        "--reporter=json",
+        "--outputFile=/workspace/work/final-main65-integration/existing-boundaries.json"
+      ],
+      "log": "existing-boundaries.txt",
+      "report": "existing-boundaries.json",
+      "stats": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "BLOCKED",
+      "detail": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "BLOCKED",
+      "detail": "Simulator-relative sources 500,1000,1500,2000,2500,3000,3500,4000 vs epoch capture 1762000000020; no clock rebasing invented"
+    },
+    {
+      "id": "chain-client",
+      "status": "FAIL",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "--config",
+        "../../scripts/integration/vitest.config.mts",
+        "--reporter=json",
+        "--outputFile=/workspace/work/final-main65-integration/chain-client.json"
+      ],
+      "log": "chain-client.txt",
+      "report": "chain-client.json",
+      "stats": {
+        "total": 5,
+        "passed": 4,
+        "failed": 1,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "recovery",
+      "status": "BLOCKED",
+      "detail": "services/mission/recovery/src/index.ts absent at target SHA; connection assertions not run"
+    },
+    {
+      "id": "handoff",
+      "status": "BLOCKED",
+      "detail": "apps/web/components/mission-world/economic-handoff/boundary.ts absent at target SHA; connection assertions not run"
+    },
+    {
+      "id": "orchestrator",
+      "status": "BLOCKED",
+      "detail": "No owner-reviewed orchestration driver supplied; no substitute is created",
+      "driverProvenance": {
+        "status": "BLOCKED",
+        "reason": "No owner-reviewed orchestration driver supplied; no substitute is created"
+      }
+    },
+    {
+      "id": "evidence-adapter",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "--config",
+        "../../scripts/integration/vitest.config.mts",
+        "--reporter=json",
+        "--outputFile=/workspace/work/final-main65-integration/evidence-adapter.json"
+      ],
+      "log": "evidence-adapter.txt",
+      "report": "evidence-adapter.json",
+      "stats": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "orchestrationDriver": {
+    "status": "BLOCKED",
+    "reason": "No owner-reviewed orchestration driver supplied; no substitute is created"
+  },
+  "status": "FAIL",
+  "finishedAt": "2026-11-08T14:04:44.279Z"
+}

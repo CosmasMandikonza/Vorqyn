@@ -1,0 +1,1363 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/integration16/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/judge-qa.config.mjs"
+    ],
+    "configFile": "/workspace/work/integration16/scripts/release/judge-qa.config.mjs",
+    "rootDir": "/workspace/work/integration16/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/integration16/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/final-browser-main65/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge-qa",
+        "name": "judge-qa",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "judge-qa*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/final-browser-main65/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "judge-qa",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "judge-qa*.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          },
+          "actionTimeout": 10000,
+          "navigationTimeout": 30000
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "judge-qa"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/final-browser-main65/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/integration16",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "judge-qa-cross-system.spec.ts",
+      "file": "judge-qa-cross-system.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "cross-system camera light 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:06:58.063Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-844ea6afa568a90651e1",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18099,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:07:30.424Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-3d11cec186e9086744ad",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31616,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:07:48.568Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-8c4fa8194b9466689218",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17921,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:08:20.272Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-3e7b6eb92892c8a6688b",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11462,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:08:38.246Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-134e536fd51a83dd55ce",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13623,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:08:49.751Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-d82b8cdb73f30d0acae8",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17332,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:09:03.395Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-960c296626079cfa750c",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19405,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T14:09:20.766Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-0ebd5f311df988616dea",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "judge-qa-shell.spec.ts",
+      "file": "judge-qa-shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "shared header fits at CSS root zoom 200% light (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:09:40.275Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1de4da06ed72bd01a1c8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared header fits at CSS root zoom 200% dark (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1561,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:09:42.099Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-6e7dac4b54b605d1fd37",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared routes and accessible navigation light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:09:43.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-424f9df38afc2cbbee6d",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:09:50.095Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-9546229d4c885ccc42b0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:09:55.657Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4842c2183fccd2773e76",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5014,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:01.155Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-a28b71153870b8f19465",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6927,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:06.187Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1881d5d14ef278a45d88",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6804,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:13.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c5191f73af357b23ebb5",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:20.026Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-96a86c460ba23ec73828",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:25.520Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c104d9e6d9559116243b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11499,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:30.473Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-e6529b37eff327bde6d8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:41.995Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-2b317622111a611160cf",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9415,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:10:50.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f87d5241d697ef8c91c6",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:11:00.151Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1737f27e5fa8754d66c0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:11:07.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-958487ca8ee1598f4dc0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:11:35.048Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-0c1001f699b2d1172806",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:11:59.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-3f9f0b6810611e12aff8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12613,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:12:12.775Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-948e763248283a4f39dd",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24848,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:12:25.419Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-ce5284f709e5c3c77207",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:12:50.291Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-eb62e898dc1c0d1e1169",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:12.201Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-7104cf2ec741884069d2",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12335,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:26.313Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4e273b8511a22afa006f",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:38.677Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c9eac884821103d3b86a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:40.929Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-30753ed343d6c628862b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2702,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:42.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f4cda780c9308d07eb1a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T14:13:45.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-b2c99550d1ecdc751e07",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T14:06:54.781Z",
+    "duration": 412640.25100000005,
+    "expected": 34,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

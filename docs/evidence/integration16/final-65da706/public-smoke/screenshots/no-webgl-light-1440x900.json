@@ -1,0 +1,23 @@
+{
+  "url": "https://vorqynweb-production.up.railway.app/demo/mission",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "theme": "light",
+  "checkoutSha": "4c7f712160ff7c19f2dd3d4003301ccb5d28ac18",
+  "remoteDeploymentSha": null,
+  "scope": "signed-out public HTTPS functional smoke",
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "capturedAt": "2026-11-08T14:08:20.122Z",
+  "sha256": "d9638d31ebe96df2fa63a808e2c81518bf3853b56d17bf542ddd97faa0b8c2fe"
+}

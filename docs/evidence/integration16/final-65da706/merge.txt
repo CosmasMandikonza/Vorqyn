@@ -1,0 +1,14 @@
+Merge made by the 'ort' strategy.
+ .../mission-orchestration/demo-driver.test.tsx     | 162 +++++++
+ .../mission-orchestration/event-store.test.tsx     | 408 +++++++++++++++++
+ .../file-event-store.test.tsx                      | 186 ++++++++
+ services/mission/orchestration/README.md           |  96 ++++
+ services/mission/orchestration/event-store.ts      | 486 +++++++++++++++++++++
+ services/mission/orchestration/file-event-log.ts   | 108 +++++
+ 6 files changed, 1446 insertions(+)
+ create mode 100644 apps/web/tests/mission-orchestration/demo-driver.test.tsx
+ create mode 100644 apps/web/tests/mission-orchestration/event-store.test.tsx
+ create mode 100644 apps/web/tests/mission-orchestration/file-event-store.test.tsx
+ create mode 100644 services/mission/orchestration/README.md
+ create mode 100644 services/mission/orchestration/event-store.ts
+ create mode 100644 services/mission/orchestration/file-event-log.ts
