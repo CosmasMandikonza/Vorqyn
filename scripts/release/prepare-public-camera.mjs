@@ -8,7 +8,11 @@ export default function preparePublicCamera() {
     JSON.stringify(
       {
         scope:
-          "Actual signed-out public HTTPS camera acceptance; sourceSha in sidecars is the QA harness, not the remote deployment",
+          "Actual signed-out public HTTPS acceptance; sourceSha is the QA harness, not the remote deployment",
+        suite:
+          process.env.RELEASE_PUBLIC_SUITE === "journey"
+            ? "guest-to-saved-draft"
+            : "camera",
         origin: process.env.RELEASE_PUBLIC_ORIGIN,
         remoteDeploymentSha: null,
         note: "No mocks, forced clicks, product credentials or deployment-SHA inference. Inspect hosting record separately.",

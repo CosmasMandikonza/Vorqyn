@@ -17,7 +17,7 @@ export default {
       ? {
           name: "public-journey",
           testMatch: "release-smoke.spec.ts",
-          grep: /^judge journey:/,
+          grep: /judge journey:/,
         }
       : { name: "public-camera", testMatch: "judge-qa-cross-system.spec.ts" },
   ],
