@@ -1,0 +1,4 @@
+
+> vorqyn@ lint /workspace/work/final-technical-preflight/snapshot
+> eslint .
+

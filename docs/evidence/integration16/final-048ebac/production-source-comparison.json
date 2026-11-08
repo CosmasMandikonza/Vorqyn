@@ -1,0 +1,19 @@
+{
+  "reviewedMain": "048ebac912a0e22db6b2a99427c5a5b5c40845f8",
+  "testedQaCodeHead": "a1383739727cb083e6889bed2d0baa7c5f7470e6",
+  "productionPaths": [
+    "apps/web/components",
+    "apps/web/app",
+    "apps/web/lib",
+    "services",
+    "packages",
+    "programs",
+    "assets",
+    "pnpm-lock.yaml",
+    "package.json",
+    ".github"
+  ],
+  "changedPaths": [],
+  "status": "PASS",
+  "scope": "Tracked production source/config equality; does not attest remote deployment SHA or pending owner branches"
+}

@@ -1,0 +1,224 @@
+{
+  "schema": "vorqyn.release-preflight/1",
+  "startedAt": "2026-11-08T13:34:12.672Z",
+  "source": {
+    "sha": "b097ce860054e11d6c99bc7da01a2863baf12ecf",
+    "workingTreeDirty": false,
+    "testedTree": "committed HEAD only; uncommitted edits and ignored environment files are excluded"
+  },
+  "checks": [
+    {
+      "id": "node-version",
+      "status": "PASS",
+      "detail": "observed 22.21.1; required 22.21.1"
+    },
+    {
+      "id": "pnpm-version",
+      "status": "PASS",
+      "detail": "observed 10.34.5; required 10.34.5"
+    },
+    {
+      "id": "fresh-snapshot",
+      "status": "PASS",
+      "detail": "isolated committed-source snapshot, no pre-existing node_modules"
+    },
+    {
+      "id": "environment-config",
+      "status": "PASS",
+      "detail": "static world and local drafts need no external secrets; optional public config is valid",
+      "findings": []
+    },
+    {
+      "id": "credential-hygiene",
+      "status": "PASS",
+      "detail": "no supported credential patterns found; heuristic scan, not a security guarantee",
+      "findings": []
+    },
+    {
+      "id": "install",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "log": "commands/install.txt",
+      "durationMs": 5552,
+      "exitCode": 0
+    },
+    {
+      "id": "lint",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "lint"
+      ],
+      "log": "commands/lint.txt",
+      "durationMs": 12127,
+      "exitCode": 0
+    },
+    {
+      "id": "typecheck",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "log": "commands/typecheck.txt",
+      "durationMs": 24979,
+      "exitCode": 0
+    },
+    {
+      "id": "unit",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "log": "commands/unit.txt",
+      "durationMs": 63672,
+      "exitCode": 0
+    },
+    {
+      "id": "build",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "log": "commands/build.txt",
+      "durationMs": 194229,
+      "exitCode": 0
+    },
+    {
+      "id": "simulation-core",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/core/determinism.test.mjs",
+        "services/simulation/core/evidence-thresholds.test.mjs",
+        "services/simulation/core/fault.test.mjs",
+        "services/simulation/core/geometry.test.mjs",
+        "services/simulation/core/input-validation.test.mjs",
+        "services/simulation/core/lifecycle.test.mjs",
+        "services/simulation/core/provenance.test.mjs",
+        "services/simulation/core/sample.test.mjs"
+      ],
+      "log": "commands/simulation-core.txt",
+      "durationMs": 2270,
+      "exitCode": 0
+    },
+    {
+      "id": "world-coordinates",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/integration/world-alignment.test.mjs"
+      ],
+      "log": "commands/world-coordinates.txt",
+      "durationMs": 592,
+      "exitCode": 0
+    },
+    {
+      "id": "world-assets",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "assets/port-world/tools/validate.mjs",
+        "--selfcheck"
+      ],
+      "log": "commands/world-assets.txt",
+      "durationMs": 596,
+      "exitCode": 0
+    },
+    {
+      "id": "release-tools",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "scripts/release/lib.test.mjs",
+        "scripts/release/public-smoke.test.mjs"
+      ],
+      "log": "commands/release-tools.txt",
+      "durationMs": 646,
+      "exitCode": 0
+    },
+    {
+      "id": "narration",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/check-narration.mjs"
+      ],
+      "log": "commands/narration.txt",
+      "durationMs": 150,
+      "exitCode": 0
+    },
+    {
+      "id": "kernel-recording-demo",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "scripts/release/kernel-demo.mjs"
+      ],
+      "log": "commands/kernel-recording-demo.txt",
+      "durationMs": 150,
+      "exitCode": 0
+    },
+    {
+      "id": "browser",
+      "status": "NOT RUN",
+      "detail": "--technical-only requested; no browser result is implied"
+    },
+    {
+      "id": "judge-qa",
+      "status": "NOT RUN",
+      "detail": "--technical-only requested; no browser result is implied"
+    },
+    {
+      "id": "judge-qa-png-validation",
+      "status": "NOT RUN",
+      "detail": "--technical-only requested; no browser result is implied"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "public-demo-url",
+      "status": "BLOCKED",
+      "detail": "no verified public deployment URL; local server is not deployment proof"
+    },
+    {
+      "id": "public-video",
+      "status": "BLOCKED",
+      "detail": "no produced, inspected and public demo video supplied"
+    },
+    {
+      "id": "submission-receipt",
+      "status": "BLOCKED",
+      "detail": "human must sign in, submit and retain the actual portal receipt"
+    },
+    {
+      "id": "solana-proof",
+      "status": "BLOCKED",
+      "detail": "no verified deployed devnet escrow/reassignment/payout evidence supplied; use contingency script"
+    }
+  ],
+  "technicalStatus": "BLOCKED",
+  "submissionStatus": "BLOCKED",
+  "artifacts": "/workspace/work/final-technical-preflight",
+  "finishedAt": "2026-11-08T13:39:22.636Z"
+}

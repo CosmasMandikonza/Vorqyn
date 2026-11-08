@@ -1,0 +1,32 @@
+{
+  "scope": "Read-only published owner tests against installed QA harness contracts; not owner frozen workspace or authenticated E2E",
+  "harnessSha": "b097ce860054e11d6c99bc7da01a2863baf12ecf",
+  "harnessDirty": false,
+  "recordedAt": "2026-11-08T13:34:14.025167+00:00",
+  "suites": [
+    {
+      "pr": 54,
+      "targetSha": "65708585b46b42e32516bd0df8b58d8ecf9e84b0",
+      "targetDirty": false,
+      "command": "INTEGRATION_TARGET_ROOT=/workspace/work/final-pr54 INTEGRATION_OWNER_SUITE=mission-orchestration pnpm --filter @vorqyn/web exec vitest run --config ../../scripts/integration/owner-vitest.config.mts --reporter=json --outputFile=/workspace/work/final-owner54-verified.json",
+      "total": 26,
+      "passed": 26,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "status": "PASS"
+    },
+    {
+      "pr": 58,
+      "targetSha": "cd739b695c247a40834fdf1e8aacabcb7b58594e",
+      "targetDirty": false,
+      "command": "INTEGRATION_TARGET_ROOT=/workspace/work/final-pr58 INTEGRATION_OWNER_SUITE=evidence-adapter pnpm --filter @vorqyn/web exec vitest run --config ../../scripts/integration/owner-vitest.config.mts --reporter=json --outputFile=/workspace/work/final-owner58-verified.json",
+      "total": 46,
+      "passed": 46,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "status": "PASS"
+    }
+  ]
+}

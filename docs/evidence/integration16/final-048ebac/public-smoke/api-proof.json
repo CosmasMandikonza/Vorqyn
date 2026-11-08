@@ -1,0 +1,33 @@
+{
+  "sourceKind": "SYNTHETIC_SIM",
+  "matchedSimulatorTimeMs": 1000,
+  "optical": {
+    "control": 0.692125,
+    "faulted": 0.083055
+  },
+  "sonar": {
+    "control": 0.63932,
+    "faulted": 0.63932
+  },
+  "repeatedTraceIdentical": true,
+  "limits": [
+    {
+      "name": "101 operations",
+      "status": 400
+    },
+    {
+      "name": "13 steps per operation",
+      "status": 400
+    },
+    {
+      "name": "408 total steps",
+      "status": 400
+    }
+  ],
+  "body16385Bytes": 413,
+  "malformedJson": 400,
+  "getMethod": 405,
+  "maximumStepsAccepted": 400,
+  "maximumResponseBytes": 793246,
+  "perIpRateLimit": "NOT IMPLEMENTED by this route; trace bounds are not an incoming request quota"
+}

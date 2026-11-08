@@ -1,0 +1,14 @@
+{
+  "scope": "Actual corrected owner testfiles against frozen clean QA harness; not authenticated E2E or owner full workspace CI",
+  "harnessSha": "a1383739727cb083e6889bed2d0baa7c5f7470e6",
+  "harnessDirty": false,
+  "targetSha": "35e6cd3b5899ac3ba9b2b6b2604e7bd76144b584",
+  "targetDirty": false,
+  "recordedAt": "2026-11-08T13:46:12.250119+00:00",
+  "command": "INTEGRATION_TARGET_ROOT=/workspace/work/final-pr58 INTEGRATION_OWNER_SUITE=evidence-adapter pnpm --filter @vorqyn/web exec vitest run --config ../../scripts/integration/owner-vitest.config.mts --reporter=json --outputFile=/workspace/work/final-owner58-corrected.json",
+  "total": 54,
+  "passed": 54,
+  "failed": 0,
+  "pending": 0,
+  "status": "PASS"
+}

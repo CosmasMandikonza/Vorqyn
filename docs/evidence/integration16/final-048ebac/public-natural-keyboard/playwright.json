@@ -1,0 +1,465 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/integration16/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/public-camera.config.mjs"
+    ],
+    "configFile": "/workspace/work/integration16/scripts/release/public-camera.config.mjs",
+    "rootDir": "/workspace/work/integration16/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/integration16/scripts/release/prepare-public-camera.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/final-public-natural-keyboard/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "public-camera",
+        "name": "public-camera",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "judge-qa-cross-system.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/final-public-natural-keyboard/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "public-camera",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "judge-qa-cross-system.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "https://vorqynweb-production.up.railway.app",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          },
+          "actionTimeout": 10000,
+          "navigationTimeout": 30000
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "public-camera"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/final-public-natural-keyboard/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "judge-qa-cross-system.spec.ts",
+      "file": "judge-qa-cross-system.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "cross-system camera light 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24596,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:40:17.821Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-38dbe9a1bc34e39951bb",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21160,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:40:43.463Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-7704f4cae7fa023e19f2",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35914,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:41:04.662Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-34edb9e700df42410c92",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31907,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:41:40.640Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-d1e8b584afdbf5be421f",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19185,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:42:12.630Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-ec6a153cfa9d563c81f9",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22393,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:42:31.845Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-6f4b7b0d9bd040e0eeca",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32198,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:42:54.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-3fbdf6c096d0526763a6",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "public-camera",
+                  "projectName": "public-camera",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 48089,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T13:43:26.522Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-f723a322807b65bef453",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T13:40:16.332Z",
+    "duration": 239031.204,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

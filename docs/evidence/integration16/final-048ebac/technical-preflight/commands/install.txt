@@ -1,0 +1,23 @@
+Scope: all 5 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +414
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 414, reused 199, downloaded 0, added 0
+Progress: resolved 414, reused 414, downloaded 0, added 140
+Progress: resolved 414, reused 414, downloaded 0, added 256
+Progress: resolved 414, reused 414, downloaded 0, added 414, done
+
+devDependencies:
++ eslint 10.14.0
++ typescript-eslint 8.72.1
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: bufferutil@4.2.0, esbuild@0.25.12,                  │
+│   utf-8-validate@6.0.6.                                                      │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 5.4s using pnpm v10.34.5
