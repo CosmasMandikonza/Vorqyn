@@ -174,16 +174,20 @@ for (const theme of ["light", "dark"])
           }
         }
         // Keyboard activation still has to work even when geometry assertions failed.
-        for (const name of [
+        const reset = group.getByRole("button", { name: "RESET", exact: true });
+        if (width < 400) await reset.tap();
+        else await reset.click();
+        for (const [index, name] of [
           "RESET",
           "AIR",
           "LAND",
           "UW",
           "INSPECT",
           "FOLLOW",
-        ]) {
+        ].entries()) {
           const button = group.getByRole("button", { name, exact: true });
-          await button.focus();
+          if (index > 0) await page.keyboard.press("Tab");
+          await expect(button).toBeFocused();
           await page.keyboard.press("Enter");
           await expect(button).toHaveAttribute("aria-pressed", "true");
         }
