@@ -31,9 +31,9 @@
 
 use anchor_lang::prelude::*;
 
-// Throwaway placeholder program id (no keypair exists or is committed);
-// replaced via `anchor keys sync` at devnet deployment time.
-declare_id!("AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc");
+// Devnet program identity (dedicated keypair, held by the Lane 1 deployer;
+// backup in encrypted Seahorse entry — see docs/release/DEPLOYMENT_RUNBOOK.md).
+declare_id!("ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL");
 
 // ---------------------------------------------------------------------------
 // Seeds (CHAIN_SEAM.md §4)

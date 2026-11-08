@@ -8,7 +8,7 @@
  * account after each step and recording real transaction signatures.
  *
  * Prereqs (from the escrow worktree):
- *   solana-test-validator --bpf-program AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc \
+ *   solana-test-validator --bpf-program ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL \
  *     <escrow-worktree>/programs/vorqyn/target/deploy/vorqyn.so --quiet
  * The .so must be built with VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey
  * <admin.json>) and VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR must point at the

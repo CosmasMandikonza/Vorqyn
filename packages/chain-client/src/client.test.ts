@@ -30,7 +30,7 @@ const OWNER = new PublicKey(fixtures.owner);
 const MISSION_PDA = fixtures.missionPda;
 const TASK_PDA = fixtures.taskPda;
 const VAULT_PDA = fixtures.vaultPda;
-const REGISTRY_PDA = "4NAwAQS1UzjMZCrewZmvJ8HB97S5UkVzR2qurfkWVnu6";
+const REGISTRY_PDA = "Hfyowne8ZcUaKLjzYP2VLekrfuFyX18GXau1M4pNoRSf";
 
 // Rust try_serialize output (discriminator + borsh fields).
 const MISSION_HEX = fixtures.missionHex;
