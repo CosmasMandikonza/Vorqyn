@@ -34,6 +34,10 @@ solana-message = "4"
 solana-transaction = "4"
 solana-signer = "3"
 solana-keypair = "3"
+# Test-only: decode Anchor event payloads from program logs to assert the
+# TaskReassigned event byte-for-byte (already in the lock graph via the
+# solana crates; no production dependency).
+base64 = "0.22"
 
 # Registers the Solana SBF target_os value so host-side cargo check/clippy
 # do not flag cfg(target_os = "solana") emitted by Anchor macros.

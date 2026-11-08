@@ -1,7 +1,7 @@
-# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04)
+# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04 + VQ-05 + VQ-06)
 
 > Status: implemented and tested with **LiteSVM simulated execution**
-> (15 integration tests + 3 unit tests). **No devnet deployment has been
+> (43 integration tests + 3 unit tests). **No devnet deployment has been
 > performed and none is claimed.** Interface alignment:
 > `packages/contracts/CHAIN_SEAM.md` (DRAFT agreement with the VQ-01 owner).
 
@@ -45,11 +45,66 @@
 | `initialize_mission(mission_id, verifier_authority, expiry)` | owner (payer) | ID rule; expiry 0 or future (Clock); mission+vault PDAs created |
 | `fund_mission(amount)` | owner | amount > 0; mission seeds+`has_one = owner`; vault delta verified == amount after CPI; ledger credited via checked `credit_funding` |
 | `create_task(task_id, task_kind, budget_lamports)` | owner | ID rule; not expired; budget ≤ `remaining_lamports`; full budget reserved atomically; task PDA uniqueness makes duplicate IDs impossible |
-| `assign_task(task_id, operator, reward_lamports)` | owner | not expired; task `Unassigned` (double-assign rejected — reassignment is VQ-05); reward ≤ task budget; `budget - reward` released back to remaining; version 0 → 1 |
+| `assign_task(task_id, operator, reward_lamports)` | owner | not expired; task `Unassigned` (double-assign rejected — reassignment is `authorize_reassignment`); reward ≤ task budget; `budget - reward` released back to remaining; version 0 → 1 |
+| `authorize_reassignment(task_id, expected_assignment_version, new_operator, reward_lamports)` (VQ-05) | owner | not expired; task `Assigned` **and** `paid_version` is None; `expected_assignment_version == current_assignment_version` (compare-and-set); `new_operator` ≠ default pubkey; quote ≤ task budget; raise topped up from remaining / cut released back; version +1 atomically; `evidence_digest`+`accepted_version` cleared (old operator's proof eligibility invalidated); emits `TaskReassigned` |
+| `verify_and_claim(task_id, expected_assignment_version, evidence_digest, policy_version, attestation_expiry)` (VQ-06) | verifier authority (co-signer; any payer may relay) | mission Active + not expired; attestation window valid; signer == `mission.verifier_authority`; digest non-zero; task `Assigned` + `paid_version` None (TWO independent one-time guards); version CAS (stale proofs from before a reassignment rejected); payout destination is program-controlled == `task.current_operator`; direct checked lamport move vault→operator (program-owned PDA — the system program cannot CPI-debit it); `funded` and `reserved` shrink together; task → `Paid` terminal state; emits `TaskPaid` (recipientWallet etc.) |
+| `close_mission()` (VQ-06) | owner | mission Active; `reserved == 0` OR mission expired (expiry/cancellation policy); full vault drain to `mission.owner` via direct lamports (zero-lamport vault GC'd); mission → `Closed` terminal; repeat close and ALL other mission instructions rejected afterwards |
 
-**Explicitly out of scope (later issues):** `authorize_reassignment`
-(VQ-05), `verify_and_claim` payout, AI delegate authority, close/refund
-transfers.
+**Explicitly out of scope (later issues):** operator registry,
+AI delegate authority. `verify_and_claim` is implemented (VQ-06); the
+evidence DIGEST producer is VQ-10 (typed fixture boundary until then).
+
+## 2a. Verifier registry (VQ-06 security correction — P0/P1)
+
+| Instruction | Signer | Key constraints |
+| --- | --- | --- |
+| `initialize_verifier_registry(policy_version)` | first mover (deployer) | one-time `init` of the global registry PDA `[vorqyn:verifier-registry]`; the signing payer becomes the admin; policy_version > 0 |
+| `register_verifier(verifier)` | registry admin | `has_one = admin`; rejects default key and duplicates; max 8 entries |
+| `revoke_verifier(verifier)` | registry admin | removes the key; IMMEDIATE effect for new missions AND existing claims |
+| `set_policy_version(v)` | registry admin | rotates the authoritative accepted policy version (definitions in VQ-10) |
+
+- `initialize_mission` now REQUIRES `verifier_authority ∈ registry
+  .verifiers` (P0: mission owners can no longer self-appoint a verifier
+  they control — reproduced failing-first, then fixed).
+- `verify_and_claim` RE-CHECKS registration at claim time (a revoked key
+  cannot authorize payouts for missions created earlier) and requires
+  `policy_version == registry.policy_version` (P1) and a STRICTLY-future
+  `attestation_expiry` (no "never expires" bypass; 0 is rejected).
+
+## 5c. Trust boundary: who controls verifier registration
+
+- **Registration authority = the registry admin, authorized at BUILD
+  time.** `initialize_verifier_registry` may ONLY be called by the
+  administrator whose base58 pubkey was compiled into the deployment
+  binary via the `VORQYN_REGISTRY_ADMIN` build variable
+  (`registry_admin_pubkey_string()`). The build default is the Solana
+  system-program id — a key no wallet can sign with — so a default build
+  is UNBOOTSTRAPPABLE and an arbitrary first caller (attacker racing a
+  fresh deployment) is rejected with `NotRegistryAdmin` (failing-first
+  regression test included). CI generates an ephemeral admin keypair per
+  run; the secret never enters the repository.
+- **REQUIRED DEPLOYMENT AGREEMENT (before any devnet deployment):** the
+  VORQYN deploying party (Lane 1, human-owned) must (1) generate a
+  dedicated registry-admin keypair in a secure wallet (NOT a mission
+  owner's key, NOT an operator key, NOT an AI key), (2) build the
+  deployment .so with `VORQYN_REGISTRY_ADMIN=<that pubkey>`, (3) record
+  the pubkey (public information) in the deployment runbook. A multisig
+  is recommended for post-hackathon operation. Without this agreement
+  the program safely refuses all registry bootstrapping.
+- **Remaining centralized trust assumptions (honest list):**
+  1. The deploying party controls the verifier set and policy version.
+     This is intentional for the hackathon: an independent HUMAN-reviewed
+     registration authority instead of per-mission self-appointment.
+  2. ~~Bootstrap is first-mover~~ RESOLVED: the administrator is
+     authorized at BUILD time (compiled-in pubkey), so no frontrunner can
+     claim the registry on any cluster — including a default build, which
+     can never be bootstrapped at all.
+  3. The program validates AUTHORIZATION over a digest; physical/sensor
+     truth remains the registered verifier's responsibility (unchanged).
+- **Independence guarantees (tested):** an owner-generated verifier key
+  fails mission init (`VerifierNotRegistered`); owners/operators/
+  attackers cannot call register/revoke/rotate (`NotRegistryAdmin`);
+  revocation kills both new missions and existing claims immediately.
 
 ## 3. Accounting invariants (all enforced with checked arithmetic)
 
@@ -76,9 +131,76 @@ No such instruction exists in VQ-04; funds can only ENTER the vault today.
 
 ## 5. Events
 
-`MissionInitialized`, `MissionFunded`, `TaskCreated`, `TaskAssigned` —
-emitted for the future TS client (VQ-12) and mirrored field-for-field with
-CHAIN_SEAM §6 receipt semantics.
+`MissionInitialized`, `MissionFunded`, `TaskCreated`, `TaskAssigned`,
+`TaskReassigned`, `TaskPaid`, `MissionClosed` — emitted for the future
+TS client (VQ-12) and mirrored field-for-field with CHAIN_SEAM §6
+receipt semantics. `TaskReassigned` carries the Finding-D bindings
+(`task_id`, new `assignment_version`, `reward_lamports` == receipt
+`amountLamports`) plus `new_payout_wallet` (IDL `newPayoutWallet`);
+`TaskPaid` carries the same bindings plus `recipient_wallet` (IDL
+`recipientWallet`) — together the complete CHAIN_SEAM §8 Q5 answer:
+receipts are self-verifying for reassignment AND payout. Byte-exact
+emission of both events is asserted in the test suite (discriminator +
+borsh payload matched against the program-log base64).
+
+## 5b. Payout & close semantics (VQ-06) — trusted boundary and invariants
+
+- **TRUSTED VERIFIER BOUNDARY:** the chain validates AUTHORIZATION over
+  an opaque 32-byte digest co-signed live by `mission
+  .verifier_authority`. It does NOT validate physical/sensor truth —
+  the verifier authority owns that responsibility. The digest producer
+  is VQ-10; until it lands, digests are a typed fixture boundary.
+- **Live co-signing beats replayable attestations:** the verifier signs
+  the exact transaction (task, version, digest, policy, window), so an
+  approval cannot be replayed against another task or a later version;
+  the CAS on `expected_assignment_version` independently rejects proofs
+  from before a reassignment (stale ROV A proof → ROV B threat).
+- **One-time payout, defense in depth:** duplicates are rejected by TWO
+  independently sufficient guards (`TaskStatus::Paid` and
+  `paid_version`). Mutation checks confirm removing either single
+  guard still rejects repeats; both set atomically after the transfer.
+- **Money movement:** the vault is a program-owned PDA, so payouts and
+  refunds use direct checked lamport moves (the system program refuses
+  to CPI-debit non-system accounts — `ExternalAccountLamportSpend`).
+  `funded`/`reserved` shrink together on payout, preserving
+  `reserved + remaining == funded`; the vault always stays
+  rent-exempt. Close drains to zero and the vault account is GC'd.
+- **Claims after mission expiry are rejected** (SOLANA_PROTOCOL §6);
+  **close after expiry is the release path** — it refunds everything
+  including unclaimed reservations (documented expiry/cancellation
+  policy). Claims and every other instruction are rejected on Closed
+  missions.
+
+## 5a. Reassignment semantics (VQ-05) — what the chain does and does NOT decide
+
+- **Eligibility (on-chain subset):** `status == Assigned` and
+  `paid_version.is_none()`. This is the money/authority layer only.
+  The mission-workflow layer (only `evidence_insufficient` /
+  `recovery_pending` tasks may be reassigned) stays in the contracts
+  reducer — the two layers compose, they do not duplicate.
+- **Failed/partial/paid task states:** do not exist on chain yet. When
+  VQ-06 adds them, the single allowlist line in
+  `authorize_reassignment` (`task.status == TaskStatus::Assigned`) is
+  the only place to extend; the guard on `paid_version` already
+  enforces "already-paid task cannot be reassigned"
+  (SOLANA_PROTOCOL §5) for the paid end-state (regression-tested by
+  forging a paid account through LiteSVM `set_account`).
+- **Old-operator invalidation:** `current_operator` is replaced and
+  `evidence_digest`/`accepted_version` are cleared. VQ-06's
+  `verify_and_claim` must ADDITIONALLY require
+  `accepted_version == Some(current_assignment_version)` at claim time,
+  so a stale proof from before a reassignment can never pay
+  (belt-and-suspenders with the clearing here).
+- **Operator identity:** the chain takes the payout wallet `Pubkey`
+  only (CHAIN_SEAM §3) and rejects the zero pubkey. Eligibility vs the
+  `OperatorRegistration` registry, capability matching and
+  new==old equality remain off-chain policy (registry integration is
+  the documented VQ-03/VQ-04 dependency; issue #6 assigns those
+  rejections to deterministic off-chain policy).
+- **Delegate path (deferred):** issue #6 marks the mission-scoped,
+  capped, revocable delegate as optional. NOT implemented: the
+  owner-signed path is the P0 deliverable; delegate scope fields would
+  expand the Mission account and are deferred with explicit sign-off.
 
 ## 6. Build, test, deploy prerequisites
 
@@ -87,8 +209,12 @@ CHAIN_SEAM §6 receipt semantics.
 # itself compiles under the Anchor MSRV 1.89.0 — `cargo +1.89.0 check`).
 # Agave CLI (cargo-build-sbf): https://release.anza.xyz/stable/install
 cd programs/vorqyn
-cargo build-sbf          # produces ../../target/deploy/vorqyn.so
-cargo test               # 3 unit + 15 LiteSVM integration tests
+cargo build-sbf          # produces target/deploy/vorqyn.so (crate-local)
+VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <gitignored-admin.json) \
+  cargo build-sbf          # compiles the test admin into the .so
+VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR=<gitignored-admin.json> \
+VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <gitignored-admin.json) \
+  cargo test               # 3 unit + 44 LiteSVM integration tests
 cargo fmt --check && cargo clippy --all-targets -- -D warnings
 ```
 

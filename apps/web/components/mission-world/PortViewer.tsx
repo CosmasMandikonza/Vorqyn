@@ -32,6 +32,9 @@ import {
 } from "./demo-sim/client";
 import { fixtureDemoTransport, FIXTURE_TRANSPORT_QUERY_PARAM } from "./demo-sim/fixture";
 import { useDemoPlayback } from "./demo-sim/useDemoPlayback";
+import { buildFaultSeries, faultStartIndex } from "./fault-series";
+import { buildGhostPaths, type GhostPaths } from "./ghost-paths";
+import { buildDiveLegs, nextLegIndex } from "./world-dive";
 
 /** R3F Canvas itself must never render during SSR. */
 const PortSceneDynamic = dynamic(() => import("./PortScene").then((m) => m.PortScene), { ssr: false });
@@ -114,6 +117,58 @@ export function PortViewer() {
   const selectedLive =
     liveRobots?.find((r) => r.robotId === selectedMachine?.robotId) ?? null;
 
+  // Mission Fracture + Ghost Replay data: derived strictly from the recorded
+  // kernel observation log (Issue #15, sections B and C).
+  const snapshots = useMemo(() => playback.response?.snapshots ?? [], [playback.response]);
+  const faultSeries = useMemo(() => buildFaultSeries(snapshots, "rov-01"), [snapshots]);
+  const faultIndex = faultStartIndex(faultSeries);
+  const ghostPaths: GhostPaths = useMemo(
+    () => buildGhostPaths(snapshots, "rov-01", faultIndex),
+    [snapshots, faultIndex],
+  );
+  const hasFault = faultIndex !== null;
+  const [ghostVisible, setGhostVisible] = useState(true);
+
+  // World Dive (Issue #15, section A): timed playthrough of calibrated
+  // stations. Any operator input cancels; reduced motion disables it.
+  const [diveActive, setDiveActive] = useState(false);
+  const [diveLegIndex, setDiveLegIndex] = useState(0);
+  const diveTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const cancelDive = useCallback(() => {
+    diveTimersRef.current.forEach(clearTimeout);
+    diveTimersRef.current = [];
+    setDiveActive(false);
+  }, []);
+  const startDive = useCallback(() => {
+    if (reducedMotion || diveActive) return;
+    cancelDive();
+    setDiveActive(true);
+    const legs = buildDiveLegs();
+    setDiveLegIndex(0);
+    setMode(legs[0]!.station);
+    diveTimersRef.current = legs.map((leg, index) =>
+      setTimeout(() => {
+        const next = nextLegIndex(index);
+        if (next === null) {
+          setDiveActive(false);
+          setMode("INSPECT");
+          return;
+        }
+        setDiveLegIndex(next);
+        setMode(legs[next]!.station);
+      }, (index + 1) * leg.durationMs),
+    );
+  }, [reducedMotion, diveActive, cancelDive]);
+  useEffect(() => () => cancelDive(), [cancelDive]);
+  const setModeAndResetInspect = useCallback(
+    (next: UiViewMode) => {
+      cancelDive();
+      setMode(next);
+      setInspectIndex(0);
+    },
+    [cancelDive],
+  );
+
   const pose: CameraPose | null = useMemo(() => {
     if (state.phase !== "ready") return null;
     if (mode === "FOLLOW") {
@@ -142,11 +197,6 @@ export function PortViewer() {
 
   const cycleInspect = useCallback(() => {
     setInspectIndex((index) => index + 1);
-  }, []);
-
-  const setModeAndResetInspect = useCallback((next: UiViewMode) => {
-    setMode(next);
-    setInspectIndex(0);
   }, []);
 
   const inspectAnchor =
@@ -211,35 +261,69 @@ export function PortViewer() {
       {state.phase === "ready" &&
         (webglAvailable && !force2D ? (
           <div className="relative">
-            {/* Keep the camera bar relative to the canvas only, not the
-                mobile inspector below it. Otherwise the bar covers the
-                inspector and disappears beneath the scene on small screens. */}
+            {/* The desktop inspector overlay lives INSIDE WorldCanvasFrame
+                (overflow-hidden, 62vh) so its absolute insets physically clip
+                to the canvas bounds — it can never reach the PlaybackBar
+                below (the 1024px Replay-interception defect from PR #43 QA).
+                The camera station bar is likewise bounded to the canvas
+                region, not the mobile inspector below it. */}
             <div className="relative">
-              <WorldCanvasFrame>
-                <PortSceneDynamic
-                  world={state.world}
-                  selectedId={selectedId}
-                  onSelect={setSelectedId}
-                  pose={pose}
-                  reducedMotion={reducedMotion}
-                  lowGpu={lowGpu.current}
-                  onContextLost={() => setContextLost(true)}
-                  onContextRestored={() => setContextLost(false)}
-                  liveRobots={liveRobots}
-                  sessionKernelState={
-                    playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null
-                  }
-                  followTarget={followTarget}
+              <div onPointerDownCapture={cancelDive} className={diveActive ? "contents" : undefined}>
+                <WorldCanvasFrame>
+                  <PortSceneDynamic
+                    world={state.world}
+                    selectedId={selectedId}
+                    onSelect={setSelectedId}
+                    pose={pose}
+                    reducedMotion={reducedMotion}
+                    lowGpu={lowGpu.current}
+                    onContextLost={() => setContextLost(true)}
+                    onContextRestored={() => setContextLost(false)}
+                    liveRobots={liveRobots}
+                    sessionKernelState={
+                      playback.latestSnapshot?.kernelState ?? playback.response?.state.kernelState ?? null
+                    }
+                    followTarget={followTarget}
+                    ghostPaths={ghostVisible ? ghostPaths : null}
+                  />
+                  {/* Desktop inspector — clipped by the frame's own
+                      overflow-hidden; scrollable within the canvas bounds. */}
+                  <aside
+                    className="absolute top-3 right-3 bottom-16 hidden w-78 overflow-y-auto lg:block"
+                    data-testid="inspector-overlay"
+                  >
+                    <InspectorPanel
+                      world={state.world}
+                      pose={pose}
+                      mode={mode === "FOLLOW" ? "RESET" : mode}
+                      selectedId={selectedId}
+                      onSelect={setSelectedId}
+                      inspectIndex={inspectIndex}
+                      onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
+                      limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
+                      sensorRobot={selectedLive}
+                      compact
+                    />
+                  </aside>
+                </WorldCanvasFrame>
+                {diveActive && (
+                  <DiveChip
+                    dive={{ label: buildDiveLegs()[diveLegIndex]?.label ?? "" }}
+                    onSkip={() => {
+                      cancelDive();
+                      setMode("INSPECT");
+                    }}
+                  />
+                )}
+                <ViewModeBar
+                  mode={mode}
+                  onChange={setModeAndResetInspect}
+                  inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
+                  onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
+                  followEnabled={sessionActive && Boolean(selectedLive)}
                 />
-              </WorldCanvasFrame>
-              <ViewModeBar
-                mode={mode}
-                onChange={setModeAndResetInspect}
-                inspectAnchor={mode === "INSPECT" ? inspectAnchor : undefined}
-                onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                followEnabled={sessionActive && Boolean(selectedLive)}
-              />
-            </div>
+              </div>
+              </div>
             {contextLost && (
               <div className="notice" role="alert">
                 The 3D context was interrupted by the browser or graphics driver.
@@ -257,7 +341,14 @@ export function PortViewer() {
               </div>
             )}
             <div className="mt-4">
-              <PlaybackBar playback={playback} />
+              <PlaybackBar
+                playback={playback}
+                faultSeries={faultSeries}
+                viewIndex={playback.viewIndex}
+                onSelectIndex={playback.setViewIndex}
+                ghost={hasFault ? { visible: ghostVisible, onToggle: () => setGhostVisible((v) => !v), pre: ghostPaths.pre, post: ghostPaths.post } : null}
+                dive={{ available: !reducedMotion, active: diveActive, legLabel: buildDiveLegs()[diveLegIndex]?.label ?? "", onStart: startDive, onSkip: () => { cancelDive(); setMode("INSPECT"); } }}
+              />
             </div>
             <div className="mt-4 lg:hidden">
               <InspectorPanel
@@ -272,23 +363,6 @@ export function PortViewer() {
                 sensorRobot={selectedLive}
               />
             </div>
-            <aside
-              className="absolute top-3 right-3 bottom-24 hidden w-78 overflow-y-auto lg:block"
-              data-testid="inspector-overlay"
-            >
-              <InspectorPanel
-                world={state.world}
-                pose={pose}
-                mode={mode === "FOLLOW" ? "RESET" : mode}
-                selectedId={selectedId}
-                onSelect={setSelectedId}
-                inspectIndex={inspectIndex}
-                onCycleInspect={mode === "INSPECT" ? cycleInspect : undefined}
-                limitations={sessionActive ? PLAYBACK_LIMITATIONS_TEXT : LIMITATIONS_TEXT}
-                sensorRobot={selectedLive}
-                compact
-              />
-            </aside>
           </div>
         ) : (
           <div>
@@ -304,7 +378,14 @@ export function PortViewer() {
               sequence={playback.latestSnapshot?.sequence ?? null}
             />
             <div className="mt-4">
-              <PlaybackBar playback={playback} />
+              <PlaybackBar
+                playback={playback}
+                faultSeries={faultSeries}
+                viewIndex={playback.viewIndex}
+                onSelectIndex={playback.setViewIndex}
+                ghost={hasFault ? { visible: ghostVisible, onToggle: () => setGhostVisible((v) => !v), pre: ghostPaths.pre, post: ghostPaths.post } : null}
+                dive={{ available: !reducedMotion, active: diveActive, legLabel: buildDiveLegs()[diveLegIndex]?.label ?? "", onStart: startDive, onSkip: () => { cancelDive(); setMode("INSPECT"); } }}
+              />
             </div>
           </div>
         ))}
@@ -385,6 +466,19 @@ function LoadingVeil() {
   );
 }
 
+function DiveChip({ dive, onSkip }: { dive: { label: string }; onSkip: () => void }) {
+  return (
+    <div className="absolute left-3 top-3 z-10 flex items-center gap-2" data-testid="dive-chip">
+      <span className="badge border-primary bg-primary font-mono text-primary-foreground">
+        World Dive · {dive.label}
+      </span>
+      <button type="button" className="button button-secondary !min-h-9 !px-2.5 text-xs" onClick={onSkip}>
+        Skip dive
+      </button>
+    </div>
+  );
+}
+
 function ViewModeBar({
   mode,
   onChange,
@@ -400,9 +494,12 @@ function ViewModeBar({
 }) {
   const modes: UiViewMode[] = ["RESET", "AIR", "LAND", "UNDERWATER", "INSPECT", "FOLLOW"];
   return (
-    <div className="absolute bottom-3 left-3 z-10 flex flex-wrap items-center gap-2">
-      <div className="halo-segmented bg-card/90 backdrop-blur-sm" role="group" aria-label="Camera station">
-        <div className="halo-options">
+    <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-wrap items-center gap-2">
+      {/* At 320px the six stations exceed the frame width: the segmented row
+          scrolls INTERNALLY so the bar never overflows the canvas frame or
+          the page. Hit-target heights stay >= 44px. */}
+      <div className="halo-segmented max-w-full bg-card/90 backdrop-blur-sm" role="group" aria-label="Camera station">
+        <div className="halo-options max-w-full overflow-x-auto">
           {modes.map((m) => (
             <button
               key={m}
@@ -414,6 +511,7 @@ function ViewModeBar({
                   ? "Available while a synthetic survey session is producing observations"
                   : undefined
               }
+              className="!min-w-0 shrink-0 !px-2.5"
               onClick={() => onChange(m)}
             >
               {m === "UNDERWATER" ? "UW" : m}
