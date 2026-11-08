@@ -1,0 +1,70 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T01:42:14.499Z",
+  "sourceSha": "efddcda8d9a68c5105be1f1a1e5efa8142b59c96",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16",
+  "targetSha": "efddcda8d9a68c5105be1f1a1e5efa8142b59c96",
+  "targetDirty": false,
+  "scope": "Current checkout; existing boundaries and pending connection acceptance",
+  "checks": [
+    {
+      "id": "existing-boundaries",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "tests/cross-system/boundaries.test.tsx",
+        "--reporter=json",
+        "--outputFile=/workspace/work/integration16-main-gate/existing-boundaries.json"
+      ],
+      "log": "existing-boundaries.txt",
+      "report": "existing-boundaries.json",
+      "stats": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "BLOCKED",
+      "detail": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "BLOCKED",
+      "detail": "Simulator-relative sources 500,1000,1500,2000,2500,3000,3500,4000 vs epoch capture 1762000000020; no clock rebasing invented"
+    },
+    {
+      "id": "chain-client",
+      "status": "BLOCKED",
+      "detail": "packages/chain-client/src/lifecycle.ts absent at target SHA; connection assertions not run"
+    },
+    {
+      "id": "recovery",
+      "status": "BLOCKED",
+      "detail": "services/mission/recovery/src/index.ts absent at target SHA; connection assertions not run"
+    },
+    {
+      "id": "handoff",
+      "status": "BLOCKED",
+      "detail": "apps/web/components/mission-world/economic-handoff/boundary.ts absent at target SHA; connection assertions not run"
+    },
+    {
+      "id": "orchestrator",
+      "status": "BLOCKED",
+      "detail": "services/mission/orchestration absent at target SHA; connection assertions not run"
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "status": "BLOCKED",
+  "finishedAt": "2026-11-08T01:42:23.778Z"
+}

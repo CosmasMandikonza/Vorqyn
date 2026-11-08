@@ -1,0 +1,19 @@
+{
+  "baseMainSha": "10b09e67bd18c1d755add2e09ba4a2739f1e85a9",
+  "branch": "test/lane2-cross-system-integration-gate",
+  "boundaryHarnessSha": "efddcda8d9a68c5105be1f1a1e5efa8142b59c96",
+  "browserAndLatestRecoveryHarnessSha": "002c765ffbfc7da40dc80f0e731cca89408565fa",
+  "ownerTargets": {
+    "chainClient": "3be9eeee8bf015f4fafe88423d1e452b44637363",
+    "recovery": "45b5762cd159b656271d51a85a06c0df77beee78",
+    "economicHandoff": "43d8059c7c6da6afc72d21ea3e568b6cbef9f8f8"
+  },
+  "orchestratorAcceptance": "NOT RUN \u2014 no merged implementation or real binding",
+  "chainCalls": "NOT RUN \u2014 no transaction signing/submission/RPC receipt check",
+  "runtime": {
+    "node": "22.21.1",
+    "pnpm": "10.34.5",
+    "chromium": "156.0.8078.79"
+  },
+  "logNormalization": "ANSI escape sequences and trailing whitespace removed; substantive output/results retained"
+}

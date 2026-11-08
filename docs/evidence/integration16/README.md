@@ -1,0 +1,62 @@
+# Issue #16 — cross-system development integration gate
+
+This is a bounded development QA slice. **The connected mission recovery flow remains BLOCKED.** Passing component/negative tests do not establish accepted replacement work, authenticated event ingestion, owner authorization or payment. No deployment readiness assessment, chain call, invented receipt or product-completion claim is made. Stop for independent review; do not merge or close #14/#15/#16.
+
+Base main: **`10b09e67bd18c1d755add2e09ba4a2739f1e85a9`**, including merged verifier #49 and release-tooling #52. Branch: `test/lane2-cross-system-integration-gate`. Clean boundary/owner-diagnostic harness source: `efddcda8d9a68c5105be1f1a1e5efa8142b59c96`. Browser source after correcting the test's theme storage key: `002c765ffbfc7da40dc80f0e731cca89408565fa`. Later evidence-only changes are identified by the final PR head. Production modules are unchanged from selected main. Prior #43/#52 failed evidence remains untouched.
+
+Read handoffs: [#14](https://github.com/CosmasMandikonza/Vorqyn/issues/14#issuecomment-6715217281), [#15](https://github.com/CosmasMandikonza/Vorqyn/issues/15#issuecomment-6715449413), [#16](https://github.com/CosmasMandikonza/Vorqyn/issues/16). Inspected actual merged simulator/journal/contracts/verifier code and read-only Git worktrees of pending PRs; no implementation was copied into this branch.
+
+## Reproduce
+
+See [executable gate instructions](../../../scripts/integration/README.md). With pinned Node 22.21.1 / pnpm 10.34.5 and frozen dependencies:
+
+```bash
+node scripts/integration/gate.mjs --out ../integration-gate-01
+```
+
+Observed exit **2 / BLOCKED** on this branch: **20/20 actual existing-boundary assertions PASS**, zero skipped/todo; metric compatibility, clock mapping and four pending module connections remain BLOCKED. [Machine report](main-gate/report.json), [test-derived metric/clock findings](main-gate/boundary-findings.json), [Vitest output](main-gate/existing-boundaries.txt).
+
+Tests run the real kernel fault trace through the real journal/telemetry constructors and paged guest trace, not a second simulator or a mocked API. They compare fault/control optical and sonar at matched seed/time, serialize/replay the journal and fault transitions, recombine pages, reject altered provenance, preserve separate clocks and reject foreign mission/task/operator/version context at the merged verifier. They confirm observations lack task/version authority and cannot themselves be canonical events. Existing shared contract fixtures exercise duplicate/tampered replay and refusal of payment without a confirmed payout record. **Those fixture signatures are not observed transactions.** The pure reducer validates data/transitions; it is not an authentication or verifier-signature check. No passing fixture test can authenticate an ingress caller.
+
+## Cross-team blockers and minimal owner actions
+
+| Priority / owner | Observed evidence | Required integration action |
+| --- | --- | --- |
+| P1 — Agent A telemetry adapter + verifier agreement | Bridge `telemetry-bridge.ts:211` emits `qualityMetric.kind=rov-01-optical` with unitless `quality01`; merged policy requires `visibility_m` or `sonar_ping`. Actual evidence is rejected with `sensor_backing_missing` and `metric_missing`, even if caller renames sensor to sonar. | Agree a source-backed measurement interface. Preserve units/modality/provenance and actual sensor records; do not equate quality fraction with visibility metres or invent sonar pings. Add real applicable recovered observations before claiming acceptance. |
+| P1 — Agent A + verifier clock interface | Bridge preserves source/simulator times 500…4000ms; journal fixture receipt epochs are 1762000000000+ordinal. Verifier subtracts sourceTimestamp from epoch capturedAt, producing `sample_stale` by ~1.762e12ms. | Define and test explicit source/capture/receipt clock mapping, including replay and staleness. Keep fixture epochs labelled; do not overwrite simulator time with UTC or widen freshness limits to bypass rejection. |
+| P1 — Agent A canonical orchestrator | `services/mission/orchestration/**` absent at selected main. Observation telemetry has no task/version/operator assignment authority; authenticated canonical ingestion, concurrent append CAS and durable restart are not established. | Bind real API to the test-only `orchestrator-port.ts` driver. Run five executable storage/ingress acceptance cases against actual isolated durable backing. No substitute repository/reducer or fake auth adapter is supplied. Cloud durability and real verifier/signer authorization need their own evidence. |
+| P1 — Omar #51 malformed input | Latest inspected head `45b5762cd159b656271d51a85a06c0df77beee78` (also reproduced at prior `2588ef4`): `checkOffer` calls BigInt before validating number; 1.5, NaN, Infinity each throw. Diagnostic **3 PASS / 4 FAIL** overall. | Validate incoming quote domain before conversion and return typed `quote_invalid`; rerun prepared tests and owner's suite. No owner code edited. |
+| P1 — Omar #51 mission isolation | Same latest head: two missions using the same task/version and one injected attempt store suppress the second mission. `attemptKey` is task+version without mission. This reproduces with real verifier failure reasons, not invented visibility measurements. | Bind deduplication key to mission+task+version (and define proposal correlation at the authority boundary). Preserve unsigned-intent semantics; cross-process storage/idempotency remains separate. |
+| P1 — Omar #50 transaction uncertainty | Actual head `3be9eeee8bf015f4fafe88423d1e452b44637363`: unseen submitted signature remains `submitted`, not `unknown`; **4 PASS / 1 FAIL**. Outage after confirmed and direct finalized reconciliation pass. | Decide/fix unseen-signature semantics without regressing observed confirmation. Rerun the executable test and current artifact local-validator coverage; localnet is not devnet. |
+| P1 — Agent B #53 status truth | Actual head `43d8059c7c6da6afc72d21ea3e568b6cbef9f8f8`: with fixture evidence accepted but no payout transaction submitted, handoff says “payout initiated”. Diagnostic **2 PASS / 1 FAIL**. Observation and foreign-event no-confirmation cases pass. | Show ready/awaiting authorization or unavailable until a submission actually exists. Feed only authority-checked events/receipts from the orchestrator; read-only projection is not RPC attestation. |
+| P1 — Agent B camera row | Current-main full-row browser results and measured rectangles below. | Correct within mission-world ownership, preserve natural pointer/touch/keyboard access, rerun original suite and all 32 whole-row states. Codex does not edit owner files. |
+
+The #51 head advanced during QA; it was fetched and rerun clean at `45b5762` using harness `002c765`, retaining the prior source-pinned failure separately. Candidate diagnostics use **this QA checkout's shared contracts**, with the actual owner source loaded read-only. They are not a full merge or substitutes for owner CI/validator tests. [#50 report](chain-client/report.json), [#51 report](recovery/report.json), [#53 report](handoff/report.json) retain harness/target SHAs, dirty=false, commands, assertions and failures. Unknown/excluded connections are NOT RUN, not PASS. Initial config-path diagnostic failure was corrected before these source-pinned runs; those earlier harness failures are not reported as product defects.
+
+## Browser evidence
+
+Production Chromium 156.0.8078.79, software WebGL, DPR1 ordinary viewports; native zoom uses measured DPR2 browser surfaces. Existing strict 26 tests are unchanged. Eight additional cases measure all six camera controls after clean UW, FOLLOW, INSPECT and fault-UW, giving **32 state captures** at 320×844, 390×844, 1024×900 and 1440×900, both themes. Mobile contexts enable touch and use natural taps; desktop uses ordinary clicks. Keyboard activation follows captures. No forced click, mocked response or global overflow suppression is introduced.
+
+Actual result: **32 PASS / 2 FAIL, zero skipped/flaky**. Original strict cases **26/26 PASS**; new full-row cases **6/8 PASS**, with both 320px theme cases failing. All 32 new PNGs pass integrity; geometry is **24 PASS / 8 FAIL**, all four states in each 320px theme. The original capture validator passes **126/126**; the unchanged legacy 32-state audit independently fails the same eight mobile states.
+
+At 320px clean-UW, FOLLOW has left=285.5625, right=353.75; frame right=300. After FOLLOW/INSPECT, RESET has left=-34, right=20.390625; frame left=20. Document width remains exactly 320. At 390px INSPECT, all six bounds are within frame and viewport (RESET left=36, FOLLOW right=353.75). At 1024/1440, RESET left=64 and FOLLOW right=381.75. The failed tests still collect all four states and exercise keyboard activation. Exact geometry, frame bounds and touch flags are in each sidecar.
+
+Manually inspected eight new captures spanning both themes/all widths, plus five strict captures: light 1024 Replay; light 390 and dark 1440 no-WebGL; dark native-200% home at physical 1440×813 and light native-200% mission at physical 2048×813. FOLLOW clearly shows the selected ROV at 390/1440; fault measurements and Replay text are readable at 1024. The 320 row is visibly clipped; native UW remains obstruction-dominant, so optimal ROV framing is not asserted. No-WebGL shows real synthetic observations plus a separately labelled static-anchor map. This is not a manual review of every image.
+
+Git retains **all 32 new camera PNGs**, eight selected strict PNGs, all strict sidecars and the full [126-capture inventory](browser/strict-capture-inventory.json). Full strict PNGs/traces remain in the recorded original executor directory; regenerate them with the documented command. Running the original 126-PNG validator on the intentionally selected Git subset will correctly fail missing files. Run the new validator against the retained 32-state set:
+
+```bash
+node scripts/integration/validate-camera-evidence.mjs --dir docs/evidence/integration16/browser
+```
+
+It returns exit 1 with **integrity PASS / layout FAIL**, preserving the eight real failures. Representative images: [320 dark INSPECT](browser/integration-camera/full-row-inspect-dark-320x844.png), [390 light FOLLOW](browser/integration-camera/full-row-follow-light-390x844.png), [1024 Replay](browser/screenshots/journey-replay-light-1024x900-dpr1.png).
+
+Results and visual inspection are recorded in [browser summary](browser-summary.json), [raw Playwright report](browser/playwright.json), source/run sidecars and genuine PNGs. The superseded first attempt used the wrong theme storage key and was interrupted; none of its images certify this packet. This corrected run asserts the actual theme class, viewport, PNG IHDR/hash, crop options and source SHA. Header/root document bounds, synthetic fault/replay, 1024 Replay click, no-WebGL and native 200% zoom remain covered by the existing tests. PNG integrity is a separate result from layout correctness.
+
+## Other checks and limits
+
+`pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build` passed. Workspace tests: **90 contracts + 190 web (20 new) + 36 verifier = 316**. Kernel **48/48**, coordinate integration **18/18**. Logs are under [commands](commands). Initial production build began before the QA-only commit; production sources match the pinned main and final-head CI independently checks the final tree. Browser/API checks use that actual local production build, never a deployment claim.
+
+Five orchestrator-driver acceptance cases are prepared/typechecked but **NOT RUN**, because the real API/binding does not exist. No positive full verifier acceptance from the actual simulator, canonical recovery event loop, replacement execution, live model invocation, wallet signer, confirmed economic handoff or stale/duplicate payment chain run was executed. Fixtures/RPC doubles prove software semantics only. No credentials or money authority are added. No fresh outsider/manual assistive-technology or physical-device GPU study was run in this bounded gate.
+
+The narrow PR changes tests/runners and this evidence only. Owners retain all production changes and merge decisions. Independent review should verify both the passing negative checks and the still-failing/blocked connections before choosing the next integration slice.

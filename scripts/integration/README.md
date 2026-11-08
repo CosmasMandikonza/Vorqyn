@@ -41,6 +41,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium \
   --config ../../scripts/release/judge-qa.config.mjs
 node scripts/release/validate-judge-qa.mjs --dir ../integration-browser-01
 node scripts/release/audit-camera-captures.mjs --dir ../integration-browser-01
+node scripts/integration/validate-camera-evidence.mjs --dir ../integration-browser-01
 ```
 
 The original 26 cases remain unchanged. Eight added cases capture four actual camera states at each of 320/390/1024/1440 in both themes, asserting **all six controls** after station changes, both edges within the frame/viewport and touch-target dimensions. Mobile cases use actual touch-enabled contexts and natural taps; desktop uses ordinary clicks. Every PNG is genuine viewport size with IHDR/hash/options/commit/run/theme/DOM sidecars in `integration-camera/`. Soft layout failures preserve all 32 captures; they still fail their tests. Do not treat document width alone or a focused/scrolled button as proof the full row fits. Existing tests retain no-WebGL, keyboard, source/API fault/replay, header/zoom and navigation checks. Keep native browser zoom distinct from CSS zoom.
