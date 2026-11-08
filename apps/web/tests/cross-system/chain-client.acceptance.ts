@@ -20,7 +20,9 @@ function submitted() {
   });
   return client.transition(record, "submitted", "wallet");
 }
-it("unseen submitted signature becomes unknown, never paid or confirmed", async () => {
+// P2: unresolved pending/unobserved status contract. Retaining submitted is
+// non-confirmed too; this red expectation does not demonstrate a payout failure.
+it("unseen submitted signature follows the proposed unknown-state contract", async () => {
   const result = await client.reconcile(submitted(), {
     getSignatureStatus: async () => null,
   });
