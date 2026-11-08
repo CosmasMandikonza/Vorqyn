@@ -1,0 +1,17 @@
+{
+  "schema": "vorqyn.standalone-payload/1",
+  "status": "PASS",
+  "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+  "preflightReportSha256": "72bf4a7921ed2fc6f920751d500b7347a71681df3e49e1b09aa3ea2a9e2c589a",
+  "sourceTechnicalStatus": "PASS",
+  "sourceSubmissionStatus": "BLOCKED",
+  "buildId": "iOic32_zqfIvU97bhMQd0",
+  "entry": "apps/web/server.js",
+  "serverSha256": "bb6b59263c7f27fec87709eb52944f07076f297c182c66b90b595b36a84d19a9",
+  "files": 2032,
+  "symlinks": 22,
+  "externalSymlinks": 0,
+  "payload": "/workspace/work/public17-staged/bundle",
+  "publicDeployment": "BLOCKED; staging a local Node bundle is not HTTPS deployment",
+  "createdAt": "2026-11-08T00:51:29.348Z"
+}

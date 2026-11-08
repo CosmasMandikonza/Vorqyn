@@ -1,0 +1,136 @@
+{
+  "name": "journey-follow-light-1024x900-dpr1",
+  "runId": "de5b2fad-7a8d-4212-b7ba-de65f2679216",
+  "commitSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+  "capturedAt": "2026-11-08T00:43:00.201Z",
+  "source": "real Chromium; local production server; no response fixtures",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "viewport": {
+    "width": 1024,
+    "height": 900,
+    "dpr": 1,
+    "rootZoom": "1",
+    "visualViewport": {
+      "width": 1024,
+      "height": 900,
+      "scale": 1
+    }
+  },
+  "screenshotOptions": {
+    "method": "Playwright page.screenshot",
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "png": {
+    "width": 1024,
+    "height": 900
+  },
+  "sha256": "1043bfc2cc37b975b577d1196aee5c69900812500852b82896845066efd9ca05",
+  "layout": {
+    "documentWidth": 1024,
+    "viewportWidth": 1024,
+    "offenders": [],
+    "header": [
+      {
+        "class": "site-header wrap",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": -288,
+          "width": 928,
+          "height": 100,
+          "top": -288,
+          "right": 976,
+          "bottom": -188,
+          "left": 48
+        }
+      },
+      {
+        "class": "wordmark",
+        "display": "flex",
+        "rect": {
+          "x": 48,
+          "y": -253.5,
+          "width": 143.5625,
+          "height": 30,
+          "top": -253.5,
+          "right": 191.5625,
+          "bottom": -223.5,
+          "left": 48
+        }
+      },
+      {
+        "class": "desktop-nav",
+        "display": "flex",
+        "rect": {
+          "x": 287.578125,
+          "y": -261.703125,
+          "width": 202.15625,
+          "height": 46.390625,
+          "top": -261.703125,
+          "right": 489.734375,
+          "bottom": -215.3125,
+          "left": 287.578125
+        }
+      },
+      {
+        "class": "header-actions",
+        "display": "flex",
+        "rect": {
+          "x": 585.75,
+          "y": -264.5,
+          "width": 390.25,
+          "height": 52,
+          "top": -264.5,
+          "right": 976,
+          "bottom": -212.5,
+          "left": 585.75
+        }
+      },
+      {
+        "class": "halo-segmented",
+        "display": "flex",
+        "rect": {
+          "x": 585.75,
+          "y": -264.5,
+          "width": 175.09375,
+          "height": 52,
+          "top": -264.5,
+          "right": 760.84375,
+          "bottom": -212.5,
+          "left": 585.75
+        }
+      },
+      {
+        "class": "button button-secondary",
+        "display": "flex",
+        "rect": {
+          "x": 776.84375,
+          "y": -261.25,
+          "width": 199.15625,
+          "height": 45.5,
+          "top": -261.25,
+          "right": 976,
+          "bottom": -215.75,
+          "left": 776.84375
+        }
+      },
+      {
+        "class": "button button-secondary menu-trigger",
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    ]
+  }
+}

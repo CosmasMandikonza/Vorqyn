@@ -1,0 +1,23 @@
+{
+  "url": "http://127.0.0.1:3218/demo",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "theme": "light",
+  "checkoutSha": "cb0f2e68695ae4fce4b34f2c3aeeef9a0fc417b9",
+  "remoteDeploymentSha": null,
+  "scope": "LOCAL HARNESS ONLY — no public deployment verified",
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "capturedAt": "2026-11-08T00:51:58.306Z",
+  "sha256": "4f4de6f55ba7b5f505e161a791d06ada851cc0faebb7da0bed1f0ec9dc13af96"
+}

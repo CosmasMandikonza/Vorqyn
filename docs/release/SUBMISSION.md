@@ -2,6 +2,8 @@
 
 Status on November 7, 2026: **not submitted; no deployment, public video, devnet settlement proof or acceptance receipt is asserted.** The public project is [CosmasMandikonza/Vorqyn](https://github.com/CosmasMandikonza/Vorqyn). Local judge entry is `/demo`, followed by `/demo/mission`; these are paths, not a public deployment URL.
 
+Founder action now: open the authenticated MLH form and begin the entry while deployment/recording proceeds. Required fields and actual registration/receipt state are human-only until inspected. Use [DEPLOYMENT.md](DEPLOYMENT.md) for the validated Node packaging, provider sign-in action and anonymous smoke; no public origin is asserted by a local container.
+
 ## Confirmed deadlines and portal discrepancy
 
 | Action, Sunday November 8                                  | America/Chicago (CST) | Official schedule ET (EST) | UTC   |

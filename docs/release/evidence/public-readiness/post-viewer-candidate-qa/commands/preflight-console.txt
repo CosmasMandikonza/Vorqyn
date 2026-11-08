@@ -1,0 +1,22 @@
+PASS    node-version: observed 22.21.1; required 22.21.1
+PASS    pnpm-version: observed 10.34.5; required 10.34.5
+PASS    fresh-snapshot: isolated committed-source snapshot, no pre-existing node_modules
+PASS    environment-config: static world and local drafts need no external secrets; optional public config is valid
+PASS    credential-hygiene: no supported credential patterns found; heuristic scan, not a security guarantee
+PASS    install: exit 0
+PASS    lint: exit 0
+PASS    typecheck: exit 0
+PASS    unit: exit 0
+PASS    build: exit 0
+PASS    simulation-core: exit 0
+PASS    world-coordinates: exit 0
+PASS    world-assets: exit 0
+PASS    release-tools: exit 0
+PASS    narration: exit 0
+PASS    kernel-recording-demo: exit 0
+PASS    browser: exit 0
+PASS    png-validation: exit 0
+PASS    integration-browser: exit 0
+PASS    judge-qa: exit 0
+PASS    judge-qa-png-validation: exit 0
+Local checks: PASS; submission readiness: BLOCKED. Report: /workspace/work/public17-merged-qa/report.json

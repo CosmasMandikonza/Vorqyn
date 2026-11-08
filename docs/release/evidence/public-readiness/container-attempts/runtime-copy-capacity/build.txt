@@ -1,0 +1,118 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.54kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:22.21.1-bookworm-slim
+#4 DONE 0.3s
+
+#5 [build 1/5] FROM docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c
+#5 DONE 0.0s
+
+#6 [build 2/5] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 13.02kB done
+#7 DONE 0.0s
+
+#8 [build 3/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm install --global pnpm@10.34.5 --ignore-scripts
+#8 CACHED
+
+#9 [build 4/5] COPY . .
+#9 CACHED
+
+#10 [build 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile && pnpm --filter @vorqyn/web build
+#10 2.423 Scope: all 3 workspace projects
+#10 2.583 Lockfile is up to date, resolution step is skipped
+#10 2.634 Progress: resolved 1, reused 0, downloaded 0, added 0
+#10 2.728 Packages: +364
+#10 2.728 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#10 3.218
+#10 3.218    ╭──────────────────────────────────────────╮
+#10 3.218    │                                          │
+#10 3.218    │   Update available! 10.34.5 → 12.18.0.   │
+#10 3.218    │   Changelog: https://pnpm.io/v/12.18.0   │
+#10 3.218    │     To update, run: pnpm add -g pnpm     │
+#10 3.218    │                                          │
+#10 3.218    ╰──────────────────────────────────────────╯
+#10 3.218
+#10 3.635 Progress: resolved 364, reused 0, downloaded 21, added 21
+#10 4.635 Progress: resolved 364, reused 0, downloaded 63, added 63
+#10 5.636 Progress: resolved 364, reused 0, downloaded 95, added 93
+#10 6.638 Progress: resolved 364, reused 0, downloaded 131, added 129
+#10 7.663 Progress: resolved 364, reused 0, downloaded 155, added 135
+#10 8.665 Progress: resolved 364, reused 0, downloaded 184, added 148
+#10 9.666 Progress: resolved 364, reused 0, downloaded 200, added 156
+#10 10.67 Progress: resolved 364, reused 0, downloaded 227, added 175
+#10 11.68 Progress: resolved 364, reused 0, downloaded 238, added 179
+#10 12.67 Progress: resolved 364, reused 0, downloaded 253, added 185
+#10 13.69 Progress: resolved 364, reused 0, downloaded 268, added 190
+#10 14.68 Progress: resolved 364, reused 0, downloaded 306, added 305
+#10 15.69 Progress: resolved 364, reused 0, downloaded 352, added 352
+#10 15.88 Progress: resolved 364, reused 0, downloaded 364, added 364, done
+#10 16.15
+#10 16.15 devDependencies:
+#10 16.15 + eslint 10.14.0
+#10 16.15 + typescript-eslint 8.72.1
+#10 16.15
+#10 16.19 Done in 14.2s using pnpm v10.34.5
+#10 16.54
+#10 16.54 > @vorqyn/web@0.0.0 build /app/apps/web
+#10 16.54 > next build
+#10 16.54
+#10 17.34    ▲ Next.js 15.5.29
+#10 17.34
+#10 17.36    Creating an optimized production build ...
+#10 41.36  ✓ Compiled successfully in 21.5s
+#10 41.36    Linting and checking validity of types ...
+#10 50.06    Collecting page data ...
+#10 51.75    Generating static pages (0/9) ...
+#10 52.67    Generating static pages (2/9)
+#10 52.67    Generating static pages (4/9)
+#10 52.67    Generating static pages (6/9)
+#10 52.69  ✓ Generating static pages (9/9)
+#10 53.32    Finalizing page optimization ...
+#10 53.32    Collecting build traces ...
+#10 60.40
+#10 60.41 Route (app)                                 Size  First Load JS
+#10 60.41 ┌ ○ /                                      592 B         107 kB
+#10 60.41 ├ ○ /_not-found                            127 B         103 kB
+#10 60.41 ├ ƒ /api/demo/simulation                   127 B         103 kB
+#10 60.41 ├ ○ /demo                                  592 B         107 kB
+#10 60.41 ├ ○ /demo/mission                        1.43 kB         107 kB
+#10 60.41 ├ ○ /icon.svg                                0 B            0 B
+#10 60.41 ├ ○ /workspace                             164 B         106 kB
+#10 60.41 └ ○ /workspace/create                    10.5 kB         127 kB
+#10 60.41 + First Load JS shared by all             103 kB
+#10 60.41   ├ chunks/0e0b8bca-3cef25f6382172fb.js  54.2 kB
+#10 60.41   ├ chunks/450-df0df7919498d45b.js       46.3 kB
+#10 60.41   └ other shared chunks (total)          2.12 kB
+#10 60.41
+#10 60.41
+#10 60.41 ○  (Static)   prerendered as static content
+#10 60.41 ƒ  (Dynamic)  server-rendered on demand
+#10 60.41
+#10 DONE 60.5s
+
+#11 [runtime 3/3] COPY --from=build --chown=node:node /app /app
+#11 ERROR: failed to mkdir /home/dockerd/.local/share/docker/vfs/dir/wilojbpdw5zebrg0xo0dha8gn/app/node_modules/.pnpm/run-parallel@1.2.0: mkdir /app/node_modules/.pnpm/run-parallel@1.2.0: no space left on device
+------
+ > [runtime 3/3] COPY --from=build --chown=node:node /app /app:
+------
+Dockerfile:23
+--------------------
+  21 |     # Keep workspace symlinks and the actual external kernel/contract sources.
+  22 |     # This is a Node server image, not a static export or a Solana deployment.
+  23 | >>> COPY --from=build --chown=node:node /app /app
+  24 |     USER node
+  25 |     EXPOSE 3000
+--------------------
+ERROR: failed to build: failed to solve: ResourceExhausted: failed to mkdir /home/dockerd/.local/share/docker/vfs/dir/wilojbpdw5zebrg0xo0dha8gn/app/node_modules/.pnpm/run-parallel@1.2.0: mkdir /app/node_modules/.pnpm/run-parallel@1.2.0: no space left on device

@@ -1,0 +1,690 @@
+{
+  "schema": "vorqyn.camera-capture-audit/1",
+  "status": "FAIL",
+  "scope": "Existing genuine screenshots and measured DOM sidecars; no new browser execution. Checks viewport bounds, not full accessibility or within-container clipping.",
+  "expected": 32,
+  "passed": 24,
+  "failed": 8,
+  "checks": [
+    {
+      "name": "journey-clean-uw-light-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-light-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-light-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-light-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-light-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-light-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-light-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-light-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-light-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-light-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-light-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-light-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-light-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "FOLLOW",
+          "rect": {
+            "x": 285.5625,
+            "y": 635.609375,
+            "width": 68.1875,
+            "height": 44,
+            "top": 635.609375,
+            "right": 353.75,
+            "bottom": 679.609375,
+            "left": 285.5625
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-follow-light-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 635.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 635.609375,
+            "right": 20.390625,
+            "bottom": 679.609375,
+            "left": -34
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-inspect-light-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 567.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 567.609375,
+            "right": 20.390625,
+            "bottom": 611.609375,
+            "left": -34
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-fault-uw-light-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 635.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 635.609375,
+            "right": 20.390625,
+            "bottom": 679.609375,
+            "left": -34
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-clean-uw-dark-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-dark-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-dark-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-dark-1440x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1440,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-dark-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-dark-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-dark-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-dark-1024x900-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 1024,
+        "height": 900,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 1024,
+          "height": 900,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-dark-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-follow-dark-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-inspect-dark-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-fault-uw-dark-390x844-dpr1",
+      "status": "PASS",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 390,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": []
+    },
+    {
+      "name": "journey-clean-uw-dark-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "FOLLOW",
+          "rect": {
+            "x": 285.5625,
+            "y": 635.609375,
+            "width": 68.1875,
+            "height": 44,
+            "top": 635.609375,
+            "right": 353.75,
+            "bottom": 679.609375,
+            "left": 285.5625
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-follow-dark-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 635.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 635.609375,
+            "right": 20.390625,
+            "bottom": 679.609375,
+            "left": -34
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-inspect-dark-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 567.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 567.609375,
+            "right": 20.390625,
+            "bottom": 611.609375,
+            "left": -34
+          }
+        }
+      ]
+    },
+    {
+      "name": "journey-fault-uw-dark-320x844-dpr1",
+      "status": "FAIL",
+      "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+      "viewport": {
+        "width": 320,
+        "height": 844,
+        "dpr": 1,
+        "rootZoom": "1",
+        "visualViewport": {
+          "width": 320,
+          "height": 844,
+          "scale": 1
+        }
+      },
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "class": "!min-w-0 shrink-0 !px-2.5",
+          "name": null,
+          "text": "RESET",
+          "rect": {
+            "x": -34,
+            "y": 635.609375,
+            "width": 54.390625,
+            "height": 44,
+            "top": 635.609375,
+            "right": 20.390625,
+            "bottom": 679.609375,
+            "left": -34
+          }
+        }
+      ]
+    }
+  ]
+}

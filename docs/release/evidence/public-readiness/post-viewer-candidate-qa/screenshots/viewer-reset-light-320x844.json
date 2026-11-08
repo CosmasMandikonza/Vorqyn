@@ -1,0 +1,29 @@
+{
+  "runId": "39d9328a-747e-4d22-a960-569f69a9965c",
+  "layout": {
+    "viewport": 320,
+    "document": 320,
+    "offenders": [
+      {
+        "text": "FOLLOW",
+        "left": 285.5625,
+        "right": 353.75
+      }
+    ]
+  },
+  "name": "viewer-reset-light-320x844",
+  "viewport": {
+    "width": 320,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "76f0e4b416caea211852b991bec3cc4692a3d39f6ddc11d1e66a181a334cbad3",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "light",
+  "capturedAt": "2026-11-08T00:39:48.792Z"
+}

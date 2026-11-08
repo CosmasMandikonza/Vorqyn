@@ -1,0 +1,30 @@
+[WebServer] (node:49792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:49804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+
+Running 12 tests using 1 worker
+
+(node:49823) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/12] [judge] › tests/browser/release-smoke.spec.ts:12:1 › judge journey: landing → guest → real 3D → 2D → independently saved local draft
+[2/12] [judge] › tests/browser/release-smoke.spec.ts:107:1 › no WebGL preserves real metadata, machine selection and source labels
+[3/12] [judge] › tests/browser/release-smoke.spec.ts:137:1 › failed metadata is an explicit error, never an infinite successful loader
+[4/12] [judge] › tests/browser/release-smoke.spec.ts:155:1 › failed GLB is recoverable through actual 2D fallback
+[5/12] [judge] › tests/browser/release-smoke.spec.ts:169:1 › keyboard, reduced motion, selection and theme changes keep static source truth
+[6/12] [judge] › tests/browser/release-smoke.spec.ts:197:1 › native 200% zoom keeps viewer navigation accessible
+(node:50316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[7/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 1440x900
+[8/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 390x844
+[9/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures light 320x844
+[10/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 1440x900
+[11/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 390x844
+[12/12] [capture] › tests/browser/release-capture.spec.ts:76:5 › genuine captures dark 320x844
+  12 passed (1.5m)

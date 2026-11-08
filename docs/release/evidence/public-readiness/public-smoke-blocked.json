@@ -1,0 +1,21 @@
+{
+  "schema": "vorqyn.public-smoke/1",
+  "startedAt": "2026-11-08T00:51:49.936Z",
+  "status": "BLOCKED",
+  "scope": "signed-out public HTTPS functional smoke",
+  "checkoutSha": "cb0f2e68695ae4fce4b34f2c3aeeef9a0fc417b9",
+  "workingTreeDirty": false,
+  "origin": null,
+  "remoteDeploymentSha": null,
+  "publicHttpsSmoke": "NOT RUN",
+  "provenance": "Retain the actual hosting build/deploy record separately; browser checks cannot attest the remote commit.",
+  "checks": [],
+  "priorStrictQa": {
+    "status": "FAIL",
+    "sourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+    "report": "docs/evidence/qa-final/README.md",
+    "note": "Historical failures remain preserved. This hosting smoke cannot clear them; consult the separately executed merged-main strict QA follow-up."
+  },
+  "reason": "No public HTTPS origin supplied; deployment and external smoke remain BLOCKED",
+  "finishedAt": "2026-11-08T00:51:49.950Z"
+}

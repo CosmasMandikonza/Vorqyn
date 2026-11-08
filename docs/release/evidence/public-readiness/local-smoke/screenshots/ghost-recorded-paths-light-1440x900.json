@@ -1,0 +1,23 @@
+{
+  "url": "http://127.0.0.1:3218/demo/mission",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "theme": "light",
+  "checkoutSha": "cb0f2e68695ae4fce4b34f2c3aeeef9a0fc417b9",
+  "remoteDeploymentSha": null,
+  "scope": "LOCAL HARNESS ONLY — no public deployment verified",
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "capturedAt": "2026-11-08T00:52:25.614Z",
+  "sha256": "285016c728ed0545ad40655a5edcc6462b6d2cddb5a3196b6729d7bc0d10166f"
+}

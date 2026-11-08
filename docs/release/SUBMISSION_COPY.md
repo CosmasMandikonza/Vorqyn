@@ -1,39 +1,45 @@
-# Submission copy — current verified scope
+# Submission copy — confirmed merged scope
 
-> **Updated November 7, 2026 for merged main `81b47248`.** Use this version, rather than the earlier static-viewer description. Confirm any new devnet integration independently before adding settlement claims. No portal submission, public deployed demo, publicly hosted video or accepted receipt is asserted here.
+Initial main was `b8860883f1732f92d37d020038a82845c74b0fff`. This packet now includes main **`d5fd1129844082d5606b2446d979d2090f6f1da5`** and a separately recorded post-viewer candidate audit at `e1cb957d248f867aa014e008aaee07c50caca592`. Public deployment/video/submission proof remains unverified. [Deployment procedure](DEPLOYMENT.md) separates a working local production image from public hosting.
 
 **Project:** VORQYN — Autonomous Work. Accountable Outcomes.
 
 **Public source:** https://github.com/CosmasMandikonza/Vorqyn
 
-**Demo route after deployment:** `/demo/mission` (append to the *verified* deployed HTTPS origin; never represent localhost as a public URL)
+**Judge routes after verified deployment:** `/demo/mission` and `/workspace/create`. No public origin or video URL is supplied until actually produced and inspected.
 
-## Short description — safe to paste today
+## Short description
 
-VORQYN explores a hard problem in autonomous operations: what happens when a mission spans independently operated drones, ground robots and underwater ROVs, and one robot's sensor data becomes unusable? Our hackathon prototype lets a judge explore a shared 3D storm-damaged port, run a real deterministic **synthetic** three-robot survey, inject an underwater optical-visibility fault through an actual simulation API, inspect the measured optical degradation alongside independent sonar, and replay the exact operation history. A separate five-step browser-local builder saves independent mission drafts with different regions, evidence criteria and budgets.
+After a storm, inspecting a port can require a drone, ground robot and underwater ROV. When one sensor becomes unreliable, operators need to understand what was observed, what failed and which decisions remain authorized.
 
-We also built validated shared mission/event contracts, assignment-version protections and a deterministic reducer that models how verified work and chain-confirmed payments *should* interact. We are building toward Solana-enforced escrow, authorized cross-operator reassignment and one-time payout; actual devnet transactions, independent evidence verdicts and runtime AI recovery are **not yet verified**. The current 3D observations are `SYNTHETIC_SIM`, not live robot telemetry.
+VORQYN's hackathon prototype places those machines in one original fictional 3D port. A guest starts a deterministic **synthetic** survey, advances real kernel observations through a bounded server API, injects an underwater optical-visibility fault, inspects measured optical degradation alongside independent sonar, and replays the operation trace identically. A 2D/no-WebGL alternative preserves source-labelled robot state. A separate five-step builder saves distinct editable browser-local mission drafts with regions, sensor requirements, thresholds and exact proposed budgets.
 
-## What works and can be demonstrated
+Merged code also includes an Anchor escrow foundation tested with local VM integration, plus a canonical source-aware synthetic telemetry bridge/journal with ordering, stream-isolation and bounded-history guards. These modules are not a demonstrated funded browser mission, deployed devnet program, independent verifier or runtime AI operator.
 
-- Actual PORT-001 3D GLB world with true-scale drone/rover/ROV and accessible 2D/no-WebGL fallback.
-- Stateless, bounded `POST /api/demo/simulation` that runs the real deterministic kernel; actual synthetic robot motion, low-visibility fault, independent sonar measurements, timeline and reproducible replay.
-- Genuine local/browser-only distinct mission drafts (not authorized, funded or server-persisted).
-- Strict typed mission contracts, per-mission ordered events, version-bound task assignments, chain-confirmed-payment gating in a **pure reducer** with synthetic fixtures. No on-chain success is implied.
+## Concrete implementation and boundaries
 
-## What still requires proof
+- **#35/#38:** actual stateless kernel POST responses drive synthetic poses, optical fault, inspector and identical replay. `SYNTHETIC_SIM`, not physical robots or SITL.
+- **#30:** distinct saved/reopened browser-local drafts; no organization authentication, server persistence, funding or launch.
+- **#41:** Anchor initialization/funding/task reservation/assignment foundation, SBF build and Rust/LiteSVM tests in [merged-main CI](https://github.com/CosmasMandikonza/Vorqyn/actions/runs/42429323169). Later merged #46/#48 add reassignment and payout source under Omar's ownership, with successful main CI. Local VM/source results are not devnet receipts; this release does not demonstrate funded browser reassignment or payout.
+- **#42:** source-aware telemetry conversion, immutable bounded guest journal (default 512 records), duplicate/regressed/cross-stream rejection and deterministic replay. The current main also exposes stateless `POST /api/demo/observations`, with deterministic paging and explicitly fixture-labelled receipt clocks; chain time is null. Neither this diagnostic endpoint nor the journal is an authenticated company persistence or financial authority.
+- **#43:** shared header reflow and strict Chromium evidence tooling. The original product browser QA recorded **FAIL** for viewer-owned 390/320 camera overflow and 1024px Replay interception. The historical failure report remains unchanged. After #45 merged, the unchanged strict suite passed 26/26 at candidate `e1cb957`; see the separate [follow-up evidence](evidence/public-readiness/README.md). A separate entire-row capture audit still fails 8/32 states at 320px (FOLLOW/RESET clipping in both themes); 26/26 does not establish overall release readiness, public hosting or submission acceptance.
 
-- Actual Solana devnet program IDs, transaction signatures, funded escrow/reassignment/payout account readbacks.
-- Independently executed policy/evidence verdicts and constrained runtime AI (coding-assistance models do not count).
-- Real hardware or SITL telemetry; authenticated multitenant company backend.
-- Public HTTPS deployment, signed-out video availability, accepted MLH submission.
+- **#45:** optional camera-only World Dive, measured-quality fault timeline and recorded pre/post-fault ghost paths. Ghosts are observations, not simulated recovery or a replacement robot. Local hosting smoke exercises start/skip, motion preference, ghost toggling, actual fault and identical replay.
 
-## Stack and learning
+## Solana and AI
 
-Next.js, React, TypeScript, Tailwind, Three.js/React Three Fiber, a deterministic JavaScript simulation kernel, and versioned mission/event schemas. Solana/Anchor is the intended authorization and settlement layer, not an implemented live guarantee. The biggest technical learning: physical ENU coordinates and clock/provenance domains must be aligned before a simulated fault can be interpreted or replayed honestly.
+Independent operators need shared rules for task ownership, committed budget and eligible rewards. The intended Solana layer enforces bounded escrow, current assignment rights and single-use payout; it does not stabilize a robot or attest physical truth. The current escrow foundation is locally tested. Do not claim the full deployed funding → reassignment → verified payout loop without actual devnet proof.
 
-**AI coding transparency:** OpenAI Codex and ZCode agents assisted with implementation and tests. Select only the actual coding tools/models used in the MLH form. These are *development* tools, not a verified autonomous runtime AI operator.
+OpenAI Codex and ZCode agents assisted development/testing. Select only actual tools/models used in the authenticated form. Coding assistance is not runtime AI recovery. No independent AI operator selection, evidence approval, real robot telemetry or SITL is demonstrated. Future AI proposals must remain constrained by deterministic policy and real authorization/verifier boundaries.
 
-**Who it could help:** Infrastructure inspection companies and fleet operators coordinating work across different robot vendors. Commercial impact and customers remain hypotheses, not verified results.
+## Stack, learning and work disclosure
 
-**Video and public demo:** Founder must record, upload and verify the actual publicly accessible links before final submission. Narration and capture runbook: [RECORDING_PLAN.md](RECORDING_PLAN.md), [SUBMISSION.md](SUBMISSION.md).
+Next.js 15, React, TypeScript, Tailwind, Three.js/React Three Fiber, an aligned deterministic JavaScript kernel, typed contracts/reducer/journal, Anchor/Rust and local VM tests. Key learning: coordinate frames, source provenance, simulator/receipt/chain clocks and financial authority must stay distinct for a fault or replay to mean anything.
+
+Repository history begins with a documentation commit dated **November 6, 2026, 15:15:20 CST (21:15:20 UTC)**, during the published event window. That is observed Git metadata, not proof of all creation times. Disclose original event implementation separately from existing Next/React/Three libraries, adapted MIT UI patterns and OFL fonts credited in `/third-party-notices.txt` and repository notices. The port pack is documented as original generated fictional geometry without texture media. Founder must confirm actual work dates, reused code/assets and eligibility; commit dates alone do not establish compliance.
+
+Potential users are inspection providers/fleet operators coordinating mixed vendors. Adoption, revenue, savings and safety outcomes remain hypotheses.
+
+## Remaining proof
+
+Public HTTPS hosting/signed-out external smoke, public video, authenticated company persistence, independent evidence/verifier execution, runtime AI, physical/SITL telemetry and verified devnet program/funding/reassignment/payout artifacts remain unverified. Keep the historical viewer QA failures and separately sourced passing follow-up visible; remaining 320px camera clipping, stale static-preview explanatory copy and the inspector's fresh-measurement `n/a` heading still need owner reconciliation. Follow [SUBMISSION.md](SUBMISSION.md); fill real public artifact fields only after inspection, keeping private receipt/account details out of GitHub.

@@ -1,13 +1,15 @@
 This is VORQYN for the MLH Solana Hackathon.
 
-A storm-damaged port needs air, ground and underwater inspection. When one sensor cannot provide useful observations, the work needs a clear recovery path.
+A storm-damaged port needs air, ground and underwater inspection. When a sensor becomes unreliable, operators need to understand what was observed and what failed.
 
-Here is our original fictional port. This survey uses deterministic synthetic observations, not live robots or SITL. I start the survey and advance it. Machine positions come from the kernel in the same world coordinate frame.
+I start our synthetic survey and advance it. This is our original fictional port. The ROV follows kernel-observed coordinates; the clock is simulator time, not blockchain time. These are not physical robots or SITL.
 
-I inject the underwater optical fault. The next observation shows degraded optical quality. Sonar is measured separately; that does not automatically make its evidence acceptable. I pause playback and inspect the recorded history. The timeline uses simulator time, not blockchain confirmation time.
+I inject an underwater optical fault. The next measurement shows a sharp optical quality drop. Sonar remains independent of that fault, with its own synthetic noise. These measurements are not evidence verdicts.
 
-If WebGL is unavailable, the two-dimensional view preserves the observation context.
+Replay re-executes the actual operation trace and returns identical observations. The two-dimensional alternative preserves source-labelled robot state without WebGL.
 
-The company entry supports independently configured browser-local briefs. I choose regions and capabilities, set acceptance thresholds and an exact proposed budget, then save and reopen the plan. This is local planning, not authenticated company storage or mission funding.
+Now I configure and save a distinct mission brief, then reload it. Regions, sonar requirements, thresholds and an exact proposed budget persist in this browser. This is not company authentication, funding or launch.
 
-Our demonstrated result is a reproducible synthetic inspection and fault workflow, paired with an editable planning experience. On-chain escrow, authorized reassignment, independent verification and payout are not demonstrated in this recording. The release packet states precisely what ran and what remains unconnected.
+Our merged escrow foundation has local VM tests; our source-aware journal has replay and ordering guards. Devnet deployment, reassignment, payout, independent verification and runtime AI are not demonstrated here.
+
+Codex and ZCode assisted development. Event work and external dependencies are disclosed in the repository. This is a working synthetic inspection prototype with explicit release limitations.
