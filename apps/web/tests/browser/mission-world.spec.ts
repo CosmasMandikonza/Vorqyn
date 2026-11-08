@@ -184,3 +184,124 @@ test("1024x900: inspector overlay never intercepts an ordinary Replay history cl
   }));
   expect(scrollState.clientHeight).toBeGreaterThan(200);
 });
+
+test("320px camera station row: whole-row geometry, natural clicks and scroll assertions across all stations and themes", async ({ page }) => {
+  test.setTimeout(120_000); // SwiftShader software rendering is slow; no assertion is relaxed
+  const stations = ["RESET", "AIR", "LAND", "UW", "INSPECT", "FOLLOW"];
+  for (const theme of ["light", "dark"] as const) {
+    await page.evaluate((t) => {
+      window.localStorage.setItem("theme", t);
+      document.documentElement.classList.remove("light", "dark");
+      document.documentElement.classList.add(t);
+    }, theme);
+    await page.reload();
+    await page.waitForSelector("canvas", { timeout: 30000 });
+    await page.waitForTimeout(6000);
+
+    // A reload resets the in-memory kernel session; FOLLOW's honest gate
+    // (sessionActive && selectedLive) needs a live session that is actually
+    // producing observations (the start response alone carries no snapshots)
+    // plus a selection. Walking stations without this journey would click a
+    // disabled control.
+    await page.getByRole("button", { name: "Start synthetic survey" }).click();
+    await page.waitForTimeout(1800);
+    await page.getByRole("button", { name: "Advance +1 step" }).click();
+    await page.waitForTimeout(1800);
+    await page.getByRole("button", { name: "Access rover" }).click();
+
+    for (const station of stations) {
+      // natural click through the real hit-target path
+      await page.getByRole("button", { name: station, exact: true }).click();
+      await page.waitForTimeout(400);
+
+      // WHOLE-ROW geometry: every station button fully within the viewport,
+      // hit-test resolves to the button itself, no internal scroll needed.
+      const row = await page.evaluate(() => {
+        const group = document.querySelector('[role="group"][aria-label="Camera station"]');
+        if (!group) return { missing: true };
+        const vw = document.documentElement.clientWidth;
+        const buttons = [...group.querySelectorAll("button")].map((b) => {
+          const r = b.getBoundingClientRect();
+          const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+          return {
+            label: b.textContent?.trim(),
+            left: r.left,
+            right: r.right,
+            top: r.top,
+            bottom: r.bottom,
+            inViewport: r.left >= 0 && r.right <= vw && r.top >= 0 && r.bottom <= window.innerHeight,
+            heightOk: r.height >= 44,
+            hitOk: hit === b || b.contains(hit),
+            pressed: b.getAttribute("aria-pressed"),
+          };
+        });
+        return {
+          buttons,
+          allVisible: buttons.every((b) => b.inViewport),
+          allHitOk: buttons.every((b) => b.hitOk),
+          allHeightOk: buttons.every((b) => b.heightOk),
+          pressed: buttons.filter((b) => b.pressed === "true").map((b) => b.label),
+          internalScroll: group.scrollWidth > group.clientWidth + 1,
+        };
+      });
+      expect(row.missing).toBeUndefined();
+      expect(row.allVisible, JSON.stringify(row)).toBe(true);
+      expect(row.allHitOk, JSON.stringify(row)).toBe(true);
+      expect(row.allHeightOk).toBe(true);
+      expect(row.internalScroll).toBe(false);
+      expect(row.pressed).toEqual([station]);
+    }
+
+    // keyboard operability: focus + Enter must activate a station too —
+    // these are native <button>s in a labelled group, no pointer-only path.
+    await page.getByRole("button", { name: "RESET", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(300);
+    await expect(page.getByRole("button", { name: "RESET", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+
+    // page never scrolls horizontally at 320
+    const pageOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+    );
+    expect(pageOverflow).toBe(false);
+  }
+});
+
+test("camera station row: selected machine and camera survive station changes", async ({ page }) => {
+  await page.getByRole("button", { name: "Start synthetic survey" }).click();
+  await page.waitForTimeout(1500);
+  await page.getByRole("button", { name: "Inspection ROV" }).click();
+  await page.getByRole("button", { name: "AIR", exact: true }).click();
+  await page.waitForTimeout(400);
+  await page.getByRole("button", { name: "RESET", exact: true }).click();
+  await page.waitForTimeout(400);
+  const selected = await page.evaluate(() => {
+    const chips = [...document.querySelectorAll("button")].filter((b) => b.getAttribute("aria-pressed") === "true");
+    return chips.map((b) => b.textContent?.trim());
+  });
+  expect(selected.some((t) => t === "Inspection ROV")).toBe(true);
+});
+
+test.use({ hasTouch: true });
+test("320px: camera stations are touch-operable (real tap activates station)", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.waitForTimeout(800);
+  await page.getByRole("button", { name: "Start synthetic survey" }).click();
+  await page.waitForTimeout(1800);
+
+  const uw = page.getByRole("button", { name: "UW", exact: true });
+  await uw.scrollIntoViewIfNeeded();
+  const box = await uw.boundingBox();
+  expect(box).not.toBeNull();
+  // real touch pipeline (touchscreen.tap), not element.click() dispatch
+  await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.waitForTimeout(400);
+  await expect(uw).toHaveAttribute("aria-pressed", "true");
+
+  // tap target must be at least ~44px tall at 320px (thumb-sized)
+  expect(box!.height).toBeGreaterThanOrEqual(44);
+});

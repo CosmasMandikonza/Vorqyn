@@ -1,8 +1,8 @@
 # Anchor workspace configuration - VQ-00 skeleton.
 #
-# The program ID below is an explicit placeholder: generate the real
-# keypair in VQ-04 (#5) and run `anchor keys sync` to replace it here
-# and in programs/vorqyn/src/lib.rs.
+# Devnet program identity — keypair held by the Lane 1 deployer.
+# The [programs.localnet] and [programs.devnet] entries share the same id
+# because the local validator loads the same binary for E2E tests.
 #
 # The Anchor toolchain (avm/anchor + Solana CLI + local validator) is NOT
 # installed by pnpm. `anchor build` / `anchor test` are manual steps;
@@ -13,7 +13,10 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-vorqyn = "AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc"
+vorqyn = "ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL"
+
+[programs.devnet]
+vorqyn = "ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL"
 
 [registry]
 url = "https://api.apr.dev"

@@ -494,30 +494,35 @@ function ViewModeBar({
 }) {
   const modes: UiViewMode[] = ["RESET", "AIR", "LAND", "UNDERWATER", "INSPECT", "FOLLOW"];
   return (
-    <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-wrap items-center gap-2">
-      {/* At 320px the six stations exceed the frame width: the segmented row
-          scrolls INTERNALLY so the bar never overflows the canvas frame or
-          the page. Hit-target heights stay >= 44px. */}
-      <div className="halo-segmented max-w-full bg-card/90 backdrop-blur-sm" role="group" aria-label="Camera station">
-        <div className="halo-options max-w-full overflow-x-auto">
-          {modes.map((m) => (
-            <button
-              key={m}
-              type="button"
-              aria-pressed={mode === m}
-              disabled={m === "FOLLOW" && !followEnabled}
-              title={
-                m === "FOLLOW" && !followEnabled
-                  ? "Available while a synthetic survey session is producing observations"
-                  : undefined
-              }
-              className="!min-w-0 shrink-0 !px-2.5"
-              onClick={() => onChange(m)}
-            >
-              {m === "UNDERWATER" ? "UW" : m}
-            </button>
-          ))}
-        </div>
+    <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-wrap items-start gap-2">
+      {/* At 320px the six stations exceed one row (~340px of controls in a
+          256px frame): a single row either overflows the frame or hides
+          stations in an internal scroll region (Codex audit: FOLLOW
+          right=353.75, RESET left=-34). The responsive grid keeps ALL six
+          stations fully visible at every width — no internal scroll, no
+          clipped controls. Hit targets stay >= 44px tall. */}
+      <div
+        className="grid w-full grid-cols-3 gap-1 rounded-full border border-border bg-card/90 p-1 backdrop-blur-sm sm:inline-flex sm:w-auto sm:gap-1"
+        role="group"
+        aria-label="Camera station"
+      >
+        {modes.map((m) => (
+          <button
+            key={m}
+            type="button"
+            aria-pressed={mode === m}
+            disabled={m === "FOLLOW" && !followEnabled}
+            title={
+              m === "FOLLOW" && !followEnabled
+                ? "Available while a synthetic survey session is producing observations"
+                : undefined
+            }
+            className="min-h-11 rounded-full px-2 font-mono text-[11px] transition-colors sm:px-3"
+            onClick={() => onChange(m)}
+          >
+            {m === "UNDERWATER" ? "UW" : m}
+          </button>
+        ))}
       </div>
       {mode === "INSPECT" && onCycleInspect && inspectAnchor && (
         <button
