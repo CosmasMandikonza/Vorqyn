@@ -9,6 +9,8 @@ import {
   FLAGSHIP_REQUEST,
   InMemoryAttemptStore,
   buildPromptInput,
+  checkOffer,
+  rankOffers,
   OFFER_CHEAP_OPTICAL,
   OFFER_EXPIRED_SONAR,
   OFFER_ROV_B_SONAR,
@@ -384,5 +386,58 @@ describe("final review: model-prompt money serialization is lossless and JSON-sa
     expect(result.ok).toBe(true);
     expect(bodies[0]).toContain('"budgetLamports":"9007199254740993"');
     expect(bodies[0]).toContain('"quoteLamports":"9007199254740993"');
+  });
+});
+
+describe("P1-D: malformed quotes are REJECTED safely, never thrown (CTO 6715808338)", () => {
+  const bad = (quoteLamports: unknown) =>
+    ({ ...OFFER_ROV_B_SONAR, quoteLamports }) as typeof OFFER_ROV_B_SONAR;
+
+  const malformed: readonly [string, unknown][] = [
+    ["fractional 1.5", 1.5],
+    ["NaN", Number.NaN],
+    ["Infinity", Number.POSITIVE_INFINITY],
+    ["-Infinity", Number.NEGATIVE_INFINITY],
+    ["negative number", -5],
+    ["negative bigint", -5n],
+    ["unsafe integer 2^53", 2 ** 53],
+    ["u64 overflow 2^64", 2n ** 64n],
+    ["u64 overflow number-cast", 18_446_744_073_709_551_616n],
+  ];
+
+  for (const [label, value] of malformed) {
+    it(`checkOffer rejects ${label} with quote_invalid instead of throwing`, () => {
+      expect(() => checkOffer(bad(value), FLAGSHIP_REQUEST)).not.toThrow();
+      const check = checkOffer(bad(value), FLAGSHIP_REQUEST);
+      expect(check.ok).toBe(false);
+      expect(check.rejection?.reasonCode).toBe("quote_invalid");
+      expect(check.rejection?.reason).toContain(String(typeof value === "bigint" ? value : value));
+    });
+  }
+
+  it("rankOffers: ONE malformed offer does not abort selection — the valid sonar replacement still ranks", () => {
+    const result = rankOffers({ ...FLAGSHIP_REQUEST, offers: [bad(1.5), OFFER_ROV_B_SONAR] });
+    expect(result.ranked.map((o) => o.offerId)).toEqual(["offer-rov-b-sonar"]);
+    expect(result.rejected.map((r) => r.reasonCode)).toEqual(["quote_invalid"]);
+  });
+
+  it("request-side monetary fields are validated before conversion (fail closed per offer)", () => {
+    const badBudget = { ...FLAGSHIP_REQUEST, budgetLamports: 1.5 as never };
+    expect(() => checkOffer(OFFER_ROV_B_SONAR, badBudget)).not.toThrow();
+    expect(checkOffer(OFFER_ROV_B_SONAR, badBudget).rejection?.reasonCode).toBe("quote_invalid");
+
+    const badCurrent = { ...FLAGSHIP_REQUEST, currentRewardLamports: Number.NaN as never };
+    expect(checkOffer(OFFER_ROV_B_SONAR, badCurrent).rejection?.reasonCode).toBe("quote_invalid");
+
+    const badRemaining = { ...FLAGSHIP_REQUEST, missionRemainingLamports: 2 ** 53 as never };
+    expect(checkOffer(OFFER_ROV_B_SONAR, badRemaining).rejection?.reasonCode).toBe("quote_invalid");
+  });
+
+  it("valid boundary values still pass: bigint 0 top-up path and u64 max ceiling arithmetic", () => {
+    const u64max = 18_446_744_073_709_551_615n;
+    const offer = { ...OFFER_ROV_B_SONAR, quoteLamports: 1_000_000_000n };
+    const req = { ...FLAGSHIP_REQUEST, currentRewardLamports: 1_000_000_000n, budgetLamports: u64max, missionRemainingLamports: u64max };
+    const check = checkOffer(offer, req);
+    expect(check.ok).toBe(true);
   });
 });
