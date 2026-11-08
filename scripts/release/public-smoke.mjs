@@ -31,6 +31,7 @@ const report = {
   workingTreeDirty: !!git(["status", "--porcelain"]),
   origin: null,
   remoteDeploymentSha: null,
+  publicHttpsSmoke: "NOT RUN",
   provenance:
     "Retain the actual hosting build/deploy record separately; browser checks cannot attest the remote commit.",
   checks: [],
@@ -380,10 +381,14 @@ try {
         );
       await page.waitForTimeout(600);
       await capture(page, "fault-follow");
-      const ghost = page.getByRole("button", {
+      await page
+        .getByRole("button", { name: /Ghost replay: recorded paths shown/ })
+        .click();
+      const hiddenGhost = page.getByRole("button", {
         name: /Ghost replay: recorded paths hidden/,
       });
-      await ghost.click();
+      await expect(hiddenGhost).toHaveAttribute("aria-pressed", "false");
+      await hiddenGhost.click();
       await expect(
         page.getByRole("button", {
           name: /Ghost replay: recorded paths shown/,
