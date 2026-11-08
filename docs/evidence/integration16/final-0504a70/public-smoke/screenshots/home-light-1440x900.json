@@ -1,0 +1,23 @@
+{
+  "url": "https://vorqynweb-production.up.railway.app/",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "png": {
+    "width": 1440,
+    "height": 900
+  },
+  "theme": "light",
+  "checkoutSha": "be8d899fe5f1d4dafe56478c2f34d0e5fe9d44ae",
+  "remoteDeploymentSha": null,
+  "scope": "signed-out public HTTPS functional smoke",
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "capturedAt": "2026-11-08T13:55:48.280Z",
+  "sha256": "9b18f756285ffc276dd332c5c69c44ae534939a6cc70776b160b6e1d10d76edd"
+}

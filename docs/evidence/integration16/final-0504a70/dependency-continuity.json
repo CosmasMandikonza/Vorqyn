@@ -1,0 +1,6 @@
+{
+  "coldMain048LockfileSha256": "061c64c7f404256713e81128dde283c8b5daa15e59a6db60a26ef60c0dd3076f",
+  "currentMain0504LockfileSha256": "061c64c7f404256713e81128dde283c8b5daa15e59a6db60a26ef60c0dd3076f",
+  "newFrozenInstall": "PASS",
+  "scope": "Cold install proof remains at048;0504 has identical lock/dependency bytes and successful new frozen installation, not a newly empty dependency tree"
+}

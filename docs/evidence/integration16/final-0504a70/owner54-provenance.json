@@ -1,0 +1,13 @@
+{
+  "scope": "Actual owner test files and newly supplied canonical fixture driver; not authenticated ingestion or kernel-journal-verifier-wallet-chain workflow",
+  "harnessSha": "be8d899fe5f1d4dafe56478c2f34d0e5fe9d44ae",
+  "harnessDirtyAtExecution": false,
+  "targetSha": "2072dda52ac12431716ff2e42e94ce3331f574dd",
+  "targetDirty": false,
+  "count": 27,
+  "passed": 27,
+  "failed": 0,
+  "pending": 0,
+  "command": "INTEGRATION_TARGET_ROOT=/workspace/work/final-pr54 INTEGRATION_OWNER_SUITE=mission-orchestration pnpm --filter @vorqyn/web exec vitest run --config ../../scripts/integration/owner-vitest.config.mts --reporter=json --outputFile=/workspace/work/final-owner54-new.json",
+  "finding": "New demo-driver uses buildPort001Script canonical fixtures and real local durable store. It expressly excludes guest observations/authenticated ingress; cannot be substituted for full integration port."
+}

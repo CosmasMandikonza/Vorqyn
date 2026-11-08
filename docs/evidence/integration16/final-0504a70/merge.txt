@@ -1,0 +1,26 @@
+Merge made by the 'ort' strategy.
+ .../tests/evidence-adapter/calibration.test.tsx    | 184 +++++++
+ apps/web/tests/evidence-adapter/capture.test.tsx   | 379 +++++++++++++
+ .../tests/evidence-adapter/clock-mapping.test.tsx  |  93 ++++
+ apps/web/tests/evidence-adapter/harness.ts         |  94 ++++
+ .../evidence-adapter/integration-verifier.test.tsx | 499 +++++++++++++++++
+ services/mission/evidence-adapter/README.md        | 175 ++++++
+ services/mission/evidence-adapter/calibration.ts   | 190 +++++++
+ services/mission/evidence-adapter/capture.ts       | 609 +++++++++++++++++++++
+ services/mission/evidence-adapter/clock-mapping.ts | 149 +++++
+ services/mission/evidence-adapter/errors.ts        |  49 ++
+ services/mission/evidence-adapter/index.ts         |  69 +++
+ services/mission/evidence-adapter/submission.ts    | 179 ++++++
+ 12 files changed, 2669 insertions(+)
+ create mode 100644 apps/web/tests/evidence-adapter/calibration.test.tsx
+ create mode 100644 apps/web/tests/evidence-adapter/capture.test.tsx
+ create mode 100644 apps/web/tests/evidence-adapter/clock-mapping.test.tsx
+ create mode 100644 apps/web/tests/evidence-adapter/harness.ts
+ create mode 100644 apps/web/tests/evidence-adapter/integration-verifier.test.tsx
+ create mode 100644 services/mission/evidence-adapter/README.md
+ create mode 100644 services/mission/evidence-adapter/calibration.ts
+ create mode 100644 services/mission/evidence-adapter/capture.ts
+ create mode 100644 services/mission/evidence-adapter/clock-mapping.ts
+ create mode 100644 services/mission/evidence-adapter/errors.ts
+ create mode 100644 services/mission/evidence-adapter/index.ts
+ create mode 100644 services/mission/evidence-adapter/submission.ts
