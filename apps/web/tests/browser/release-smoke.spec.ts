@@ -51,8 +51,11 @@ test("judge journey: landing → guest → real 3D → 2D → independently save
     .getByRole("link", { name: "Create Workspace", exact: false })
     .first()
     .click();
-  await page.getByRole("link", { name: "Plan a local mission draft" }).click();
+  await page.getByRole("link", { name: "Open mission builder" }).click();
   await expect(page).toHaveURL(/\/workspace\/create/);
+  await expect(
+    page.getByRole("link", { name: "Explore live harbor simulation" }),
+  ).toHaveAttribute("href", "/demo/mission");
   await expect(
     page.getByText(
       "Local Mission Draft · Saved in This Browser · Not Funded or Launched",

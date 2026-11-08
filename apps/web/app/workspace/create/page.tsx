@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { MissionBuilder } from "@/components/mission-builder/mission-builder";
 import styles from "@/components/mission-builder/builder.module.css";
 
@@ -34,6 +35,16 @@ export default function CreateMissionPage() {
           unencrypted and are not shared across browsers. Use fictional planning
           names; do not enter customer information, credentials or private keys.
         </p>
+      </div>
+      <div className={styles.boundary}>
+        <p>
+          Ready to see the robots move? Open the working PORT-001 synthetic
+          mission. It runs the reference harbor scenario, not this local
+          draft, and does not create an organization or authorize funding.
+        </p>
+        <Button asChild variant="secondary">
+          <Link href="/demo/mission">Explore live harbor simulation</Link>
+        </Button>
       </div>
       <MissionBuilder />
       <noscript>

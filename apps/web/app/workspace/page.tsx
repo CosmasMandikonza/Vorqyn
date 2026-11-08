@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CutoutCard } from "@/components/ui/cutout-card";
 
-export const metadata: Metadata = { title: "Workspace preview" };
+export const metadata: Metadata = { title: "Mission workspace" };
 const structure = [
   [
     "Objective & template",
@@ -52,7 +52,7 @@ export default function WorkspacePage() {
         </aside>
         <div className="workspace-content">
           <section className="entry-heading" aria-labelledby="workspace-title">
-            <Badge>Workspace shell · Preview</Badge>
+            <Badge>Mission planning · Browser local</Badge>
             <div className="entry-title-row">
               <h1 id="workspace-title">
                 Make room for
@@ -60,8 +60,8 @@ export default function WorkspacePage() {
                 the mission.
               </h1>
               <p className="entry-description">
-                A future home for your organization’s inspection work, from
-                mission brief to accepted evidence.
+                Plan a port inspection mission in five guided steps, save
+                drafts in this browser, and explore the live synthetic demo.
               </p>
             </div>
           </section>
@@ -70,7 +70,7 @@ export default function WorkspacePage() {
               <h2 id="missions-title" className="eyebrow">
                 Missions
               </h2>
-              <span>No organization connected · No stored missions</span>
+              <span>No company account connected · Local drafts available</span>
             </div>
             <div className="empty-state">
               <svg
@@ -92,16 +92,16 @@ export default function WorkspacePage() {
                   strokeDasharray="3 4"
                 />
               </svg>
-              <h2>Your first mission starts here.</h2>
+              <h2>Plan your first mission.</h2>
               <p>
-                No organization or mission has been created. Account setup and
-                mission creation will arrive with the mission builder. For now,
-                inspect the planned structure.
+                The five-step mission builder is available now. Choose an inspection
+                objective, zones, machine capabilities, evidence criteria and
+                budget. Save and reopen your plan in this browser.
               </p>
               <Button asChild>
-                <Link href="/workspace/create">Plan a local mission draft</Link>
+                <Link href="/workspace/create">Open mission builder</Link>
               </Button>
-              <p>Saved in this browser only · Not funded or launched.</p>
+              <p>Browser-local planning only · No company account, funding or mission launch.</p>
               <Button asChild variant="secondary">
                 <a href="#templates">
                   View mission template{" "}
@@ -116,16 +116,16 @@ export default function WorkspacePage() {
               <Badge>Template preview</Badge>
             </div>
             <CutoutCard
-              label="Builder not yet available"
+              label="Five-step builder available"
               className="template-card"
             >
               <p className="eyebrow">Air / Land / Underwater</p>
               <h3>Post-storm port inspection</h3>
               <p>
-                A proposed template for coordinating aerial survey, dock access
-                and underwater obstruction mapping. The future builder will let
-                a company configure its own mission, rather than replay a fixed
-                demo.
+                Start from the PORT-001 world and create your own local inspection
+                brief with configurable zones, capabilities, evidence criteria
+                and a proposed budget. The builder is working; actual company
+                missions and wallet funding are not connected.
               </p>
               <details className="builder-outline">
                 <summary>Preview mission structure</summary>
@@ -140,16 +140,13 @@ export default function WorkspacePage() {
               </details>
             </CutoutCard>
             <p className="notice">
-              Preview only. Nothing entered or stored here; no account,
-              organization, mission, budget or wallet is connected.
+              The template is a preview; the linked builder saves real local drafts
+              in this browser. No organization, funded mission or wallet is connected.
             </p>
-            <a
-              className="text-link"
-              href="https://github.com/CosmasMandikonza/Vorqyn/issues/4"
-            >
-              Follow mission-builder progress{" "}
+            <Link className="text-link" href="/workspace/create">
+              Open the working mission builder{" "}
               <span aria-hidden="true" className="arrow-icon" />
-            </a>
+            </Link>
           </section>
         </div>
       </div>
