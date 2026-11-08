@@ -86,8 +86,20 @@ jobs:
       - name: Format check
         run: cargo fmt --check
 
+      # The verifier-registry admin is compiled into the binary at build
+      # time (fail-closed default = system program id, which no wallet can
+      # sign as). Generate an EPHEMERAL admin keypair per CI run (never
+      # committed), compile its pubkey into the .so, and let the tests load
+      # the secret from the gitignored target path via env vars.
+      - name: Generate ephemeral test registry admin
+        run: |
+          solana-keygen new --no-bip39-passphrase --force --silent             -o "$PWD/target/deploy/registry-admin-keypair.json"
+          echo "VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey "$PWD/target/deploy/registry-admin-keypair.json")" >> "$GITHUB_ENV"
+          echo "VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR=$PWD/target/deploy/registry-admin-keypair.json" >> "$GITHUB_ENV"
       # build-sbf must precede clippy/test: the integration tests embed the
-      # produced .so via include_bytes!.
+      # produced .so via include_bytes!. The env above compiles the
+      # ephemeral admin in; clippy/MSRV compile against the fail-closed
+      # default, which is valid.
       - name: Build SBF program
         run: cargo build-sbf
 
