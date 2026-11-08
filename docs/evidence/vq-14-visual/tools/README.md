@@ -32,11 +32,16 @@ test), which also covers keyboard and touch activation.
 ## Build / serve conditions (2026-11-07)
 
 Captured against the production build of this branch: `pnpm build` + `next
-start` on 127.0.0.1:3000. On this Windows host the build's deploy-only
-standalone trace-copy step fails with EPERM (symlink privilege); the main
-build completed first (`Compiled successfully`, 9/9 static pages, BUILD_ID
-present) and `next start` serves `.next` directly — deployment packaging is
-unaffected and is Codex's release lane, not this fix.
+start` on 127.0.0.1:3000. The captures were taken at the pre-rebase head of
+this branch; the branch was subsequently rebased onto main (the #50 merge)
+and given a one-line pnpm-lock.yaml repair — `git diff` over the product
+trees (`apps/web`, components, contracts, services) between the capture head
+and the pushed head is empty, so the captures describe the pushed code
+exactly. On this Windows host the build's deploy-only standalone trace-copy
+step fails with EPERM (symlink privilege); the main build completed first
+(`Compiled successfully`, 9/9 static pages, BUILD_ID present) and `next
+start` serves `.next` directly — deployment packaging is unaffected and is
+Codex's release lane, not this fix.
 
 ## Screenshots
 
