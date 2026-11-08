@@ -1,0 +1,22 @@
+{
+  "name": "@vorqyn/recovery",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "VORQYN constrained AI recovery proposals (VQ-11 / #12): structured model input from real mission/evidence state, strict JSON output validation, a deterministic policy gate that never trusts the model, owner-approved proposals only. No autonomous wallet authority; no LLM-generated evidence approval.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vorqyn/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  }
+}
