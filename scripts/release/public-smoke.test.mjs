@@ -22,3 +22,24 @@ test("loopback harness validation is explicitly local-only", () => {
   );
   assert.throws(() => smokeOrigin("https://github.com", true));
 });
+
+test("HTTP client uses inherited proxy separately from product authentication", async () => {
+  const { inheritedApiProxy } = await import("./public-smoke-lib.mjs");
+  assert.deepEqual(
+    inheritedApiProxy(false, {
+      HTTPS_PROXY: "http://qa-user:fixture-only@proxy.example:8080",
+      NO_PROXY: "localhost,127.0.0.1",
+    }),
+    {
+      server: "http://proxy.example:8080",
+      username: "qa-user",
+      password: "fixture-only",
+      bypass: "localhost,127.0.0.1",
+    },
+  );
+  assert.equal(
+    inheritedApiProxy(true, { HTTPS_PROXY: "http://proxy.example:8080" }),
+    undefined,
+  );
+  assert.equal(inheritedApiProxy(false, {}), undefined);
+});

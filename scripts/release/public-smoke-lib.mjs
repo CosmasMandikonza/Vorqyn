@@ -27,3 +27,29 @@ export function smokeOrigin(input, localOnly = false) {
     throw new Error("Public smoke requires a real HTTPS DNS origin");
   return url.origin;
 }
+
+/** Playwright's Node HTTP client does not inherit the shell proxy automatically. */
+export function inheritedApiProxy(localOnly = false, env = process.env) {
+  if (localOnly) return undefined;
+  const raw =
+    env.HTTPS_PROXY ?? env.https_proxy ?? env.HTTP_PROXY ?? env.http_proxy;
+  if (!raw) return undefined;
+  let proxy;
+  try {
+    proxy = new URL(raw);
+  } catch {
+    throw new Error(
+      "Invalid inherited API proxy configuration; values omitted",
+    );
+  }
+  if (!["http:", "https:"].includes(proxy.protocol))
+    throw new Error("Unsupported inherited API proxy protocol; values omitted");
+  return {
+    server: proxy.origin,
+    ...(proxy.username ? { username: decodeURIComponent(proxy.username) } : {}),
+    ...(proxy.password ? { password: decodeURIComponent(proxy.password) } : {}),
+    ...((env.NO_PROXY ?? env.no_proxy)
+      ? { bypass: env.NO_PROXY ?? env.no_proxy }
+      : {}),
+  };
+}

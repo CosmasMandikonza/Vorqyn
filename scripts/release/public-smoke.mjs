@@ -6,7 +6,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve, relative, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { smokeOrigin } from "./public-smoke-lib.mjs";
+import { smokeOrigin, inheritedApiProxy } from "./public-smoke-lib.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const args = process.argv.slice(2),
   value = (name) => args[args.indexOf(name) + 1];
@@ -42,7 +42,7 @@ const report = {
     note: "Historical failures remain preserved. This hosting smoke cannot clear them; consult the separately executed merged-main strict QA follow-up.",
   },
 };
-let browser;
+let browser, apiClient;
 try {
   if (!args.includes("--origin")) {
     report.reason =
@@ -51,7 +51,7 @@ try {
   } else {
     report.origin = smokeOrigin(value("--origin"), localOnly);
     const require = createRequire(join(root, "apps/web/package.json"));
-    const { chromium, expect } = require("@playwright/test");
+    const { chromium, expect, request } = require("@playwright/test");
     browser = await chromium.launch({
       executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
       args: [
@@ -69,6 +69,16 @@ try {
       ignoreHTTPSErrors: false,
       storageState: { cookies: [], origins: [] },
     };
+    const apiProxy = inheritedApiProxy(localOnly);
+    apiClient = await request.newContext({
+      baseURL: report.origin,
+      ignoreHTTPSErrors: false,
+      storageState: { cookies: [], origins: [] },
+      ...(apiProxy ? { proxy: apiProxy } : {}),
+    });
+    report.apiTransport = apiProxy
+      ? "Inherited session proxy; no product login or Authorization injection; TLS verification enabled"
+      : "Direct HTTP client; empty storage and TLS verification enabled";
     const context = await browser.newContext(options);
     context.setDefaultTimeout(15000);
     context.setDefaultNavigationTimeout(30000);
@@ -183,7 +193,7 @@ try {
       });
     await check("actual-api-and-server-limits", async () => {
       const post = (operations) =>
-        context.request.post("/api/demo/simulation", {
+        apiClient.post("/api/demo/simulation", {
           data: {
             schema: "vorqyn.demo-sim/request/1",
             seed: 20261107,
@@ -239,17 +249,17 @@ try {
         expect(r.status()).toBe(400);
         limits.push({ name, status: r.status() });
       }
-      const oversized = await context.request.post("/api/demo/simulation", {
+      const oversized = await apiClient.post("/api/demo/simulation", {
         data: "x".repeat(16385),
         headers: { "content-type": "application/json" },
       });
       expect(oversized.status()).toBe(413);
-      const malformed = await context.request.post("/api/demo/simulation", {
+      const malformed = await apiClient.post("/api/demo/simulation", {
         data: "{",
         headers: { "content-type": "application/json" },
       });
       expect(malformed.status()).toBe(400);
-      const method = await context.request.get("/api/demo/simulation");
+      const method = await apiClient.get("/api/demo/simulation");
       expect(method.status()).toBe(405);
       const maximum = await post([
         ...Array.from({ length: 33 }, () => ({ op: "step", count: 12 })),
@@ -290,8 +300,7 @@ try {
         seed: 20261107,
         operations: [{ op: "step", count: 2 }],
       };
-      const request = () =>
-        context.request.post("/api/demo/observations", { data });
+      const request = () => apiClient.post("/api/demo/observations", { data });
       const first = await request();
       expect(first.status()).toBe(200);
       expect(first.headers()["cache-control"]).toContain("no-store");
@@ -302,7 +311,7 @@ try {
       expect(trace.clockDomains.chain).toBeNull();
       expect(trace.clockDomains.receipt).toContain("not UTC");
       expect(await (await request()).json()).toEqual(trace);
-      const paged = await context.request.post(
+      const paged = await apiClient.post(
         "/api/demo/observations?afterSequence=1&limit=1",
         { data },
       );
@@ -492,6 +501,7 @@ try {
   report.reason = error.message;
   process.exitCode = 1;
 } finally {
+  if (apiClient) await apiClient.dispose();
   if (browser) await browser.close();
   report.finishedAt = new Date().toISOString();
   writeFileSync(
