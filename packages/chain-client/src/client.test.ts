@@ -218,3 +218,46 @@ describe("explorer links are cluster-truthful", () => {
     expect(explorerTxUrl("abc123", "localnet")).toContain("cluster=localnet");
   });
 });
+
+describe("CTO review P1-A: reconciliation must accept real RPC shapes monotonically", () => {
+  const SIG = "Sig3333333333333333333333333333333333333333333333333333333333333333";
+  const base = () =>
+    newTxRecord({ id: "tx-cto-a", kind: "funding", missionId: "port-001", amountLamports: 1_000_000 });
+  const submittedRecord = () => {
+    const r = transition(base(), "submitted", "wallet");
+    r.signature = SIG;
+    return r;
+  };
+
+  it("submitted → finalized directly (first readable RPC says finalized)", async () => {
+    let r = submittedRecord();
+    const finalized = { getSignatureStatus: async () => ({ confirmationStatus: "finalized" as const, slot: 42, err: null }) };
+    r = await reconcile(r, finalized);
+    expect(r.state).toBe("finalized");
+    expect(r.slot).toBe(42);
+    expect(r.confirmedAtMs).toBeDefined();
+  });
+
+  it("unknown → finalized directly (delayed first observation)", async () => {
+    let r = transition(submittedRecord(), "unknown", "client", "rpc timeout");
+    const finalized = { getSignatureStatus: async () => ({ confirmationStatus: "finalized" as const, slot: 43, err: null }) };
+    r = await reconcile(r, finalized);
+    expect(r.state).toBe("finalized");
+  });
+
+  it("a stale processed response never regresses or throws on a confirmed record", async () => {
+    let r = transition(submittedRecord(), "confirmed", "rpc");
+    const stale = { getSignatureStatus: async () => ({ confirmationStatus: "processed" as const, slot: 9, err: null }) };
+    expect(async () => { r = await reconcile(r, stale); }).not.toThrow();
+    r = await reconcile(r, stale);
+    expect(r.state).toBe("confirmed"); // monotonic knowledge preserved
+    expect(r.slot).not.toBe(9); // stale slot not adopted
+  });
+
+  it("processed → finalized directly", async () => {
+    let r = transition(submittedRecord(), "processed", "rpc");
+    const finalized = { getSignatureStatus: async () => ({ confirmationStatus: "finalized" as const, slot: 44, err: null }) };
+    r = await reconcile(r, finalized);
+    expect(r.state).toBe("finalized");
+  });
+});

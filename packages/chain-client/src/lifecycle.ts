@@ -50,16 +50,33 @@ export interface TxRecord {
   slot?: number;
 }
 
-/** Allowed transitions — anything else is a client bug and throws. */
+/**
+ * Allowed transitions — anything else is a client bug and throws. Real
+ * Solana RPC may report `finalized` as the FIRST readable status (CTO
+ * review P1-A), so every non-terminal pre-confirmation state may move
+ * directly to finalized; `unknown` may also repeat (retry loops).
+ */
 const ALLOWED: Readonly<Record<TxState, readonly TxState[]>> = {
   awaiting_signature: ["submitted", "rejected", "expired"],
-  submitted: ["processed", "confirmed", "rejected", "expired", "unknown"],
-  processed: ["confirmed", "rejected", "expired", "unknown"],
-  unknown: ["processed", "confirmed", "rejected", "expired", "unknown"],
+  submitted: ["processed", "confirmed", "finalized", "rejected", "expired", "unknown"],
+  processed: ["confirmed", "finalized", "rejected", "expired", "unknown"],
+  unknown: ["processed", "confirmed", "finalized", "rejected", "expired", "unknown"],
   confirmed: ["finalized", "unknown"],
   finalized: [],
   rejected: [],
   expired: [],
+};
+
+/** Monotonic confirmation knowledge: reconcile never moves backwards. */
+const CONFIRMATION_RANK: Readonly<Record<TxState, number>> = {
+  awaiting_signature: 0,
+  submitted: 1,
+  unknown: 1,
+  processed: 2,
+  confirmed: 3,
+  finalized: 4,
+  rejected: 4,
+  expired: 4,
 };
 
 export function isTerminal(state: TxState): boolean {
@@ -139,7 +156,16 @@ export async function reconcile(record: TxRecord, rpc: SignatureStatusSource): P
     return transition(record, "unknown", "client", "rpc unreachable — retry later");
   }
   const next = rpcToState(status);
-  if (status !== null && status.slot !== undefined) record.slot = status.slot;
+  // Monotonic guard (CTO review P1-A): a stale/delayed RPC response must
+  // never regress or throw away already-observed confirmation knowledge.
+  if (
+    CONFIRMATION_RANK[next] < CONFIRMATION_RANK[record.state] ||
+    (CONFIRMATION_RANK[next] === CONFIRMATION_RANK[record.state] && next !== record.state)
+  ) {
+    return record; // keep the stronger observation; do not adopt stale slots
+  }
+  if (status !== null && status.slot !== undefined && CONFIRMATION_RANK[next] >= CONFIRMATION_RANK[record.state])
+    record.slot = status.slot;
   return transition(record, next, "rpc", `confirmationStatus=${status?.confirmationStatus ?? "unseen"}`);
 }
 

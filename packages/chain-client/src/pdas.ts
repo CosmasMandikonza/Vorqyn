@@ -7,6 +7,9 @@
  */
 
 import { PublicKey } from "@solana/web3.js";
+
+/** Browser-safe UTF-8 seed bytes (no Node Buffer global). */
+const utf8 = (value: string): Uint8Array => new TextEncoder().encode(value);
 import { asMissionId, asTaskId, ok, type Result } from "@vorqyn/contracts";
 import { PROGRAM_ID } from "./config";
 
@@ -25,7 +28,7 @@ export function missionPda(owner: PublicKey, missionId: string): Result<MissionP
   const id = asMissionId(missionId);
   if (!id.ok) return id;
   const [address, bump] = PublicKey.findProgramAddressSync(
-    [Buffer.from(MISSION_SEED, "utf8"), owner.toBuffer(), Buffer.from(missionId, "utf8")],
+    [utf8(MISSION_SEED), owner.toBytes(), utf8(missionId)],
     PROGRAM_ID,
   );
   return ok({ address, bump });
@@ -36,7 +39,7 @@ export function taskPda(mission: PublicKey, taskId: string): Result<MissionPda> 
   const id = asTaskId(taskId);
   if (!id.ok) return id;
   const [address, bump] = PublicKey.findProgramAddressSync(
-    [Buffer.from(TASK_SEED, "utf8"), mission.toBuffer(), Buffer.from(taskId, "utf8")],
+    [utf8(TASK_SEED), mission.toBytes(), utf8(taskId)],
     PROGRAM_ID,
   );
   return ok({ address, bump });
@@ -45,14 +48,14 @@ export function taskPda(mission: PublicKey, taskId: string): Result<MissionPda> 
 /** [vorqyn:vault, mission_pda] — program-owned escrow vault. */
 export function vaultPda(mission: PublicKey): PublicKey {
   return PublicKey.findProgramAddressSync(
-    [Buffer.from(VAULT_SEED, "utf8"), mission.toBuffer()],
+    [utf8(VAULT_SEED), mission.toBytes()],
     PROGRAM_ID,
   )[0];
 }
 
 /** [vorqyn:verifier-registry] — the single global registry PDA. */
 export function registryPda(): PublicKey {
-  return PublicKey.findProgramAddressSync([Buffer.from(REGISTRY_SEED, "utf8")], PROGRAM_ID)[0];
+  return PublicKey.findProgramAddressSync([utf8(REGISTRY_SEED)], PROGRAM_ID)[0];
 }
 
 /** Derive every address a mission flow needs, failing closed on bad IDs. */

@@ -75,6 +75,17 @@ function meta(pubkey: PublicKey, isSigner: boolean, isWritable: boolean): Accoun
   return { pubkey, isSigner, isWritable };
 }
 
+/**
+ * web3.js 1.x TYPES instruction data as Buffer, but only ever treats it as
+ * bytes; a plain Uint8Array works in browsers and Node alike (CTO review
+ * P1-B — no Node globals at builder runtime). Cast is confined here.
+ */
+function bytes(u8: Uint8Array): Buffer {
+  // See note above: web3.js only READS these bytes; the cast satisfies
+  // its Buffer-typed field without requiring a Node Buffer at runtime.
+  return u8 as unknown as Buffer;
+}
+
 // --- mission flow ----------------------------------------------------------
 
 export interface InitializeVerifierRegistryArgs { policyVersion: number }
@@ -92,7 +103,7 @@ export function initializeVerifierRegistryIx(
       meta(registryPda(), false, true),
       meta(SystemProgram.programId, false, false),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("initialize_verifier_registry"))),
+    data: bytes(w.finish(ixDiscriminator("initialize_verifier_registry"))),
   });
 }
 
@@ -105,7 +116,7 @@ export function registerVerifierIx(admin: PublicKey, verifier: PublicKey): Trans
       meta(admin, true, true),
       meta(registryPda(), false, true),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("register_verifier"))),
+    data: bytes(w.finish(ixDiscriminator("register_verifier"))),
   });
 }
 
@@ -118,7 +129,7 @@ export function revokeVerifierIx(admin: PublicKey, verifier: PublicKey): Transac
       meta(admin, true, true),
       meta(registryPda(), false, true),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("revoke_verifier"))),
+    data: bytes(w.finish(ixDiscriminator("revoke_verifier"))),
   });
 }
 
@@ -131,7 +142,7 @@ export function setPolicyVersionIx(admin: PublicKey, policyVersion: number): Tra
       meta(admin, true, true),
       meta(registryPda(), false, true),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("set_policy_version"))),
+    data: bytes(w.finish(ixDiscriminator("set_policy_version"))),
   });
 }
 
@@ -163,7 +174,7 @@ export function initializeMissionIx(
       meta(SystemProgram.programId, false, false),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(data),
+    data: bytes(data),
   });
 }
 
@@ -178,7 +189,7 @@ export function fundMissionIx(owner: PublicKey, missionAddress: PublicKey, amoun
       meta(vaultPda(missionAddress), false, true),
       meta(SystemProgram.programId, false, false),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("fund_mission"))),
+    data: bytes(w.finish(ixDiscriminator("fund_mission"))),
   });
 }
 
@@ -200,7 +211,7 @@ export function createTaskIx(owner: PublicKey, missionAddress: PublicKey, args: 
       meta(SystemProgram.programId, false, false),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("create_task"))),
+    data: bytes(w.finish(ixDiscriminator("create_task"))),
   });
 }
 
@@ -221,7 +232,7 @@ export function assignTaskIx(owner: PublicKey, missionAddress: PublicKey, args: 
       meta(task.value.address, false, true),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("assign_task"))),
+    data: bytes(w.finish(ixDiscriminator("assign_task"))),
   });
 }
 
@@ -243,7 +254,7 @@ export function authorizeReassignmentIx(owner: PublicKey, missionAddress: Public
       meta(task.value.address, false, true),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(w.finish(ixDiscriminator("authorize_reassignment"))),
+    data: bytes(w.finish(ixDiscriminator("authorize_reassignment"))),
   });
 }
 
@@ -289,7 +300,7 @@ export function verifyAndClaimIx(
       meta(payoutWallet, false, true),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(data),
+    data: bytes(data),
   });
 }
 
@@ -302,7 +313,7 @@ export function closeMissionIx(owner: PublicKey, missionAddress: PublicKey): Tra
       meta(vaultPda(missionAddress), false, true),
       meta(SYSVAR_CLOCK_PUBKEY, false, false),
     ],
-    data: Buffer.from(ixDiscriminator("close_mission")),
+    data: bytes(ixDiscriminator("close_mission")),
   });
 }
 
