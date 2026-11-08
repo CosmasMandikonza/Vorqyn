@@ -1,0 +1,26 @@
+{
+  "name": "@vorqyn/chain-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "VORQYN typed Solana chain client (VQ-12 / #13): PDA derivation, account decoding, instruction builders and a truthful transaction-lifecycle state machine for the mission escrow program.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run && node scripts/check-browser-bundle.mjs",
+    "check:browser": "node scripts/check-browser-bundle.mjs"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.0",
+    "@vorqyn/contracts": "workspace:*",
+    "@noble/hashes": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0",
+    "esbuild": "^0.25.0"
+  }
+}
