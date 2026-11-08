@@ -260,4 +260,24 @@ describe("CTO review P1-A: reconciliation must accept real RPC shapes monotonica
     r = await reconcile(r, finalized);
     expect(r.state).toBe("finalized");
   });
+
+  it("an RPC exception (429/timeout) does NOT demote a confirmed record to unknown", async () => {
+    // Failing-first pre-fix: the catch branch unconditionally transitioned
+    // to unknown, discarding already-observed confirmation + slot. An RPC
+    // error is absence of knowledge, never evidence of non-finality.
+    let r = transition(submittedRecord(), "confirmed", "rpc");
+    r.slot = 777;
+    const exploding = { getSignatureStatus: async () => { throw new Error("429 Too Many Requests"); } };
+    r = await reconcile(r, exploding);
+    expect(r.state).toBe("confirmed"); // preserved
+    expect(r.slot).toBe(777); // preserved
+  });
+
+  it("an RPC exception on a genuinely unconfirmed (submitted) record still yields unknown", async () => {
+    let r = submittedRecord();
+    const exploding = { getSignatureStatus: async () => { throw new Error("timeout"); } };
+    r = await reconcile(r, exploding);
+    expect(r.state).toBe("unknown");
+  });
+
 });

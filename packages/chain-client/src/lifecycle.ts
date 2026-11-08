@@ -153,6 +153,11 @@ export async function reconcile(record: TxRecord, rpc: SignatureStatusSource): P
   try {
     status = await rpc.getSignatureStatus(record.signature);
   } catch {
+    // An RPC error is ABSENCE of knowledge, never evidence of
+    // non-finality: only records not yet past the submitted/unknown tier
+    // may become unknown. Already-observed processed/confirmed knowledge
+    // (and its slot) is preserved untouched (final review, PR #50).
+    if (CONFIRMATION_RANK[record.state] > CONFIRMATION_RANK.unknown) return record;
     return transition(record, "unknown", "client", "rpc unreachable — retry later");
   }
   const next = rpcToState(status);
