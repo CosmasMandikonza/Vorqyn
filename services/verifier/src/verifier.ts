@@ -16,6 +16,7 @@
  */
 
 import {
+  SOURCE_KINDS,
   err,
   makeTelemetrySample,
   ok,
@@ -87,6 +88,10 @@ export function makeEvidenceSubmission(input: {
     return err("validation_error", "capturedAtMs must be a non-negative integer");
   if (typeof input.sensor !== "string" || input.sensor.trim().length === 0)
     return err("validation_error", "sensor must be a non-empty string");
+  // P1-C: the CLAIMED origin must be a real SourceKind — unsupported
+  // provenance labels never reach evaluation.
+  if (typeof input.simulatorSource !== "string" || !(SOURCE_KINDS as readonly string[]).includes(input.simulatorSource))
+    return err("validation_error", `simulatorSource must be one of [${SOURCE_KINDS.join("|")}]`);
   const samples: TelemetrySample[] = [];
   for (const raw of input.samples) {
     const sample = makeTelemetrySample(raw);
@@ -149,8 +154,12 @@ export function verifyEvidence(
   if (policy.policyId !== ctx.activePolicyId)
     reasons.push(`policy_mismatch:active=${ctx.activePolicyId}:applied=${policy.policyId}`);
 
-  // 3. Origin: every sample must come from an allowed source kind.
+  // 3. Origin: the CLAIMED submission origin must agree with every
+  //    normalized sample origin (P1-C — no SYNTHETIC body claiming
+  //    LIVE_SITL), and every sample origin must be policy-allowed.
   for (const s of submission.samples) {
+    if (s.sourceKind !== submission.simulatorSource)
+      reasons.push(`origin_claim_mismatch:claimed=${submission.simulatorSource}:samples=${s.sourceKind}`);
     if (!policy.allowedOrigins.includes(s.sourceKind))
       reasons.push(`origin_not_allowed:${s.sourceKind}:${s.robotId}#${s.sequence}`);
   }
@@ -166,8 +175,16 @@ export function verifyEvidence(
     const backing = sensorRule.backingMetricKind ?? sensorRule.requiresMetric?.kind;
     if (backing === undefined) {
       reasons.push(`sensor_rule_incomplete:${submission.sensor}`);
-    } else if (!submission.samples.some((s) => s.qualityMetric?.kind === backing)) {
-      reasons.push(`sensor_backing_missing:${submission.sensor}:kind=${backing}`);
+    } else {
+      const backed = submission.samples.filter((s) => s.qualityMetric?.kind === backing).length;
+      if (backed === 0) {
+        reasons.push(`sensor_backing_missing:${submission.sensor}:kind=${backing}`);
+      } else if (backed < policy.minSamples) {
+        // P1-B: minimum evidence volume counts ONLY samples of the
+        // declared sensor's modality (no mixed-sensor fusion policy
+        // exists — a sonar survey is proven by sonar-backed samples).
+        reasons.push(`insufficient_modality_samples:${submission.sensor}:count=${backed}:min=${policy.minSamples}`);
+      }
     }
   }
   if (sensorRule !== undefined && !sensorRule.satisfiesOnItsOwn && sensorRule.requiresMetric !== undefined) {
@@ -225,8 +242,9 @@ export function verifyEvidence(
       if (prev === undefined || curr === undefined) continue; // unreachable; satisfies noUncheckedIndexedAccess-style narrowing
       const gap = curr.sequence - prev.sequence;
       if (gap === 0) reasons.push(`sequence_duplicate:${robotId}#${curr.sequence}`);
-      if (gap > policy.maxSequenceGap + 1)
-        reasons.push(`sequence_gap:${robotId}:${prev.sequence}->${curr.sequence}`);
+      const missing = gap - 1;
+      if (missing > policy.maxMissingSamples)
+        reasons.push(`sequence_missing:${robotId}:${prev.sequence}->${curr.sequence}:missing=${missing}:max=${policy.maxMissingSamples}`);
       if (curr.sourceTimestampMs < prev.sourceTimestampMs)
         reasons.push(`out_of_order_timestamps:${robotId}#${curr.sequence}`);
     }

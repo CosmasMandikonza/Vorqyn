@@ -44,6 +44,20 @@ claim path.
   `attestation_expiry` (unix **s**) via `toChainAttestationExpirySeconds`
   (floor; keep ≥1s headroom — the chain requires strictly-future).
 
+## Trusted-ingestion boundary (CTO review, PR #49)
+
+Deterministic policy proves three things and ONLY three things: the
+submission is internally consistent (binding, continuity, freshness,
+volume, modality, zone), its provenance CLAIM is a real SourceKind and
+agrees with every normalized sample, and its content hashes to the
+digest. **Typed samples arriving here are still caller-supplied bytes** —
+a SHA-256 digest or a `SYNTHETIC_SIM`/`LIVE_SITL` label does not
+authenticate any observation's origin. Before any REAL settlement claim,
+a trusted mission-service ingestion layer (source journal bound to the
+kernel/SITL adapter, operator→robot binding) must stand behind the
+samples. No hardware-authentication or real-sensor claim is made — or
+possible — in this package.
+
 ## Trust boundary (read this before integrating)
 
 1. **This module validates POLICY over SOURCE RECORDS.** It does not

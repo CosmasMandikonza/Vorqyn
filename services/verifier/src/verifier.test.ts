@@ -12,6 +12,8 @@ import {
   POLICY_STRUCTURAL_CERTIFICATION_1,
   SUBMISSION_ROV_A_V1,
   SUBMISSION_ROV_B_V2,
+  FIXTURE_CAPTURE_MS,
+  makeEvidenceSubmission,
   rovAOpticalSamples,
   synthSample,
   verifyEvidence,
@@ -134,7 +136,7 @@ describe("measurement defences (never default-accept)", () => {
     expect(outcome.ok).toBe(true);
     if (!outcome.ok) return;
     const all = outcome.value.verdict.reasons.join(" ");
-    expect(all).toContain("sequence_gap:rov-b-02:40->43");
+    expect(all).toContain("sequence_missing:rov-b-02:40->43:missing=2:max=1");
     expect(all).toContain("sequence_duplicate:rov-b-02#43");
     expect(all).toContain("out_of_order_timestamps:rov-b-02#43");
   });
@@ -218,5 +220,98 @@ describe("review corrections (PR #49)", () => {
     if (!outcome.ok) return;
     expect(outcome.value.verdict.accepted).toBe(false);
     expect(outcome.value.verdict.reasons).toContain("sensor_backing_missing:sonar:kind=sonar_ping");
+  });
+});
+
+describe("CTO review corrections (PR #49)", () => {
+  it("P1-A: a strict step-one (zero-missing) policy rejects a single missing sequence 10→12", () => {
+    // Failing-first pre-fix: maxSequenceGap:1 was ambiguous ("step 1"?),
+    // so 10→12 passed. Post-fix the field is maxMissingSamples: 0 =
+    // consecutive samples only.
+    const strict = { ...POLICY_SEA_OBSTRUCTION_1, maxMissingSamples: 0 };
+    const withGap = [
+      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, sonarQuality: 0.9 }),
+    ];
+    const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: withGap }, strict, CTX_V2_ROV_B);
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons.join(" ")).toContain("sequence_missing:rov-b-02:10->12:missing=1:max=0");
+  });
+
+  it("P1-A positive: maxMissingSamples:1 tolerates exactly one missing sequence", () => {
+    const tolerant = { ...POLICY_SEA_OBSTRUCTION_1, maxMissingSamples: 1 };
+    const withGap = [
+      synthSample({ robotId: "rov-b-02", sequence: 10, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 12, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 13, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, sonarQuality: 0.9 }),
+    ];
+    const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: withGap }, tolerant, CTX_V2_ROV_B);
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(true);
+  });
+
+  it("P1-B: one sonar_ping plus unrelated optical samples does NOT satisfy a 3-sample sonar requirement", () => {
+    // Failing-first pre-fix: sensor_backing_missing only required SOME
+    // backing sample; minSamples counted ALL samples regardless of
+    // modality, so this mixed submission was accepted.
+    const mixed = [
+      synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: FIXTURE_CAPTURE_MS - 3_000, x: 1, y: 1, sonarQuality: 0.9 }),
+      synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: FIXTURE_CAPTURE_MS - 2_000, x: 2, y: 2, visibilityMetres: 2.0 }),
+      synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: FIXTURE_CAPTURE_MS - 1_000, x: 3, y: 3, visibilityMetres: 2.1 }),
+    ];
+    const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: mixed }, POLICY_SEA_OBSTRUCTION_1, CTX_V2_ROV_B);
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons).toContain("insufficient_modality_samples:sonar:count=1:min=3");
+  });
+
+  it("P1-B positive: three sonar-backed samples satisfy the sonar policy", () => {
+    const sonarOnly = SUBMISSION_ROV_B_V2.samples.slice(0, 3);
+    const outcome = verifyEvidence({ ...SUBMISSION_ROV_B_V2, samples: sonarOnly }, POLICY_SEA_OBSTRUCTION_1, CTX_V2_ROV_B);
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(true);
+  });
+
+  it("P1-C: a LIVE_SITL claim over SYNTHETIC_SIM samples is rejected (provenance mismatch)", () => {
+    // Failing-first pre-fix: origin was checked per-sample against the
+    // policy allowlist, but the CLAIMED submission origin never had to
+    // agree with the normalized samples.
+    const outcome = verifyEvidence(
+      { ...SUBMISSION_ROV_B_V2, simulatorSource: "LIVE_SITL" },
+      POLICY_SEA_OBSTRUCTION_1,
+      CTX_V2_ROV_B,
+    );
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(false);
+    expect(outcome.value.verdict.reasons.join(" ")).toContain("origin_claim_mismatch:claimed=LIVE_SITL:samples=SYNTHETIC_SIM");
+  });
+
+  it("P1-C: an unsupported simulatorSource string is rejected at submission validation", () => {
+    const made = makeEvidenceSubmission({
+      ...SUBMISSION_ROV_B_V2,
+      simulatorSource: "TOTALLY_REAL_HARDWARE",
+      samples: SUBMISSION_ROV_B_V2.samples as unknown as readonly unknown[],
+    });
+    expect(made.ok).toBe(false);
+  });
+
+  it("P1-C positive: consistent LIVE_SITL claim + samples under a LIVE_SITL-allowing policy is accepted", () => {
+    const livePolicy = { ...POLICY_SEA_OBSTRUCTION_1, allowedOrigins: ["LIVE_SITL" as const] };
+    const liveSamples = SUBMISSION_ROV_B_V2.samples.map((s) => ({ ...s, sourceKind: "LIVE_SITL" as const }));
+    const outcome = verifyEvidence(
+      { ...SUBMISSION_ROV_B_V2, simulatorSource: "LIVE_SITL", samples: liveSamples },
+      livePolicy,
+      CTX_V2_ROV_B,
+    );
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.value.verdict.accepted).toBe(true);
   });
 });
