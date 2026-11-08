@@ -1,0 +1,103 @@
+{
+  "source": "actual POST /api/demo/simulation; no mocked transport",
+  "before": {
+    "robotId": "rov-01",
+    "role": "underwater-rov",
+    "pose": {
+      "x": 60,
+      "y": -10,
+      "z": -2.5
+    },
+    "waypointIndex": 1,
+    "speedMps": 1.2,
+    "linkState": "connected",
+    "fresh": true,
+    "staleness": "none",
+    "staleSinceSimMs": null,
+    "activeOpticalFault": null,
+    "sensors": [
+      {
+        "sensorId": "rov-01-optical",
+        "kind": "optical",
+        "measured": {
+          "quality01": 0.706076,
+          "qualityUnits": "unitless_0_to_1_fixture_model",
+          "opticalVisibilityFactorApplied": null
+        },
+        "coverage": {
+          "modelCellsVisited": 0,
+          "modelCellsTotal": 15,
+          "coverage01": 0
+        }
+      },
+      {
+        "sensorId": "rov-01-sonar",
+        "kind": "sonar",
+        "measured": {
+          "quality01": 0.636836,
+          "qualityUnits": "unitless_0_to_1_fixture_model",
+          "opticalVisibilityFactorApplied": null
+        },
+        "coverage": {
+          "modelCellsVisited": 0,
+          "modelCellsTotal": 15,
+          "coverage01": 0
+        }
+      }
+    ]
+  },
+  "after": {
+    "robotId": "rov-01",
+    "role": "underwater-rov",
+    "pose": {
+      "x": 60.498799,
+      "y": -10.332532,
+      "z": -2.52494
+    },
+    "waypointIndex": 1,
+    "speedMps": 1.2,
+    "linkState": "connected",
+    "fresh": true,
+    "staleness": "none",
+    "staleSinceSimMs": null,
+    "activeOpticalFault": {
+      "faultId": "fault-rov-01-1",
+      "kind": "optical-visibility",
+      "severity": "severe",
+      "startedAtSimMs": 500,
+      "expiresAtSimMs": 9500
+    },
+    "sensors": [
+      {
+        "sensorId": "rov-01-optical",
+        "kind": "optical",
+        "measured": {
+          "quality01": 0.083055,
+          "qualityUnits": "unitless_0_to_1_fixture_model",
+          "opticalVisibilityFactorApplied": 0.12
+        },
+        "coverage": {
+          "modelCellsVisited": 0,
+          "modelCellsTotal": 15,
+          "coverage01": 0
+        }
+      },
+      {
+        "sensorId": "rov-01-sonar",
+        "kind": "sonar",
+        "measured": {
+          "quality01": 0.63932,
+          "qualityUnits": "unitless_0_to_1_fixture_model",
+          "opticalVisibilityFactorApplied": null
+        },
+        "coverage": {
+          "modelCellsVisited": 0,
+          "modelCellsTotal": 15,
+          "coverage01": 0
+        }
+      }
+    ]
+  },
+  "replayIdentical": true,
+  "simulatorTimeMs": 1000
+}

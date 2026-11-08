@@ -1,0 +1,147 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.73kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#3 sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 0B / 14.28MB 0.1s
+#3 sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 9.08kB / 9.08kB done
+#3 sha256:7b32114e84ca21aeb2d6f871a0b62b3a0762193f75d9afd048ee4cbe889f3148 1.13kB / 1.13kB done
+#3 sha256:528c92d70d7e39dbb3dd1c6681f6750c565c7e45b70527cda47c1a61495c1b6a 1.41kB / 1.41kB done
+#3 sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 2.10MB / 14.28MB 0.5s
+#3 sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 8.39MB / 14.28MB 0.7s
+#3 sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 11.53MB / 14.28MB 0.8s
+#3 extracting sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62
+#3 sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 14.28MB / 14.28MB 0.9s done
+#3 extracting sha256:9d2b4f57f9e20f33279375ce25c6ff14f30f64270ed5c7b613b2b30256754f62 0.2s done
+#3 DONE 1.1s
+
+#4 [internal] load metadata for docker.io/library/node:22.21.1-bookworm-slim
+#4 DONE 1.6s
+
+#5 [internal] load build context
+#5 transferring context: 4.21MB 0.1s done
+#5 DONE 0.1s
+
+#6 [build 1/5] FROM docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c
+#6 resolve docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 0.0s done
+#6 sha256:8c3a0351e2535c75b4f15dcdd918612e419e829306291a93ddce97f4746581bd 6.87kB / 6.87kB done
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 0B / 28.23MB 0.2s
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 0B / 3.31kB 0.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 0B / 49.48MB 0.2s
+#6 sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 6.49kB / 6.49kB done
+#6 sha256:650d460b4e6b02411caa0e563838f07fafc9792314d5091859d837d8b070712b 1.93kB / 1.93kB done
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 3.31kB / 3.31kB 0.6s done
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 6.29MB / 49.48MB 0.7s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 0B / 1.71MB 0.7s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 4.19MB / 28.23MB 0.8s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 7.34MB / 28.23MB 1.0s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 11.53MB / 49.48MB 1.0s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 10.49MB / 28.23MB 1.1s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 12.58MB / 28.23MB 1.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 14.68MB / 49.48MB 1.2s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.05MB / 1.71MB 1.3s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 17.83MB / 28.23MB 1.5s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 20.97MB / 49.48MB 1.5s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.71MB / 1.71MB 1.3s done
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 0B / 447B 1.5s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 22.02MB / 28.23MB 1.7s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 24.12MB / 49.48MB 1.7s
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 447B / 447B 1.7s done
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 25.17MB / 28.23MB 1.8s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 30.41MB / 49.48MB 2.0s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 28.23MB / 28.23MB 2.0s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 34.60MB / 49.48MB 2.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 38.80MB / 49.48MB 2.5s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 42.99MB / 49.48MB 2.7s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 47.19MB / 49.48MB 2.9s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 49.48MB / 49.48MB 3.0s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 2.1s done
+#6 extracting sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 done
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 2.9s done
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 3.2s done
+#6 extracting sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 done
+#6 DONE 15.4s
+
+#7 [build 2/5] WORKDIR /app
+#7 DONE 2.9s
+
+#8 [build 3/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm install --global pnpm@10.34.5 --ignore-scripts
+#8 5.582
+#8 5.582 added 1 package in 2s
+#8 5.582
+#8 5.582 1 package is looking for funding
+#8 5.582   run `npm fund` for details
+#8 5.582 npm notice
+#8 5.582 npm notice New major version of npm available! 10.9.4 -> 12.2.2
+#8 5.582 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#8 5.582 npm notice To update run: npm install -g npm@12.2.2
+#8 5.582 npm notice
+#8 DONE 5.8s
+
+#9 [build 4/5] COPY --chown=node:node . .
+#9 DONE 3.1s
+
+#10 [build 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next
+#10 2.990 Scope: all 3 workspace projects
+#10 3.117 Lockfile is up to date, resolution step is skipped
+#10 3.190 Progress: resolved 1, reused 0, downloaded 0, added 0
+#10 3.282 Packages: +364
+#10 3.282 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#10 3.511
+#10 3.511    ╭──────────────────────────────────────────╮
+#10 3.511    │                                          │
+#10 3.511    │   Update available! 10.34.5 → 12.18.0.   │
+#10 3.511    │   Changelog: https://pnpm.io/v/12.18.0   │
+#10 3.511    │     To update, run: pnpm add -g pnpm     │
+#10 3.511    │                                          │
+#10 3.511    ╰──────────────────────────────────────────╯
+#10 3.511
+#10 4.196 Progress: resolved 364, reused 0, downloaded 17, added 17
+#10 5.193 Progress: resolved 364, reused 0, downloaded 52, added 52
+#10 6.195 Progress: resolved 364, reused 0, downloaded 77, added 77
+#10 7.204 Progress: resolved 364, reused 0, downloaded 95, added 93
+#10 8.214 Progress: resolved 364, reused 0, downloaded 141, added 141
+#10 9.214 Progress: resolved 364, reused 0, downloaded 163, added 163
+#10 10.21 Progress: resolved 364, reused 0, downloaded 176, added 174
+#10 11.22 Progress: resolved 364, reused 0, downloaded 194, added 180
+#10 12.21 Progress: resolved 364, reused 0, downloaded 229, added 229
+#10 12.99  WARN  GET https://registry.npmjs.org/next/-/next-15.5.29.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+#10 12.99  WARN  GET https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+#10 13.12  WARN  GET https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+#10 13.26 Progress: resolved 364, reused 0, downloaded 251, added 238
+#10 13.31  ERR_PNPM_ENOSPC  [importPackage /app/node_modules/.pnpm/@next+eslint-plugin-next@15.5.29/node_modules/@next/eslint-plugin-next] ENOSPC: no space left on device, mkdir '/app/node_modules/.pnpm/@next+eslint-plugin-next@15.5.29/node_modules/@next'
+#10 ERROR: process "/bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next" did not complete successfully: exit code: 1
+------
+ > [build 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next:
+8.214 Progress: resolved 364, reused 0, downloaded 141, added 141
+9.214 Progress: resolved 364, reused 0, downloaded 163, added 163
+10.21 Progress: resolved 364, reused 0, downloaded 176, added 174
+11.22 Progress: resolved 364, reused 0, downloaded 194, added 180
+12.21 Progress: resolved 364, reused 0, downloaded 229, added 229
+12.99  WARN  GET https://registry.npmjs.org/next/-/next-15.5.29.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+12.99  WARN  GET https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+13.12  WARN  GET https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz error (ERR_PNPM_ENOSPC). Will retry in 10 seconds. 2 retries left.
+13.26 Progress: resolved 364, reused 0, downloaded 251, added 238
+13.31  ERR_PNPM_ENOSPC  [importPackage /app/node_modules/.pnpm/@next+eslint-plugin-next@15.5.29/node_modules/@next/eslint-plugin-next] ENOSPC: no space left on device, mkdir '/app/node_modules/.pnpm/@next+eslint-plugin-next@15.5.29/node_modules/@next'
+------
+Dockerfile:11
+--------------------
+  10 |     COPY --chown=node:node . .
+  11 | >>> RUN --mount=type=secret,id=proxy_ca \
+  12 | >>>     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
+  13 | >>>     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store && \
+  14 | >>>     rm -rf /tmp/pnpm-store && \
+  15 | >>>     pnpm --filter @vorqyn/web build && \
+  16 | >>>     chown -R node:node apps/web/.next
+  17 |
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next" did not complete successfully: exit code: 1

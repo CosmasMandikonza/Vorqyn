@@ -1,0 +1,3 @@
+
+> vorqyn@ lint /workspace/work/public17-merged-qa/snapshot
+> eslint .

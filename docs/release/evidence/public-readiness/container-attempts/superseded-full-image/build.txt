@@ -1,0 +1,161 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.63kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:22.21.1-bookworm-slim
+#4 DONE 1.8s
+
+#5 [internal] load build context
+#5 transferring context: 4.21MB 0.1s done
+#5 DONE 0.1s
+
+#6 [stage-0 1/5] FROM docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c
+#6 resolve docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 0.0s done
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 0B / 3.31kB 0.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 0B / 49.48MB 0.2s
+#6 sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 6.49kB / 6.49kB done
+#6 sha256:650d460b4e6b02411caa0e563838f07fafc9792314d5091859d837d8b070712b 1.93kB / 1.93kB done
+#6 sha256:8c3a0351e2535c75b4f15dcdd918612e419e829306291a93ddce97f4746581bd 6.87kB / 6.87kB done
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 0B / 28.23MB 0.2s
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 3.31kB / 3.31kB 0.6s done
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 3.15MB / 28.23MB 0.7s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 0B / 1.71MB 0.7s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 6.29MB / 49.48MB 0.9s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 7.34MB / 28.23MB 0.9s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 10.49MB / 49.48MB 1.1s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 11.53MB / 28.23MB 1.1s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 14.68MB / 28.23MB 1.3s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 15.73MB / 49.48MB 1.4s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.57MB / 1.71MB 1.4s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 19.92MB / 49.48MB 1.6s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 19.92MB / 28.23MB 1.6s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.71MB / 1.71MB 1.4s done
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 0B / 447B 1.6s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 22.02MB / 28.23MB 1.7s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 25.17MB / 49.48MB 1.9s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 25.17MB / 28.23MB 1.9s
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 447B / 447B 1.8s done
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 28.31MB / 49.48MB 2.1s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 28.23MB / 28.23MB 2.1s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 35.65MB / 49.48MB 2.4s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 38.80MB / 49.48MB 2.6s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 42.99MB / 49.48MB 2.8s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 47.19MB / 49.48MB 3.0s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 49.48MB / 49.48MB 3.1s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 2.1s done
+#6 extracting sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 done
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 2.0s done
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.1s done
+#6 extracting sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 done
+#6 DONE 10.6s
+
+#7 [stage-0 2/5] WORKDIR /app
+#7 DONE 1.5s
+
+#8 [stage-0 3/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm install --global pnpm@10.34.5 --ignore-scripts
+#8 2.679
+#8 2.679 added 1 package in 1s
+#8 2.679
+#8 2.680 1 package is looking for funding
+#8 2.680   run `npm fund` for details
+#8 2.681 npm notice
+#8 2.681 npm notice New major version of npm available! 10.9.4 -> 12.2.2
+#8 2.681 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#8 2.681 npm notice To update run: npm install -g npm@12.2.2
+#8 2.681 npm notice
+#8 DONE 2.7s
+
+#9 [stage-0 4/5] COPY --chown=node:node . .
+#9 DONE 1.1s
+
+#10 [stage-0 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next
+#10 1.926 Scope: all 3 workspace projects
+#10 2.051 Lockfile is up to date, resolution step is skipped
+#10 2.116 Progress: resolved 1, reused 0, downloaded 0, added 0
+#10 2.200 Packages: +364
+#10 2.200 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#10 2.459
+#10 2.459    ╭──────────────────────────────────────────╮
+#10 2.459    │                                          │
+#10 2.459    │   Update available! 10.34.5 → 12.18.0.   │
+#10 2.459    │   Changelog: https://pnpm.io/v/12.18.0   │
+#10 2.459    │     To update, run: pnpm add -g pnpm     │
+#10 2.459    │                                          │
+#10 2.459    ╰──────────────────────────────────────────╯
+#10 2.459
+#10 3.118 Progress: resolved 364, reused 0, downloaded 25, added 25
+#10 4.118 Progress: resolved 364, reused 0, downloaded 66, added 66
+#10 5.119 Progress: resolved 364, reused 0, downloaded 97, added 97
+#10 6.119 Progress: resolved 364, reused 0, downloaded 135, added 135
+#10 7.120 Progress: resolved 364, reused 0, downloaded 172, added 172
+#10 8.122 Progress: resolved 364, reused 0, downloaded 212, added 212
+#10 9.121 Progress: resolved 364, reused 0, downloaded 234, added 229
+#10 10.12 Progress: resolved 364, reused 0, downloaded 262, added 262
+#10 11.12 Progress: resolved 364, reused 0, downloaded 302, added 302
+#10 12.14 Progress: resolved 364, reused 0, downloaded 326, added 326
+#10 13.13 Progress: resolved 364, reused 0, downloaded 333, added 330
+#10 14.15 Progress: resolved 364, reused 0, downloaded 345, added 330
+#10 15.15 Progress: resolved 364, reused 0, downloaded 358, added 334
+#10 15.43 Progress: resolved 364, reused 0, downloaded 364, added 364, done
+#10 15.73
+#10 15.73 devDependencies:
+#10 15.73 + eslint 10.14.0
+#10 15.73 + typescript-eslint 8.72.1
+#10 15.73
+#10 15.77 Done in 14.2s using pnpm v10.34.5
+#10 16.32
+#10 16.32 > @vorqyn/web@0.0.0 build /app/apps/web
+#10 16.32 > next build
+#10 16.32
+#10 17.08    ▲ Next.js 15.5.29
+#10 17.08
+#10 17.11    Creating an optimized production build ...
+#10 40.66  ✓ Compiled successfully in 21.1s
+#10 40.67    Linting and checking validity of types ...
+#10 49.33    Collecting page data ...
+#10 51.03    Generating static pages (0/9) ...
+#10 51.86    Generating static pages (2/9)
+#10 51.86    Generating static pages (4/9)
+#10 51.86    Generating static pages (6/9)
+#10 51.86  ✓ Generating static pages (9/9)
+#10 52.49    Finalizing page optimization ...
+#10 52.49    Collecting build traces ...
+#10 60.08
+#10 60.09 Route (app)                                 Size  First Load JS
+#10 60.09 ┌ ○ /                                      592 B         107 kB
+#10 60.09 ├ ○ /_not-found                            127 B         103 kB
+#10 60.09 ├ ƒ /api/demo/simulation                   127 B         103 kB
+#10 60.09 ├ ○ /demo                                  592 B         107 kB
+#10 60.09 ├ ○ /demo/mission                        1.43 kB         107 kB
+#10 60.09 ├ ○ /icon.svg                                0 B            0 B
+#10 60.09 ├ ○ /workspace                             164 B         106 kB
+#10 60.09 └ ○ /workspace/create                    10.5 kB         127 kB
+#10 60.09 + First Load JS shared by all             103 kB
+#10 60.09   ├ chunks/0e0b8bca-3cef25f6382172fb.js  54.2 kB
+#10 60.09   ├ chunks/450-df0df7919498d45b.js       46.3 kB
+#10 60.09   └ other shared chunks (total)          2.12 kB
+#10 60.09
+#10 60.09
+#10 60.09 ○  (Static)   prerendered as static content
+#10 60.09 ƒ  (Dynamic)  server-rendered on demand
+#10 60.09
+#10 DONE 60.1s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 4.9s done
+#11 writing image sha256:58ee755d0d9a8648b8fb9c5493b48e9c33529431d8290b364d60babc0dd0d585
+#11 writing image sha256:58ee755d0d9a8648b8fb9c5493b48e9c33529431d8290b364d60babc0dd0d585 done
+#11 naming to docker.io/library/vorqyn-judge:96cb10d76bdf done
+#11 DONE 4.9s

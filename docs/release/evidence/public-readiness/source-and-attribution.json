@@ -1,0 +1,65 @@
+{
+  "sourceSha": "e1cb957d248f867aa014e008aaee07c50caca592",
+  "sourceScan": [
+    {
+      "id": "environment-config",
+      "status": "PASS",
+      "detail": "static world and local drafts need no external secrets; optional public config is valid",
+      "findings": []
+    },
+    {
+      "id": "credential-hygiene",
+      "status": "PASS",
+      "detail": "no supported credential patterns found; heuristic scan, not a security guarantee",
+      "findings": []
+    },
+    {
+      "id": "world-assets",
+      "status": "PASS",
+      "detail": "exit 0",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "assets/port-world/tools/validate.mjs",
+        "--selfcheck"
+      ],
+      "log": "commands/world-assets.txt",
+      "durationMs": 168,
+      "exitCode": 0
+    }
+  ],
+  "attributionFiles": [
+    {
+      "path": "apps/web/public/third-party-notices.txt",
+      "sha256": "cd165e99608f10498c051e37b8f77cc9cc5dfcec439b00a0097dc9f206d273e2"
+    },
+    {
+      "path": "assets/port-world/README.md",
+      "sha256": "15ccf636a1655c01c25ef3379b755a9b9ecebe07b53dd090e04f577477e1c180"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/dm-sans-OFL.txt",
+      "sha256": "6fbd040a29c2037a765dfb9f2561e9965b5c95c6dcb5dce516089d63d5f17af7"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/shadcn-license.txt",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/reactbits-license.txt",
+      "sha256": "4bdd1fa59a6b7d5954bc3b213dbc34e455c635a94bbcecf9293553797d0fad02"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/space-grotesk-OFL.txt",
+      "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/ibm-plex-mono-OFL.txt",
+      "sha256": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f"
+    },
+    {
+      "path": "docs/evidence/vq-02/licenses/cult-license.txt",
+      "sha256": "78045e58dfd5f039ad350ad293da2ad9a2c0362b82dadb069b1c10be382ddac7"
+    }
+  ],
+  "scope": "Existing notices/provenance present; no new third-party media/UI/dependencies. Not an exhaustive legal audit."
+}
