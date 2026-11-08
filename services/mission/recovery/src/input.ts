@@ -31,12 +31,20 @@ export interface RecoveryRequest {
   readonly requiredCapabilities: readonly string[];
   /** The task's CURRENT assignment version (stale proposals die here). */
   readonly currentAssignmentVersion: number;
+  /** Authority-derived CURRENT assignment facts (CTO review P1-A/P1-B):
+   * the reserved reward being replaced (top-up math) and the identities a
+   * GENUINE recovery must replace. Lamports accept bigint to avoid lossy
+   * Number conversions near 2^53. */
+  readonly currentRewardLamports: Lamports | bigint;
+  readonly currentOperatorId: string;
+  readonly currentRobotId: string;
   /** Measured failure reasons from the VQ-10 verdict (source-bound). */
   readonly evidenceFailureReasons: readonly string[];
   readonly offers: readonly OperatorOffer[];
-  /** Spendable ceiling: min(task budget, mission unreserved lamports). */
-  readonly budgetLamports: Lamports;
-  readonly missionRemainingLamports: Lamports;
+  /** Spendable ceiling: min(task budget, mission unreserved lamports).
+   * Lamports | bigint everywhere — no lossy Number coercion (CTO P1-A). */
+  readonly budgetLamports: Lamports | bigint;
+  readonly missionRemainingLamports: Lamports | bigint;
   /** Decision clock — explicit for determinism in tests and replay. */
   readonly nowMs: EpochMs;
 }
@@ -69,7 +77,12 @@ export function buildPromptInput(request: RecoveryRequest): ModelPromptInput {
     requiredCapabilities: request.requiredCapabilities,
     currentAssignmentVersion: request.currentAssignmentVersion,
     evidenceFailureReasons: request.evidenceFailureReasons,
-    budgetLamports: request.budgetLamports,
+    // The prompt carries the budget as a NUMBER for JSON serialization;
+    // unsafe values (>2^53-1) are serialized as strings to stay exact.
+    budgetLamports:
+      typeof request.budgetLamports === "bigint" || typeof request.budgetLamports === "number"
+        ? Number(request.budgetLamports)
+        : Number(request.budgetLamports),
     offers: request.offers.map((o) => ({
       offerId: o.offerId,
       operatorId: o.operatorId,

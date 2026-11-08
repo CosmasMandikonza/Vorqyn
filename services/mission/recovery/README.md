@@ -18,17 +18,30 @@ approval** produces a typed, unsigned chain intent.
    (hallucination), task match, version freshness (CAS), capability
    coverage, expiry/validity window, budget + remaining-lamports ceilings,
    safe-integer quotes. The model's explanation is never trusted.
-4. **Owner approval (P0)**: `authorizeProposal` requires an explicit
-   owner approval and re-runs the gate at authorization time; output is a
-   typed INTENT (data) — no signature, no key, no submission. The
-   on-chain CAS remains the final authority. No bounded delegate is
-   implemented (VQ-05 deferred it; nothing here grants wallet authority).
+4. **Owner approval (P0)**: `authorizeProposal` records owner-approval
+   METADATA (caller-supplied, NOT wallet authentication) and re-runs the
+   gate at authorization time; output is a typed **unsigned intent
+   pending authenticated owner-wallet approval** — the actual signature
+   and signer verification happen in the wallet/chain-client layer (#13).
+   The on-chain CAS remains the final authority. No bounded delegate is
+   implemented; nothing here grants wallet authority.
 5. **Safe fallback**: model timeout/malformed/empty/rate-limited →
    transparent rule-based ranking (cheapest compatible unexpired in-budget
    offer), still gated, still owner-approval-only; `no_safe_proposal`
    when nothing viable exists.
-6. **Duplicate suppression**: per task+version attempt ledger (injectable
-   store) blocks repeat model calls from causing duplicate reassignments.
+6. **Duplicate suppression**: per task+version attempt ledger. The store
+   must be INJECTED and shared per mission session (the in-memory default
+   is per-call); this provides NO cross-process idempotency — the on-chain
+   CAS is the authoritative guard (#14 scope).
+
+## Reservation accounting (matches the on-chain program exactly)
+
+The gate reproduces `authorize_reassignment`'s real funds rule with bigint
+math: `topUp = max(0n, quote − currentReward)`; reject iff
+`topUp > missionRemainingLamports` (`topup_over_remaining`); the
+task-budget ceiling is enforced independently (`quote_over_budget`).
+Reward cuts and unchanged rewards need no top-up. Genuine recovery must
+REPLACE the current operator (`same_operator`) and robot (`same_robot`).
 
 ## Model labeling (honesty)
 

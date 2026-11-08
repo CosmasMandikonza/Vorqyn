@@ -45,8 +45,15 @@ export interface OwnerApprovedIntent {
   readonly payoutWallet: string;
 }
 
+/**
+ * OWNER-APPROVAL METADATA — NOT wallet authentication (CTO review).
+ * `approvedBy: "owner"` is caller-supplied data recording that an owner
+ * approval REQUEST was accepted upstream. What leaves this module is an
+ * UNSIGNED chain intent pending AUTHENTICATED owner-wallet approval: the
+ * real signature happens in the wallet/chain-client layer (#13), where
+ * signer identity is actually verified. Nothing here proves ownership.
+ */
 export interface OwnerApproval {
-  /** Explicit human approval token (P0: owner-signed UI action upstream). */
   readonly approvedBy: "owner";
   readonly approvalId: string;
   readonly approvedAtMs: number;
@@ -63,6 +70,13 @@ export interface AttemptStore {
   set(key: string, value: number): void;
 }
 
+/**
+ * In-memory attempt ledger. NOTE (CTO review): duplicate suppression only
+ * works when callers INJECT ONE SHARED STORE per mission session; a fresh
+ * default store per call suppresses nothing across calls/processes.
+ * Cross-process idempotency is NOT provided here — the on-chain CAS
+ * remains the authoritative stale-version guard (#14 scope).
+ */
 export class InMemoryAttemptStore implements AttemptStore {
   private readonly counts = new Map<string, number>();
   get(key: string): number { return this.counts.get(key) ?? 0; }
@@ -235,9 +249,10 @@ export async function proposeRecovery(
 }
 
 /**
- * The ONLY bridge toward a chain action: explicit owner approval turns a
- * proposal into a typed INTENT. No signature, no transaction, no wallet —
- * the (still-independent) on-chain CAS remains the final authority.
+ * The ONLY bridge toward a chain action: owner-approval METADATA turns a
+ * proposal into a typed UNSIGNED intent pending authenticated owner-wallet
+ * approval. No signature, no transaction, no wallet — the on-chain CAS
+ * remains the final authority.
  */
 export function authorizeProposal(
   outcome: RecoveryProposalOutcome,

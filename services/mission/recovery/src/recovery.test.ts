@@ -215,3 +215,113 @@ describe("strict model-output schema", () => {
     expect(parseModelChoice(JSON.stringify({ ...chose("x"), rejectedOfferReasons: "none" })).ok).toBe(false);
   });
 });
+
+describe("CTO review P1-A: reservation-aware top-up accounting", () => {
+  // The on-chain rule (authorize_reassignment, PR #46):
+  //   topUp = max(0, newReward - currentReward); topUp <= missionRemaining.
+  const baseRequest = (over: Partial<typeof FLAGSHIP_REQUEST>) =>
+    ({ ...FLAGSHIP_REQUEST, currentRewardLamports: 800_000_000n, ...over }) as typeof FLAGSHIP_REQUEST;
+
+  it("accepts a valid reward INCREASE when the top-up fits unreserved funds", async () => {
+    // quote 0.9, current 0.8 → topUp 0.1 ≤ remaining 0.2: chain allows it.
+    // Failing-first pre-fix: the gate compared the WHOLE quote (0.9) to
+    // remaining (0.2) and wrongly rejected.
+    const req = baseRequest({ missionRemainingLamports: 200_000_000n });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose("offer-rov-b-sonar"))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("proposed");
+  });
+
+  it("accepts a reward CUT even with ZERO unreserved funds", async () => {
+    const cut = { ...OFFER_ROV_B_SONAR, quoteLamports: 500_000_000 as never };
+    const req = baseRequest({ missionRemainingLamports: 0n, offers: [cut] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(cut.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("proposed"); // release, no top-up needed
+  });
+
+  it("accepts an UNCHANGED reward with zero unreserved funds (topUp 0)", async () => {
+    const same = { ...OFFER_ROV_B_SONAR, quoteLamports: 800_000_000 as never };
+    const req = baseRequest({ missionRemainingLamports: 0n, offers: [same] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(same.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("proposed");
+  });
+
+  it("rejects when the TOP-UP exceeds unreserved funds (reason-coded)", async () => {
+    // quote 1.1, current 0.8 → topUp 0.3 > remaining 0.1. The task-budget
+    // ceiling alone (1.2) would NOT catch this.
+    const raise = { ...OFFER_ROV_B_SONAR, offerId: "offer-raise", quoteLamports: 1_100_000_000 as never };
+    const req = baseRequest({ missionRemainingLamports: 100_000_000n, offers: [raise] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(raise.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("no_safe_proposal");
+    expect(result.value.rejectedAlternatives.map((r) => r.reasonCode)).toContain("topup_over_remaining");
+    expect(result.value.rejectedAlternatives.find((r) => r.reasonCode === "topup_over_remaining")?.reason)
+      .toContain("topUp=300000000");
+  });
+
+  it("still enforces the task-budget ceiling independently", async () => {
+    const over = { ...OFFER_ROV_B_SONAR, quoteLamports: 1_300_000_000 as never };
+    const req = baseRequest({ missionRemainingLamports: 5_000_000_000n, offers: [over] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(over.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.rejectedAlternatives.map((r) => r.reasonCode)).toContain("quote_over_budget");
+  });
+
+  it("uses bigint math end-to-end (no lossy Number conversion)", async () => {
+    const exact = { ...OFFER_ROV_B_SONAR, quoteLamports: 900_719_925_474_0993n as never };
+    const req = baseRequest({ budgetLamports: 9_007_199_254_740_993n as never, missionRemainingLamports: 9_007_199_254_740_993n as never, currentRewardLamports: 1n, offers: [exact] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(exact.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("proposed");
+    expect(result.value.offer?.quoteLamports).toBe(9007199254740993n);
+  });
+});
+
+describe("CTO review P1-B: genuine recovery must replace the operator/robot", () => {
+  const withCurrent = (over: Partial<typeof FLAGSHIP_REQUEST>) =>
+    ({ ...FLAGSHIP_REQUEST, currentOperatorId: "operator-rov-a", currentRobotId: "rov-a-01", ...over }) as typeof FLAGSHIP_REQUEST;
+
+  it("rejects an offer selecting the SAME operator (reason-coded)", async () => {
+    const sameOperator = { ...OFFER_ROV_B_SONAR, operatorId: "operator-rov-a" };
+    const req = withCurrent({ offers: [sameOperator] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(sameOperator.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("no_safe_proposal");
+    expect(result.value.rejectedAlternatives.map((r) => r.reasonCode)).toContain("same_operator");
+  });
+
+  it("rejects an offer selecting the SAME robot under a different operator", async () => {
+    const sameRobot = { ...OFFER_ROV_B_SONAR, robotId: "rov-a-01" };
+    const req = withCurrent({ offers: [sameRobot] });
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose(sameRobot.offerId))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.rejectedAlternatives.map((r) => r.reasonCode)).toContain("same_robot");
+  });
+
+  it("a DIFFERENT operator and robot still passes (positive)", async () => {
+    const req = withCurrent({});
+    const model = new ScriptedModelClient(() => parseModelChoice(JSON.stringify(chose("offer-rov-b-sonar"))));
+    const result = await proposeRecovery(req, { model, attemptStore: new InMemoryAttemptStore() });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.status).toBe("proposed");
+  });
+});
