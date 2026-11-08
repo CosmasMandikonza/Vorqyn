@@ -1,124 +1,226 @@
+<div align="center">
+
 # VORQYN
 
-**Autonomous work. Accountable outcomes.**
+### Autonomous work. Accountable outcomes.
 
-### Watch the hackathon demo
+**A mission control and economic coordination layer for independently operated robots.**
 
-[![Watch VORQYN's Solana hackathon demo on YouTube](https://img.youtube.com/vi/5LzJXEW5Eas/hqdefault.jpg)](https://youtu.be/5LzJXEW5Eas)
+Plan the job. Observe the machines. Understand a failure. Preserve the evidence.  
+Build toward settlement that rewards **verified work—not merely a claim of completion.**
 
-**[▶ Watch the VORQYN demo on YouTube](https://youtu.be/5LzJXEW5Eas)** · [Try the live synthetic harbor demo](https://vorqynweb-production.up.railway.app/demo/mission) · [Open the browser-local mission builder](https://vorqynweb-production.up.railway.app/workspace/create)
+[**▶ Watch the demo**](https://youtu.be/5LzJXEW5Eas) &nbsp;·&nbsp; [**Explore the 3D harbor**](https://vorqynweb-production.up.railway.app/demo/mission) &nbsp;·&nbsp; [**Plan a mission**](https://vorqynweb-production.up.railway.app/workspace/create)
 
-> The video demonstrates the synthetic harbor workflow. Browser-local mission drafts are not funded missions, and the Anchor contract tests do not imply verified live Solana settlement.
+[![CI](https://github.com/CosmasMandikonza/Vorqyn/actions/workflows/ci.yml/badge.svg)](https://github.com/CosmasMandikonza/Vorqyn/actions/workflows/ci.yml) &nbsp; ![Solana](https://img.shields.io/badge/Solana-Anchor%20%2B%20Rust-6b4aff?logo=solana&logoColor=white) &nbsp; ![Stack](https://img.shields.io/badge/Next.js-Three.js%20%2B%20TypeScript-182329)
 
-VORQYN is a proposed company-grade mission platform for independently operated autonomous machines: a customer creates a mission, robots execute physical tasks in a shared 3D world, an AI mission coordinator proposes recovery when evidence fails, and a Solana program enforces task reassignment and accepted-work payments.
+[![Watch the VORQYN hackathon demonstration](https://img.youtube.com/vi/5LzJXEW5Eas/hqdefault.jpg)](https://youtu.be/5LzJXEW5Eas)
 
-> **Verified build status — November 7, 2026 (merged main):** VORQYN has a real interactive PORT-001 3D viewer and a deterministic, bounded server-side **synthetic** simulation API. A guest can start a survey, watch drone/rover/underwater ROV poses from actual kernel observations, inject a simulated underwater optical-visibility fault, inspect independent sonar measurements and replay the identical trace ([3D playback PR #38](https://github.com/CosmasMandikonza/Vorqyn/pull/38), [API PR #35](https://github.com/CosmasMandikonza/Vorqyn/pull/35)). The local browser-only mission draft builder ([PR #30](https://github.com/CosmasMandikonza/Vorqyn/pull/30)), original port assets, world-aligned kernel, and typed event contracts/reducer ([PR #37](https://github.com/CosmasMandikonza/Vorqyn/pull/37)) are also merged. **Not yet verified:** authenticated company mission persistence, runtime AI recovery, independent evidence verifier, real physical/SITL telemetry, deployed Solana escrow/reassignment/payout, public demo/video, or accepted submission. Canonical chain events in test fixtures are synthetic examples, **not devnet transactions**. Do not present this prototype as a deployed autonomous fleet or as completed financial settlement.
+*Built for the November 2026 Solana × MLH Hackathon.*
 
-## Local development and current feature boundaries
+</div>
 
-The monorepo contains a **working guest synthetic mission journey** at `/demo/mission` and a separate browser-local mission planner. The guest 3D viewer is connected to the actual stateless `POST /api/demo/simulation` endpoint, but it is **not** connected to a persisted company mission, real hardware, independent evidence approval, runtime AI operator, or Solana financial authority.
+---
 
-- **Runtime:** Node `22.21.1` (see `.nvmrc`) and pnpm `10.34.5` (pinned via the root `packageManager` field; `corepack enable` prepares it automatically).
-- **Install:** `pnpm install` (committed lockfile; CI uses `--frozen-lockfile`).
-- **Checks:** `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`. CI (`.github/workflows/ci.yml`) also runs the core synthetic kernel, world-coordinate integration tests, asset validator, and Rust scaffold. Release tooling and browser checks are documented in [docs/release/README.md](docs/release/README.md); its prior 320px failures and remaining external submission blockers must not be reported as passing.
-- **Web app:** `pnpm dev:web` serves the landing page, `/demo/mission` guest synthetic 3D playback with fault/replay controls and 2D fallback, and `/workspace/create` browser-local planning drafts. Both interfaces prominently disclose their limitations. No blockchain transaction or live hardware read is implied; see [#8](https://github.com/CosmasMandikonza/Vorqyn/issues/8), [#9](https://github.com/CosmasMandikonza/Vorqyn/issues/9), and [#4](https://github.com/CosmasMandikonza/Vorqyn/issues/4) for remaining integration.
-- **Shared contracts:** `packages/contracts` now contains validated IDs, exact lamports, source-aware telemetry, versioned mission events, pure deterministic reducer and two replay fixtures ([PR #37](https://github.com/CosmasMandikonza/Vorqyn/pull/37)). The proposed Solana PDA/IDL agreement in `CHAIN_SEAM.md` remains a **draft** pending Anchor-owner agreement; fixtures are not actual devnet history.
-- **Anchor program:** `programs/vorqyn` is a no-op skeleton verified by `cargo fmt --check`, `cargo clippy` and `cargo check` in CI. The Anchor/Solana toolchain (`avm`, `anchor`, `solana` CLI, local validator) is **not** installed by pnpm; `anchor build`/`anchor test` become relevant from VQ-04 (#5) onward. Devnet/test keypairs only — never commit keys or secrets.
-- **Windows:** WSL2 is recommended for a consistent Node/Solana environment. Some contributors also run the dependency-free simulation/asset validation under Windows Git Bash and Node; Anchor/validator installation must be verified separately per workstation.
+## The missing layer between autonomy and trust
 
-## What makes VORQYN special?
+A storm damages a port. A drone can inspect overhead structures, a ground rover can assess access routes, and an underwater ROV can map submerged obstructions. But when these machines are operated by different providers, **who owns the mission, who decides whether the evidence is good enough, and who gets paid when conditions change?**
 
-A port needs to inspect access roads, aerial structures, and underwater obstructions after a storm. In the **implemented synthetic demo**, a drone surveys from above, a rover checks access, and an underwater ROV surveys beneath the docks. A genuine kernel command injects a low-visibility fault: optical sensor measurements degrade, while independent sonar readings remain observable. The operator can inspect source-labelled poses, a fault timeline and repeatable replay in one 3D world (or text-based 2D fallback). **Planned, not yet completed:** independent evidence rejection, AI replacement matching, owner-authorized reassignment, and single-use payout enforced by a real Solana program.
+Most robotics software focuses on controlling a machine. VORQYN explores the layer *around* the machine: a shared operational world, source-aware observations, reproducible evidence, and programmable financial rules for a multi-operator mission.
 
-**Target end-to-end interaction:** observe → fail → explain → recover → verify → settle → replay. **Implemented guest subset:** observe → synthetic optical fault → inspect sensor measurements → replay. The remaining real financial/evidence transitions must be independently inspectable before the project claims a complete recovery loop.
+| The operational challenge | The VORQYN approach |
+| --- | --- |
+| Different robots operate in disconnected interfaces | One spatially aligned, interactive mission world |
+| A sensor can fail while the robot still appears to be working | Measured fault effects, independent sensors, and an inspectable timeline |
+| An operator needs to investigate what happened | Source-labelled observations and deterministic replay |
+| Multiple businesses need enforceable task ownership and payments | Solana Anchor escrow, versioned reassignment, and verifier-authorized payout rules |
 
-## Two product entry points
+**The idea:** physical execution stays off-chain; **financial authority belongs in a transparent, constrained protocol.**
 
-- **Explore Demo:** instant, no account or wallet required; real kernel-driven synthetic three-machine port survey at `/demo/mission`, with optical-fault command, source-aware sensor inspector, camera stations and deterministic replay. **No actual devnet transaction is shown by this route.**
-- **Create Mission:** `/workspace/create` saves genuinely different local drafts with selected zones, machine capabilities, acceptance criteria and exact proposed budgets. Data stays in the current browser; there is **no authenticated organization, secure server persistence, funded escrow or real mission launch** yet.
+## Experience the working demo
 
-Long-term customers may include infrastructure inspection providers, port operators, and robotics contractors. Enterprise mission-management subscriptions are the leading business hypothesis; marketplace fees and developer APIs are future hypotheses, **not validated demand or existing revenue**.
+The public demo is an interactive **synthetic** inspection of a fictional port. The controls drive a deterministic simulation kernel through a real server API; the failure is reflected in sensor measurements, not just a visual effect.
 
-## Competition objective
+| Step | Try it | What it demonstrates |
+| --- | --- | --- |
+| **01 · Define** | [Open mission builder](https://vorqynweb-production.up.railway.app/workspace/create) | Five-step planning: objective, environment, capabilities, evidence rules, and exact proposed SOL budget |
+| **02 · Explore** | [Enter the harbor](https://vorqynweb-production.up.railway.app/demo/mission) | Aerial, ground, and underwater inspection in a shared ENU-coordinate world |
+| **03 · Operate** | Click **Start synthetic survey**, then **Advance +1 step** | Kernel-observed robot positions, session state, and sequence timeline |
+| **04 · Break** | Select **Inspection ROV** → **FOLLOW** → **Inject underwater optical fault** | Genuine simulated optical degradation while sonar remains independently observable |
+| **05 · Investigate** | Advance, inspect the quality timeline, then click **Replay history** | Source-aware measurements, recorded pre/post-fault paths, and identical deterministic replay |
 
-Primary objective: **Top 3 Overall — $1,000 microgrant per selected team** at the November 6–8, 2026 Solana × MLH Hackathon. Secondary: AI Track, if the AI agent and Solana each perform meaningful, demonstrable work. The objective is to produce an impressive **working product** across MLH's standard Technology, Design, Completion, and Learning criteria; winning is not guaranteed.
+**[Watch the recorded walkthrough →](https://youtu.be/5LzJXEW5Eas)**
 
-**Why Solana is necessary here:** separate operators hold task rights under a shared escrow; a failed task cannot be paid as completed; scoped authorities can reassign unfinished work; verified evidence is bound to an assignment version; and the correct operator can claim once without the application freely reallocating customer funds. The chain enforces financial and authorization state, **not** robot stabilization or physical truth.
+### The guest experience, end to end
 
-## Product architecture (partially implemented; full authority path remains planned)
-
-```text
-           Visitors                         Companies
-      Explore Demo / replay             Sign-in / Create Mission
-                   \                      /
-                     Next.js + React UI
-                3D world + Evidence + Wallet
-                             |
-              Mission API + event/replay log
-                   /          |           \
-          Vehicle adapters   AI/policy     Verifier
-          and simulator      planner       (off-chain)
-                   \          |           /
-                  Shared typed mission contract
-                             |
-                Solana Anchor program / devnet
-                  escrow · reassignment · payout
+```mermaid
+flowchart LR
+    A["Define mission brief<br/>5-step local planner"] -->|"Explore reference scenario"| B["PORT-001<br/>shared 3D harbor"]
+    B --> C["Start deterministic<br/>simulation session"]
+    C --> D["Inject ROV<br/>optical fault"]
+    D --> E["Inspect optical +<br/>independent sonar"]
+    E --> F["Replay the same<br/>operation trace"]
+    style B fill:#123D42,color:#fff,stroke:#123D42
+    style D fill:#B9703E,color:#fff,stroke:#B9703E
+    style F fill:#2C7167,color:#fff,stroke:#2C7167
 ```
 
-*Proposed stack*: Next.js + TypeScript, React Three Fiber / Three.js (optional Cesium after proof of need), ArduPilot SITL/MAVLink for genuine vehicle telemetry where feasible, server-side mission orchestration and policy verification, an Anchor/Rust Solana program, and an event store. Technology choices can be revised through an explicit architecture decision—not independently by separate coding agents.
+*The builder saves a separate browser-local mission brief. “Explore” opens the independently running PORT-001 reference scenario, not a funded execution of that saved draft.*
 
-## Visual language (non-negotiable intent)
+## Why Solana belongs in VORQYN
 
-A **light-led, carefully designed light/dark system**: warm mineral ivory, industrial petrol, restrained copper actions and sea-glass verification; cinematic world, clear engineering typography, accessible controls and honest statuses. The two themes are **equally crafted**, not inverted styles. Prefer Cult UI for app components, React Bits selectively for narrative motion, Skiper UI selectively where licensing permits, and Awwwards as art-direction reference. Main 3D world must represent actual mission state.
+A normal database can display **“task complete.”** A smart-contract protocol can constrain **who is authorized to change an assignment, how much has been reserved, and whether a reward can be paid twice.** Those are different responsibilities—and the reason we built a custom Anchor program rather than adding a wallet button to a robotics UI.
 
-Mission Control should offer named Orbit / Follow / Inspect / X-Ray / Replay modes, a contextual inspector and a synchronized event timeline. No mock confirmations disguised as chain receipts. Reduced-motion, keyboard/touch, low-performance and no-WebGL alternatives are part of the design contract.
+The [Anchor/Rust program](programs/vorqyn/src/lib.rs) implements:
 
-## Docs: read before writing code
+- **Mission escrow:** initialize missions, fund a program-controlled vault, reserve bounded task rewards, and return eligible unused funds on close.
+- **Ownership and reassignment:** assign an operator wallet, then authorize a replacement with compare-and-set assignment versions. Stale assignment requests cannot silently overwrite a newer owner decision.
+- **Independent verifier authority:** registry-managed verifier identities and policy versions, with authorization checked before an acceptance can release funds.
+- **Single-use payout:** `verify_and_claim` binds the claim to the current assignment, evidence digest, authorized verifier, and designated recipient; repeated and stale claims are rejected.
+- **Exact accounting:** integer lamports, checked arithmetic, bounded reservations, and safe terminal states.
 
-| File | Purpose |
+### How the on-chain contract works
+
+```mermaid
+flowchart TB
+    M["Mission owner"] -->|"initialize_mission · fund_mission"| E["Mission escrow vault · PDA"]
+    M -->|"create_task · assign_task"| T["Versioned task · PDA"]
+    M -->|"authorize_reassignment<br/>expected version required"| T
+    E --- T
+    V["Registered independent verifier"] -->|"verify_and_claim<br/>digest + current version"| T
+    T -->|"single authorized payout"| W["Current operator wallet"]
+    style E fill:#123D42,color:#fff,stroke:#123D42
+    style T fill:#274C66,color:#fff,stroke:#274C66
+    style W fill:#2C7167,color:#fff,stroke:#2C7167
+```
+
+This is **implemented Anchor program behavior exercised in local Solana execution tests**, including negative cases. It is **not** a claim that the public web demo funds an escrow or that the program has a verified devnet settlement history. The deployment procedure and proof requirements are documented in [the devnet runbook](docs/release/DEPLOYMENT_RUNBOOK.md).
+
+| Failure / attack | Contract-level protection |
 | --- | --- |
-| [Agent instructions](AGENTS.md) | Root-level coding-agent constraints and proof rules |
-| [Issue index](docs/ISSUE_INDEX.md) | Dependency-ordered links to all 17 development issues |
-| [Product definition](docs/PRODUCT.md) | User journeys, business scope, P0/P1 boundaries |
-| [Architecture and interfaces](docs/ARCHITECTURE.md) | Shared state, event types, trust boundaries, replay clocks |
-| [Solana contract](docs/SOLANA_PROTOCOL.md) | Exact financial invariants, permissions and attack cases |
-| [Design system](docs/DESIGN_SYSTEM.md) | UI direction, components, color, motion, accessibility |
-| [Engineering plan](docs/EXECUTION_PLAN.md) | Small work packets, parallel lanes, dependencies and fail-stops |
-| [Verification gates](docs/QUALITY_GATES.md) | Functional, adversarial, operational and UX acceptance |
-| [Agent protocol](docs/AGENT_PROTOCOL.md) | ZCode and ChatGPT prompts, review workflow, PR evidence |
-| [Demo & submission](docs/DEMO_RUNBOOK.md) | End-to-end proof, timeline, fallbacks and judge journey |
-| [PR template](.github/pull_request_template.md) | Consistent claims, evidence and review |
+| Two actors attempt competing reassignments | Compare-and-set `expected_assignment_version` |
+| Old operator submits evidence after reassignment | Version-bound claim eligibility |
+| Payout is submitted twice | Terminal paid state and one-time claim guards |
+| Unrelated wallet attempts to authorize evidence | Registered verifier / authority checks |
+| Payment exceeds agreed task or escrow budget | Bounded reward and checked lamport accounting |
 
-Shared team references:
-- [Notion — Product, Business & Technical Blueprint](https://app.notion.com/p/41001192111281d9b342c1f5b3d3fda5)
-- [Notion — Shared AI Engineering Workflow](https://app.notion.com/p/410011921112819e8667c455ac342e89)
+Read the [Solana protocol and threat model](docs/SOLANA_PROTOCOL.md), [account and instruction specification](programs/vorqyn/ACCOUNTS.md), and [LiteSVM integration tests](programs/vorqyn/tests/litesvm_escrow.rs).
 
-**Current implementation status:** [completed PRs](https://github.com/CosmasMandikonza/Vorqyn/pulls?q=is%3Apr+is%3Amerged) and [remaining original-issue backlog](docs/ISSUE_INDEX.md). The public repo is a hackathon prototype, not a production physical-robot or payments product.
+## Architecture: machines off-chain, economic rights on-chain
 
-## Workflow for the two developers
+VORQYN deliberately separates fast physical observation from financial authority. The browser does not need a blockchain transaction for every sensor reading. The smart contract does not pretend to determine whether a real underwater inspection was successful.
 
-Both people use **separate local workspaces and separate branches** in this one GitHub repository. ZCode + GLM can implement a bounded ticket; each person's ChatGPT acts as an **independent** reviewer of diffs, tests and evidence. No agent is authorized to claim completeness based on prose alone or to silently change shared interface contracts.
+```mermaid
+flowchart TB
+    subgraph LIVE["Public guest application · connected"]
+        UI["Next.js / React<br/>mission viewer"]
+        WORLD["Three.js / React Three Fiber<br/>PORT-001 world"]
+        API["/api/demo/simulation<br/>deterministic kernel"]
+        JOURNAL["Source-aware observations<br/>fault timeline · replay"]
+        UI --> WORLD
+        UI <--> API
+        API --> JOURNAL
+    end
 
-1. Pick an unblocked issue; read its dependencies and allowed scope.
-2. Create a branch from verified base; implement **only that issue**.
-3. Run tests and collect exact commands/results, screenshots or devnet signatures as appropriate.
-4. Open a PR with the provided template; have an independent reviewer inspect the actual diff.
-5. Fix P0/P1 issues, merge in order, then run the full integrated journey from a fresh session.
+    subgraph FOUNDATIONS["Implemented engineering modules · tested separately"]
+        CONTRACTS["Typed mission contracts<br/>events + reducer"]
+        STORE["Mission event store<br/>CAS + idempotent replay"]
+        POLICY["Evidence policy / verifier<br/>source + coverage rules"]
+        CHAIN["Solana chain client<br/>PDA + transaction state"]
+        ANCHOR["Anchor/Rust program<br/>escrow + reassignment + payout"]
+        CONTRACTS --> STORE
+        CONTRACTS --> POLICY
+        CONTRACTS --> CHAIN
+        CHAIN --> ANCHOR
+    end
 
-Do not place secrets, wallet seed phrases, private keys, or sensitive customer data in PRs, chat prompts, tests or screenshots. Only use funded **devnet** test wallets for the hackathon.
+    JOURNAL -. "integration boundary" .-> CONTRACTS
+    style API fill:#123D42,color:#fff,stroke:#123D42
+    style ANCHOR fill:#6D50AE,color:#fff,stroke:#6D50AE
+```
 
-## Current execution order
+**The core trust boundary:** simulated telemetry carries its source label; evidence policy evaluates measurements; financial authority is enforced separately. The public guest journey currently exercises the simulation and replay path, while the mission-event, verifier, chain-client, and Anchor modules have separate code and tests. Integrating these modules into authenticated, funded customer missions is the next product milestone.
 
-**Foundations → stateful mission engine → escrow authorization → 3D world → simulator telemetry → fault + AI recovery → verifier + single-use payout → full journey → judged video.**
+### What's already in the repository
 
-These streams can overlap after the **shared contracts** are frozen. The mission engine is reusable; the port is a flagship **template**, not a hardcoded product.
+| Module | What it contains |
+| --- | --- |
+| [`apps/web`](apps/web) | Public landing, five-step mission planner, interactive 3D harbor, fault controls, and 2D fallback |
+| [`services/simulation`](services/simulation) | Deterministic inspection kernel and coordinate-aligned observations |
+| [`assets/port-world`](assets/port-world) | Original fictional harbor geometry, routes, zones, and world metadata |
+| [`packages/contracts`](packages/contracts) | Typed IDs, source provenance, mission events, exact lamports, reducer and replay fixtures |
+| [`services/mission/orchestration`](services/mission/orchestration) | Append-only event store, compare-and-set protection, idempotency and file-backed local replay |
+| [`services/verifier`](services/verifier) | Versioned policy and evidence-evaluation logic |
+| [`packages/chain-client`](packages/chain-client) | Typed Solana account/PDA logic and transaction lifecycle handling |
+| [`programs/vorqyn`](programs/vorqyn) | Custom Anchor program implementing escrow, assignments, verifier controls and claims |
 
-## Hackathon links and rules
+## What the failure scenario proves
 
-- [Official MLH Solana event](https://events.mlh.com/events/15200-solana-hackathon)
-- [MLH standard rules and judging](https://github.com/MLH/mlh-policies/blob/main/standard-hackathon-rules.md)
-- [Solana docs](https://solana.com/docs)
-- [Anchor docs](https://www.anchor-lang.com/docs)
-- [ArduPilot SITL](https://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html)
+The standout interaction is intentional: **we damage the sensing conditions, not the credibility of the measurements.**
 
-The event listing shows an **initial submission Sunday 10:00 AM ET** and **final hacking cutoff Sunday 11:45 AM ET**; verify the live submission portal rather than interpreting a later portal-close timestamp as permission to keep developing. Check the event-specific rules for permitted pre-existing code and third-party assets.
+The underwater optical-visibility command is applied inside the deterministic simulation. Subsequent observations record degradation in optical quality; sonar remains a separate modality. The inspector exposes the source, simulator clock, trace sequence and measurement timeline. **Replay history** re-executes the trace and checks that the snapshots match.
+
+Ghost Replay visualizes **recorded pre-fault and post-fault paths**. Those paths are not an invented recovery robot or evidence of a completed reassignment. This distinction matters: a credible autonomous-systems platform must make uncertainty and provenance visible instead of drawing a reassuring animation.
+
+## Built for engineers, designed for operators
+
+- A shared, navigable 3D harbor with calibrated camera stations: **AIR / LAND / UW / FOLLOW / INSPECT**.
+- A quick **World Dive** camera journey and a fault timeline that makes degraded measurements readable.
+- A **2D/no-WebGL alternative** that preserves source-labelled spatial information.
+- Browser-local mission drafts with precise, validated SOL-to-lamport conversion and reload persistence.
+- Deterministic APIs, typed state transitions, versioned policies and adversarial tests.
+- An accessible light/dark interface rather than a generic crypto dashboard.
+
+## Run it locally
+
+**Requirements:** Node.js `22.21.1`, pnpm `10.34.5`, and Git. Windows developers can use WSL2 for the Solana/Rust toolchain.
+
+```bash
+git clone https://github.com/CosmasMandikonza/Vorqyn.git
+cd Vorqyn
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev:web
+```
+
+Open `http://localhost:3000` and choose **Explore Demo**, or go directly to `/demo/mission` and `/workspace/create`.
+
+```bash
+# JavaScript/TypeScript quality gates
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+
+# Deterministic kernel, coordinate integration, and port assets
+node --test services/simulation/core/*.test.mjs
+node --test services/simulation/integration/*.test.mjs
+node assets/port-world/tools/validate.mjs --selfcheck
+```
+
+The [GitHub Actions workflow](.github/workflows/ci.yml) also builds the Solana SBF program and runs Rust/LiteSVM tests. Installing the Solana/Anchor tooling for separate program development requires additional setup; see the [program documentation](programs/vorqyn/ACCOUNTS.md) and [deployment runbook](docs/release/DEPLOYMENT_RUNBOOK.md).
+
+## Delivery, evidence and next milestone
+
+| Layer | Demonstrated state |
+| --- | --- |
+| Public 3D harbor and real synthetic fault/replay | **Interactive hosted demo** |
+| Five-step mission configuration | **Working browser-local drafts** |
+| Versioned mission events, verifier policy and chain client | **Implemented/tested modules** |
+| Solana escrow, reassignment and payout invariants | **Anchor program + local SBF/LiteSVM tests** |
+| Authenticated organizations, live robot telemetry and browser-to-chain settlement | **Next integration milestone** |
+
+A public link, repository tests and a smart-contract implementation are three different forms of proof. We show each on its own terms. See the [release evidence](docs/release/README.md), [quality gates](docs/QUALITY_GATES.md), and [completed pull requests](https://github.com/CosmasMandikonza/Vorqyn/pulls?q=is%3Apr+is%3Amerged) for the engineering record.
+
+### Where this can go
+
+Ports are the first setting, not the whole market. The same separation of **mission definition → physical evidence → authorized settlement** could serve infrastructure inspectors, robotics service providers and other fleets that cross business boundaries. Our next step is to connect authenticated mission records, independently evaluated evidence and actual devnet-backed financial lifecycle—with inspectable receipts and no ambiguity about what was simulated versus settled.
+
+---
+
+<div align="center">
+
+**VORQYN — autonomous work deserves accountable outcomes.**
+
+[Watch the demo](https://youtu.be/5LzJXEW5Eas) · [Launch the 3D harbor](https://vorqynweb-production.up.railway.app/demo/mission) · [Read the protocol](docs/SOLANA_PROTOCOL.md)
+
+</div>
