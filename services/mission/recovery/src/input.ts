@@ -16,7 +16,8 @@ export interface OperatorOffer {
   readonly description: string;
   /** e.g. ["sonar"] or ["optical"] — authoritative capability manifest. */
   readonly capabilities: readonly string[];
-  readonly quoteLamports: Lamports;
+  /** Lamports | bigint — no lossy Number coercion (final review). */
+  readonly quoteLamports: Lamports | bigint;
   readonly payoutWallet: string;
   /** Offer validity window (epoch ms). */
   readonly validFromMs: EpochMs;
@@ -49,6 +50,25 @@ export interface RecoveryRequest {
   readonly nowMs: EpochMs;
 }
 
+/**
+ * Lossless, JSON-safe money representation for model prompts (final
+ * review, PR #51): every lamport value is a DECIMAL STRING. JSON numbers
+ * silently lose precision above 2^53 and raw bigints make JSON.stringify
+ * throw; strings do neither. Validation happens BEFORE any BigInt
+ * conversion — fractional, unsafe-integer, negative and NaN inputs throw.
+ */
+export function toDecimalLamports(value: Lamports | bigint): string {
+  if (typeof value === "number") {
+    if (!Number.isFinite(value)) throw new Error(`lamport value ${value} is not finite`);
+    if (!Number.isInteger(value)) throw new Error(`lamport value ${value} must be an integer`);
+    if (!Number.isSafeInteger(value))
+      throw new Error(`unsafe lamport value ${value} — not a safe integer; pass a bigint`);
+  }
+  const n = BigInt(value);
+  if (n < 0n) throw new Error(`lamport value ${value} must be non-negative`);
+  return n.toString();
+}
+
 export interface ModelPromptInput {
   /** Only structured, non-instructional fields reach the model. */
   readonly missionId: string;
@@ -57,13 +77,15 @@ export interface ModelPromptInput {
   readonly requiredCapabilities: readonly string[];
   readonly currentAssignmentVersion: number;
   readonly evidenceFailureReasons: readonly string[];
-  readonly budgetLamports: number;
+  /** Decimal string lamports (lossless above 2^53; JSON-safe). */
+  readonly budgetLamports: string;
   readonly offers: readonly {
     offerId: string;
     operatorId: string;
     robotId: string;
     capabilities: readonly string[];
-    quoteLamports: number;
+    /** Decimal string lamports (lossless above 2^53; JSON-safe). */
+    quoteLamports: string;
     expiresAtMs: number;
   }[];
 }
@@ -77,18 +99,13 @@ export function buildPromptInput(request: RecoveryRequest): ModelPromptInput {
     requiredCapabilities: request.requiredCapabilities,
     currentAssignmentVersion: request.currentAssignmentVersion,
     evidenceFailureReasons: request.evidenceFailureReasons,
-    // The prompt carries the budget as a NUMBER for JSON serialization;
-    // unsafe values (>2^53-1) are serialized as strings to stay exact.
-    budgetLamports:
-      typeof request.budgetLamports === "bigint" || typeof request.budgetLamports === "number"
-        ? Number(request.budgetLamports)
-        : Number(request.budgetLamports),
+    budgetLamports: toDecimalLamports(request.budgetLamports),
     offers: request.offers.map((o) => ({
       offerId: o.offerId,
       operatorId: o.operatorId,
       robotId: o.robotId,
       capabilities: o.capabilities,
-      quoteLamports: o.quoteLamports,
+      quoteLamports: toDecimalLamports(o.quoteLamports),
       expiresAtMs: o.expiresAtMs,
     })),
   };

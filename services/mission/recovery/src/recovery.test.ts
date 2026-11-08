@@ -8,10 +8,10 @@ import { describe, expect, it } from "vitest";
 import {
   FLAGSHIP_REQUEST,
   InMemoryAttemptStore,
+  buildPromptInput,
   OFFER_CHEAP_OPTICAL,
   OFFER_EXPIRED_SONAR,
   OFFER_ROV_B_SONAR,
-  buildPromptInput,
   proposeRecovery,
   authorizeProposal,
   parseModelChoice,
@@ -323,5 +323,66 @@ describe("CTO review P1-B: genuine recovery must replace the operator/robot", ()
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.value.status).toBe("proposed");
+  });
+});
+
+describe("final review: model-prompt money serialization is lossless and JSON-safe", () => {
+  it("serializes bigint values above 2^53 as exact decimal STRINGS (JSON round-trips)", () => {
+    // Failing-first pre-fix: buildPromptInput used Number(...) on the
+    // budget and forwarded raw bigint quotes — the former loses
+    // precision above 2^53, the latter makes JSON.stringify THROW.
+    const huge = 9_007_199_254_740_993n; // 2^53 + 1
+    const req = {
+      ...FLAGSHIP_REQUEST,
+      budgetLamports: huge,
+      missionRemainingLamports: huge,
+      offers: [{ ...OFFER_ROV_B_SONAR, quoteLamports: huge }],
+    };
+    const prompt = buildPromptInput(req);
+    expect(prompt.budgetLamports).toBe("9007199254740993");
+    expect(prompt.offers[0]?.quoteLamports).toBe("9007199254740993");
+    const json = JSON.stringify(prompt); // must not throw
+    expect(json).toContain('"budgetLamports":"9007199254740993"');
+    // Lossless round-trip: parse back and compare exactly.
+    const back = JSON.parse(json) as { budgetLamports: string };
+    expect(BigInt(back.budgetLamports)).toBe(huge);
+  });
+
+  it("rejects fractional quotes before any BigInt conversion", () => {
+    const fractional = { ...OFFER_ROV_B_SONAR, quoteLamports: 1.5 as never };
+    expect(() => buildPromptInput({ ...FLAGSHIP_REQUEST, offers: [fractional] })).toThrow(/must be an integer/);
+  });
+
+  it("rejects non-safe-integer numbers (must be passed as bigint)", () => {
+    const unsafe = { ...OFFER_ROV_B_SONAR, quoteLamports: 2 ** 53 as never };
+    expect(() => buildPromptInput({ ...FLAGSHIP_REQUEST, offers: [unsafe] })).toThrow(/unsafe|safe integer/);
+  });
+
+  it("rejects negative and NaN values", () => {
+    expect(() => buildPromptInput({ ...FLAGSHIP_REQUEST, budgetLamports: -5n })).toThrow(/non-negative/);
+    expect(() => buildPromptInput({ ...FLAGSHIP_REQUEST, budgetLamports: Number.NaN as never })).toThrow();
+  });
+
+  it("HttpModelClient request body serializes losslessly (stringified decimal money)", async () => {
+    const bodies: string[] = [];
+    const { createHttpModelClient } = await import("./model");
+    const client = createHttpModelClient({
+      endpoint: "https://model.example/v1",
+      apiKey: "runtime-only",
+      modelId: "test-model",
+      fetchImpl: (async (_url: unknown, init: RequestInit) => {
+        bodies.push(String(init.body));
+        return new Response(JSON.stringify(chose("offer-rov-b-sonar")), { status: 200 });
+      }) as unknown as typeof fetch,
+    });
+    const req = {
+      ...FLAGSHIP_REQUEST,
+      budgetLamports: 9_007_199_254_740_993n,
+      offers: [{ ...OFFER_ROV_B_SONAR, quoteLamports: 9_007_199_254_740_993n }],
+    };
+    const result = await client.propose(buildPromptInput(req));
+    expect(result.ok).toBe(true);
+    expect(bodies[0]).toContain('"budgetLamports":"9007199254740993"');
+    expect(bodies[0]).toContain('"quoteLamports":"9007199254740993"');
   });
 });

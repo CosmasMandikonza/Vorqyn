@@ -41,7 +41,8 @@ export interface OwnerApprovedIntent {
   readonly newOperatorId: string;
   readonly newRobotId: string;
   readonly offerId: string;
-  readonly quoteLamports: number;
+  /** Lamports | bigint — the chain client validates before serialization. */
+  readonly quoteLamports: number | bigint;
   readonly payoutWallet: string;
 }
 
