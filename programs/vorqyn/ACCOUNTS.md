@@ -218,11 +218,10 @@ VORQYN_REGISTRY_ADMIN=$(solana-keygen pubkey <gitignored-admin.json) \
 cargo fmt --check && cargo clippy --all-targets -- -D warnings
 ```
 
-- **Program id** `AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc` is a
-  throwaway placeholder — **no keypair exists or is committed**. At devnet
-  deployment time (later issue): `anchor keys generate` + `anchor keys
-  sync` replace it in `declare_id!` and `Anchor.toml`. No secrets belong in
-  this repo.
+- **Program id** `ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL` is the DEDICATED
+  devnet identity — keypair held by the Lane 1 deployer outside the repo
+  (encrypted Seahorse backup; see docs/release/DEPLOYMENT_RUNBOOK.md).
+  No secrets belong in this repo.
 - **LiteSVM ≠ devnet.** All test results here are simulated local
   execution; no transaction signature in the test logs references any
   cluster.
