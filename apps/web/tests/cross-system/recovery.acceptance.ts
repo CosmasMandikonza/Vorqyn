@@ -115,3 +115,77 @@ it("stale version cannot produce an unsigned intent; fresh metadata produces no 
   expect(intent.value).not.toHaveProperty("signature");
   expect(intent.value).not.toHaveProperty("confirmedAtMs");
 });
+
+it("public proposal isolates one malformed offer without poisoning a valid replacement or sending invalid model input", async () => {
+  const r = request();
+  const invalid = {
+    ...r.offers[0]!,
+    offerId: "qa-malformed",
+    quoteLamports: 1.5,
+  };
+  const observed: unknown[] = [];
+  const recordingModel = {
+    ...model,
+    propose: async (input: unknown) => {
+      observed.push(input);
+      return model.propose();
+    },
+  };
+  const result = await recovery.proposeRecovery(
+    { ...r, offers: [invalid, ...r.offers] },
+    { model: recordingModel, timeoutMs: 10 },
+  );
+  expect(result.ok).toBe(true);
+  if (!result.ok)
+    throw new Error("Expected safe replacement from the valid offer");
+  expect(result.value.offer?.offerId).toBe("qa-sonar");
+  expect(result.value.rejectedAlternatives).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        offerId: "qa-malformed",
+        reasonCode: "quote_invalid",
+      }),
+    ]),
+  );
+  for (const input of observed) {
+    const serialized = JSON.stringify(input);
+    expect(serialized).not.toContain("qa-malformed");
+    expect(serialized).toContain("qa-sonar");
+  }
+  expect(result.value).not.toHaveProperty("transactionSignature");
+});
+
+it("public proposal with malformed-only offers returns structured non-payable failure rather than throwing", async () => {
+  const r = request();
+  const result = await recovery.proposeRecovery(
+    { ...r, offers: [{ ...r.offers[0]!, quoteLamports: 1.5 }] },
+    { model, timeoutMs: 10 },
+  );
+  if (result.ok) {
+    expect(result.value.status).toBe("no_safe_proposal");
+    expect(result.value.offer).toBeUndefined();
+    expect(result.value).not.toHaveProperty("transactionSignature");
+  } else {
+    expect(result.error.code).toBeTypeOf("string");
+    expect(result.error.message).toBeTypeOf("string");
+  }
+});
+
+it("same mission, task and version still deduplicate after mission isolation is corrected", async () => {
+  const attemptStore = new recovery.InMemoryAttemptStore();
+  const first = await recovery.proposeRecovery(request(), {
+    model,
+    attemptStore,
+    timeoutMs: 10,
+  });
+  const duplicate = await recovery.proposeRecovery(request(), {
+    model,
+    attemptStore,
+    timeoutMs: 10,
+  });
+  expect(first.ok).toBe(true);
+  expect(duplicate).toMatchObject({
+    ok: false,
+    error: { code: "duplicate_idempotency_key" },
+  });
+});
