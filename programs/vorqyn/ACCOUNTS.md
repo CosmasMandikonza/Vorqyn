@@ -1,7 +1,7 @@
-# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04)
+# VORQYN escrow — account layout, invariants and build/deploy notes (VQ-04 + VQ-05)
 
 > Status: implemented and tested with **LiteSVM simulated execution**
-> (15 integration tests + 3 unit tests). **No devnet deployment has been
+> (26 integration tests + 3 unit tests). **No devnet deployment has been
 > performed and none is claimed.** Interface alignment:
 > `packages/contracts/CHAIN_SEAM.md` (DRAFT agreement with the VQ-01 owner).
 
@@ -45,11 +45,11 @@
 | `initialize_mission(mission_id, verifier_authority, expiry)` | owner (payer) | ID rule; expiry 0 or future (Clock); mission+vault PDAs created |
 | `fund_mission(amount)` | owner | amount > 0; mission seeds+`has_one = owner`; vault delta verified == amount after CPI; ledger credited via checked `credit_funding` |
 | `create_task(task_id, task_kind, budget_lamports)` | owner | ID rule; not expired; budget ≤ `remaining_lamports`; full budget reserved atomically; task PDA uniqueness makes duplicate IDs impossible |
-| `assign_task(task_id, operator, reward_lamports)` | owner | not expired; task `Unassigned` (double-assign rejected — reassignment is VQ-05); reward ≤ task budget; `budget - reward` released back to remaining; version 0 → 1 |
+| `assign_task(task_id, operator, reward_lamports)` | owner | not expired; task `Unassigned` (double-assign rejected — reassignment is `authorize_reassignment`); reward ≤ task budget; `budget - reward` released back to remaining; version 0 → 1 |
+| `authorize_reassignment(task_id, expected_assignment_version, new_operator, reward_lamports)` (VQ-05) | owner | not expired; task `Assigned` **and** `paid_version` is None; `expected_assignment_version == current_assignment_version` (compare-and-set); `new_operator` ≠ default pubkey; quote ≤ task budget; raise topped up from remaining / cut released back; version +1 atomically; `evidence_digest`+`accepted_version` cleared (old operator's proof eligibility invalidated); emits `TaskReassigned` |
 
-**Explicitly out of scope (later issues):** `authorize_reassignment`
-(VQ-05), `verify_and_claim` payout, AI delegate authority, close/refund
-transfers.
+**Explicitly out of scope (later issues):** `verify_and_claim` payout,
+operator registry, AI delegate authority, close/refund transfers.
 
 ## 3. Accounting invariants (all enforced with checked arithmetic)
 
@@ -76,9 +76,47 @@ No such instruction exists in VQ-04; funds can only ENTER the vault today.
 
 ## 5. Events
 
-`MissionInitialized`, `MissionFunded`, `TaskCreated`, `TaskAssigned` —
-emitted for the future TS client (VQ-12) and mirrored field-for-field with
-CHAIN_SEAM §6 receipt semantics.
+`MissionInitialized`, `MissionFunded`, `TaskCreated`, `TaskAssigned`,
+`TaskReassigned` — emitted for the future TS client (VQ-12) and mirrored
+field-for-field with CHAIN_SEAM §6 receipt semantics. `TaskReassigned`
+carries the Finding-D bindings (`task_id`, new `assignment_version`,
+`reward_lamports` == receipt `amountLamports`) plus
+`new_payout_wallet` (IDL `newPayoutWallet`) — the CHAIN_SEAM §8 Q5
+answer for reassignment receipts: the enacted wallet is emitted by the
+program, so receipts are self-verifying. Its byte-exact emission is
+asserted in the test suite (discriminator + borsh payload matched
+against the program-log base64).
+
+## 5a. Reassignment semantics (VQ-05) — what the chain does and does NOT decide
+
+- **Eligibility (on-chain subset):** `status == Assigned` and
+  `paid_version.is_none()`. This is the money/authority layer only.
+  The mission-workflow layer (only `evidence_insufficient` /
+  `recovery_pending` tasks may be reassigned) stays in the contracts
+  reducer — the two layers compose, they do not duplicate.
+- **Failed/partial/paid task states:** do not exist on chain yet. When
+  VQ-06 adds them, the single allowlist line in
+  `authorize_reassignment` (`task.status == TaskStatus::Assigned`) is
+  the only place to extend; the guard on `paid_version` already
+  enforces "already-paid task cannot be reassigned"
+  (SOLANA_PROTOCOL §5) for the paid end-state (regression-tested by
+  forging a paid account through LiteSVM `set_account`).
+- **Old-operator invalidation:** `current_operator` is replaced and
+  `evidence_digest`/`accepted_version` are cleared. VQ-06's
+  `verify_and_claim` must ADDITIONALLY require
+  `accepted_version == Some(current_assignment_version)` at claim time,
+  so a stale proof from before a reassignment can never pay
+  (belt-and-suspenders with the clearing here).
+- **Operator identity:** the chain takes the payout wallet `Pubkey`
+  only (CHAIN_SEAM §3) and rejects the zero pubkey. Eligibility vs the
+  `OperatorRegistration` registry, capability matching and
+  new==old equality remain off-chain policy (registry integration is
+  the documented VQ-03/VQ-04 dependency; issue #6 assigns those
+  rejections to deterministic off-chain policy).
+- **Delegate path (deferred):** issue #6 marks the mission-scoped,
+  capped, revocable delegate as optional. NOT implemented: the
+  owner-signed path is the P0 deliverable; delegate scope fields would
+  expand the Mission account and are deferred with explicit sign-off.
 
 ## 6. Build, test, deploy prerequisites
 
@@ -87,8 +125,8 @@ CHAIN_SEAM §6 receipt semantics.
 # itself compiles under the Anchor MSRV 1.89.0 — `cargo +1.89.0 check`).
 # Agave CLI (cargo-build-sbf): https://release.anza.xyz/stable/install
 cd programs/vorqyn
-cargo build-sbf          # produces ../../target/deploy/vorqyn.so
-cargo test               # 3 unit + 15 LiteSVM integration tests
+cargo build-sbf          # produces target/deploy/vorqyn.so (crate-local)
+cargo test               # 3 unit + 26 LiteSVM integration tests
 cargo fmt --check && cargo clippy --all-targets -- -D warnings
 ```
 

@@ -145,3 +145,12 @@ the program should emit/require the same fields in its events and IDL.**
    receipts can verify the enacted operator (§5). Contracts accept and
    cross-check these fields today; making them REQUIRED is blocked on this
    agreement, as is the operator-registry integration (VQ-03/VQ-04).
+   **Partially resolved by the VQ-05 owner (issue #6 / PR, 2026-11-07):
+   YES for reassignment — `authorize_reassignment` emits
+   `TaskReassigned { task_id, assignment_version (new),
+   expected_assignment_version, previous_operator, new_payout_wallet
+   (IDL `newPayoutWallet`), reward_lamports, reserved_lamports }`, and
+   the receipt bindings of Finding D (`taskId`, `assignmentVersion`,
+   `amountLamports` == the quote) are all carried. Emission is asserted
+   byte-exact in the LiteSVM suite. `recipientWallet` on payouts stays
+   OPEN until VQ-06 implements `verify_and_claim`.**

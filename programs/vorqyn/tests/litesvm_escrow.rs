@@ -11,8 +11,10 @@ use {
     anchor_lang::{
         prelude::Pubkey,
         solana_program::{instruction::Instruction, system_program},
-        AccountDeserialize, InstructionData, ToAccountMetas,
+        AccountDeserialize, AccountSerialize, AnchorSerialize, Discriminator, InstructionData,
+        ToAccountMetas,
     },
+    base64::{engine::general_purpose::STANDARD as BASE64, Engine as _},
     litesvm::LiteSVM,
     solana_keypair::Keypair,
     solana_message::{Message, VersionedMessage},
@@ -21,9 +23,9 @@ use {
 };
 
 use vorqyn::{
-    accounts::{AssignTask, CreateTask, FundMission, InitializeMission},
-    instruction, Mission, MissionStatus, Task, TaskKind, TaskStatus, MISSION_SEED, TASK_SEED,
-    VAULT_SEED,
+    accounts::{AssignTask, AuthorizeReassignment, CreateTask, FundMission, InitializeMission},
+    instruction, Mission, MissionStatus, Task, TaskKind, TaskReassigned, TaskStatus, MISSION_SEED,
+    TASK_SEED, VAULT_SEED,
 };
 
 const LAMPORTS: u64 = 1_000_000_000; // 1 SOL
@@ -677,6 +679,630 @@ fn assign_task_rejects_wrong_task_pda() {
 }
 
 // ---------------------------------------------------------------------------
+// authorize_reassignment (VQ-05 / issue #6)
+// ---------------------------------------------------------------------------
+
+fn reassign(
+    svm: &mut LiteSVM,
+    signer: &Keypair,
+    mission: Pubkey,
+    task_id: &str,
+    expected_version: u64,
+    new_operator: Pubkey,
+    reward: u64,
+) -> Result<(), String> {
+    reassign_capture_logs(
+        svm,
+        signer,
+        mission,
+        task_id,
+        expected_version,
+        new_operator,
+        reward,
+    )
+    .map(|_| ())
+}
+
+/// `reassign` returning the transaction logs (for event-byte assertions).
+fn reassign_capture_logs(
+    svm: &mut LiteSVM,
+    signer: &Keypair,
+    mission: Pubkey,
+    task_id: &str,
+    expected_version: u64,
+    new_operator: Pubkey,
+    reward: u64,
+) -> Result<Vec<String>, String> {
+    let task = task_pda(&mission, task_id);
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::AuthorizeReassignment {
+            task_id: task_id.to_string(),
+            expected_assignment_version: expected_version,
+            new_operator,
+            reward_lamports: reward,
+        }
+        .data(),
+        AuthorizeReassignment {
+            owner: signer.pubkey(),
+            mission,
+            task,
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let blockhash = svm.latest_blockhash();
+    let msg = Message::new_with_blockhash(&[ix], Some(&signer.pubkey()), &blockhash);
+    let tx = VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[signer]).unwrap();
+    svm.send_transaction(tx)
+        .map(|meta| meta.logs)
+        .map_err(|err| format!("{err:?}"))
+}
+
+// The expected-event discriminator comes straight from the macro: the
+// `#[event]` derive exposes sha256("event:TaskReassigned")[..8] as
+// `TaskReassigned::DISCRIMINATOR`, so the byte-exact log assertion below
+// needs no hand-rolled hashing.
+
+/// Minimal legal reassignment fixture: port-001 funded with 3 SOL and one
+/// `Assigned` task (version 1) with the given budget and agreed reward.
+fn setup_assigned(budget: u64, agreed: u64) -> TestEnv {
+    let mut env = setup();
+    fund(
+        &mut env.svm,
+        &env.owner,
+        env.mission,
+        env.vault,
+        3 * LAMPORTS,
+    )
+    .unwrap();
+    create_task(&mut env.svm, &env.owner, env.mission, "task-rs", budget).unwrap();
+    assign_task(
+        &mut env.svm,
+        &env.owner,
+        env.mission,
+        "task-rs",
+        env.operator.pubkey(),
+        agreed,
+    )
+    .unwrap();
+    env
+}
+
+#[test]
+fn reassignment_succeeds_with_exact_ledger_and_deterministic_event() {
+    let TestEnv {
+        mut svm,
+        owner,
+        operator,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let replacement = Keypair::new().pubkey();
+
+    let logs = reassign_capture_logs(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        replacement,
+        900_000_000,
+    )
+    .expect("owner-authorized reassignment should succeed");
+
+    // Task: version 1 -> 2, operator swapped, reward re-quoted, prior proof
+    // eligibility invalidated (fields cleared).
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(task.current_assignment_version, 2);
+    assert_eq!(task.current_operator, Some(replacement));
+    assert_eq!(task.reward_lamports, 900_000_000);
+    assert_eq!(task.status, TaskStatus::Assigned);
+    assert_eq!(task.evidence_digest, None);
+    assert_eq!(task.accepted_version, None);
+
+    // Mission: raise topped up from remaining; ledger invariant preserved.
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.reserved_lamports, 900_000_000);
+    assert_eq!(state.remaining_lamports, 3 * LAMPORTS - 900_000_000);
+    assert_eq!(
+        state.reserved_lamports + state.remaining_lamports,
+        state.funded_lamports
+    );
+
+    // Deterministic event (CHAIN_SEAM §6/§8-Q5): the exact bytes a TS
+    // client binds receipts to must appear verbatim in the tx logs.
+    let expected_event = TaskReassigned {
+        mission_id: "port-001".to_string(),
+        task_id: "task-rs".to_string(),
+        expected_assignment_version: 1,
+        assignment_version: 2,
+        previous_operator: operator.pubkey(),
+        new_payout_wallet: replacement,
+        reward_lamports: 900_000_000,
+        reserved_lamports: 900_000_000,
+    };
+    let mut expected = TaskReassigned::DISCRIMINATOR.to_vec();
+    expected_event
+        .serialize(&mut expected)
+        .expect("borsh-serializing the expected event cannot fail");
+    let encoded = BASE64.encode(&expected);
+    assert!(
+        logs.iter()
+            .any(|line| line == &format!("Program data: {encoded}")),
+        "TaskReassigned must be emitted byte-for-byte, logs were: {logs:?}"
+    );
+}
+
+#[test]
+fn reassignment_reward_cut_releases_reservation_back() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 900_000_000);
+    let replacement = Keypair::new().pubkey();
+
+    reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        replacement,
+        400_000_000,
+    )
+    .expect("reward cut should succeed");
+
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(task.current_assignment_version, 2);
+    assert_eq!(task.reward_lamports, 400_000_000);
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.reserved_lamports, 400_000_000);
+    assert_eq!(state.remaining_lamports, 3 * LAMPORTS - 400_000_000);
+    assert_eq!(
+        state.reserved_lamports + state.remaining_lamports,
+        state.funded_lamports
+    );
+}
+
+#[test]
+fn reassignment_rejects_wrong_signer_and_changes_nothing() {
+    let TestEnv {
+        mut svm,
+        operator,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let replacement = Keypair::new().pubkey();
+
+    let attacker = Keypair::new();
+    svm.airdrop(&attacker.pubkey(), LAMPORTS).unwrap();
+    assert!(
+        reassign(
+            &mut svm,
+            &attacker,
+            mission,
+            "task-rs",
+            1,
+            replacement,
+            500_000_000
+        )
+        .is_err(),
+        "non-owner must not reassign"
+    );
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(task.current_assignment_version, 1);
+    assert_eq!(task.current_operator, Some(operator.pubkey()));
+    let state = mission_state(&svm, &mission);
+    assert_eq!(
+        (state.reserved_lamports, state.remaining_lamports),
+        (400_000_000, 3 * LAMPORTS - 400_000_000)
+    );
+}
+
+#[test]
+fn reassignment_rejects_stale_expected_versions() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let replacement = Keypair::new().pubkey();
+
+    // Version 0 (never assigned state), 2 and 7 (future) all mismatch the
+    // current version 1 — every compare-and-set must fail.
+    for stale in [0u64, 2, 7] {
+        let err = reassign(
+            &mut svm,
+            &owner,
+            mission,
+            "task-rs",
+            stale,
+            replacement,
+            500_000_000,
+        )
+        .expect_err("stale expected version must be rejected");
+        assert!(
+            err.to_lowercase().contains("staleassignmentversion"),
+            "expected StaleAssignmentVersion for expected={stale}, got: {err}"
+        );
+    }
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").current_assignment_version,
+        1
+    );
+    assert_eq!(mission_state(&svm, &mission).reserved_lamports, 400_000_000);
+}
+
+#[test]
+fn reassignment_cas_lets_only_one_of_two_competing_txs_win() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let operator_a = Keypair::new().pubkey();
+    let operator_b = Keypair::new().pubkey();
+
+    // Both transactions claim expected version 1. LiteSVM executes them
+    // sequentially, exactly like a validator's serialized account writes:
+    // the first applies version 1 -> 2, the second's CAS must fail.
+    reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        operator_a,
+        500_000_000,
+    )
+    .expect("first competing reassignment should win");
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        operator_b,
+        600_000_000,
+    )
+    .expect_err("second competing reassignment must lose the CAS");
+    assert!(
+        err.to_lowercase().contains("staleassignmentversion"),
+        "expected StaleAssignmentVersion, got: {err}"
+    );
+
+    let task = task_state(&svm, &mission, "task-rs");
+    assert_eq!(
+        task.current_assignment_version, 2,
+        "version must be exactly 2"
+    );
+    assert_eq!(task.current_operator, Some(operator_a));
+    let state = mission_state(&svm, &mission);
+    assert_eq!(state.reserved_lamports, 500_000_000);
+    assert_eq!(
+        state.reserved_lamports + state.remaining_lamports,
+        state.funded_lamports
+    );
+}
+
+#[test]
+fn reassignment_rejects_quote_over_task_budget() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let replacement = Keypair::new().pubkey();
+
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        replacement,
+        LAMPORTS + 1,
+    )
+    .expect_err("quote above the task budget must be rejected");
+    assert!(
+        err.to_lowercase().contains("rewardexceedstaskbudget"),
+        "expected RewardExceedsTaskBudget, got: {err}"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").current_assignment_version,
+        1
+    );
+    assert_eq!(mission_state(&svm, &mission).reserved_lamports, 400_000_000);
+}
+
+#[test]
+fn reassignment_rejects_topup_over_unreserved_funds() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup();
+    fund(&mut svm, &owner, mission, vault_pda(&mission), LAMPORTS).unwrap();
+    // task-rs: budget 0.8 SOL reserved at creation; assign at only 0.1 SOL,
+    // releasing 0.7 SOL back to remaining…
+    create_task(&mut svm, &owner, mission, "task-rs", 800_000_000).unwrap();
+    assign_task(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        Keypair::new().pubkey(),
+        100_000_000,
+    )
+    .unwrap();
+    // …then a second task consumes that 0.7 SOL, so raising task-rs back to
+    // its full budget has no unreserved funds to draw from.
+    create_task(&mut svm, &owner, mission, "task-other", 700_000_000).unwrap();
+    let state = mission_state(&svm, &mission);
+    assert_eq!(
+        (state.reserved_lamports, state.remaining_lamports),
+        (800_000_000, 200_000_000)
+    );
+
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        Keypair::new().pubkey(),
+        800_000_000,
+    )
+    .expect_err("top-up beyond remaining funds must be rejected");
+    assert!(
+        err.to_lowercase().contains("rewardexceedsunreservedfunds"),
+        "expected RewardExceedsUnreservedFunds, got: {err}"
+    );
+    let state = mission_state(&svm, &mission);
+    assert_eq!(
+        (state.reserved_lamports, state.remaining_lamports),
+        (800_000_000, 200_000_000),
+        "rejected reassignment must not move the ledger"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").reward_lamports,
+        100_000_000
+    );
+}
+
+#[test]
+fn reassignment_rejects_expired_mission_and_changes_nothing() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+    let ledger_before = {
+        let s = mission_state(&svm, &mission);
+        (s.reserved_lamports, s.remaining_lamports)
+    };
+
+    // Advance the wall clock to the mission's expiry instant (the default
+    // fixture uses EXPIRY_FAR_FUTURE).
+    svm.set_sysvar(&anchor_lang::prelude::Clock {
+        slot: 1,
+        epoch_start_timestamp: TEST_NOW,
+        epoch: 0,
+        leader_schedule_epoch: 0,
+        unix_timestamp: EXPIRY_FAR_FUTURE,
+    });
+
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        Keypair::new().pubkey(),
+        500_000_000,
+    )
+    .expect_err("reassignment on an expired mission must be rejected");
+    assert!(
+        err.to_lowercase().contains("missionexpired"),
+        "expected MissionExpired, got: {err}"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").current_assignment_version,
+        1
+    );
+    let s = mission_state(&svm, &mission);
+    assert_eq!((s.reserved_lamports, s.remaining_lamports), ledger_before);
+}
+
+#[test]
+fn reassignment_rejects_unassigned_task_wrong_pda_and_foreign_mission_task() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup();
+    fund(&mut svm, &owner, mission, vault_pda(&mission), LAMPORTS).unwrap();
+    create_task(&mut svm, &owner, mission, "task-open", 500_000_000).unwrap();
+
+    // Unassigned (version 0) is not reassignable — the chain's subset of
+    // the reducer's recoverable-state gating.
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-open",
+        0,
+        Keypair::new().pubkey(),
+        100_000_000,
+    )
+    .expect_err("unassigned task must not be reassignable");
+    assert!(
+        err.to_lowercase().contains("tasknotreassignable"),
+        "expected TaskNotReassignable, got: {err}"
+    );
+
+    // Wrong task PDA: the decoy account must EXIST (an existing-but-
+    // different task) so the failure is the seeds mismatch itself, not
+    // AccountNotInitialized.
+    create_task(&mut svm, &owner, mission, "task-other", 100_000_000).unwrap();
+    let wrong_task = task_pda(&mission, "task-other");
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::AuthorizeReassignment {
+            task_id: "task-open".to_string(),
+            expected_assignment_version: 0,
+            new_operator: Keypair::new().pubkey(),
+            reward_lamports: 100_000_000,
+        }
+        .data(),
+        AuthorizeReassignment {
+            owner: owner.pubkey(),
+            mission,
+            task: wrong_task,
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "ConstraintSeeds");
+
+    // Foreign mission's task: mission and task do not belong together —
+    // the task PDA derived from THIS mission cannot match the other
+    // mission's real task account (seeds or has_one must fire).
+    let ix2 = init_mission_ix(
+        &owner,
+        "port-002",
+        Keypair::new().pubkey(),
+        EXPIRY_FAR_FUTURE,
+    );
+    send(&mut svm, &owner, &[ix2]).unwrap();
+    let mission2 = mission_pda(&owner.pubkey(), "port-002");
+    fund(
+        &mut svm,
+        &owner,
+        mission2,
+        vault_pda(&mission2),
+        500_000_000,
+    )
+    .unwrap();
+    create_task(&mut svm, &owner, mission2, "task-m2", 200_000_000).unwrap();
+    let foreign_task = task_pda(&mission2, "task-m2");
+    let ix = Instruction::new_with_bytes(
+        vorqyn::ID,
+        &instruction::AuthorizeReassignment {
+            task_id: "task-m2".to_string(),
+            expected_assignment_version: 0,
+            new_operator: Keypair::new().pubkey(),
+            reward_lamports: 100_000_000,
+        }
+        .data(),
+        AuthorizeReassignment {
+            owner: owner.pubkey(),
+            mission,            // mission 1 …
+            task: foreign_task, // … with mission 2's task
+            clock: CLOCK,
+        }
+        .to_account_metas(None),
+    );
+    let tx = signed_tx(&mut svm, &owner, ix);
+    assert_tx_fails(&mut svm, tx, "onstraint"); // ConstraintSeeds / ConstraintHasOne
+    assert_eq!(
+        task_state(&svm, &mission2, "task-m2").current_assignment_version,
+        0
+    );
+}
+
+#[test]
+fn reassignment_rejects_default_operator_wallet() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        Pubkey::default(),
+        500_000_000,
+    )
+    .expect_err("default (zero) operator wallet must be rejected");
+    assert!(
+        err.to_lowercase().contains("invalidoperatorwallet"),
+        "expected InvalidOperatorWallet, got: {err}"
+    );
+    assert_eq!(
+        task_state(&svm, &mission, "task-rs").current_assignment_version,
+        1
+    );
+}
+
+#[test]
+fn reassignment_rejects_already_paid_task() {
+    let TestEnv {
+        mut svm,
+        owner,
+        mission,
+        ..
+    } = setup_assigned(LAMPORTS, 400_000_000);
+
+    // No instruction sets paid_version yet (VQ-06 scope), so forge the
+    // future end-state directly through LiteSVM's set_account: an Account
+    // with paid_version = Some(1) is what verify_and_claim will leave
+    // behind, and SOLANA_PROTOCOL §5 forbids reassigning it.
+    let task_addr = task_pda(&mission, "task-rs");
+    let mut account = svm.get_account(&task_addr).unwrap();
+    let mut data: &[u8] = &account.data;
+    let mut task = Task::try_deserialize(&mut data).unwrap();
+    task.paid_version = Some(1);
+    let mut serialized = Vec::new();
+    task.try_serialize(&mut serialized).unwrap();
+    // Anchor accounts are allocated at the fixed max size (8 + INIT_SPACE);
+    // re-serializing the current (shorter) state must be zero-padded back
+    // to the original length, exactly like a real realloc leaves slack.
+    assert!(
+        serialized.len() <= account.data.len(),
+        "re-serialized task must fit the allocated account space"
+    );
+    serialized.resize(account.data.len(), 0);
+    account.data = serialized;
+    svm.set_account(task_addr, account).unwrap();
+
+    let err = reassign(
+        &mut svm,
+        &owner,
+        mission,
+        "task-rs",
+        1,
+        Keypair::new().pubkey(),
+        500_000_000,
+    )
+    .expect_err("already-paid task must not be reassignable");
+    assert!(
+        err.to_lowercase().contains("tasknotreassignable"),
+        "expected TaskNotReassignable, got: {err}"
+    );
+    // The forged paid marker itself is untouched by the rejection.
+    let mut data: &[u8] = &svm.get_account(&task_addr).unwrap().data;
+    assert_eq!(
+        Task::try_deserialize(&mut data).unwrap().paid_version,
+        Some(1)
+    );
+}
+
 // Mission expiry (mid-life) — every mutating path must reject
 // ---------------------------------------------------------------------------
 
