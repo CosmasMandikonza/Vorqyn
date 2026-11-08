@@ -5,6 +5,7 @@ import {
   buildPort001Script,
   FIXTURE_SIG_PAYOUT_SEA,
   PORT_001,
+  rehydrate,
 } from "@vorqyn/contracts";
 import { scenario } from "./scenario";
 const load = () =>
@@ -122,10 +123,12 @@ it("a later rejected observation cannot erase an earlier recorded confirmed paym
     observedAtMs: last.observedAtMs + 100 + index,
     payload: { transactionSignature: FIXTURE_SIG_PAYOUT_SEA, status },
   }));
-  const result = handoff.projectEconomicHandoff(
-    [...events, ...updates],
-    context,
-  );
+  const history = [...events, ...updates];
+  const canonical = rehydrate(history);
+  expect(canonical.ok).toBe(true);
+  if (!canonical.ok) throw new Error(canonical.error.message);
+  expect(canonical.value.projection.tasks[context.taskId]?.status).toBe("paid");
+  const result = handoff.projectEconomicHandoff(history, context);
   expect(result.audit).toHaveLength(0);
   expect(result.derivedFromEventCount).toBe(events.length + 2);
   const payout = result.stages.find(
