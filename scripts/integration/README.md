@@ -12,6 +12,18 @@ Use a new directory outside the checkout. Exit **0 = every exercised/required ga
 
 `existing-boundaries` executes actual simulator → journal → canonical telemetry and actual merged verifier calls. It also exercises shared reducer semantics using existing **CONTRACT FIXTURES ONLY**. Fixture signatures are not observed RPC receipts. A passing negative test proves rejection, not a successful verified recovery. Current metric/clock incompatibilities remain explicit BLOCKED checks even though safe rejection tests pass. When the owning adapters change, independently review and replace the current-boundary expectations with source-backed acceptance; never rename unitless quality to metres or silently relax thresholds/time windows.
 
+## Independent checks while installation is blocked
+
+These commands use Node built-ins and checked-in source/data; they do not invoke workspace packages, the browser, a model provider or a chain RPC:
+
+```bash
+node --test services/simulation/core/*.test.mjs
+node --test services/simulation/integration/*.test.mjs
+node --test scripts/integration/tooling.test.mjs
+```
+
+The tooling suite deliberately supplies a **failing installation fixture only** and proves no dependent product checks can run. It validates copies of the historical 32-state evidence packet, refusing false source/run/viewport metadata, missing images and a hash-matching desktop PNG substituted for mobile. Its PASS means the QA tools reject invalid proof; the historical eight camera layout failures remain FAIL. Originals are not edited. No mocked successful install or fabricated product adapter is supplied. The full integration runner also requires these tool checks **after** a real successful frozen install; it does not waive that prerequisite.
+
 ## Pending connections
 
 The runner checks real module presence and runs separate `*.acceptance.ts` suites when available; absent modules are BLOCKED, not skipped Vitest cases. These acceptance files are deliberately outside ordinary `*.test.tsx` discovery because pending packages do not exist on main. They become mandatory in the integration runner as those modules merge. Keep the ordinary CI result distinct from the integration report.
@@ -19,7 +31,7 @@ The runner checks real module presence and runs separate `*.acceptance.ts` suite
 - **#50 chain client:** real lifecycle functions, RPC test doubles for unseen signature, direct finalized status and outage monotonicity; expiry conversion compared to the merged verifier. Test replies are explicitly not chain receipts or funded instructions.
 - **#51 recovery:** real gate/prompt/proposal functions fed QA offers and real verifier failure reasons; top-up arithmetic, malformed quote totality, lossless prompt JSON, cross-mission attempt ledger isolation and stale unsigned intents. Scripted failure client is labelled; no live AI claim.
 - **#53 economic handoff:** actual read-only owner projection; observation records and foreign events cannot display confirmed stages; verified-only task cannot claim a payout was initiated before a submission exists. Existing contract fixtures test presentation semantics only.
-- **Agent A orchestration:** API not yet merged. `apps/web/tests/cross-system/orchestrator-port.ts` defines a **test-driver interface, not a new production contract/state model**. Bind it to the actual implementation using `--orchestration-driver /absolute/path/to/driver.ts`. The driver must map append/read/restart/untrusted observation ingestion to the real store/service, use fresh isolated durable backing and dispose only its own test data. No in-memory substitute or fabricated authority adapter is supplied here. Tests require atomic concurrent CAS, mission isolation, exact idempotency, tampered duplicates, command reuse, sequence gaps, restart/reducer replay and observation-path rejection of canonical verdict/payment/confirmation injection. If real durability or an untrusted authority boundary is absent, leave that connection BLOCKED; do not write a fake adapter to satisfy assertions.
+- **Agent A orchestration:** API not yet merged. `apps/web/tests/cross-system/orchestrator-port.ts` defines a **test-driver interface, not a new production contract/state model**. Bind it to the actual implementation using `--orchestration-driver /absolute/path/to/driver.ts`. The driver must be committed with bytes matching the recorded harness or target SHA; the runner records its path/hash/commit and blocks untracked or changed driver files. This proves source attribution only, not authorization. The driver must map the actual single-event `append(missionId, event, expectedLastSequence)`/read/restart/untrusted observation ingestion to the real store/service, use fresh isolated durable backing and dispose only its own test data. No in-memory substitute or fabricated authority adapter is supplied here. Tests require atomic concurrent CAS, mission isolation, exact idempotency, tampered duplicates, command reuse, sequence gaps, restart/reducer replay and observation-path rejection of canonical verdict/payment/confirmation injection. If real durability or an untrusted authority boundary is absent, leave that connection BLOCKED; do not write a fake adapter to satisfy assertions.
 
 A read-only diagnostic against an owner's actual checked-out PR source is supported without copying its implementation into this branch:
 

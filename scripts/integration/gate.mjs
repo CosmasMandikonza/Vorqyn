@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /** Cross-system QA only. Missing authority/implementation is BLOCKED, never a skipped passing test. */
 import { spawnSync } from "node:child_process";
+import { inspectToolingRun } from "./tooling-results.mjs";
+import { inspectDriverSource } from "./driver-provenance.mjs";
 import {
   existsSync,
   mkdirSync,
@@ -50,6 +52,13 @@ const report = {
   publicChainReceipts:
     "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
 };
+report.orchestrationDriver = inspectDriverSource(
+  value("--orchestration-driver"),
+  [
+    { root, sha: report.sourceSha },
+    { root: target, sha: report.targetSha },
+  ],
+);
 if ((report.dirty || report.targetDirty) && !args.includes("--allow-dirty"))
   throw new Error(
     "Commit changes first, or explicitly use --allow-dirty for a diagnostic",
@@ -76,6 +85,7 @@ report.checks.push({
 });
 if (install.status !== 0) {
   for (const id of [
+    "qa-tooling",
     "existing-boundaries",
     "source-backed-verifier-metrics",
     "source-to-capture-clock-mapping",
@@ -156,6 +166,35 @@ function run(id, test, selected) {
     error: result.error?.message,
   });
 }
+// The same tool regressions are independently runnable with Node only while
+// installation is blocked. Full-gate execution still requires the frozen install.
+const toolingCommand = ["--test", "scripts/integration/tooling.test.mjs"];
+const toolingFd = openSync(join(out, "qa-tooling.txt"), "w");
+let toolingResult;
+try {
+  toolingResult = spawnSync(process.execPath, toolingCommand, {
+    cwd: root,
+    stdio: ["ignore", toolingFd, toolingFd],
+    timeout: 300000,
+  });
+} finally {
+  closeSync(toolingFd);
+}
+const toolingOutput = readFileSync(join(out, "qa-tooling.txt"), "utf8");
+const { stats: toolingStats, passed: toolingPassed } = inspectToolingRun(
+  toolingResult.status,
+  toolingOutput,
+);
+report.checks.push({
+  id: "qa-tooling",
+  status: toolingPassed ? "PASS" : "FAIL",
+  command: [process.execPath, ...toolingCommand],
+  exitCode: toolingResult.status,
+  log: "qa-tooling.txt",
+  stats: toolingStats,
+  scope:
+    "QA-tool negative fixtures and historical evidence validation only; not product/chain acceptance",
+});
 run("existing-boundaries", "tests/cross-system/boundaries.test.tsx");
 const findingsFile = join(out, "boundary-findings.json");
 if (existsSync(findingsFile)) {
@@ -200,12 +239,12 @@ for (const [id, path] of Object.entries(modules)) {
     });
     continue;
   }
-  if (id === "orchestrator" && !value("--orchestration-driver")) {
+  if (id === "orchestrator" && report.orchestrationDriver.status !== "PASS") {
     report.checks.push({
       id,
       status: "BLOCKED",
-      detail:
-        "Agent A must bind the real API using orchestrator-port.ts; --orchestration-driver absent. No substitute implementation supplied.",
+      detail: report.orchestrationDriver.reason,
+      driverProvenance: report.orchestrationDriver,
     });
     continue;
   }

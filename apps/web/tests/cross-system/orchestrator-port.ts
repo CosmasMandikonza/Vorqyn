@@ -1,10 +1,16 @@
 /** QA adapter contract only. Agent A binds these calls to the real implementation; no in-memory substitute supplied here. */
 import type { MissionEvent, Result } from "@vorqyn/contracts";
 export interface IntegrationStore {
+  /** Explicit authority-side mission key matches #54's actual single-event API.
+   * Keep it separate from event.missionId so a forged envelope is testable. */
   append(
-    events: readonly unknown[],
+    missionId: string,
+    event: unknown,
     expectedLastSequence: number,
-  ): Promise<Result<unknown>>;
+  ): Promise<{
+    readonly ok: boolean;
+    readonly error?: { readonly code: string; readonly message: string };
+  }>;
   read(missionId: string): Promise<readonly MissionEvent[]>;
   restart(): Promise<void>;
   /** Must enter the actual untrusted observation ingestion path, not a privileged event append. */
