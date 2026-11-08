@@ -2,6 +2,14 @@
 
 **Autonomous work. Accountable outcomes.**
 
+### Watch the hackathon demo
+
+[![Watch VORQYN's Solana hackathon demo on YouTube](https://img.youtube.com/vi/5LzJXEW5Eas/hqdefault.jpg)](https://youtu.be/5LzJXEW5Eas)
+
+**[▶ Watch the VORQYN demo on YouTube](https://youtu.be/5LzJXEW5Eas)** · [Try the live synthetic harbor demo](https://vorqynweb-production.up.railway.app/demo/mission) · [Open the browser-local mission builder](https://vorqynweb-production.up.railway.app/workspace/create)
+
+> The video demonstrates the synthetic harbor workflow. Browser-local mission drafts are not funded missions, and the Anchor contract tests do not imply verified live Solana settlement.
+
 VORQYN is a proposed company-grade mission platform for independently operated autonomous machines: a customer creates a mission, robots execute physical tasks in a shared 3D world, an AI mission coordinator proposes recovery when evidence fails, and a Solana program enforces task reassignment and accepted-work payments.
 
 > **Verified build status — November 7, 2026 (merged main):** VORQYN has a real interactive PORT-001 3D viewer and a deterministic, bounded server-side **synthetic** simulation API. A guest can start a survey, watch drone/rover/underwater ROV poses from actual kernel observations, inject a simulated underwater optical-visibility fault, inspect independent sonar measurements and replay the identical trace ([3D playback PR #38](https://github.com/CosmasMandikonza/Vorqyn/pull/38), [API PR #35](https://github.com/CosmasMandikonza/Vorqyn/pull/35)). The local browser-only mission draft builder ([PR #30](https://github.com/CosmasMandikonza/Vorqyn/pull/30)), original port assets, world-aligned kernel, and typed event contracts/reducer ([PR #37](https://github.com/CosmasMandikonza/Vorqyn/pull/37)) are also merged. **Not yet verified:** authenticated company mission persistence, runtime AI recovery, independent evidence verifier, real physical/SITL telemetry, deployed Solana escrow/reassignment/payout, public demo/video, or accepted submission. Canonical chain events in test fixtures are synthetic examples, **not devnet transactions**. Do not present this prototype as a deployed autonomous fleet or as completed financial settlement.
