@@ -1,9 +1,9 @@
 {
   "schema": "vorqyn.vq14-captures/2",
-  "sourceHeadSha": "bfaae4b6abb7cd8ee05615fe8fbefb7a6b459088",
-  "buildIdSha256": "ba8a4510f30e8ec1b6f80c87dda2e2a5ee579989ecb05de6fab290c99ad2e01a",
+  "sourceHeadSha": "bd9aaf476fd04df2027f6d3452da5d3937aa61cd",
+  "buildIdSha256": "f987ab9b95a073424c9aa03420b6c735e2693f909253d44f7d0018511c157f51",
   "worktreeClean": true,
-  "capturedAtUtc": "2026-11-07T22:53:39.414Z",
+  "capturedAtUtc": "2026-11-08T01:25:17.161Z",
   "captureTool": "docs/evidence/vq-14-visual-r2/tools/capture-r2.mjs",
   "browser": "Playwright Chromium (deviceScaleFactor 1, fullPage false)",
   "validation": "IHDR dimensions must equal the requested viewport; mismatches fail the run (exit 1)",
@@ -14,32 +14,32 @@
       "expected": "1440x900",
       "actual": "1440x900",
       "ok": true,
-      "bytes": 160779,
-      "sha256": "99246f0f952dddbd160d5e7f967c5530a9820436d984ef99c4be8ac0efcfc367"
+      "bytes": 160745,
+      "sha256": "178303f704253982031bf442c59380cc4217be24aa0215d965f7ac5a94760782"
     },
     {
       "file": "r2-desktop-fault-uw-light.png",
       "expected": "1440x900",
       "actual": "1440x900",
       "ok": true,
-      "bytes": 130373,
-      "sha256": "dc9b103366d2bd5afac4e5981d9dc1f90173525d4ff46e44736e52cc17e43faf"
+      "bytes": 143680,
+      "sha256": "a1940bbfc4041d7f5cfbbb4083325b570d020ccdc6b4798ba91c041f8a6e6946"
     },
     {
       "file": "r2-desktop-inspect-light.png",
       "expected": "1440x900",
       "actual": "1440x900",
       "ok": true,
-      "bytes": 153076,
-      "sha256": "cdce9480aedbc9752e4eb01e816ac2f99c83972d926913b1d16ed0744f1c2582"
+      "bytes": 152573,
+      "sha256": "7b1866c92fe4cf5edbd7da9c53557940fbdecf0119ad3600c1c0a4fb0d448052"
     },
     {
       "file": "r2-desktop-reset-dark.png",
       "expected": "1440x900",
       "actual": "1440x900",
       "ok": true,
-      "bytes": 162179,
-      "sha256": "0138f6da0b1539f5dba1fb530b9032aa33ecf6894e0fb294a8e38bb709774f3c"
+      "bytes": 162035,
+      "sha256": "e8c421b49fe7d7225db35ec11ca9e4263d4b5f3d6ed11cf5684883507f833681"
     },
     {
       "file": "r2-mobile-390-light.png",
