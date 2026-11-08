@@ -2,7 +2,7 @@
 
 This directory is the release entry point for [Issue #34](https://github.com/CosmasMandikonza/Vorqyn/issues/34). It supplies executable verification and materials; it is not a claim of a deployed app, produced video, real chain settlement or accepted submission. See [the observed evidence and findings](../evidence/release/README.md).
 
-Current release/deployment slice: [DEPLOYMENT.md](DEPLOYMENT.md), based on merged main `b8860883f1732f92d37d020038a82845c74b0fff` (#41 escrow foundation, #42 canonical synthetic journal, #43 shell QA). Public hosting remains BLOCKED without an authenticated compatible provider. [JUDGE_QA.md](JUDGE_QA.md) and its immutable evidence preserve the existing viewer failures; a functional hosting smoke does not clear them. The original release packet records its earlier SHA and historical absent-integration results.
+Current release/deployment slice: [DEPLOYMENT.md](DEPLOYMENT.md), initially based on main `b8860883` and subsequently integrated through main `d5fd1129844082d5606b2446d979d2090f6f1da5` (#45 viewer and #46/#48 protocol source). Public hosting remains BLOCKED without an authenticated compatible provider. The new screenshot audit also finds remaining 320px camera clipping (8/32 captured states fail), despite the original strict suite passing. [JUDGE_QA.md](JUDGE_QA.md) and its immutable evidence preserve the existing viewer failures; a functional hosting smoke does not clear them. The original release packet records its earlier SHA and historical absent-integration results.
 
 ## 1. Reproduce on Linux or Windows through WSL2
 
@@ -52,7 +52,7 @@ The default browser projects use the **production build** at `127.0.0.1:3110`; t
 
 Exit `0` means required technical checks passed. Exit `1` means at least one FAIL. Exit `2` means incomplete/blocked technical checks, or blocked submission readiness when `--require-submission` is supplied. **Always inspect `submissionStatus` separately:** local test success cannot certify external publication or receipt. `--technical-only` explicitly leaves browser checks NOT RUN, so it cannot certify all release gates. No test is silently skipped to make current missing functionality pass.
 
-The earlier release packet had absent integration and 320px failures. API/playback are now merged and real transport checks pass in recorded QA. The preserved strict viewer findings are 390/320 camera overflow and 1024px Replay interception. Do not weaken those tests; after the viewer owner fix merges, run a fresh merged-main audit as a separate follow-up.
+The earlier release packet had absent integration and 320px failures. API/playback are now merged and real transport checks pass in recorded QA. The historical strict findings were 390/320 camera overflow and 1024px Replay interception. They remain preserved at their original SHA. After #45, candidate `e1cb957` passed the unchanged full preflight, including 26/26 strict cases; read the separately sourced follow-up in [public readiness evidence](evidence/public-readiness/README.md). No hosting smoke alone cleared the earlier failures.
 
 ## 2. Run/capture separately after a production build
 

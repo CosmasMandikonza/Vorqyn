@@ -1,0 +1,29 @@
+{
+  "runId": "39d9328a-747e-4d22-a960-569f69a9965c",
+  "layout": {
+    "viewport": 320,
+    "document": 320,
+    "offenders": [
+      {
+        "text": "FOLLOW",
+        "left": 283.5625,
+        "right": 351.75
+      }
+    ]
+  },
+  "name": "mobile-inspector-dark-320x844",
+  "viewport": {
+    "width": 320,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "fbd893c9a5673f19b0bf26adbe226be59957f54e41327899cf5f462f49ead87e",
+  "url": "http://127.0.0.1:3110/demo/mission",
+  "theme": "dark",
+  "capturedAt": "2026-11-08T00:40:21.393Z"
+}

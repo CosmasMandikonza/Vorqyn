@@ -1,0 +1,28 @@
+{
+  "schema": "vorqyn.container-build/1",
+  "status": "PASS",
+  "sourceSha": "96cb10d76bdf35a05387ce4dd5966f3db5cda64b",
+  "workingTreeDirty": false,
+  "tag": "vorqyn-judge:96cb10d76bdf",
+  "publicDeployment": "BLOCKED — local image build is not public hosting",
+  "startedAt": "2026-11-07T21:30:02.867Z",
+  "phase": "build",
+  "command": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "build",
+    "--progress=plain",
+    "--file",
+    "scripts/release/deploy/Dockerfile",
+    "--build-arg",
+    "VORQYN_BUILD_SHA=96cb10d76bdf35a05387ce4dd5966f3db5cda64b",
+    "--tag",
+    "vorqyn-judge:96cb10d76bdf",
+    "--secret",
+    "id=proxy_ca,src=<session CA path>",
+    "."
+  ],
+  "imageId": "sha256:58ee755d0d9a8648b8fb9c5493b48e9c33529431d8290b364d60babc0dd0d585",
+  "revisionLabel": "96cb10d76bdf35a05387ce4dd5966f3db5cda64b",
+  "finishedAt": "2026-11-07T21:31:27.917Z"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "BLOCKED",
+  "source": "runtime readiness metadata, provider variable/file presence probes, GitHub deployments API, founder statement",
+  "founderConfirmedNoExistingDeployment": true,
+  "githubDeploymentRecordsObserved": 0,
+  "compatibleProviderCredentialObserved": false,
+  "publicUrl": null,
+  "deploymentSha": null,
+  "portalProbe": {
+    "httpStatus": 200,
+    "effectiveUrl": "https://www.mlh.com/signin?return_to=https%3A%2F%2Fwww.mlh.com%2Fevents%2Fsolana-hackathon%2Fsubmissions%2Fnew",
+    "requiredFields": "NOT RUN \u2014 authentication required",
+    "receipt": null
+  }
+}

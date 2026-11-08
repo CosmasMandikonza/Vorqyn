@@ -10,5 +10,6 @@
 **/test-results
 **/playwright-report
 docs/evidence
+docs/release/evidence
 .github
 programs

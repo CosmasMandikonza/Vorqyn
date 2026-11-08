@@ -1,0 +1,26 @@
+{
+  "schema": "vorqyn.container-build/1",
+  "status": "BLOCKED",
+  "sourceSha": "a97d50a049a4de52685d86d900b7359418e7b9de",
+  "workingTreeDirty": false,
+  "tag": "vorqyn-judge:a97d50a049a4",
+  "publicDeployment": "BLOCKED — local image build is not public hosting",
+  "startedAt": "2026-11-07T21:23:01.952Z",
+  "command": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "build",
+    "--progress=plain",
+    "--file",
+    "scripts/release/deploy/Dockerfile",
+    "--build-arg",
+    "VORQYN_BUILD_SHA=a97d50a049a4de52685d86d900b7359418e7b9de",
+    "--tag",
+    "vorqyn-judge:a97d50a049a4",
+    "--secret",
+    "id=proxy_ca,src=<session CA path>",
+    "."
+  ],
+  "reason": "docker failed (1); inspect the recorded command log",
+  "finishedAt": "2026-11-07T21:23:58.371Z"
+}
