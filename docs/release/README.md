@@ -2,7 +2,7 @@
 
 This directory is the release entry point for [Issue #34](https://github.com/CosmasMandikonza/Vorqyn/issues/34). It supplies executable verification and materials; it is not a claim of a deployed app, produced video, real chain settlement or accepted submission. See [the observed evidence and findings](../evidence/release/README.md).
 
-For the later merged API/playback and shared-shell audit under Issue #16, use [JUDGE_QA.md](JUDGE_QA.md) and its new evidence namespace. The older packet below records its original SHA; its absent-integration results are historical. The preflight now also runs the strict judge-QA matrix and capture validator.
+Current release/deployment slice: [DEPLOYMENT.md](DEPLOYMENT.md), based on merged main `b8860883f1732f92d37d020038a82845c74b0fff` (#41 escrow foundation, #42 canonical synthetic journal, #43 shell QA). Public hosting remains BLOCKED without an authenticated compatible provider. [JUDGE_QA.md](JUDGE_QA.md) and its immutable evidence preserve the existing viewer failures; a functional hosting smoke does not clear them. The original release packet records its earlier SHA and historical absent-integration results.
 
 ## 1. Reproduce on Linux or Windows through WSL2
 
@@ -39,20 +39,20 @@ If Linux browser libraries are missing, install the appropriate Playwright syste
 
 It archives **committed HEAD** into a fresh disposable directory, verifies that no `node_modules` exists there, and performs a frozen-lockfile install. It never deletes the working checkout's dependencies or copies ignored `.env` files. A dirty-working-tree flag means uncommitted changes were excluded; commit intended code before the real release check.
 
-The report includes exact commands, exit codes, logs, source SHA and timings for lint, strict types, existing unit tests, production build, core simulation tests, world-coordinate integration tests, asset hashes/deterministic regeneration, release-tool tests, narration checks, offline kernel demo, browser smoke/capture and upcoming integration tests. Runtime configuration checks reject non-devnet public cluster settings, public credential-shaped service URLs and supported tracked-secret patterns without logging their values. A heuristic scan is not a guarantee that no secret exists; perform human review too. The static viewer and local planner require no external secret/service configuration.
+The report includes exact commands, exit codes, logs, source SHA and timings for lint, strict types, existing unit tests, production build, core simulation tests, world-coordinate integration tests, asset hashes/deterministic regeneration, release-tool tests, narration checks, offline kernel demo, browser smoke/capture and upcoming integration tests. Runtime configuration checks reject non-devnet public cluster settings, public credential-shaped service URLs and supported tracked-secret patterns without logging their values. A heuristic scan is not a guarantee that no secret exists; perform human review too. The guest synthetic API/viewer and local planner require no external secret/service configuration.
 
-The default browser projects use the **production build** at `127.0.0.1:3110`; that local origin is not a deployment URL. A conflicting existing server is an error, not silently reused. Existing Rust scaffold checks are exercised by the unchanged GitHub CI; no local Anchor/Solana validator, signing or devnet spending is performed by this preflight.
+The default browser projects use the **production build** at `127.0.0.1:3110`; that local origin is not a deployment URL. A conflicting existing server is an error, not silently reused. Rust/Anchor/LiteSVM checks are exercised by the existing GitHub CI; no local Anchor/Solana validator, signing or devnet spending is performed by this preflight.
 
 ### Result semantics
 
 - **PASS:** the recorded assertion/command actually succeeded.
 - **FAIL:** a check ran and found a defect, including layout overflow or malformed output.
-- **BLOCKED:** a required capability/proof is absent, including the unmerged simulation API/playback, public deployment/video or authenticated submission receipt.
+- **BLOCKED:** a required capability/proof is absent, including absent services, public deployment/video or authenticated submission receipt.
 - **NOT RUN:** no observation was made, with an explicit reason. It never aggregates to PASS.
 
 Exit `0` means required technical checks passed. Exit `1` means at least one FAIL. Exit `2` means incomplete/blocked technical checks, or blocked submission readiness when `--require-submission` is supplied. **Always inspect `submissionStatus` separately:** local test success cannot certify external publication or receipt. `--technical-only` explicitly leaves browser checks NOT RUN, so it cannot certify all release gates. No test is silently skipped to make current missing functionality pass.
 
-At the checked release base, the strict browser capture suite **fails at 320px** and the real upcoming integration assertions are **BLOCKED**. A nonzero preflight is the correct result. Fixes belong to the named integration/viewer owners, then rerun on merged main; do not weaken the release tests.
+The earlier release packet had absent integration and 320px failures. API/playback are now merged and real transport checks pass in recorded QA. The preserved strict viewer findings are 390/320 camera overflow and 1024px Replay interception. Do not weaken those tests; after the viewer owner fix merges, run a fresh merged-main audit as a separate follow-up.
 
 ## 2. Run/capture separately after a production build
 
@@ -73,7 +73,7 @@ The expected 46 viewport PNGs cover light/dark at **1440×900**, **390×844**, *
 
 Inspect `playwright.json`, `screenshots/validation.json` and the `*.json` measured sidecars. Look at UW/INSPECT for recognizable targets, readable inspector text and deliberate framing. Check mobile camera bounds and inspector separation. Old `docs/evidence/vq-07-view/04-underwater-light-1440.png` and `05-inspect-light-1440.png` are actually **1329×558**; they remain untouched and are superseded only by explicitly labeled new evidence. Old 390px captures are historical; use the new post-fix main captures and measured no-overlap checks. The native zoom smoke test sets real Chromium zoom through Settings; it is not a CSS scale or smaller viewport substitution.
 
-Upcoming API/playback checks are a separate, real project:
+Actual API/playback checks are a separate, real project:
 
 ```bash
 RELEASE_ARTIFACT_DIR="$PWD/../release-integration-01" RELEASE_STAGE=integration \
@@ -82,7 +82,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium \
   --config ../../scripts/release/playwright.config.mjs --project integration
 ```
 
-Raw Playwright marks absent-implementation assertions failed with a `BLOCKED:` reason. The preflight preserves the raw nonzero result and classifies only those explicit missing dependencies as BLOCKED; a present-but-wrong endpoint remains FAIL. These tests never mock the transport. After #32/#33 merge, require an actual deterministic fault/stale response and browser POST/provenance before enabling integrated narration. Client stale/out-of-order telemetry behavior is not proven while the real integration is absent.
+Raw Playwright marks absent-implementation assertions failed with a `BLOCKED:` reason. The preflight preserves the raw nonzero result and classifies only those explicit missing dependencies as BLOCKED; a present-but-wrong endpoint remains FAIL. These tests never mock the transport. Both #32/#33 are merged; retain actual deterministic fault/stale response and browser POST/provenance checks. Client stale/out-of-order telemetry behavior is not proven while the real integration is absent.
 
 ## 3. Founder local recording session
 
@@ -93,7 +93,7 @@ node scripts/release/kernel-demo.mjs
 node scripts/release/check-narration.mjs
 ```
 
-Open `http://localhost:3000` in a clean browser profile. Use the [shot-by-shot plan](RECORDING_PLAN.md) and currently enabled [contingency narration](narration-contingency.txt). The alternate [synthetic-integrated narration](narration-integrated-synthetic.txt) is gated, not a claim that it works on the release base. Word/time checks are estimates; no recording is created by these scripts.
+Open `http://localhost:3000` in a clean browser profile. Use the [current 110-second shot list](RECORDING_PLAN.md) and [integrated-synthetic narration](narration-integrated-synthetic.txt) on the tested 1440px working path. The [contingency narration](narration-contingency.txt) is an explicitly separate static-viewer/terminal fallback if the actual API is unavailable. Word/time checks are estimates; no recording is created by these scripts.
 
 After actually producing and inspecting a recording:
 
