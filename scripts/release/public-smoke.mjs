@@ -322,6 +322,7 @@ try {
       await page.goto("/demo/mission");
       await expect(page.getByTestId("loading-veil")).toHaveCount(0);
       await page.emulateMedia({ reducedMotion: "no-preference" });
+      await page.reload();
       await page
         .getByRole("button", { name: "World Dive", exact: true })
         .click();
@@ -329,6 +330,11 @@ try {
       await expect(skip).toBeVisible();
       await skip.click();
       await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.reload();
+      await expect(
+        page.getByTestId("world-canvas-frame").locator("canvas"),
+      ).toBeVisible();
+      await expect(page.getByTestId("loading-veil")).toHaveCount(0);
       await expect(
         page.getByRole("button", { name: "World Dive", exact: true }),
       ).toHaveCount(0);
