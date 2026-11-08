@@ -10,8 +10,8 @@
 
 import { PublicKey } from "@solana/web3.js";
 
-/** Matches declare_id! in programs/vorqyn/src/lib.rs (placeholder). */
-export const PROGRAM_ID = new PublicKey("AHXUZz3HsnPjtUGdeg1VB4uyHN2WtVpkrQ2ZKgzX49dc");
+/** Matches declare_id! in programs/vorqyn/src/lib.rs (devnet identity). */
+export const PROGRAM_ID = new PublicKey("ChqJne5i8L5rZebCJrRde1wx76czKuSHpZJTKNkSNAGL");
 
 export type Cluster = "localnet" | "devnet" | "mainnet-beta";
 
