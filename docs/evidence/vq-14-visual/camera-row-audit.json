@@ -1,0 +1,392 @@
+{
+  "failures": 0,
+  "total": 32,
+  "base": "http://127.0.0.1:3000",
+  "decomposition": "4 viewports (320/390/1024/1440) x 2 themes x 4 key stations (RESET/AIR/UW/FOLLOW)",
+  "results": [
+    {
+      "width": 320,
+      "theme": "light",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "light",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "light",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "light",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "station": "RESET",
+      "pass": true,
+      "pressed": [
+        "RESET"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "station": "AIR",
+      "pass": true,
+      "pressed": [
+        "AIR"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "station": "UW",
+      "pass": true,
+      "pressed": [
+        "UW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "station": "FOLLOW",
+      "pass": true,
+      "pressed": [
+        "FOLLOW"
+      ],
+      "allVisible": true,
+      "allHitOk": true,
+      "pageOverflow": false
+    }
+  ]
+}
