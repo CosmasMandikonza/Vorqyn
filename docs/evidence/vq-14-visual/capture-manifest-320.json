@@ -1,0 +1,14 @@
+[
+  {
+    "name": "09-mobile-320-light.png",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "name": "10-ghost-overlay-freshbuild-1440.png",
+    "width": 1344,
+    "height": 559,
+    "ok": false,
+    "correction": "actual 1344x559 canvas-frame crop, not a 1440x900 viewport capture"
+  }
+]
