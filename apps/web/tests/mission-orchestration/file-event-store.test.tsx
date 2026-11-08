@@ -146,3 +146,41 @@ describe("file-backed durable store", () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// CTO review regression test (PR #54 re-review) — added BEFORE the fix.
+// ---------------------------------------------------------------------------
+
+import { mkdir as fsMkdir } from "node:fs/promises";
+
+describe("review P1-D: read failures other than ENOENT are hard errors", () => {
+  it("an unreadable mission log is never silently treated as absent history", async () => {
+    const dir = await mkdtemp(path.join(tmpdir(), "vorqyn-orch-locked-"));
+    try {
+      const store = await openMissionEventStoreFromFile(dir);
+      const first = await store.append(PORT_001.missionId, script[0] as never, 0);
+      expect(first.ok).toBe(true);
+      const second = await store.append(PORT_001.missionId, script[1] as never, 1);
+      expect(second.ok).toBe(true);
+
+      // Simulate a non-ENOENT read failure (EACCES/EIO class) portably:
+      // replace the JSONL file with a DIRECTORY at the same path.
+      await rm(path.join(dir, `${PORT_001.missionId}.jsonl`));
+      await fsMkdir(path.join(dir, `${PORT_001.missionId}.jsonl`));
+
+      // Readback must be a hard failure — not a silent empty history.
+      await expect(store.readEvents(PORT_001.missionId)).rejects.toThrow();
+
+      // An append against an unreadable log is never acknowledged.
+      const attempted = await store.append(PORT_001.missionId, script[2] as never, 2);
+      expect(attempted.ok).toBe(false);
+      if (!attempted.ok) expect(attempted.error.code).toBe("storage_write_failed");
+
+      // Restart hydration must fail loudly instead of treating the mission
+      // as absent (which would allow a later mission to reuse its log path).
+      await expect(openMissionEventStoreFromFile(dir)).rejects.toThrow();
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});

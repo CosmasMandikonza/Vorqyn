@@ -11,21 +11,25 @@
  * - mission isolation: events are bucketed by `event.missionId`; an event
  *   whose missionId differs from the requested stream is rejected
  *   (`cross_mission_reference`) and can never touch another bucket;
- * - append-only history: accepted events are persisted through the storage
- *   adapter BEFORE the acknowledgement and are never edited or reordered;
+ * - append-only immutable history: accepted events are deep-frozen,
+ *   persisted through the storage adapter BEFORE the acknowledgement, and
+ *   never edited or reordered; readers receive the same frozen objects, so
+ *   a caller cannot mutate accepted history (P1-C);
  * - CAS: the caller declares `expectedLastSequence`; a mismatch rejects
- *   with `stale_cas` before any reducer work, so two racing writers cannot
- *   both claim the same version (per-mission queues serialize appends and
- *   the loser observes the winner's sequence);
+ *   with `stale_cas` before the computed next state is committed, so two
+ *   racing writers cannot both claim the same version (per-mission queues
+ *   serialize appends and the loser observes the winner's sequence);
  * - sequence integrity: `event.sequence` must be exactly
- *   `lastSequence + 1` — gaps (`sequence_gap`) and regressions
- *   (`stale_cas`) are rejected, never healed;
+ *   `lastSequence + 1` — gaps (`validation_error` from the reducer) and
+ *   regressions (`stale_cas`) are rejected, never healed;
  * - idempotency: the reducer's own rules apply — an exact duplicate event
  *   acknowledges `duplicate: true` WITHOUT changing history, a tampered
  *   duplicate and a reused `commandId` with different content are
  *   rejected;
  * - bounded storage: missions per store, events per mission and canonical
- *   bytes per event are all capped;
+ *   bytes per event are all capped. EVERY allocated mission bucket counts
+ *   against the missions cap — including buckets whose only appends were
+ *   rejected or invalid (P1-B);
  * - deterministic replay: `replay` rebuilds the projection from the stored
  *   history through the same contracts primitives and reports whether it
  *   matches the live projection byte-for-byte (canonicalJson).
@@ -59,15 +63,6 @@ import {
 // Limits
 // ---------------------------------------------------------------------------
 
-/**
- * Reload-only bucket seeding, registered per store instance by the factory
- * for the durable adapters (see seedMissionBucket below). Replay-only.
- */
-const seeders = new WeakMap<
-  MissionEventStore,
-  (seed: { missionId: string; projection: MissionProjection; lastSequence: number; eventCount: number }) => void
->();
-
 export interface MissionEventStoreLimits {
   /** Distinct missions allowed in one store. */
   readonly maxMissions: number;
@@ -85,6 +80,21 @@ export const DEFAULT_MISSION_EVENT_STORE_LIMITS: Readonly<MissionEventStoreLimit
 
 const MISSION_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,31}$/;
 
+/**
+ * Structural deep freeze: accepted events (and everything reachable from
+ * them) become immutable at the storage boundary, so aliases handed out by
+ * read interfaces cannot mutate committed history (P1-C).
+ */
+function deepFreeze<T>(value: T): T {
+  if (value !== null && typeof value === "object" && !Object.isFrozen(value)) {
+    for (const key of Object.keys(value as Record<string, unknown>)) {
+      deepFreeze((value as Record<string, unknown>)[key]);
+    }
+    Object.freeze(value);
+  }
+  return value;
+}
+
 // ---------------------------------------------------------------------------
 // Storage seam
 // ---------------------------------------------------------------------------
@@ -92,10 +102,13 @@ const MISSION_ID_PATTERN = /^[a-z0-9][a-z0-9-]{2,31}$/;
 /**
  * Durable-storage seam. The in-memory adapter is the default (test/replay);
  * the file adapter in file-event-log.ts provides real local durability.
- * Implementations must append atomically per batch and return events in
- * stored order — the store relies on both for restart replay.
+ * Implementations must append atomically per batch, return events in stored
+ * order, and treat absent history as an empty list — every other read
+ * failure must be thrown as a hard error (P1-D), never swallowed.
  */
 export interface MissionEventLogStorage {
+  /** Distinct mission keys that have a stored history. */
+  listMissions(): Promise<readonly string[]>;
   /** Durably append the events, in order, to the mission's history. */
   appendEvents(missionId: string, events: readonly MissionEvent[]): Promise<void>;
   /** Read the full stored history, in stored order. */
@@ -105,9 +118,14 @@ export interface MissionEventLogStorage {
 export class InMemoryMissionEventLogStorage implements MissionEventLogStorage {
   private readonly logs = new Map<string, MissionEvent[]>();
 
+  async listMissions(): Promise<readonly string[]> {
+    return [...this.logs.keys()];
+  }
+
   async appendEvents(missionId: string, events: readonly MissionEvent[]): Promise<void> {
+    // Freeze at the storage boundary: committed history is immutable (P1-C).
     const existing = this.logs.get(missionId);
-    this.logs.set(missionId, [...(existing ?? []), ...events]);
+    this.logs.set(missionId, [...(existing ?? []), ...events.map((event) => deepFreeze(event))]);
   }
 
   async readAll(missionId: string): Promise<readonly MissionEvent[]> {
@@ -116,7 +134,7 @@ export class InMemoryMissionEventLogStorage implements MissionEventLogStorage {
 }
 
 // ---------------------------------------------------------------------------
-// Store
+// Append results
 // ---------------------------------------------------------------------------
 
 export interface AppendAccepted {
@@ -130,8 +148,8 @@ export interface AppendAccepted {
 export interface AppendRejected {
   readonly ok: false;
   /** Contracts-style typed error. Reducer codes pass through; store-level
-   * codes: stale_cas, sequence_gap, cross_mission_reference, mission_full,
-   * event_too_large, too_many_missions, storage_write_failed. */
+   * codes: stale_cas, cross_mission_reference, mission_full, event_too_large,
+   * too_many_missions, storage_write_failed. */
   readonly error: {
     readonly code: string;
     readonly message: string;
@@ -146,12 +164,16 @@ export interface MissionEventStoreLimitsInput {
   readonly maxEventCanonicalBytes?: number;
 }
 
+// ---------------------------------------------------------------------------
+// Store interface
+// ---------------------------------------------------------------------------
+
 export interface MissionEventStore {
   readonly limits: MissionEventStoreLimits;
   /**
    * Append one contract-validated event to a mission's history.
    * `expectedLastSequence` is the caller's declared view of the last applied
-   * sequence (0 for an empty mission); a mismatch is a `stale_cas` rejection.
+   * sequence (0 for an empty mission); a mismatch rejects with `stale_cas`.
    * Concurrent appends to the same mission are serialized; exactly one
    * writer wins a given expected sequence.
    */
@@ -166,13 +188,19 @@ export interface MissionEventStore {
   projectionCanonical(missionId: string): string | null;
   /** Last applied sequence, or null when the mission has no events. */
   lastSequence(missionId: string): number | null;
-  /** Stored events, oldest first (paged). */
+  /** Stored events, oldest first (paged). Events are frozen (P1-C). */
   readEvents(
     missionId: string,
     page?: { readonly afterSequence?: number; readonly limit?: number },
   ): Promise<readonly MissionEvent[]>;
   /** Number of stored events for the mission. */
   eventCount(missionId: string): number;
+  /**
+   * Number of allocated mission buckets — every allocation counts against
+   * `maxMissions`, including missions whose only appends were rejected or
+   * invalid (P1-B).
+   */
+  allocatedMissionCount(): number;
   /**
    * Rebuild the projection from STORAGE through the same contracts
    * primitives (`rehydrate`) and report whether it matches the live
@@ -189,6 +217,71 @@ interface MissionBucket {
   queue: Promise<unknown>;
 }
 
+// ---------------------------------------------------------------------------
+// Storage-derived hydration (issue #14 CTO review P1-A)
+// ---------------------------------------------------------------------------
+
+/**
+ * Per-store hydration callback. Registered by the factory; derives buckets
+ * ONLY from persisted events read through the storage adapter and
+ * re-validated by the contracts reducer (`rehydrate`). No caller-supplied
+ * projection is ever trusted — that is the P1-A fix: the previous public
+ * `seedMissionBucket(projection)` hook was removed entirely.
+ */
+const hydrators = new WeakMap<MissionEventStore, () => Promise<void>>();
+
+async function hydrateStoreFromStorageImpl(
+  storage: MissionEventLogStorage,
+  buckets: Map<string, MissionBucket>,
+  limits: MissionEventStoreLimits,
+): Promise<void> {
+  const missionIds = await storage.listMissions();
+  for (const missionId of missionIds) {
+    const events = await storage.readAll(missionId);
+    if (events.length === 0) continue;
+    const rehydrated = rehydrate(events);
+    if (!rehydrated.ok) {
+      throw new Error(
+        `durable history for mission ${missionId} failed replay: ${rehydrated.error.code}: ${rehydrated.error.message}`,
+      );
+    }
+    // Cross-mission misbinding guard: the persisted projection's identity
+    // must match the storage key it was found under.
+    if (rehydrated.value.projection.missionId !== missionId) {
+      throw new Error(
+        `durable history under key ${missionId} contains mission ${rehydrated.value.projection.missionId} (cross-mission misbinding)`,
+      );
+    }
+    // Persisted truth bypasses the new-growth bounds (every event was
+    // validated at append time and is re-validated by rehydrate above).
+    buckets.set(missionId, {
+      projection: rehydrated.value.projection,
+      lastSequence: rehydrated.value.projection.lastSequence,
+      eventCount: events.length,
+      queue: Promise.resolve(),
+    });
+  }
+}
+
+/**
+ * Rebuild all mission buckets from the storage adapter's persisted history.
+ * Derives state ONLY from validated persisted events (`rehydrate`) — there
+ * is no parameter accepting caller-supplied projections (P1-A). Failures
+ * are hard errors: a store never resumes from corrupted or misbound
+ * history.
+ */
+export async function hydrateStoreFromStorage(store: MissionEventStore): Promise<void> {
+  const hydrate = hydrators.get(store);
+  if (hydrate === undefined) {
+    throw new Error("hydrateStoreFromStorage is only supported on stores created by createMissionEventStore");
+  }
+  await hydrate();
+}
+
+// ---------------------------------------------------------------------------
+// Factory
+// ---------------------------------------------------------------------------
+
 export function createMissionEventStore(options: {
   storage?: MissionEventLogStorage;
   limits?: MissionEventStoreLimitsInput;
@@ -203,40 +296,48 @@ export function createMissionEventStore(options: {
 
   const buckets = new Map<string, MissionBucket>();
 
-  /**
-   * Reload-only bucket seeding, registered per store instance for the
-   * durable adapters (see seedMissionBucket below). Replay-only: re-derives
-   * nothing from storage writes and never accepts new events.
-   */
   function reject(code: string, message: string): AppendRejected {
     return { ok: false, error: { code, message } };
   }
 
   /** Run one append serialized behind the mission's queue. */
   function performAppend(missionId: string, event: MissionEvent, expectedLastSequence: number): Promise<AppendResult> {
-    const bucket = buckets.get(missionId);
-    const previousTurn = bucket?.queue ?? Promise.resolve();
-    const turn = previousTurn.then(() => appendTurn(missionId, event, expectedLastSequence));
-    if (bucket !== undefined) {
-      // Keep the queue alive even when a turn rejects.
-      bucket.queue = turn.catch(() => undefined);
-    } else {
-      // First turn for a brand-new bucket (created inside appendTurn).
-      buckets.set(missionId, {
-        projection: null,
-        lastSequence: 0,
-        eventCount: 0,
-        queue: turn.catch(() => undefined),
-      });
+    const existing = buckets.get(missionId);
+    if (existing !== undefined) {
+      const turn = existing.queue.then(() => appendTurn(missionId, event, expectedLastSequence));
+      existing.queue = turn.catch(() => undefined);
+      return turn;
     }
+
+    // P1-B: allocation itself is bounded. A bucket is allocated for EVERY
+    // new mission key — including missions whose first append turns out to
+    // be rejected or invalid — so rejected attempts cannot be used to
+    // allocate unbounded buckets later.
+    if (buckets.size >= limits.maxMissions) {
+      return Promise.resolve(
+        reject("too_many_missions", `store is bounded at ${limits.maxMissions} mission buckets`),
+      );
+    }
+    const bucket: MissionBucket = {
+      projection: null,
+      lastSequence: 0,
+      eventCount: 0,
+      queue: Promise.resolve(),
+    };
+    buckets.set(missionId, bucket);
+    const turn = bucket.queue.then(() => appendTurn(missionId, event, expectedLastSequence));
+    bucket.queue = turn.catch(() => undefined);
     return turn;
   }
 
-  async function appendTurn(missionId: string, event: MissionEvent, expectedLastSequence: number): Promise<AppendResult> {
-    let bucket = buckets.get(missionId);
+  async function appendTurn(
+    missionId: string,
+    event: MissionEvent,
+    expectedLastSequence: number,
+  ): Promise<AppendResult> {
+    const bucket = buckets.get(missionId);
     if (bucket === undefined) {
-      bucket = { projection: null, lastSequence: 0, eventCount: 0, queue: Promise.resolve() };
-      buckets.set(missionId, bucket);
+      return reject("validation_error", `mission bucket for ${missionId} disappeared (internal invariant)`);
     }
 
     if (!MISSION_ID_PATTERN.test(missionId)) {
@@ -278,10 +379,7 @@ export function createMissionEventStore(options: {
         // the reducer's validation_error; tampered duplicates keep
         // duplicate_event; everything else passes through verbatim.
         if (applied.error.code === "duplicate_sequence") {
-          return reject(
-            "stale_cas",
-            `caller expectation is stale: ${applied.error.message}`,
-          );
+          return reject("stale_cas", `caller expectation is stale: ${applied.error.message}`);
         }
         return reject(applied.error.code, applied.error.message);
       }
@@ -301,12 +399,6 @@ export function createMissionEventStore(options: {
     if (canonicalJson(validated.value).length > limits.maxEventCanonicalBytes) {
       return reject("event_too_large", `event ${validated.value.eventId} exceeds the ${limits.maxEventCanonicalBytes}-byte canonical limit`);
     }
-    if (bucket.eventCount === 0) {
-      const activeMissions = [...buckets.values()].filter((candidate) => candidate.eventCount > 0).length;
-      if (activeMissions >= limits.maxMissions) {
-        return reject("too_many_missions", "store is bounded at " + limits.maxMissions + " missions");
-      }
-    }
 
     // CAS commit gate: the caller's view of history must match the store's.
     // The computed next state is committed only when the expectation holds,
@@ -320,35 +412,30 @@ export function createMissionEventStore(options: {
       );
     }
 
-    const persisted = storage.appendEvents(missionId, [validated.value]);
-    return persisted
-      .then(() => {
-        bucket.projection = nextState;
-        bucket.lastSequence = validated.value.sequence;
-        bucket.eventCount += 1;
-        return { ok: true, duplicate: false, lastSequence: bucket.lastSequence } as AppendResult;
-      })
-      .catch((storageError: unknown): AppendResult => {
-        return {
-          ok: false,
-          error: {
-            code: "storage_write_failed",
-            message: `event ${validated.value.eventId} passed validation but the storage adapter rejected the write: ${
-              storageError instanceof Error ? storageError.message : String(storageError)
-            }`,
-          },
-        };
-      });
+    // Freeze at the storage boundary: committed history is immutable (P1-C).
+    const frozenEvent = deepFreeze(validated.value);
+    try {
+      await storage.appendEvents(missionId, [frozenEvent]);
+    } catch (storageError: unknown) {
+      return {
+        ok: false,
+        error: {
+          code: "storage_write_failed",
+          message: `event ${validated.value.eventId} passed validation but the storage adapter rejected the write: ${
+            storageError instanceof Error ? storageError.message : String(storageError)
+          }`,
+        },
+      };
+    }
+    bucket.projection = nextState;
+    bucket.lastSequence = validated.value.sequence;
+    bucket.eventCount += 1;
+    return { ok: true, duplicate: false, lastSequence: bucket.lastSequence };
   }
 
   const store: MissionEventStore = {
     limits,
     append(missionId, event, expectedLastSequence) {
-      // Create the bucket shell synchronously so concurrent callers serialize
-      // behind the same queue, then await the serialized turn.
-      if (!buckets.has(missionId)) {
-        buckets.set(missionId, { projection: null, lastSequence: 0, eventCount: 0, queue: Promise.resolve() });
-      }
       return performAppend(missionId, event, expectedLastSequence);
     },
     projection(missionId) {
@@ -365,12 +452,14 @@ export function createMissionEventStore(options: {
       const bucket = buckets.get(missionId);
       return bucket === undefined || bucket.eventCount === 0 ? null : bucket.lastSequence;
     },
-    readEvents(missionId, page = {}) {
+    async readEvents(missionId, page = {}) {
       const afterSequence = page.afterSequence ?? 0;
       const limit = page.limit ?? limits.maxEventsPerMission;
-      return storage
-        .readAll(missionId)
-        .then((events) => events.filter((event) => event.sequence > afterSequence).slice(0, limit));
+      const events = await storage.readAll(missionId);
+      return events.filter((event) => event.sequence > afterSequence).slice(0, limit);
+    },
+    allocatedMissionCount() {
+      return buckets.size;
     },
     eventCount(missionId) {
       return buckets.get(missionId)?.eventCount ?? 0;
@@ -392,31 +481,7 @@ export function createMissionEventStore(options: {
     },
   };
 
-  seeders.set(store, (seed) => {
-    buckets.set(seed.missionId, {
-      projection: seed.projection,
-      lastSequence: seed.lastSequence,
-      eventCount: seed.eventCount,
-      queue: Promise.resolve(),
-    });
-  });
+  hydrators.set(store, () => hydrateStoreFromStorageImpl(storage, buckets, limits));
 
   return store;
-}
-
-/**
- * Reload-only bucket seeding for durable adapters: replay an already
- * persisted history through the reducer (never writing storage again) so a
- * restarted process resumes exactly where the files left off. Not an API
- * for new events — new events go through `append`.
- */
-export function seedMissionBucket(
-  store: MissionEventStore,
-  seed: { readonly missionId: string; readonly projection: MissionProjection; readonly lastSequence: number; readonly eventCount: number },
-): void {
-  const seedBucket = seeders.get(store);
-  if (seedBucket === undefined) {
-    throw new Error("seedMissionBucket is only supported on stores created by createMissionEventStore");
-  }
-  seedBucket(seed);
 }

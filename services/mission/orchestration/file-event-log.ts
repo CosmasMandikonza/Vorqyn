@@ -7,27 +7,30 @@
  * files through the contracts reducer on startup, so a restarted process
  * resumes exactly where the previous one stopped (tested).
  *
- * HONESTY BOUNDARY: this is local filesystem durability for tests, a demo
- * host or a single-node deployment. It is NOT cloud/serverless persistence,
- * has no replication, locking across machines, or retention guarantees, and
- * must never be described as production cloud storage. The `MissionEventLog
- * Storage` seam exists precisely so a real database adapter (Omar's Lane 1
- * persistence work) can replace this file without touching the reducer or
- * the store logic.
+ * READ-FAILURE SEMANTICS (P1-D): only ENOENT (no history yet) is treated as
+ * an empty mission. Every other read failure — EACCES, EIO, EISDIR, data
+ * corruption at the OS layer — is a HARD ERROR: it propagates to callers
+ * and aborts restart hydration, so a real stored mission can never be
+ * silently mistaken for absent history (which would let a later mission
+ * append into an unreadable log).
  *
- * File layout: <dir>/<missionId>.jsonl — one canonical-JSON event per line
- * (missionId is pattern-validated lowercase/digits/hyphens, so it is a safe
- * file name). The append-only format keeps restart replay trivially
- * verifiable: concatenating the lines and re-running the reducer must
- * reproduce the live projection exactly.
+ * DURABILITY LIMITATIONS (truthful): appendFile without fsync means a
+ * process crash or power loss may lose recently acknowledged appends
+ * (OS-buffered writes); multiple processes appending to the same directory
+ * are NOT supported (no cross-process locking); there is no replication,
+ * retention or backup. This is local filesystem durability for tests, a
+ * demo host or a single-node deployment — NOT cloud/serverless persistence.
+ * The `MissionEventLogStorage` seam exists precisely so a real database
+ * adapter (Lane 1 persistence work) can replace this file without touching
+ * the reducer or the store logic.
  */
 
 import { mkdir, appendFile, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import { rehydrate, type MissionEvent } from "../../../packages/contracts/src/index";
+import type { MissionEvent } from "../../../packages/contracts/src/index";
 import {
   createMissionEventStore,
-  seedMissionBucket,
+  hydrateStoreFromStorage,
   type MissionEventLogStorage,
   type MissionEventStore,
   type MissionEventStoreLimitsInput,
@@ -47,6 +50,11 @@ class FileEventLogStorage implements MissionEventLogStorage {
     return path.join(this.dir, `${missionId}.jsonl`);
   }
 
+  async listMissions(): Promise<readonly string[]> {
+    const entries = await readdir(this.dir);
+    return entries.filter((name) => name.endsWith(".jsonl")).map((name) => name.replace(/\.jsonl$/, ""));
+  }
+
   async appendEvents(missionId: string, events: readonly MissionEvent[]): Promise<void> {
     if (events.length === 0) return;
     const filePath = this.filePathFor(missionId);
@@ -58,8 +66,15 @@ class FileEventLogStorage implements MissionEventLogStorage {
     let raw: string;
     try {
       raw = await readFile(this.filePathFor(missionId), "utf8");
-    } catch {
-      return []; // no history yet for this mission
+    } catch (error: unknown) {
+      const code = (error as NodeJS.ErrnoException | null)?.code;
+      if (code === "ENOENT") {
+        return []; // genuinely no history yet for this mission
+      }
+      // P1-D: every other read failure (permissions, I/O error, a directory
+      // at the log path, ...) is a HARD error — never silently treated as
+      // absent history.
+      throw error;
     }
     const events: MissionEvent[] = [];
     for (const line of raw.split("\n")) {
@@ -72,9 +87,9 @@ class FileEventLogStorage implements MissionEventLogStorage {
 
 /**
  * Open a store whose histories live in `dir`. Existing per-mission files are
- * replayed through the contracts reducer (deterministic restart recovery):
- * a store opened this way continues every mission exactly where the files
- * left off, with CAS expectations derived from the replayed sequences.
+ * replayed through the contracts reducer on startup (storage-derived
+ * hydration, P1-A: state derives only from persisted validated events). A
+ * stored mission whose log cannot be read fails the open loudly (P1-D).
  */
 export async function openMissionEventStoreFromFile(
   dir: string,
@@ -83,28 +98,7 @@ export async function openMissionEventStoreFromFile(
   await mkdir(dir, { recursive: true });
   const storage = new FileEventLogStorage(dir);
   const store = createMissionEventStore({ storage, limits: options.limits });
-
-  // Restart replay: rehydrate every persisted mission from its file.
-  const fileNames = (await readdir(dir)).filter((name) => name.endsWith(".jsonl"));
-  for (const fileName of fileNames) {
-    const missionId = fileName.replace(/\.jsonl$/, "");
-    const events = await storage.readAll(missionId);
-    if (events.length === 0) continue;
-    // Replay through the same contracts primitives the live path uses; the
-    // first event must be mission.created (rehydrate enforces this).
-    const rehydrated = rehydrate(events);
-    if (!rehydrated.ok) {
-      throw new Error(
-        `durable history for mission ${missionId} failed replay: ${rehydrated.error.code}: ${rehydrated.error.message}`,
-      );
-    }
-    seedMissionBucket(store, {
-      missionId,
-      projection: rehydrated.value.projection,
-      lastSequence: rehydrated.value.projection.lastSequence,
-      eventCount: events.length,
-    });
-  }
+  await hydrateStoreFromStorage(store);
   return store;
 }
 

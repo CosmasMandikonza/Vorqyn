@@ -312,3 +312,97 @@ describe("bounds", () => {
     expect(store.eventCount(PORT_001.missionId)).toBe(0);
   });
 });
+
+// ---------------------------------------------------------------------------
+// CTO review regression tests (PR #54 re-review) — added BEFORE the fixes;
+// every test here failed against head 2447fa3.
+// ---------------------------------------------------------------------------
+
+import * as orchestrationModule from "../../../../services/mission/orchestration/event-store";
+
+describe("review P1-A: no public projection-injection hook", () => {
+  it("seedMissionBucket is removed from the public API — state derives only from validated events", () => {
+    const exports_ = orchestrationModule as unknown as Record<string, unknown>;
+    expect(exports_.seedMissionBucket).toBeUndefined();
+    // The only way to create state is append(); there is no API accepting a
+    // caller-supplied projection.
+    const store = createMissionEventStore();
+    const forgedStateInjection = (store as unknown as Record<string, unknown>).seedBucket;
+    expect(forgedStateInjection).toBeUndefined();
+  });
+});
+
+describe("review P1-B: maxMissions bounds every allocated bucket", () => {
+  it("high-volume invalid/rejected mission attempts cannot allocate beyond the bound", async () => {
+    const store = createMissionEventStore({ limits: { maxMissions: 2 } });
+    const portInit = await store.append(PORT_001.missionId, script[0] as never, 0);
+    expect(portInit.ok).toBe(true);
+
+    // 30 attempts for 30 NEW missions after the bound is exhausted.
+    let rejected = 0;
+    for (let i = 0; i < 30; i += 1) {
+      const ghostId = `ghost-mission-${i}`;
+      const ghostEvent = {
+        eventId: `evt-ghost-${i}`,
+        missionId: ghostId,
+        sequence: 1,
+        kind: "mission.created",
+        payload: {
+          config: {
+            missionId: ghostId,
+            organizationId: "port-authority",
+            templateId: "tpl-port-storm-clearance",
+            siteLabel: "ghost",
+            budgetLamports: 1,
+            tasks: [],
+          },
+        },
+        occurredAtMs: 1762000000000,
+        observedAtMs: 1762000000000,
+        schemaVersion: 1,
+      };
+      const result = await store.append(ghostId, ghostEvent as never, 0);
+      if (!result.ok && result.error.code === "too_many_missions") rejected += 1;
+    }
+    // 30 attempts, one remaining slot (maxMissions 2, PORT-001 uses 1):
+    // exactly one ghost mission legitimately fits; all 29 others reject.
+    expect(rejected).toBe(29);
+    // Every allocated bucket (including shells from rejected attempts) counts.
+    expect(store.allocatedMissionCount()).toBeLessThanOrEqual(2);
+  });
+
+  it("a pending same-mission writer survives a rejected attempt on the same mission", async () => {
+    const store = createMissionEventStore({ limits: { maxMissions: 2 } });
+    const init = await store.append(PORT_001.missionId, script[0] as never, 0);
+    expect(init.ok).toBe(true);
+    // Invalid attempt for the SAME mission (garbage event).
+    const invalid = await store.append(PORT_001.missionId, { nonsense: true } as never, 1);
+    expect(invalid.ok).toBe(false);
+    // The queue still works for a valid next event.
+    const launch = await store.append(PORT_001.missionId, script[1] as never, 1);
+    expect(launch.ok).toBe(true);
+    expect(store.lastSequence(PORT_001.missionId)).toBe(2);
+  });
+});
+
+describe("review P1-C: accepted history is immutable through the read interface", () => {
+  it("mutating an event returned by readEvents throws (frozen) and replay parity survives", async () => {
+    const store = await storeWithPort001();
+    const stored = await store.readEvents(PORT_001.missionId);
+    const first = stored[0] as { payload: Record<string, unknown> };
+    let mutationThrew = false;
+    try {
+      (first.payload as Record<string, unknown>).budgetLamports = 1;
+    } catch (error) {
+      mutationThrew = error instanceof TypeError;
+    }
+    expect(mutationThrew).toBe(true);
+
+    const replay = await store.replay(PORT_001.missionId);
+    expect(replay.ok).toBe(true);
+    if (replay.ok) expect(replay.value.matchesLiveProjection).toBe(true);
+    // The stored event is unchanged by the mutation attempt (frozen): a
+    // fresh read serializes identically to the pre-mutation read.
+    expect(JSON.stringify((await store.readEvents(PORT_001.missionId))[0])).toBe(JSON.stringify(first));
+  });
+});
