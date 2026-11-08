@@ -2,6 +2,16 @@
 
 **Acceptance is BLOCKED. PR #55 remains open and unmerged.** This checkpoint follows the [complete CTO review](https://github.com/CosmasMandikonza/Vorqyn/pull/55#issuecomment-6716267107). The required separate owner lockfile hotfix has not landed in the observed main `fe00763cd44bb854a7554f55ca0359a76e6a2b83`; its [merged-main CI](https://github.com/CosmasMandikonza/Vorqyn/actions/runs/42435843830) failed frozen installation. No cold-install, current-source diagnostic or fresh-browser success is asserted here.
 
+## Independent QA executed without workspace dependencies
+
+At clean committed source **`615e94cf4eed27182479df381f8fc747ddd5af3d`**, direct Node checks passed: **48 kernel**, **18 coordinate**, and **12 QA-tool** tests; zero skipped/todo/cancelled. [Report and exact commands](independent-615e94c/report.json), [kernel log](independent-615e94c/kernel.txt), [coordinate log](independent-615e94c/coordinates.txt), [tooling log](independent-615e94c/qa-tooling.txt). These are synthetic component/tool results, not the blocked full gate.
+
+Tool checks exercise a deliberately **failing** installation fixture and prove no product check runs afterward. They reject a hash-matching desktop PNG substituted for mobile, forged run/commit/viewport metadata and missing captures; preserve the historical eight geometry failures; reject zero/skipped/incomplete TAP; and attribute driver bytes to an actual recorded commit. The provenance fixtures are non-executed marker files, not orchestration adapters. The full gate requires the same tooling suite only after real successful frozen installation.
+
+All **205 protected files** (the original 20-test source and original browser packet) matched the recorded `7994522` bytes before and after execution; [hash inventory](independent-615e94c/protected-files.json). No new browser screenshots were produced. Main was still `fe00763` when checked after these runs.
+
+The prepared orchestration QA port now mirrors Agent A's real single-event `append(missionId, event, expectedLastSequence)` shape. Foreign-envelope tests use an explicit target mission; observation authority negatives use actual kernel records bound to that same mission. This removes an implicit-ID/foreign-mission shortcut. Runtime/TypeScript package verification remains NOT RUN until frozen installation is restored. [Source-specific interface handoff](INTERFACE_HANDOFF.md) lists the actual APIs, required owner decisions and missing authority/clock/metric bindings. No adapter is implemented here.
+
 The original **20 boundary tests and genuine browser packet are unchanged**. Earlier reports remain historical evidence at their own SHAs; [the first checkpoint](README.md) does not certify the current acceptance rerun.
 
 | Required acceptance check | Current result / next dependency |

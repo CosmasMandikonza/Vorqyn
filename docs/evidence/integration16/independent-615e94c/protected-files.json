@@ -1,0 +1,822 @@
+[
+  {
+    "path": "docs/evidence/integration16/browser/camera-capture-audit.json",
+    "sha256": "193ef681048f7eec6826570b5fbd1d756f6f88e3e5bd54ad38fd9b5c0f88ce57"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/camera-validation.json",
+    "sha256": "8214b74de81b4fe1ef85a9998ce92c54fb656d915a144dc2df12baaedb53cba2"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/capture-run.json",
+    "sha256": "cb8d962063004ea06a6198f7fb71c6e1f0d5dcb5c269e35f58a0f0159edb8607"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-1024x900.json",
+    "sha256": "7a16b1848a9e4377962ab7186c7c72a92c5860f19560caae0e5766f9c747ee53"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-1024x900.png",
+    "sha256": "28053fec63143128325dbdc52edf2d3ac6f3d178bfba13ea64b92f75c3ca6212"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-1440x900.json",
+    "sha256": "a86a9a5c88841392eb6d62088fc42ca17ab8e296e8853f1ce6d39cf8561ba0b2"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-1440x900.png",
+    "sha256": "66b913e4e9d266e6179f0cc00f555e26edd0fd0662e735b0d15bdc55a6cc8cec"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-320x844.json",
+    "sha256": "275ab100c3f5d432effce80008cf6fa0913de06d3284b332d856cc5c51176bad"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-320x844.png",
+    "sha256": "dc7da41ba7c0bc39fb4e6204bb02457a91562f47201bbe48b1a3b7f2be7b032e"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-390x844.json",
+    "sha256": "419790ead7141d944854e14306cc45f1719a4528e24b498f4ac2ff43cbf3fd45"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-dark-390x844.png",
+    "sha256": "2f4d67494b02987714296699fac9532ec147e9f3c112c4d9b346725784ef77cc"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-1024x900.json",
+    "sha256": "d34af519c92e99be43bdfacc668977e27c108ceeed264d5ed0c65402a79660b8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-1024x900.png",
+    "sha256": "8091b8072901954a438463882fa3e072f707869208bf52c5e4ef3e36f5a6b305"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-1440x900.json",
+    "sha256": "97089fb541d85b330e28c8194c16aed2a4eabcfb2450d0ae137bc06f8e5228ef"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-1440x900.png",
+    "sha256": "195dde3a01b5ceaea76a29806fae6748cd471d82f3145f59381ca17d4397497b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-320x844.json",
+    "sha256": "3b97c2a924049f83b3f7fcca5e5f3fdac6e9412944eb0cc17c2a00831975a2e3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-320x844.png",
+    "sha256": "2c6381c92310c2b0af691e3c24cbd1bd223b086b1bae82813ee678e368e17aab"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-390x844.json",
+    "sha256": "b28dc1b7ee482f10e153386ea6d7e2bb7f8dd1d44dbc86aebc6b2644b9676374"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-clean-uw-light-390x844.png",
+    "sha256": "d103e73407faa48de2fc2ccd2dd0f27058292b0d30802110666ae3e7c8f04689"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-1024x900.json",
+    "sha256": "707da897aeb9e253a7eaee0c65cdc426b9158f4ddf80d22c85c410581ca306b8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-1024x900.png",
+    "sha256": "61c469787c76f92907da3b275ee9a443a3ba4272639f91c4ffad9037935446b8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-1440x900.json",
+    "sha256": "2fa3d124083f1b35e54263e13363ad1d824bccdbed54f8c6d1b1edfa55a0ce82"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-1440x900.png",
+    "sha256": "99d7b00d1c9de2fdc9a0b058fe225c17db10d4130e39909f24300afdefc09402"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-320x844.json",
+    "sha256": "a8c466b3475a7d784ed7ab869c75015cbdb8fe65b289cab656e801612c7c03b7"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-320x844.png",
+    "sha256": "c3938c27ef5a4908b08f53fe24d73a02958f4801d4b48dbed3403e749fb1e010"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-390x844.json",
+    "sha256": "419790ead7141d944854e14306cc45f1719a4528e24b498f4ac2ff43cbf3fd45"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-dark-390x844.png",
+    "sha256": "2f4d67494b02987714296699fac9532ec147e9f3c112c4d9b346725784ef77cc"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-1024x900.json",
+    "sha256": "cb3f393ed72fd85874cbc87854d8555841fbac26384b783d2e6a5cdfdea90ac2"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-1024x900.png",
+    "sha256": "7a62c470dadce9a6018dc4ce0f724aece785cfa0663b85f3bae9ac8646f1b343"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-1440x900.json",
+    "sha256": "d23a680de9d6a8e5dc2d2258fd979b082a1f0ec5ca9af8242db3d794229faf9c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-1440x900.png",
+    "sha256": "eed0333dad76c3cd5def3d4fef474df08685ebc2efabf3737f2e4b1f6e7cf5d2"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-320x844.json",
+    "sha256": "1adf160c6549246e8ec37d4974575aa1178716a5a4a37d08328ca4a980951bd5"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-320x844.png",
+    "sha256": "6ba3f39fe6dc469fc04e04ea6abc9002064fce744fd74dd3933fbf2bca699b43"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-390x844.json",
+    "sha256": "b28dc1b7ee482f10e153386ea6d7e2bb7f8dd1d44dbc86aebc6b2644b9676374"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-fault-uw-light-390x844.png",
+    "sha256": "d103e73407faa48de2fc2ccd2dd0f27058292b0d30802110666ae3e7c8f04689"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-1024x900.json",
+    "sha256": "b0a0f70b01c6de03a4a52508b2d0729a6fe5b131726516293ead41a08ad80136"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-1024x900.png",
+    "sha256": "bbfc8ef43b490ac9b73a7818b1ff76382ad5e5edac3a3fe8709b578643896bf5"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-1440x900.json",
+    "sha256": "a7b3addb8274d8f82d285f6898ac229e24707171b35cffaeac1a95d1fb09226b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-1440x900.png",
+    "sha256": "3a581a6d8e4dea034c7ee04f126e08f76fa984f82edc10707ef4a4822ae84166"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-320x844.json",
+    "sha256": "98b2d912c04b127997d6de9b6bae1f472a8a5f2594202321bfcf86c29e67b993"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-320x844.png",
+    "sha256": "77f217f27cf0920fe763fa5bdb130c4121660799eb61c5ccba267f74733f575f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-390x844.json",
+    "sha256": "7c16810a00dc3151e8d2d1fef2aaef9c8b7a2a5fb1af9b4e827c28cee3efeba1"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-dark-390x844.png",
+    "sha256": "aed8acdf5a7da00098532f84a99ba052bcf3b411b12fc6c8cabc1f93393335dd"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-1024x900.json",
+    "sha256": "fd384b5dc737bd16be10c11f5c83075b3f4cc5a7363ce7069a4c5ac94bfcfcbd"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-1024x900.png",
+    "sha256": "1043bfc2cc37b975b577d1196aee5c69900812500852b82896845066efd9ca05"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-1440x900.json",
+    "sha256": "8884855b7937d1545e21600067d04ba92fbed3080e05d1a995a3ab3adaf28de6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-1440x900.png",
+    "sha256": "f615a539f56dcce087591172b488d29d03354cded1d151e47406664cbb601379"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-320x844.json",
+    "sha256": "37e330c5c9d1e4b069338bf578f34a3d18af8f000683291a5c19b36bd2623d08"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-320x844.png",
+    "sha256": "d7fdd598890b5032c5b80ac24ce9196e7be2c24ed4546697910260836c7f3235"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-390x844.json",
+    "sha256": "4bae2e5df090f152aa9ec5f465990742fe19b8d5cd9dc1464a3b647e6269cff4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-follow-light-390x844.png",
+    "sha256": "53fc207427c7497625096bcf9800479ee6ccc48e7946a0f1f4d7c59e5cba1f19"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-1024x900.json",
+    "sha256": "6233a8b0146c3c1ac2a2536b28201c0a3f4cc6d379bcf6476b4e37a37434cd20"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-1024x900.png",
+    "sha256": "80f61a117e53e4644a067fe98816460b8edd2c76abd6c0cab9dedc0d24730272"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-1440x900.json",
+    "sha256": "239501ce41a89fb647361e683856e70b8dbfe9b07a1afd5a8ebcadf52c11b611"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-1440x900.png",
+    "sha256": "5a44df68c8f9f177557532700e22e2de5c05e774a079aa8b23d0db25c08077db"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-320x844.json",
+    "sha256": "2bab63487752167142c74e31e230b08e5956177ceaf1661b152e448306eb96b6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-320x844.png",
+    "sha256": "c53e7c8b4c1301b90efee89e7a11c196ae24bb18711c70668b7995a78a1ec62d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-390x844.json",
+    "sha256": "b9e097a5026d5cd14ca1f85732b27f124b69bf36f1eec2471985c4668f1d5397"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-dark-390x844.png",
+    "sha256": "57b476bf48a6d8a86b281e8a20d162b3c239881499a5877882b04cf278875a70"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-1024x900.json",
+    "sha256": "b675e86ee49dc25b0b315d9858f8d2ca7adbfedcbbd9276c6c08654f9dea4a61"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-1024x900.png",
+    "sha256": "74d5b8226b4f020eb216ae2eb60beb7de4a190c148ccb8817d09b021b4b03508"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-1440x900.json",
+    "sha256": "e2390fe884e03d7e275c8497f45d5eabc7e6f761755b1743851eed4b795465a4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-1440x900.png",
+    "sha256": "bede20a4b953539fdcd8edbea97aadfe0cbda1395d1485f044d3e90dd3c060dc"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-320x844.json",
+    "sha256": "60da9afa1ccf0790031d4640a79b2a457f1f5fb204973963535104763652df9c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-320x844.png",
+    "sha256": "3cec40576a3a1bc4a5f4d04e7eeff9783deba01ffb0ce3d6f8d91984514ed6cd"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-390x844.json",
+    "sha256": "6c185372222f022d08bf4b31de1ad19e3473c26b6fb650d95cb502404369e828"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/integration-camera/full-row-inspect-light-390x844.png",
+    "sha256": "420fa1331d5966050aa4542ab72b4281f49a3024950a676a73b0402808d11b2e"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/playwright.json",
+    "sha256": "8eae0f07eeb05f3ee2865620376b11083b6db71528122cad139dc26330a98033"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/css-root-zoom-200-dark-1440x900-dpr1.json",
+    "sha256": "1ff53fe2d142d5ac8aed75e96ee9825e72f557908f00d0727cbbf1efe6386a53"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/css-root-zoom-200-light-1440x900-dpr1.json",
+    "sha256": "a5da92bccaa874217cd3be83630c85e9eab371ab4877327208debd2ba1c300b8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-dark-1024x900-dpr1.json",
+    "sha256": "5508f2e30b71e43cc7642041e9dfd6c32710f169fd70ae242837cd27a936dc81"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-dark-1440x900-dpr1.json",
+    "sha256": "642e6a3d104fe25babbbf699c6d7411c24ff687d4ac89b0c31c68778765474c5"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-dark-320x844-dpr1.json",
+    "sha256": "9748a804a2e82ccb9da26e3475529a514feb4c6b1377e3bb46e1d8c6159e32fb"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-dark-390x844-dpr1.json",
+    "sha256": "42db10f930d42daa9a9a4209e244ea17dc87480a90ddc9881d067fba74e28cf8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-light-1024x900-dpr1.json",
+    "sha256": "a410a783ef8fb758f97871556726bb13099a37477db148971bbc7f538aefe310"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-light-1440x900-dpr1.json",
+    "sha256": "102ff7dcbb9bd1e3c497365df40fbfe5dc68d4cc9670f768084521cb48a2067c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-light-320x844-dpr1.json",
+    "sha256": "727d583d0314a2934f21e8c21cfbdf66b75033151d57a10093e942001b239af1"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-clean-uw-light-390x844-dpr1.json",
+    "sha256": "b993c08aa1fa117566baf2d2387cde1d76f9c250fc4a366a5cd6c23b276fe4fd"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-dark-1024x900-dpr1.json",
+    "sha256": "fa1970d447bc967d4fbd6c0aa5a419d62795cae7ef2cb5021549ef7b234c3fe6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-dark-1440x900-dpr1.json",
+    "sha256": "45ee52fd055f691442ba0ffb502c4f3fbc16d717fc7673ebd4b456ece3daedbe"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-dark-320x844-dpr1.json",
+    "sha256": "0f89477699069832f2b889a3295cac6ebd3107f6cf22b2898229a18daa489800"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-dark-390x844-dpr1.json",
+    "sha256": "10f78c754b422e5a9c0043663a7c13496b9d396833511f1d3ef83634d7806417"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-light-1024x900-dpr1.json",
+    "sha256": "2917a97bf93d13c1f7000a112d6d74fbf808967e26af9414a05226b189991935"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-light-1440x900-dpr1.json",
+    "sha256": "0d0dc74390f5bad1fefed22de89eb6581980106610d22039ff281df16ebbb831"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-light-320x844-dpr1.json",
+    "sha256": "9c22f1872aeccea333a1d7c5dec62ab737e7cadd47fb7ba890fb03cba1346a9b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fallback-light-390x844-dpr1.json",
+    "sha256": "77526b56ea1b756a954ec2546294591df5105057c2432642ef2f2e0239ad200c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-dark-1024x900-dpr1.json",
+    "sha256": "e4919a0aa149e833d3afcd9c4def4cca690652f994e95073d2803fb81cc054ce"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-dark-1440x900-dpr1.json",
+    "sha256": "6db71e626643dd4ccc05a17bfebedf1818505ac04fcb871ed3a2d8eeeb737534"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-dark-320x844-dpr1.json",
+    "sha256": "545359533443dd904a4467c158aec17ea5790ec78dabd8c0882c41b983014a2f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-dark-390x844-dpr1.json",
+    "sha256": "31d92dd617322a31890984332187dbf1e61a3e94d63f20a8f2494f3442bff755"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-light-1024x900-dpr1.json",
+    "sha256": "90eb15fe955bec6bdee5ff26a21ff39c0f35a57c97d363d28fdaf027a744365f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-light-1440x900-dpr1.json",
+    "sha256": "0dfdecd089acef8292342afa78af4b443145dabf7c3400e6aca6ba63b8e1102c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-light-320x844-dpr1.json",
+    "sha256": "426736f4089cc607e9f1d02fb20c4271fa821011a512558d55bc472119e3a538"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-inspector-light-390x844-dpr1.json",
+    "sha256": "e9d6825a6b75cc4c034400f443fbdb6ef6884f167beaf8d0c13746fe908c3367"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-dark-1024x900-dpr1.json",
+    "sha256": "26a261781be3b8771229806cf9fb002efbd0cf0ccde7bef9b6edfa015ea5d4a9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-dark-1440x900-dpr1.json",
+    "sha256": "a8c730c92ea5795ca003b2d033196493085f7587c02e056b011ddb63d86d373d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-dark-320x844-dpr1.json",
+    "sha256": "735d3f9c007d78096acc04665ff169e9ce6c7e9c07c9a7b2b13511e321ba4a5d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-dark-390x844-dpr1.json",
+    "sha256": "f2fb653a77a14c5740ff832edaecdd728c6743004c6bc6bf49621aeef7ac2347"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-light-1024x900-dpr1.json",
+    "sha256": "9078446cbe5f4c9b6410cfe5775f4db4e084a89e754e820db051317f69223065"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-light-1440x900-dpr1.json",
+    "sha256": "bc63071a898a79e80b28492872bec2f170ffa84f5863dbf16b8a69b783626998"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-light-320x844-dpr1.json",
+    "sha256": "2b4604500865be4a8e13894159148e777c95077eeeb749534d5cd31862a895c9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-fault-uw-light-390x844-dpr1.json",
+    "sha256": "3c5bab53f545e9e4c066260bf5949b7b5be8b8913c060264a70418699e3ba6b4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-dark-1024x900-dpr1.json",
+    "sha256": "99db6ac31462fb92c0c492fb964430242b889e018a0a8e51e9a7bb0bf17e9b21"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-dark-1440x900-dpr1.json",
+    "sha256": "ec7d71eaec1c27f9dffc0a56c47b04d3b15f25486df73170d257ddc316c9c5fe"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-dark-320x844-dpr1.json",
+    "sha256": "7286b22385fe7333e8dae93774dd825f57868ee117207cf20ed17c51647e1511"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-dark-390x844-dpr1.json",
+    "sha256": "7153ca56396352c93ab0a4b00743aa70d6ea0343594101ec55dd8140278be1e1"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-light-1024x900-dpr1.json",
+    "sha256": "89bb4b79641fec2c04f02bfbd45947697037210e722705bc9ae03bb279750d79"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-light-1440x900-dpr1.json",
+    "sha256": "22d35d7faa0a72dcd1ca233f3e922f6003e427d106d1c0563b0aea2683634d0b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-light-320x844-dpr1.json",
+    "sha256": "ede7f2bcfa55df33641d80d433fb0fd908ccd3d4efe5823d2ce2707c1b729c2a"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-follow-light-390x844-dpr1.json",
+    "sha256": "f1cf2b87f482215d5ca68a23ee1b44b0a72ac2460368694aede1095061f0c786"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-dark-1024x900-dpr1.json",
+    "sha256": "4f5b3fd9a1b5c2d9b65f73959cdba04794d2540cbdec0ff64360f763d60eebd4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-dark-1440x900-dpr1.json",
+    "sha256": "f469d34690de6d814796e889e7ed510cd3e56e3c48a119cfbb390e31c13e4ea5"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-dark-320x844-dpr1.json",
+    "sha256": "474baa1e271c44657aba735f27fb28cd3da6752f7c28abfaa750aa025a0f6e97"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-dark-390x844-dpr1.json",
+    "sha256": "ca9dfc7ab393283ea0f469d06ea6d9242a5d63594e9eefcd1df1a5c81b2a6c79"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-light-1024x900-dpr1.json",
+    "sha256": "2a7a51f3513f60c0957d9d4a18ad442b43800e2f2e5d7143305bc6cc561676f4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-light-1440x900-dpr1.json",
+    "sha256": "2415dedec5a89a3bbd30a3f065e6ab859cf207e6483c58bc7201167efc284644"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-light-320x844-dpr1.json",
+    "sha256": "f1d062da7fe8c5f5d154b8855bd5d6e6aa8ff5cc3e5ac0f2c950ec44c7733dd8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-inspect-light-390x844-dpr1.json",
+    "sha256": "f97ec0ef9e981d7ec028329381182695fecfb285d3f13d0eb36c5d2882aa6312"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-dark-1024x900-dpr1.json",
+    "sha256": "43aec2b5e4541f8bba3514418f6694f4b998fc196e1202578c90f8c3384ef199"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-dark-1024x900-dpr1.png",
+    "sha256": "79132699dc51169980ff09f0e6dc028c777773b0106b83660412287ab25fd462"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-dark-1440x900-dpr1.json",
+    "sha256": "2c414bcceb558c5e6bab40cc652f2930fec93566e3d8f1e82bce800a5ce8c11b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-dark-320x844-dpr1.json",
+    "sha256": "660af2827bb6532898ea83c847a1db41c3e133bef51346afefbce42ea5c72442"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-dark-390x844-dpr1.json",
+    "sha256": "0f9d8071dc84333ccd308de1c48a649958c002f1514ea7b62ba34a5b671c9ddc"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-light-1024x900-dpr1.json",
+    "sha256": "0c815c98fd6c183e6a4a7deb69bcc0b195ba873c92049e2ec8f9cd176edfe006"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-light-1024x900-dpr1.png",
+    "sha256": "c2c76386efa088f5ad3d1a2b66f00cfca149e301abfe7d007155bee1ecec2e58"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-light-1440x900-dpr1.json",
+    "sha256": "87196c286cd08ed8bc81bf2df6988e877df5d4bf2c83fed7e17f2d9395d256d3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-light-320x844-dpr1.json",
+    "sha256": "118be276e3587be3236460e37df00819ad3df0a1693b9df8c9d29a01bc1641c4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/journey-replay-light-390x844-dpr1.json",
+    "sha256": "6b55204fabe2d8cc4209a9018c439b3a1289edbef2a3f1683b87093a42093df9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/mobile-menu-dark-320x844-dpr1.json",
+    "sha256": "254203d45f3ea74cebebddf9e1f547a71650e10a26c3e4267ab3f9a710b08b87"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/mobile-menu-dark-390x844-dpr1.json",
+    "sha256": "54a2ad00fa0043582fbd8d1b5084ce969880c2a3f12209788ab79bc414e2f135"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/mobile-menu-light-320x844-dpr1.json",
+    "sha256": "407370743e6ee6f1ac831681348e0ff1a823f6f3c79235395ff30cb84d628efb"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/mobile-menu-light-390x844-dpr1.json",
+    "sha256": "173983b8dcbfde6286ca22228215ac9b36f8213c92c4132eb1f4e582c50b1ea9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-demo-dark-1440x813-css720x406-dpr2.json",
+    "sha256": "d92458255455663f35403047fed260445a899ea6a84703e76fb757142344fb73"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-demo-light-1440x813-css720x406-dpr2.json",
+    "sha256": "940835d8842a24ee3b7365a8b39e71f84cf584b8d9dbf0d30c62a93605aa0c54"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-draft-dark-1440x813-css720x406-dpr2.json",
+    "sha256": "cc5ee59562fa7e238f4da6ef03568c5c50f4827e3f3cdb1171dbe107fff230b6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-draft-light-1440x813-css720x406-dpr2.json",
+    "sha256": "19184fe7d3dd8e79308046f6538867e74759ca38fb890260dbdf00cd1ecd04b8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-home-dark-1440x813-css720x406-dpr2.json",
+    "sha256": "0a2d094cc7ff29737167b0fcb8605819e6d14bcfd931d34fea432999fd7420a9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-home-dark-1440x813-css720x406-dpr2.png",
+    "sha256": "355c461781674e72950602f0739399d8ca5c674c01799a0b3d1d8e06e4600469"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-home-light-1440x813-css720x406-dpr2.json",
+    "sha256": "d7ad52122503edcedec391fc8308e6a823b1582f746e79ead37039f50fe52302"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-mission-dark-1440x813-css720x406-dpr2.json",
+    "sha256": "e64ac721918f4161194cbcf02be5d919b05930eae9c416732f34f42ac8082e19"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-mission-light-1440x813-css720x406-dpr2.json",
+    "sha256": "05195113e3931cdedf3257de3cce7523417b51186f868779788b5ed38ee131e0"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-workspace-dark-1440x813-css720x406-dpr2.json",
+    "sha256": "418f3f868260a0e3b8ca179cc8bac454f168cf7046e12dc30a7f7b2d37134576"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-1440-workspace-light-1440x813-css720x406-dpr2.json",
+    "sha256": "425b4e5417d4d92a96c5aab914e20f12fba12121c29b044f499929c2e98af7f8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-demo-dark-2048x813-css1024x406-dpr2.json",
+    "sha256": "c461da24d50a32002e98c7a92d7e995251c9ed293413406bc349d287fb6faec6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-demo-light-2048x813-css1024x406-dpr2.json",
+    "sha256": "e803bfd08558ec8d988ae61837d1369a11750756ba06af3c08807877096458fa"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-draft-dark-2048x813-css1024x406-dpr2.json",
+    "sha256": "3f111325c5f8fb2beb16815cebee26421576ddb7c71d13e6d67c9a85fee40248"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-draft-light-2048x813-css1024x406-dpr2.json",
+    "sha256": "bbf60933828b352d901aab14cf5f41c7c9fd726568de37b9981b41b0592c437d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-home-dark-2048x813-css1024x406-dpr2.json",
+    "sha256": "082caefe06d347413aa432dfcb28e089199a3187b40a0fe308a2adcc9d3fd849"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-home-light-2048x813-css1024x406-dpr2.json",
+    "sha256": "9c40d49341f61bc1e02aad5a01e2668346438be376927a076da6847607afcfe5"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-mission-dark-2048x813-css1024x406-dpr2.json",
+    "sha256": "507bcb36368d583df87863c702ab50e6c95edf7e1fcce8336267ccd9fe8cb0a6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-mission-light-2048x813-css1024x406-dpr2.json",
+    "sha256": "a5acdb76a05619f65299c64d362cb7a06f94268203dffce2a13d6efa87fe7832"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-mission-light-2048x813-css1024x406-dpr2.png",
+    "sha256": "4b7ec9f403a750bb3543491d12fb82325b46677417710c03af1832f2540c52d4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-workspace-dark-2048x813-css1024x406-dpr2.json",
+    "sha256": "57d1eab5c77656d3079fbf818c345e1733cbce4b40b5a5d0e16e35116b582278"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/native-200-2048-workspace-light-2048x813-css1024x406-dpr2.json",
+    "sha256": "6e5d2676f19efbaafd532c941525c301837655c4b1f73dfa56e3b6742abf369d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-dark-1440x900-dpr1.json",
+    "sha256": "f5a325d7d8648d62d079a7d12d6d74849e1b83915f8fd83808fea6ff59d646c9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-dark-1440x900-dpr1.png",
+    "sha256": "daaa0124f1e4be2f57d05c98e8847ff2c5e2951cd018cf840a84c034ae869a8c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-dark-390x844-dpr1.json",
+    "sha256": "e0394cea2cc9f7ccad5c4dbf7fa3ba1781a221477a73566b699db8ec20949e7f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-dark-390x844-dpr1.png",
+    "sha256": "79d0935c8559ea716cbd81ef078e435c92bdcc09275aa30da7bb75362edddcd3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-light-1440x900-dpr1.json",
+    "sha256": "c9f70de4441594fc5b3f980acb888e6b1ebb50873aed2a362b78cc8146209ed4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-light-1440x900-dpr1.png",
+    "sha256": "f5439c8d709d5ec67b33824efbe1cd78672854041b4ace085ae7f74d8a5da1aa"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-light-390x844-dpr1.json",
+    "sha256": "7c6e5378df115f6035d35abe63c52fa86de482a8796834a69939f18d19c96e68"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/no-webgl-light-390x844-dpr1.png",
+    "sha256": "ebdaf7c0da586a263439524cf78ef40f5eb895a6b9c64c25457d1310440d8714"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-dark-1024x900-dpr1.json",
+    "sha256": "5ec3a3fde94a20de6d7ceb5f21f4b7ff52f0321dadede0d1e996571ee31946b9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-dark-1440x900-dpr1.json",
+    "sha256": "f56de892d8238364f1a2d1def07e2ba3d1b5d21739cac802d77a90fd8afd526c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-dark-320x844-dpr1.json",
+    "sha256": "127fa2ef8e68d9f573bbcdb77b87da9758d96801dd028f0d8c71c205da0eb82d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-dark-390x844-dpr1.json",
+    "sha256": "7296dbe1dfa6ce8d738e1929bd722d74647d21ee69009bea3eba79d6ed44aacb"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-light-1024x900-dpr1.json",
+    "sha256": "1733679c92a8e730f2397c57966122558ed97805a9f034402cf0b5fab0664e4a"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-light-1440x900-dpr1.json",
+    "sha256": "a7106c98aaf01c1779598c68aef1549f4e123e7bbdbf3a61c7641a0ac670860b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-light-320x844-dpr1.json",
+    "sha256": "71919020445b820b36d0f789fdd611a9e85bb05c5787d9052e6067646efc4123"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-demo-light-390x844-dpr1.json",
+    "sha256": "8e0bd799f0f51fe92fe9770419c64c12fcfbd9330b6e658f0c91a039eff3ffb4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-dark-1024x900-dpr1.json",
+    "sha256": "1286033f9c4386e4f2e01b3b9d496009745a5fa5142d60a9ab014c220f197621"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-dark-1440x900-dpr1.json",
+    "sha256": "a9328463e5eaef1303c7186ca0281f8571cebf68c00566efb804ade53bfbb6e0"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-dark-320x844-dpr1.json",
+    "sha256": "eea61dd0d2e2c265c325db1ef268a76e5480cf663cca82216b1a4ec73f8adeab"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-dark-390x844-dpr1.json",
+    "sha256": "880538283c85c56ecdf17cafe2b9d38d6bb61c0f56e02729d5994b97ecb69594"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-light-1024x900-dpr1.json",
+    "sha256": "1c84dfa5d2bcd0052373d528bcddee1ca590ed35b2d4c95297cdbdfa382df5d7"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-light-1440x900-dpr1.json",
+    "sha256": "cc8ea7c0f581aa8fa4660e3aba7a04a564e356f1c3efcb3ea7ec53618705a52b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-light-320x844-dpr1.json",
+    "sha256": "877349e40b7ec4c7ce0768744d8629fa43e6ebb48eaf5a50182bd99c5a59b97c"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-draft-light-390x844-dpr1.json",
+    "sha256": "ea3a6663ba8d9377d1e956d1d56f138f02300f53a64aaf88d70adb0eb72a7ff8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-dark-1024x900-dpr1.json",
+    "sha256": "dbf45795ecac67b8bf99f70b21181c818e973a6cffa19f87502869b1d93e9099"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-dark-1440x900-dpr1.json",
+    "sha256": "51b76461d25029e76e1a7bbc718025d94e12050e35471177f198e1f980d2a75f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-dark-320x844-dpr1.json",
+    "sha256": "bddcf0e2b3ec3d0ca722b2eb463cddcc83b2c7aa98bea46e5a920850b646c733"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-dark-390x844-dpr1.json",
+    "sha256": "4d8654623265bab2dba1d64d11de570518762083acb99e6447fd3ae04fcb76d6"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-light-1024x900-dpr1.json",
+    "sha256": "3213f1dcdd02583355b4176e675d568889cc554617abaf76704c8aca922e72a3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-light-1440x900-dpr1.json",
+    "sha256": "6eea066df5d5dd05c3604484200ccc0bd8aea9e603e24caf1f9d09cd714ea854"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-light-320x844-dpr1.json",
+    "sha256": "f090d68f1251fe8fe72997dd3fb667c200cf7d8c6aa20f6a79e0178b771b3aa4"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-home-light-390x844-dpr1.json",
+    "sha256": "08afeb547f172adf9e70a02294bac3d68d8195f1b749a2982d192e096b5736e3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-dark-1024x900-dpr1.json",
+    "sha256": "353d390847cd38e1bee61e476af8e784ba4eada86ed4e5249fb65ed0ab768485"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-dark-1440x900-dpr1.json",
+    "sha256": "f2a7518834163d91c042951a5cfca3949cbea919a2feb7c8058c960d90b5009e"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-dark-320x844-dpr1.json",
+    "sha256": "e16a45a527e5e0b1094e7635c168e395d0a6f1361a165fc0fd8ee92fed4a97f0"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-dark-390x844-dpr1.json",
+    "sha256": "0c10af12a18d324cb9998d425a96d3524e0d6557ade2c9ab57a3096ca006f1c9"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-light-1024x900-dpr1.json",
+    "sha256": "3db097d71657cd1d47c73707a8386a0f61518be1926c7c5626e9ebde823c25d1"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-light-1440x900-dpr1.json",
+    "sha256": "35023d1c6b4569d8f99952d02ee37565c203ddb2dd20712a19ac5351d6535736"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-light-320x844-dpr1.json",
+    "sha256": "395473aca8daf5061ade1b7e67845a5ad3183000e0b19f925a712fe8793bcf6d"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-mission-light-390x844-dpr1.json",
+    "sha256": "a335cd9e71eaad1e0bcec6c620a11ff2169943d89d12858d8144d83fe997397f"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-dark-1024x900-dpr1.json",
+    "sha256": "57003f44bae181919b27a96ce74a9eb2e536fa65f7e8d3011c11dc1a3a958731"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-dark-1440x900-dpr1.json",
+    "sha256": "737e05520193837d459227cab685565814417ac16f6c42a5fb05b005e74acb53"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-dark-320x844-dpr1.json",
+    "sha256": "e00ad65bd8ab445ab2fed6edc32c7b81be5317676fed153712cff7c2f438ead8"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-dark-390x844-dpr1.json",
+    "sha256": "aaef37ccab6dcc4853dbc05925554e3a541d7278f994b6e133b709bea09cb513"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-light-1024x900-dpr1.json",
+    "sha256": "0f4c9e784ffd69d9fee99aa5894b7cdf80de6e7a149c450cb86a30def4874aeb"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-light-1440x900-dpr1.json",
+    "sha256": "74d86e06bd87fd40780eaf024703d0f4eba987af44575d3c4b6afa76a7556fbe"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-light-320x844-dpr1.json",
+    "sha256": "438f2cccc17336def87e7c7e684059e28e7954cb5b846b8dc25502e351a8f3f3"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/screenshots/shell-workspace-light-390x844-dpr1.json",
+    "sha256": "6a9685f329f62d2e998060d105d4e55b91061f2d69f1f728d976b4f221a39e83"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/strict-capture-inventory.json",
+    "sha256": "845985ded0fc82613cef6e2989315dd9d70bea1b96e5113275cace765712fa7b"
+  },
+  {
+    "path": "docs/evidence/integration16/browser/validation.json",
+    "sha256": "38aaeb8fd2224a31bb78282c8412250be75a7c628402766f3afb58f6e365889e"
+  },
+  {
+    "path": "apps/web/tests/cross-system/boundaries.test.tsx",
+    "sha256": "358ec87aa18e28ac866a01053d8061baf99af306d01b117a1a9fa61a3a9ec0bd"
+  }
+]
