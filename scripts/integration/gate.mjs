@@ -55,6 +55,44 @@ if ((report.dirty || report.targetDirty) && !args.includes("--allow-dirty"))
     "Commit changes first, or explicitly use --allow-dirty for a diagnostic",
   );
 mkdirSync(out);
+const installLog = openSync(join(out, "frozen-install.txt"), "w");
+let install;
+try {
+  install = spawnSync("pnpm", ["install", "--frozen-lockfile"], {
+    cwd: root,
+    stdio: ["ignore", installLog, installLog],
+    timeout: 300000,
+  });
+} finally {
+  closeSync(installLog);
+}
+report.checks.push({
+  id: "frozen-install",
+  status: install.status === 0 ? "PASS" : "FAIL",
+  exitCode: install.status,
+  command: ["pnpm", "install", "--frozen-lockfile"],
+  log: "frozen-install.txt",
+  error: install.error?.message,
+});
+if (install.status !== 0) {
+  for (const id of [
+    "existing-boundaries",
+    "source-backed-verifier-metrics",
+    "source-to-capture-clock-mapping",
+    "chain-client",
+    "recovery",
+    "handoff",
+    "orchestrator",
+  ])
+    report.checks.push({
+      id,
+      status: "NOT RUN",
+      detail:
+        "Frozen dependency installation failed; existing node_modules cannot certify this target",
+    });
+  finish();
+  process.exit(process.exitCode);
+}
 function run(id, test, selected) {
   const command = [
     "--filter",
@@ -173,28 +211,35 @@ for (const [id, path] of Object.entries(modules)) {
   }
   run(id, undefined, id);
 }
-report.status = report.checks.some((c) => c.status === "FAIL")
-  ? "FAIL"
-  : report.checks.some((c) => c.status !== "PASS")
-    ? "BLOCKED"
-    : "PASS";
-report.finishedAt = new Date().toISOString();
-writeFileSync(join(out, "report.json"), JSON.stringify(report, null, 2) + "\n");
-console.log(
-  JSON.stringify(
-    {
-      status: report.status,
-      sourceSha: report.sourceSha,
-      targetSha: report.targetSha,
-      checks: report.checks.map(({ id, status, stats }) => ({
-        id,
-        status,
-        stats,
-      })),
-    },
-    null,
-    2,
-  ),
-);
-process.exitCode =
-  report.status === "PASS" ? 0 : report.status === "FAIL" ? 1 : 2;
+finish();
+
+function finish() {
+  report.status = report.checks.some((c) => c.status === "FAIL")
+    ? "FAIL"
+    : report.checks.some((c) => c.status !== "PASS")
+      ? "BLOCKED"
+      : "PASS";
+  report.finishedAt = new Date().toISOString();
+  writeFileSync(
+    join(out, "report.json"),
+    JSON.stringify(report, null, 2) + "\n",
+  );
+  console.log(
+    JSON.stringify(
+      {
+        status: report.status,
+        sourceSha: report.sourceSha,
+        targetSha: report.targetSha,
+        checks: report.checks.map(({ id, status, stats }) => ({
+          id,
+          status,
+          stats,
+        })),
+      },
+      null,
+      2,
+    ),
+  );
+  process.exitCode =
+    report.status === "PASS" ? 0 : report.status === "FAIL" ? 1 : 2;
+}
