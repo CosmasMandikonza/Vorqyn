@@ -35,7 +35,7 @@ for (const theme of ["light", "dark"])
         page,
       }) => {
         await page.addInitScript(
-          (value) => localStorage.setItem("theme", value),
+          (value) => localStorage.setItem("vorqyn-theme", value),
           theme,
         );
         await page.goto("/");
