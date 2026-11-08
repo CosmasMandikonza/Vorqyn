@@ -42,6 +42,20 @@ node scripts/integration/gate.mjs --component recovery \
 
 Use `chain-client` or `handoff` for those components. The target must be a Git checkout. Reports label this as candidate evidence, not merged-main integration. Other component checks remain NOT RUN and overall status cannot certify the full flow. The harness resolves shared contracts from this QA checkout; record both SHAs and do not equate this with the target's own full workspace CI or local-validator tests. Inspect target code/dependency changes before running. No target files are modified by the runner.
 
+`--component evidence-adapter` additionally runs the actual owner capture/clock/calibration exports: real sonar fidelity and deterministic mapping, unavailable optical calibration, partial-domain rejection, and rejection of records whose measurement/pose/mission/seed/ordinal bytes are absent from the supplied accepted journal. The partial calibration is deliberately artificial QA input; it is never approved physical evidence. Missing merged adapters remain BLOCKED. A read-only candidate result cannot clear merged-main metric/clock blockers.
+
+To execute the owner's own component tests without copying their implementation, after the harness frozen install:
+
+```bash
+INTEGRATION_TARGET_ROOT=/absolute/path/to/reviewed-pr-checkout \
+INTEGRATION_OWNER_SUITE=mission-orchestration \
+  pnpm --filter @vorqyn/web exec vitest run \
+  --config ../../scripts/integration/owner-vitest.config.mts \
+  --reporter=json --outputFile=/absolute/new/output.json
+```
+
+Use `evidence-adapter` for that owner suite. Record both clean checkout SHAs and the exact command with the machine result. The config executes the actual target test files with this installed harness's Vitest and shared contracts, in Node. This is a compatibility/component diagnostic, not that target's frozen installation/full workspace CI. Contract fixture signatures remain fixtures; local file replay is not authenticated ingestion, cloud durability or a live chain workflow. No orchestration driver is synthesized by this config. Require positive test counts and zero failures/skips/todos before describing these component checks as PASS.
+
 ## Browser regression
 
 After a production build, run the existing strict suite plus the added full-row tests:

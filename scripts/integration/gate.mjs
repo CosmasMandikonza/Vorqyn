@@ -33,7 +33,13 @@ const target = resolve(value("--target-root") ?? root);
 const component = value("--component");
 if (
   component &&
-  !["chain-client", "recovery", "handoff", "orchestrator"].includes(component)
+  ![
+    "chain-client",
+    "recovery",
+    "handoff",
+    "orchestrator",
+    "evidence-adapter",
+  ].includes(component)
 )
   throw new Error("Unknown component");
 const report = {
@@ -93,6 +99,7 @@ if (install.status !== 0) {
     "recovery",
     "handoff",
     "orchestrator",
+    "evidence-adapter",
   ])
     report.checks.push({
       id,
@@ -220,6 +227,7 @@ const modules = {
   recovery: "services/mission/recovery/src/index.ts",
   handoff: "apps/web/components/mission-world/economic-handoff/boundary.ts",
   orchestrator: "services/mission/orchestration",
+  "evidence-adapter": "services/mission/evidence-adapter/index.ts",
 };
 for (const [id, path] of Object.entries(modules)) {
   if (component && id !== component) {
