@@ -36,13 +36,19 @@ describe("VQ-02 entry routes", () => {
       screen.queryByRole("button", { name: /connect wallet|start mission/i }),
     ).not.toBeInTheDocument();
   });
-  it("shows a truthful empty workspace and a readable builder outline", async () => {
+  it("links to the working local builder without claiming an authenticated company mission", async () => {
     render(<Workspace />);
     expect(
-      screen.getByRole("heading", { name: "Your first mission starts here." }),
+      screen.getByRole("heading", { name: "Plan your first mission." }),
     ).toBeVisible();
     expect(
-      screen.getByText(/No organization or mission has been created/),
+      screen.getByText(/The five-step mission builder is available now/),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Open mission builder" }),
+    ).toHaveAttribute("href", "/workspace/create");
+    expect(
+      screen.getByText(/No company account, funding or mission launch/),
     ).toBeVisible();
     await userEvent.click(screen.getByText("Preview mission structure"));
     expect(screen.getByText("Evidence & budget")).toBeVisible();
