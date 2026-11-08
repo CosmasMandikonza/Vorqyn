@@ -14,6 +14,19 @@
 | Upgrade authority | Deployer wallet (upgradeable during hackathon) |
 | Build-time admin | `VORQYN_REGISTRY_ADMIN` — **pending B1 designation** |
 
+## Implementation status (honest — what exists vs. what is planned)
+
+| Procedure | Status | What exists today |
+|---|---|---|
+| Local-validator E2E (all 9 instructions + financial assertions) | **EXECUTABLE** ✓ | `packages/chain-client/scripts/local-validator-e2e.test.ts` — gated (`E2E_VALIDATOR=1`), just verified against the NEW program ID |
+| Devnet registry bootstrap (Phase D) | **DOCUMENTED ONLY** — no script yet | The runbook below describes the procedure; an executable script must be written before Phase C execution |
+| Resumable mission-flow runner (Phase E) | **DOCUMENTED ONLY** — no script yet | The runbook below describes the design (state file + on-chain reconciliation); an executable script must be written before Phase C execution |
+| Deployment commands (Phase C) | **DOCUMENTED** — standard `solana program deploy` | No wrapper needed; the runbook lists the exact commands to run manually |
+
+These scripts are deliberately NOT in this PR — they are operational tooling
+that should be written and tested against the deployed devnet program, not
+committed blind. They land in Phase C/D.
+
 ## Prerequisites checklist (before Phase C)
 
 - [ ] This PR merged (config approved)
