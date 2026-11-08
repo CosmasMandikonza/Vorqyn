@@ -97,6 +97,7 @@ for (const theme of ["light", "dark"])
                 dpr: devicePixelRatio,
               },
               documentWidth: document.documentElement.scrollWidth,
+              storedThemePreference: localStorage.getItem("vorqyn-theme"),
               group: camera.getBoundingClientRect().toJSON(),
               groupScrollLeft: camera.scrollLeft,
               frame: canvas.getBoundingClientRect().toJSON(),
@@ -109,6 +110,7 @@ for (const theme of ["light", "dark"])
             };
           });
           expect(measured.viewport).toEqual({ ...viewport, dpr: 1 });
+          expect(measured.storedThemePreference).toBe(theme);
           await expect(page.locator("html")).toHaveClass(new RegExp(theme));
           const name = `full-row-${state}-${theme}-${width}x${viewport.height}`;
           const directory = resolve(out, "integration-camera");
