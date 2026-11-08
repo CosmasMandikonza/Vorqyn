@@ -145,6 +145,35 @@ describe("evidence adapter calibration — deterministic interpolation", () => {
   });
 });
 
+describe("evidence adapter calibration — anchor-span domain (review P1-A)", () => {
+  const narrow: VisibilityCalibration = {
+    ...validCalibration,
+    calibrationId: "cal-narrow-span-1",
+    points: [
+      { quality01: 0.3, visibilityM: 1.02 },
+      { quality01: 0.7, visibilityM: 2.38 },
+    ],
+  };
+
+  it("fails closed for readings BELOW the first anchor (no endpoint clamping)", () => {
+    const below = interpolateVisibilityM(narrow, 0.1);
+    expect(below.ok).toBe(false);
+    if (!below.ok) expect(below.error.code).toBe("calibration_domain_exceeded");
+  });
+
+  it("fails closed for readings ABOVE the last anchor (no endpoint clamping)", () => {
+    const above = interpolateVisibilityM(narrow, 0.9);
+    expect(above.ok).toBe(false);
+    if (!above.ok) expect(above.error.code).toBe("calibration_domain_exceeded");
+  });
+
+  it("preserves valid endpoint and interior interpolation (inclusive anchor span)", () => {
+    expect(interpolateVisibilityM(narrow, 0.3)).toEqual({ ok: true, value: 1.02 });
+    expect(interpolateVisibilityM(narrow, 0.5)).toEqual({ ok: true, value: 1.7 });
+    expect(interpolateVisibilityM(narrow, 0.7)).toEqual({ ok: true, value: 2.38 });
+  });
+});
+
 describe("evidence adapter calibration — harness fixture honesty", () => {
   it("the TEST-ONLY fixture calibration stays clearly labelled as such", () => {
     expect(TEST_CALIBRATION.sourceRef).toMatch(/TEST-ONLY/);

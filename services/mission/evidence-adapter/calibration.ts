@@ -147,22 +147,31 @@ const round6 = (value: number): number => Math.round(value * 1e6) / 1e6;
 
 /**
  * Deterministic piecewise-linear interpolation of visibility metres at a
- * unitless quality01 value. Outside the documented anchor domain this
- * FAILS CLOSED (calibration_domain_exceeded) — no clamping, no
- * extrapolation, no invented numbers.
+ * unitless quality01 value. The calibrated domain is the calibration's
+ * documented ANCHOR SPAN [first.quality01, last.quality01] — readings
+ * outside it FAIL CLOSED (calibration_domain_exceeded): no endpoint
+ * clamping, no extrapolation, no invented numbers. Anchors themselves are
+ * validated to lie in [0,1], so the span also covers the kernel's unitless
+ * domain bounds.
  */
 export function interpolateVisibilityM(calibration: VisibilityCalibration, quality01: number): EvidenceAdapterResult<number> {
-  if (!isFiniteNumber(quality01) || quality01 < 0 || quality01 > 1) {
-    return adapterErr(
-      "calibration_domain_exceeded",
-      `quality01 ${String(quality01)} is outside the calibration's documented [0,1] domain — refusing to extrapolate`,
-    );
+  if (!isFiniteNumber(quality01)) {
+    return adapterErr("calibration_domain_exceeded", `quality01 ${String(quality01)} must be a finite number`);
   }
   const { points } = calibration;
   const first = points[0];
   const last = points[points.length - 1];
   if (first === undefined || last === undefined) {
     return adapterErr("validation_error", "calibration has no anchors");
+  }
+  // Review P1-A: the domain boundary is the anchor span. Clamping a 0.1
+  // reading to the 0.3 anchor's metres (or a 0.9 to the 0.7 anchor) would
+  // present uncalibrated values as measurements.
+  if (quality01 < first.quality01 || quality01 > last.quality01) {
+    return adapterErr(
+      "calibration_domain_exceeded",
+      `quality01 ${String(quality01)} is outside the calibration's documented anchor span [${first.quality01}, ${last.quality01}] — refusing to clamp or extrapolate`,
+    );
   }
   if (quality01 <= first.quality01) return adapterOk(round6(first.visibilityM));
   if (quality01 >= last.quality01) return adapterOk(round6(last.visibilityM));
