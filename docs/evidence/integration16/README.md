@@ -1,3 +1,5 @@
+> **CTO follow-up:** see [current acceptance status](ACCEPTANCE_STATUS.md). The following packet is the historical first checkpoint. Its owner-target diagnostics must not be treated as latest-source results.
+
 # Issue #16 — cross-system development integration gate
 
 This is a bounded development QA slice. **Latest integrated gate FAILS frozen installation; the connected mission recovery flow remains BLOCKED.** Passing component/negative tests do not establish accepted replacement work, authenticated event ingestion, owner authorization or payment. No deployment readiness assessment, chain call, invented receipt or product-completion claim is made. Stop for independent review; do not merge or close #14/#15/#16.
