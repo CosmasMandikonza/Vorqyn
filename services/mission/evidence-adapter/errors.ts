@@ -28,7 +28,9 @@ export type EvidenceAdapterErrorCode =
   | "no_fresh_observations"
   | "sensor_modality_mismatch"
   | "sensor_metric_unavailable"
-  | "decision_clock_domain_mismatch";
+  | "decision_clock_domain_mismatch"
+  | "record_not_in_journal"
+  | "record_content_mismatch";
 
 export interface EvidenceAdapterError {
   readonly code: EvidenceAdapterErrorCode;

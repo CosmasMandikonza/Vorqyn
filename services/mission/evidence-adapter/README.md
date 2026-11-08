@@ -48,7 +48,10 @@ evidence is *unavailable by construction* and the honest negative path is
 enforced. When the team supplies a real calibration it must be an explicit
 `VisibilityCalibration` value: `calibrationId`, `version`, non-empty
 `sourceRef`, non-empty `derivation`, `inputKind: "unitless_quality01"`, ≥ 2
-monotone anchors. The adapter validates structure/determinism only — it
+monotone anchors. The calibrated domain is the calibration's documented
+ANCHOR SPAN: readings below the first or above the last anchor fail closed
+with `calibration_domain_exceeded` — no endpoint clamping, no extrapolation.
+The adapter validates structure/determinism only — it
 cannot judge physical truth — and records the descriptor **verbatim in every
 capture it produced** (`capture.calibration`) for CTO review. The tests use a
 clearly-labelled TEST-ONLY fixture calibration to prove the machinery; it is
@@ -86,6 +89,13 @@ introducing any chain time (none exists in scope).
 
 ## 3. Provenance guarantees
 
+- **Accepted-record integrity:** capture records must BE the journal's
+  accepted records — membership by `recordOrdinal` plus canonical-JSON byte
+  agreement with the accepted record (missionId, seed, `recordOrdinal` and
+  the frozen snapshot's observation bytes). A cloned record with altered
+  sensor quality, pose, identity or provenance is rejected
+  (`record_not_in_journal` / `record_content_mismatch`); an exact rehydrated
+  copy (JSON round-trip) still passes — content, not reference, identity.
 - `sourceKind` is always the kernel's own `SYNTHETIC_SIM`, re-validated from
   snapshot provenance (`provenance_mismatch` otherwise). `prepareSubmission`
   takes the origin from the capture — the caller cannot choose it, and the

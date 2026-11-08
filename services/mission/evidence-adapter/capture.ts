@@ -33,6 +33,7 @@
 
 import {
   TELEMETRY_UNITS,
+  canonicalJson,
   makeTelemetrySample,
   type TelemetrySample,
 } from "../../../packages/contracts/src/index";
@@ -184,12 +185,57 @@ function validateCaptureRecords(
   if (records.length === 0) {
     return { ok: false, error: { code: "no_records", message: "capture needs at least one accepted journal record" } };
   }
+  // Review P1-B — accepted-record integrity: membership map of the
+  // journal's ACTUAL accepted records, keyed by recordOrdinal.
+  const acceptedByOrdinal = new Map<number, ObservationJournalRecord>();
+  for (const accepted of journal.records) {
+    acceptedByOrdinal.set(accepted.recordOrdinal, accepted);
+  }
   const validated: { record: ObservationJournalRecord; snapshot: DemoSnapshot }[] = [];
   let lastSequence: number | null = null;
   let lastSimulatorTimeMs: number | null = null;
   for (const record of records) {
     if (!isRecord(record) || record.journalSchema !== GUEST_JOURNAL_SCHEMA) {
       return { ok: false, error: { code: "validation_error", message: "capture records must be guest observation journal records" } };
+    }
+    // Review P1-B: the provided record must BE one of the journal's
+    // accepted records — same membership (by recordOrdinal) and
+    // byte-identical content (canonical JSON over the whole record,
+    // including the frozen snapshot's observation bytes). A cloned record
+    // with altered quality, pose, identity or provenance is rejected here,
+    // before it can masquerade as source evidence. An exact rehydrated
+    // copy (JSON round-trip) still passes — content, not reference,
+    // identity.
+    if (typeof record.recordOrdinal !== "number" || !Number.isSafeInteger(record.recordOrdinal) || record.recordOrdinal < 0) {
+      return { ok: false, error: { code: "validation_error", message: "capture records must be journal records carrying a valid recordOrdinal" } };
+    }
+    const accepted = acceptedByOrdinal.get(record.recordOrdinal);
+    if (accepted === undefined) {
+      return {
+        ok: false,
+        error: {
+          code: "record_not_in_journal",
+          message: `no accepted journal record has recordOrdinal ${record.recordOrdinal} — captures can only be built from the journal's own accepted records`,
+        },
+      };
+    }
+    if (record.missionId !== journal.missionId || record.seed !== journal.seed) {
+      return {
+        ok: false,
+        error: {
+          code: "record_content_mismatch",
+          message: `record ${record.recordOrdinal} identity (missionId/seed) disagrees with the accepted journal record`,
+        },
+      };
+    }
+    if (canonicalJson(record) !== canonicalJson(accepted)) {
+      return {
+        ok: false,
+        error: {
+          code: "record_content_mismatch",
+          message: `record ${record.recordOrdinal} bytes differ from the accepted journal record — altered observations (sensor quality, pose, provenance, ...) are never treated as evidence`,
+        },
+      };
     }
     const snapshot = record.snapshot;
     if (!isRecord(snapshot) || !isRecord(snapshot.provenance)) {

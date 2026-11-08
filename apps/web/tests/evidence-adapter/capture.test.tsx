@@ -180,6 +180,99 @@ describe("evidence capture — optical visibility requires a documented calibrat
   });
 });
 
+describe("evidence capture — accepted-record integrity (review P1-B)", () => {
+  it("rejects a cloned record whose sonar quality was tampered", () => {
+    const { snapshots } = runKernel((k) => {
+      k.step(3);
+    });
+    const journal = journalFromSnapshots(MISSION_ID, snapshots);
+    const tampered = structuredClone(journal.records) as Array<typeof journal.records[number]>;
+    const first = tampered[0];
+    expect(first).toBeDefined();
+    if (first === undefined) return;
+    const sonar = first.snapshot.robots.find((robot) => robot.robotId === "rov-01")?.sensors.find((sensor) => sensor.kind === "sonar");
+    expect(sonar?.measured).not.toBeNull();
+    if (sonar === undefined || sonar.measured === null) return;
+    (sonar.measured as { quality01: number }).quality01 = 0.99;
+    const capture = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: tampered });
+    expect(capture.ok).toBe(false);
+    if (capture.ok) return;
+    expect(capture.error.code).toBe("record_content_mismatch");
+  });
+
+  it("rejects a cloned record whose pose was tampered", () => {
+    const { snapshots } = runKernel((k) => {
+      k.step(3);
+    });
+    const journal = journalFromSnapshots(MISSION_ID, snapshots);
+    const tampered = structuredClone(journal.records) as Array<typeof journal.records[number]>;
+    const first = tampered[0];
+    expect(first).toBeDefined();
+    if (first === undefined) return;
+    const drone = first.snapshot.robots.find((robot) => robot.robotId === "drone-01");
+    expect(drone).toBeDefined();
+    if (drone === undefined) return;
+    drone.pose.x += 25;
+    const capture = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: tampered });
+    expect(capture.ok).toBe(false);
+    if (capture.ok) return;
+    expect(capture.error.code).toBe("record_content_mismatch");
+  });
+
+  it("rejects records that are not members of the journal (foreign recordOrdinal)", () => {
+    const { snapshots } = runKernel((k) => {
+      k.step(3);
+    });
+    const journal = journalFromSnapshots(MISSION_ID, snapshots);
+    const foreign = structuredClone(journal.records) as Array<typeof journal.records[number]>;
+    const first = foreign[0];
+    expect(first).toBeDefined();
+    if (first === undefined) return;
+    (first as { recordOrdinal: number }).recordOrdinal = 999;
+    const capture = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: foreign });
+    expect(capture.ok).toBe(false);
+    if (capture.ok) return;
+    expect(capture.error.code).toBe("record_not_in_journal");
+  });
+
+  it("rejects a record whose missionId or seed disagrees with the journal", () => {
+    const { snapshots } = runKernel((k) => {
+      k.step(3);
+    });
+    const journal = journalFromSnapshots(MISSION_ID, snapshots);
+    const relabeled = structuredClone(journal.records) as Array<typeof journal.records[number]>;
+    const first = relabeled[0];
+    expect(first).toBeDefined();
+    if (first === undefined) return;
+    (first as { missionId: string }).missionId = "harbor-002";
+    const missionMismatch = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: relabeled });
+    expect(missionMismatch.ok).toBe(false);
+    if (!missionMismatch.ok) expect(missionMismatch.error.code).toBe("record_content_mismatch");
+
+    const reseeded = structuredClone(journal.records) as Array<typeof journal.records[number]>;
+    const firstReseeded = reseeded[0];
+    if (firstReseeded === undefined) return;
+    (firstReseeded as { seed: number }).seed = journal.seed + 1;
+    const seedMismatch = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: reseeded });
+    expect(seedMismatch.ok).toBe(false);
+    if (!seedMismatch.ok) expect(seedMismatch.error.code).toBe("record_content_mismatch");
+  });
+
+  it("accepts an exact rehydrated copy of accepted records (JSON round-trip)", () => {
+    const { snapshots } = runKernel((k) => {
+      k.step(3);
+    });
+    const journal = journalFromSnapshots(MISSION_ID, snapshots);
+    const rehydrated = JSON.parse(JSON.stringify(journal.records));
+    const fromRehydrated = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: rehydrated });
+    const fromJournal = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING });
+    expect(fromRehydrated.ok).toBe(true);
+    expect(fromJournal.ok).toBe(true);
+    if (!fromRehydrated.ok || !fromJournal.ok) return;
+    expect(fromRehydrated.value).toEqual(fromJournal.value);
+  });
+});
+
 describe("evidence capture — stream and record defenses", () => {
   it("rejects a clock mapping bound to a different stream", () => {
     const { snapshots } = runKernel((k) => {
@@ -222,7 +315,11 @@ describe("evidence capture — stream and record defenses", () => {
     const capture = buildEvidenceCapture({ journal, modality: "sonar", clockMapping: DEMO_MAPPING, records: tampered });
     expect(capture.ok).toBe(false);
     if (capture.ok) return;
-    expect(capture.error.code).toBe("provenance_mismatch");
+    // Layered defense: any altered byte (including provenance) is caught
+    // FIRST by accepted-record integrity (review P1-B); the provenance rule
+    // itself remains as defense-in-depth behind it (e.g. for rehydrated
+    // journal stores).
+    expect(capture.error.code).toBe("record_content_mismatch");
   });
 
   it("records paused snapshots as exclusions, never as evidence", () => {
