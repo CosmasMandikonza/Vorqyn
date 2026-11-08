@@ -15,5 +15,9 @@
     "pnpm": "10.34.5",
     "chromium": "156.0.8078.79"
   },
-  "logNormalization": "ANSI escape sequences and trailing whitespace removed; substantive output/results retained"
+  "logNormalization": "ANSI escape sequences and trailing whitespace removed; substantive output/results retained",
+  "integratedMainSha": "fe00763cd44bb854a7554f55ca0359a76e6a2b83",
+  "integratedMainCommit": "c14f67cadf060b09a470da14cfa0bae5db5f6c24",
+  "latestGateSourceSha": "997bf307ed50a66e4c6f58e447e04cea833747c4",
+  "latestGateStatus": "FAIL \u2014 broken frozen lockfile; all dependent checks NOT RUN"
 }
