@@ -1,0 +1,2 @@
+{"file":"narration-contingency.txt","status":"PASS","words":208,"estimatedSecondsAt120Wpm":104,"actualRecordingDuration":"NOT RUN — no recorded media produced"}
+{"file":"narration-integrated-synthetic.txt","status":"PASS","words":205,"estimatedSecondsAt120Wpm":102.5,"actualRecordingDuration":"NOT RUN — no recorded media produced"}

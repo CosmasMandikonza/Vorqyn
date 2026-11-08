@@ -1,0 +1,27 @@
+{
+  "schema": "vorqyn.container-build/1",
+  "status": "BLOCKED",
+  "sourceSha": "27496bf3316df584616d6f06dec977d1d2f1b4e3",
+  "workingTreeDirty": true,
+  "tag": "vorqyn-judge:27496bf3316d",
+  "publicDeployment": "BLOCKED — local image build is not public hosting",
+  "startedAt": "2026-11-08T00:34:34.076Z",
+  "phase": "build",
+  "command": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "build",
+    "--progress=plain",
+    "--file",
+    "scripts/release/deploy/Dockerfile",
+    "--build-arg",
+    "VORQYN_BUILD_SHA=27496bf3316df584616d6f06dec977d1d2f1b4e3",
+    "--tag",
+    "vorqyn-judge:27496bf3316d",
+    "--secret",
+    "id=proxy_ca,src=<session CA path>",
+    "."
+  ],
+  "reason": "Docker build exceeded available filesystem capacity (ENOSPC); no public deployment occurred",
+  "finishedAt": "2026-11-08T00:35:21.191Z"
+}

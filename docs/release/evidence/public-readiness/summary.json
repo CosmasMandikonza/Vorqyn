@@ -1,0 +1,68 @@
+{
+  "auditSource": {
+    "sha": "e1cb957d248f867aa014e008aaee07c50caca592",
+    "workingTreeDirty": false,
+    "testedTree": "committed HEAD only; uncommitted edits and ignored environment files are excluded"
+  },
+  "technicalStatus": "PASS",
+  "submissionStatus": "BLOCKED",
+  "publicDeployment": {
+    "status": "BLOCKED",
+    "url": null,
+    "deploymentSha": null,
+    "reason": "No existing deployment (founder confirmed); no compatible hosting credential available"
+  },
+  "browser": {
+    "original": {
+      "startTime": "2026-11-08T00:38:49.466Z",
+      "duration": 92857.214,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "integration": {
+      "startTime": "2026-11-08T00:40:23.767Z",
+      "duration": 6087.822,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "strict": {
+      "startTime": "2026-11-08T00:40:30.954Z",
+      "duration": 287007.445,
+      "expected": 26,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "localArtifactSmoke": {
+    "status": "PASS",
+    "checks": 9,
+    "scope": "LOCAL HARNESS ONLY \u2014 no public deployment verified",
+    "harnessSha": "cb0f2e68695ae4fce4b34f2c3aeeef9a0fc417b9",
+    "applicationSourceSha": "e1cb957d248f867aa014e008aaee07c50caca592"
+  },
+  "captureValidation": {
+    "original": {
+      "status": "PASS",
+      "expected": 46,
+      "passed": 46
+    },
+    "strict": {
+      "status": "PASS",
+      "expected": 126,
+      "passed": 126
+    }
+  },
+  "cameraCaptureAudit": {
+    "status": "FAIL",
+    "expected": 32,
+    "passed": 24,
+    "failed": 8,
+    "reason": "320px camera row clips FOLLOW or RESET after station changes in both themes; original 26-case suite did not assert the entire row after each station change"
+  },
+  "releaseQualityStatus": "FAIL"
+}

@@ -1,0 +1,41 @@
+[WebServer] (node:51005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:51017) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+
+Running 26 tests using 1 worker
+
+(node:51036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% light (historical 89px reproduction)
+[2/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% dark (historical 89px reproduction)
+[3/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1440x900
+[4/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1024x900
+[5/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+[6/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+[7/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1440x900
+[8/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1024x900
+[9/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+[10/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+[11/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 1440
+[12/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 2048
+[13/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 1440
+[14/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 2048
+[15/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1440x900
+[16/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+[17/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+[18/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+[19/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1440x900
+[20/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+[21/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+[22/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+[23/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 1440
+[24/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 390
+[25/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 1440
+[26/26] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 390
+  26 passed (4.8m)

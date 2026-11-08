@@ -1,0 +1,23 @@
+{
+  "runId": "39d9328a-747e-4d22-a960-569f69a9965c",
+  "layout": {
+    "viewport": 390,
+    "document": 390,
+    "offenders": []
+  },
+  "name": "landing-light-390x844",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 390,
+    "height": 844
+  },
+  "sha256": "4610a73fe67a205b0815dee6c721ec871e3ac104e3cfc971fd02609e6b8db483",
+  "url": "http://127.0.0.1:3110/",
+  "theme": "light",
+  "capturedAt": "2026-11-08T00:39:37.842Z"
+}

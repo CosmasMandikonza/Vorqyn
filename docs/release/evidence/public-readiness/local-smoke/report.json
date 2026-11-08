@@ -1,0 +1,139 @@
+{
+  "schema": "vorqyn.public-smoke/1",
+  "startedAt": "2026-11-08T00:51:49.952Z",
+  "status": "PASS",
+  "scope": "LOCAL HARNESS ONLY — no public deployment verified",
+  "checkoutSha": "cb0f2e68695ae4fce4b34f2c3aeeef9a0fc417b9",
+  "workingTreeDirty": false,
+  "origin": "http://127.0.0.1:3218",
+  "remoteDeploymentSha": null,
+  "publicHttpsSmoke": "NOT RUN — local validation cannot certify external access",
+  "provenance": "Retain the actual hosting build/deploy record separately; browser checks cannot attest the remote commit.",
+  "checks": [
+    {
+      "id": "route-home",
+      "status": "PASS",
+      "durationMs": 4979,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:3218/"
+      }
+    },
+    {
+      "id": "route-demo",
+      "status": "PASS",
+      "durationMs": 1742,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:3218/demo"
+      }
+    },
+    {
+      "id": "route-mission",
+      "status": "PASS",
+      "durationMs": 2061,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:3218/demo/mission"
+      }
+    },
+    {
+      "id": "route-draft",
+      "status": "PASS",
+      "durationMs": 2044,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:3218/workspace/create"
+      }
+    },
+    {
+      "id": "actual-api-and-server-limits",
+      "status": "PASS",
+      "durationMs": 264,
+      "detail": {
+        "sourceKind": "SYNTHETIC_SIM",
+        "matchedSimulatorTimeMs": 1000,
+        "optical": {
+          "control": 0.692125,
+          "faulted": 0.083055
+        },
+        "sonar": {
+          "control": 0.63932,
+          "faulted": 0.63932
+        },
+        "repeatedTraceIdentical": true,
+        "limits": [
+          {
+            "name": "101 operations",
+            "status": 400
+          },
+          {
+            "name": "13 steps per operation",
+            "status": 400
+          },
+          {
+            "name": "408 total steps",
+            "status": 400
+          }
+        ],
+        "body16385Bytes": 413,
+        "malformedJson": 400,
+        "getMethod": 405,
+        "maximumStepsAccepted": 400,
+        "maximumResponseBytes": 793246,
+        "perIpRateLimit": "NOT IMPLEMENTED by this route; trace bounds are not an incoming request quota"
+      }
+    },
+    {
+      "id": "source-bound-observation-trace-api",
+      "status": "PASS",
+      "durationMs": 89,
+      "detail": {
+        "schema": "vorqyn.guest-trace/response/1",
+        "sourceKind": "SYNTHETIC_SIM",
+        "clockDomains": {
+          "simulator": "kernel simulatorTimeMs (fixed 500ms steps, integer)",
+          "receipt": "fixture-epoch-base+ordinal (not UTC, not simulator time)",
+          "chain": null
+        },
+        "records": 2,
+        "repeatedTraceIdentical": true,
+        "pagingSequence": 2
+      }
+    },
+    {
+      "id": "real-browser-fault-replay-and-2d",
+      "status": "PASS",
+      "durationMs": 26833,
+      "detail": {
+        "actualPost": true,
+        "replayIdentical": true,
+        "worldDiveInterrupted": true,
+        "reducedMotionHidesDive": true,
+        "ghostPathsAreRecordedOnly": true,
+        "sourceKind": "SYNTHETIC_SIM"
+      }
+    },
+    {
+      "id": "no-webgl-signed-out-alternative",
+      "status": "PASS",
+      "durationMs": 2264,
+      "detail": "Actual context creation disabled; real API observations retained as text"
+    },
+    {
+      "id": "unexpected-console-errors",
+      "status": "PASS",
+      "durationMs": 0,
+      "detail": []
+    }
+  ],
+  "priorStrictQa": {
+    "status": "FAIL",
+    "sourceSha": "cbbdb18abdd70d1519cc76f53dd28f52fd8702f4",
+    "report": "docs/evidence/qa-final/README.md",
+    "note": "Historical failures remain preserved. This hosting smoke cannot clear them; consult the separately executed merged-main strict QA follow-up."
+  },
+  "browserVersion": "156.0.8078.79",
+  "cookiesAtStart": 0,
+  "finishedAt": "2026-11-08T00:52:32.024Z"
+}

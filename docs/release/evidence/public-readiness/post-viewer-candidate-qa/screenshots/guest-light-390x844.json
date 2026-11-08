@@ -1,0 +1,23 @@
+{
+  "runId": "39d9328a-747e-4d22-a960-569f69a9965c",
+  "layout": {
+    "viewport": 390,
+    "document": 390,
+    "offenders": []
+  },
+  "name": "guest-light-390x844",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "deviceScaleFactor": 1,
+  "fullPage": false,
+  "png": {
+    "width": 390,
+    "height": 844
+  },
+  "sha256": "3c525d2311c4609e93915dbef31d4b616e3c818cab2b3e459a608edc2b8ca22d",
+  "url": "http://127.0.0.1:3110/demo",
+  "theme": "light",
+  "capturedAt": "2026-11-08T00:39:38.274Z"
+}

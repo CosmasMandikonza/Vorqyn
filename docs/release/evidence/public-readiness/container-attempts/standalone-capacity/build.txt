@@ -1,0 +1,158 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.73kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:22.21.1-bookworm-slim
+#4 DONE 1.3s
+
+#5 [internal] load build context
+#5 transferring context: 4.21MB 0.1s done
+#5 DONE 0.1s
+
+#6 [build 1/5] FROM docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c
+#6 resolve docker.io/library/node:22.21.1-bookworm-slim@sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 0.0s done
+#6 sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c 6.49kB / 6.49kB done
+#6 sha256:650d460b4e6b02411caa0e563838f07fafc9792314d5091859d837d8b070712b 1.93kB / 1.93kB done
+#6 sha256:8c3a0351e2535c75b4f15dcdd918612e419e829306291a93ddce97f4746581bd 6.87kB / 6.87kB done
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 0B / 28.23MB 0.2s
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 0B / 3.31kB 0.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 0B / 49.48MB 0.2s
+#6 sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 3.31kB / 3.31kB 0.6s done
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 0B / 1.71MB 0.6s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 4.19MB / 28.23MB 0.7s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 6.29MB / 28.23MB 0.8s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 4.19MB / 49.48MB 0.8s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 11.53MB / 28.23MB 1.0s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 7.34MB / 49.48MB 1.0s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 16.78MB / 28.23MB 1.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 11.53MB / 49.48MB 1.2s
+#6 sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.71MB / 1.71MB 1.1s done
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 0B / 447B 1.2s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 18.87MB / 28.23MB 1.3s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 24.12MB / 28.23MB 1.5s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 15.73MB / 49.48MB 1.5s
+#6 sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 28.23MB / 28.23MB 1.6s done
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 18.87MB / 49.48MB 1.7s
+#6 sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 447B / 447B 1.6s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 23.07MB / 49.48MB 1.9s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 28.31MB / 49.48MB 2.3s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 32.51MB / 49.48MB 2.5s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 35.65MB / 49.48MB 2.7s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 38.80MB / 49.48MB 2.9s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 44.04MB / 49.48MB 3.2s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 48.23MB / 49.48MB 3.4s
+#6 sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 49.48MB / 49.48MB 3.5s done
+#6 extracting sha256:c02d17997ce3d2c82e082235ea0b5152d06ee659c4e2fabcf1e0079312f1bcde 2.3s done
+#6 extracting sha256:73c2b2f30c9169a9d1d500e414a7d0345ffd35ddd2448dbaa28057c627e722d0 done
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a
+#6 extracting sha256:b0e670e4d938455d5f209d46248900acafbce8956cca163290a772418e4b376a 2.0s done
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb
+#6 extracting sha256:7351856d1071511142cdaa7e193ddebe2bd1013c13d6a3a0ab1d7bb91b2943eb 1.3s done
+#6 extracting sha256:f72aedeaeb505d5d37a36a72a1cd7226d2411316130211ab1d319730bf6931d2 done
+#6 DONE 9.8s
+
+#7 [build 2/5] WORKDIR /app
+#7 DONE 0.7s
+
+#8 [build 3/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm install --global pnpm@10.34.5 --ignore-scripts
+#8 2.498
+#8 2.498 added 1 package in 1s
+#8 2.498
+#8 2.498 1 package is looking for funding
+#8 2.499   run `npm fund` for details
+#8 2.500 npm notice
+#8 2.500 npm notice New major version of npm available! 10.9.4 -> 12.2.2
+#8 2.500 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#8 2.500 npm notice To update run: npm install -g npm@12.2.2
+#8 2.500 npm notice
+#8 DONE 2.5s
+
+#9 [build 4/5] COPY --chown=node:node . .
+#9 DONE 1.2s
+
+#10 [build 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next
+#10 2.237 Scope: all 3 workspace projects
+#10 2.375 Lockfile is up to date, resolution step is skipped
+#10 2.430 Progress: resolved 1, reused 0, downloaded 0, added 0
+#10 2.523 Packages: +364
+#10 2.523 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#10 2.741
+#10 2.741    ╭──────────────────────────────────────────╮
+#10 2.741    │                                          │
+#10 2.741    │   Update available! 10.34.5 → 12.18.0.   │
+#10 2.741    │   Changelog: https://pnpm.io/v/12.18.0   │
+#10 2.741    │     To update, run: pnpm add -g pnpm     │
+#10 2.741    │                                          │
+#10 2.741    ╰──────────────────────────────────────────╯
+#10 2.741
+#10 3.433 Progress: resolved 364, reused 0, downloaded 24, added 24
+#10 4.432 Progress: resolved 364, reused 0, downloaded 70, added 70
+#10 5.440 Progress: resolved 364, reused 0, downloaded 99, added 99
+#10 6.443 Progress: resolved 364, reused 0, downloaded 141, added 141
+#10 7.442 Progress: resolved 364, reused 0, downloaded 171, added 170
+#10 8.442 Progress: resolved 364, reused 0, downloaded 201, added 201
+#10 9.450 Progress: resolved 364, reused 0, downloaded 230, added 230
+#10 10.46 Progress: resolved 364, reused 0, downloaded 240, added 237
+#10 11.45 Progress: resolved 364, reused 0, downloaded 255, added 243
+#10 12.45 Progress: resolved 364, reused 0, downloaded 277, added 259
+#10 13.48 Progress: resolved 364, reused 0, downloaded 318, added 307
+#10 14.48 Progress: resolved 364, reused 0, downloaded 364, added 364, done
+#10 14.91
+#10 14.91 devDependencies:
+#10 14.91 + eslint 10.14.0
+#10 14.91 + typescript-eslint 8.72.1
+#10 14.91
+#10 14.97 Done in 13.3s using pnpm v10.34.5
+#10 15.59
+#10 15.59 > @vorqyn/web@0.0.0 build /app/apps/web
+#10 15.59 > next build
+#10 15.59
+#10 16.38    ▲ Next.js 15.5.29
+#10 16.39
+#10 16.41    Creating an optimized production build ...
+#10 31.06 <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, mkdir '/app/apps/web/.next/cache/webpack/edge-server-production'
+#10 41.19 <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, mkdir '/app/apps/web/.next/cache/webpack/client-production'
+#10 41.19 Failed to compile.
+#10 41.19
+#10 41.19 Error: ENOSPC: no space left on device, mkdir '/app/apps/web/.next/static'
+#10 41.19
+#10 41.20
+#10 41.20 > Build failed because of webpack errors
+#10 41.26 /app/apps/web:
+#10 41.26  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @vorqyn/web@0.0.0 build: `next build`
+#10 41.26 Exit status 1
+#10 ERROR: process "/bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next" did not complete successfully: exit code: 1
+------
+ > [build 5/5] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next:
+41.19 <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, mkdir '/app/apps/web/.next/cache/webpack/client-production'
+41.19 Failed to compile.
+41.19
+41.19 Error: ENOSPC: no space left on device, mkdir '/app/apps/web/.next/static'
+41.19
+41.20
+41.20 > Build failed because of webpack errors
+41.26 /app/apps/web:
+41.26  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @vorqyn/web@0.0.0 build: `next build`
+41.26 Exit status 1
+------
+Dockerfile:11
+--------------------
+  10 |     COPY --chown=node:node . .
+  11 | >>> RUN --mount=type=secret,id=proxy_ca \
+  12 | >>>     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
+  13 | >>>     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store && \
+  14 | >>>     rm -rf /tmp/pnpm-store && \
+  15 | >>>     pnpm --filter @vorqyn/web build && \
+  16 | >>>     chown -R node:node apps/web/.next
+  17 |
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     pnpm install --frozen-lockfile --store-dir /tmp/pnpm-store &&     rm -rf /tmp/pnpm-store &&     pnpm --filter @vorqyn/web build &&     chown -R node:node apps/web/.next" did not complete successfully: exit code: 1

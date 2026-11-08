@@ -1,0 +1,9 @@
+
+> vorqyn@ typecheck /workspace/work/public17
+> pnpm -r run typecheck
+
+Scope: 2 of 3 workspace projects
+packages/contracts typecheck$ tsc --noEmit
+packages/contracts typecheck: Done
+apps/web typecheck$ tsc --noEmit
+apps/web typecheck: Done

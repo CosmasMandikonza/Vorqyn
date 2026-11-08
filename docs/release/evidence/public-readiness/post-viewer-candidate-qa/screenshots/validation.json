@@ -1,0 +1,284 @@
+{
+  "schema": "vorqyn.capture-validation/1",
+  "status": "PASS",
+  "expected": 46,
+  "results": [
+    {
+      "name": "landing-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "guest-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "local-drafts-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-reset-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-uw-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-inspect-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "fallback-light-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "landing-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "guest-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "local-drafts-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-reset-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-uw-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-inspect-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "fallback-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "mobile-inspector-light-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "landing-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "guest-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "local-drafts-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-reset-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-uw-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-inspect-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "fallback-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "mobile-inspector-light-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "landing-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "guest-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "local-drafts-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-reset-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-uw-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "viewer-inspect-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "fallback-dark-1440x900",
+      "status": "PASS",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "landing-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "guest-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "local-drafts-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-reset-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-uw-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "viewer-inspect-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "fallback-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "mobile-inspector-dark-390x844",
+      "status": "PASS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "landing-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "guest-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "local-drafts-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-reset-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-uw-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "viewer-inspect-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "fallback-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "name": "mobile-inspector-dark-320x844",
+      "status": "PASS",
+      "width": 320,
+      "height": 844
+    }
+  ],
+  "visualReadability": "NOT RUN — dimension/hash validation cannot certify scene composition; inspect images and record observations"
+}
