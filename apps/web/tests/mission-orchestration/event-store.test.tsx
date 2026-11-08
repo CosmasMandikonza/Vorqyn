@@ -96,7 +96,7 @@ describe("journal defenses (store level)", () => {
 
   it("acceptance 4a: a tampered duplicate (same id, different content) is rejected", async () => {
     const store = await storeWithPort001();
-    const tampered = structuredClone(SCRIPT_LAST);
+    const tampered = structuredClone(SCRIPT_LAST) as unknown as Parameters<typeof store.append>[1];
     (tampered as { payload: { amountLamports: number } }).payload.amountLamports += 1;
 
     const result = await store.append(PORT_001.missionId, tampered, script.length);
@@ -389,7 +389,7 @@ describe("review P1-C: accepted history is immutable through the read interface"
   it("mutating an event returned by readEvents throws (frozen) and replay parity survives", async () => {
     const store = await storeWithPort001();
     const stored = await store.readEvents(PORT_001.missionId);
-    const first = stored[0] as { payload: Record<string, unknown> };
+    const first = stored[0] as unknown as { payload: Record<string, unknown> };
     let mutationThrew = false;
     try {
       (first.payload as Record<string, unknown>).budgetLamports = 1;
