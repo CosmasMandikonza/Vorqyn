@@ -76,6 +76,15 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
   --color-destructive: var(--destructive);
+  /* Semantic status + subtle-surface tokens. The raw vars below were always
+     defined per-theme, but were never exposed to the utility layer — every
+     text-success/border-warning/bg-surface-muted utility silently no-oped
+     until these mappings landed (PR #53 review correction). */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-border-subtle: var(--border-subtle);
+  --color-surface-muted: var(--surface-muted);
   --font-sans: var(--font-ui);
   --font-mono: var(--font-mono);
 }

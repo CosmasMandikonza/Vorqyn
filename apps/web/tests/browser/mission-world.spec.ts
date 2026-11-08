@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 /**
  * Judge-story regressions (Issue #15): camera stations, World Dive
@@ -15,6 +15,49 @@ test.beforeEach(async ({ page }) => {
   await page.waitForSelector("canvas", { timeout: 30000 });
   await page.waitForTimeout(6000); // GLB decode + world metadata
 });
+
+/** Whole-row geometry probe for the camera station group (shared by the
+    320px and multi-viewport camera-row tests). Rects are viewport-relative:
+    scroll the group into view before probing when the bar may be off-screen. */
+function wholeRowState(page: Page) {
+  return page.evaluate(() => {
+    const group = document.querySelector('[role="group"][aria-label="Camera station"]');
+    if (!group) return { missing: true as const };
+    const vw = document.documentElement.clientWidth;
+    const buttons = [...group.querySelectorAll("button")].map((b) => {
+      const r = b.getBoundingClientRect();
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return {
+        label: b.textContent?.trim(),
+        left: r.left,
+        right: r.right,
+        inViewport: r.left >= 0 && r.right <= vw && r.top >= 0 && r.bottom <= window.innerHeight,
+        heightOk: r.height >= 44,
+        hitOk: hit === b || b.contains(hit),
+        pressed: b.getAttribute("aria-pressed"),
+      };
+    });
+    return {
+      missing: false,
+      buttons,
+      allVisible: buttons.every((b) => b.inViewport),
+      allHitOk: buttons.every((b) => b.hitOk),
+      allHeightOk: buttons.every((b) => b.heightOk),
+      pressed: buttons.filter((b) => b.pressed === "true").map((b) => b.label),
+      internalScroll: group.scrollWidth > group.clientWidth + 1,
+    };
+  });
+}
+
+/** The recorded journey that opens FOLLOW's honest gate: a live session
+    that is actually producing observations, plus a machine selection. */
+async function openFollowGate(page: Page) {
+  await page.getByRole("button", { name: "Start synthetic survey" }).click();
+  await page.waitForTimeout(1800);
+  await page.getByRole("button", { name: "Advance +1 step" }).click();
+  await page.waitForTimeout(1800);
+  await page.getByRole("button", { name: "Access rover" }).click();
+}
 
 test("camera stations switch without losing selection and never overflow the page at 320px", async ({ page }) => {
   await page.getByRole("button", { name: "Start synthetic survey" }).click();
@@ -189,25 +232,46 @@ test("320px camera station row: whole-row geometry, natural clicks and scroll as
   test.setTimeout(120_000); // SwiftShader software rendering is slow; no assertion is relaxed
   const stations = ["RESET", "AIR", "LAND", "UW", "INSPECT", "FOLLOW"];
   for (const theme of ["light", "dark"] as const) {
+    // Use the REAL next-themes storage key ("vorqyn-theme", see
+    // components/theme-provider.tsx). Setting a foreign key silently left
+    // the provider on the system default after reload — the "dark" leg
+    // actually ran light. Assert the EFFECTIVE theme after the reload.
     await page.evaluate((t) => {
-      window.localStorage.setItem("theme", t);
-      document.documentElement.classList.remove("light", "dark");
-      document.documentElement.classList.add(t);
+      window.localStorage.setItem("vorqyn-theme", t);
     }, theme);
     await page.reload();
     await page.waitForSelector("canvas", { timeout: 30000 });
     await page.waitForTimeout(6000);
+    expect(await page.evaluate((t) => document.documentElement.classList.contains(t), theme)).toBe(true);
+
+    // DISTINCT DISABLED FOLLOW styling (PR #53 review item): before any
+    // session exists the FOLLOW gate is closed — the control must render
+    // dimmed (opacity < 1), not as an ordinary enabled button.
+    const followDisabled = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('[role="group"][aria-label="Camera station"] button')].find(
+        (x) => x.textContent?.trim() === "FOLLOW",
+      );
+      if (!b) return null;
+      const cs = getComputedStyle(b);
+      return { disabled: b.hasAttribute("disabled"), opacity: cs.opacity, cursor: cs.cursor };
+    });
+    expect(followDisabled?.disabled).toBe(true);
+    expect(Number(followDisabled?.opacity)).toBeLessThan(1);
 
     // A reload resets the in-memory kernel session; FOLLOW's honest gate
-    // (sessionActive && selectedLive) needs a live session that is actually
-    // producing observations (the start response alone carries no snapshots)
-    // plus a selection. Walking stations without this journey would click a
-    // disabled control.
-    await page.getByRole("button", { name: "Start synthetic survey" }).click();
-    await page.waitForTimeout(1800);
-    await page.getByRole("button", { name: "Advance +1 step" }).click();
-    await page.waitForTimeout(1800);
-    await page.getByRole("button", { name: "Access rover" }).click();
+    // needs a live session producing observations plus a selection.
+    await openFollowGate(page);
+
+    // Once the gate is open, FOLLOW renders at full strength again.
+    const followEnabled = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('[role="group"][aria-label="Camera station"] button')].find(
+        (x) => x.textContent?.trim() === "FOLLOW",
+      );
+      if (!b) return null;
+      return { disabled: b.hasAttribute("disabled"), opacity: getComputedStyle(b).opacity };
+    });
+    expect(followEnabled?.disabled).toBe(false);
+    expect(followEnabled?.opacity).toBe("1");
 
     for (const station of stations) {
       // natural click through the real hit-target path
@@ -216,40 +280,30 @@ test("320px camera station row: whole-row geometry, natural clicks and scroll as
 
       // WHOLE-ROW geometry: every station button fully within the viewport,
       // hit-test resolves to the button itself, no internal scroll needed.
-      const row = await page.evaluate(() => {
-        const group = document.querySelector('[role="group"][aria-label="Camera station"]');
-        if (!group) return { missing: true };
-        const vw = document.documentElement.clientWidth;
-        const buttons = [...group.querySelectorAll("button")].map((b) => {
-          const r = b.getBoundingClientRect();
-          const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-          return {
-            label: b.textContent?.trim(),
-            left: r.left,
-            right: r.right,
-            top: r.top,
-            bottom: r.bottom,
-            inViewport: r.left >= 0 && r.right <= vw && r.top >= 0 && r.bottom <= window.innerHeight,
-            heightOk: r.height >= 44,
-            hitOk: hit === b || b.contains(hit),
-            pressed: b.getAttribute("aria-pressed"),
-          };
-        });
-        return {
-          buttons,
-          allVisible: buttons.every((b) => b.inViewport),
-          allHitOk: buttons.every((b) => b.hitOk),
-          allHeightOk: buttons.every((b) => b.heightOk),
-          pressed: buttons.filter((b) => b.pressed === "true").map((b) => b.label),
-          internalScroll: group.scrollWidth > group.clientWidth + 1,
-        };
-      });
-      expect(row.missing).toBeUndefined();
+      const row = await wholeRowState(page);
+      expect(row.missing).toBe(false);
       expect(row.allVisible, JSON.stringify(row)).toBe(true);
       expect(row.allHitOk, JSON.stringify(row)).toBe(true);
       expect(row.allHeightOk).toBe(true);
       expect(row.internalScroll).toBe(false);
       expect(row.pressed).toEqual([station]);
+
+      // SELECTED visual state (PR #53 review item): the pressed station must
+      // RENDER selected — a filled, non-transparent background distinct from
+      // every unselected station — not just carry aria-pressed.
+      const visuals = await page.evaluate(() => {
+        const group = document.querySelector('[role="group"][aria-label="Camera station"]');
+        return [...(group?.querySelectorAll("button") ?? [])].map((b) => ({
+          label: b.textContent?.trim(),
+          bg: getComputedStyle(b).backgroundColor,
+          pressed: b.getAttribute("aria-pressed"),
+        }));
+      });
+      const pressedVis = visuals.find((v) => v.pressed === "true");
+      expect(pressedVis?.bg).not.toBe("rgba(0, 0, 0, 0)");
+      for (const v of visuals.filter((x) => x.pressed !== "true")) {
+        expect(v.bg, `unselected ${v.label} mimics selected bg`).not.toBe(pressedVis?.bg);
+      }
     }
 
     // keyboard operability: focus + Enter must activate a station too —
@@ -283,6 +337,38 @@ test("camera station row: selected machine and camera survive station changes", 
     return chips.map((b) => b.textContent?.trim());
   });
   expect(selected.some((t) => t === "Inspection ROV")).toBe(true);
+});
+
+test("camera station row across 390/1024/1440: whole-row geometry, pressed state, keyboard, no overflow", async ({ page }) => {
+  test.setTimeout(180_000); // SwiftShader software rendering is slow
+  await openFollowGate(page);
+  for (const width of [390, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForTimeout(800);
+    for (const station of ["RESET", "AIR", "UW", "FOLLOW"]) {
+      await page.getByRole("button", { name: station, exact: true }).click();
+      await page.waitForTimeout(300);
+      const row = await wholeRowState(page);
+      expect(row.missing).toBe(false);
+      expect(row.allVisible, `${width}px after ${station}: ${JSON.stringify(row)}`).toBe(true);
+      expect(row.allHitOk).toBe(true);
+      expect(row.allHeightOk).toBe(true);
+      expect(row.internalScroll).toBe(false);
+      expect(row.pressed).toEqual([station]);
+    }
+    // keyboard activation at every width
+    await page.getByRole("button", { name: "RESET", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(300);
+    await expect(page.getByRole("button", { name: "RESET", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    const pageOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+    );
+    expect(pageOverflow, `${width}px page overflow`).toBe(false);
+  }
 });
 
 test.use({ hasTouch: true });

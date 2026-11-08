@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildPort001Script,
   buildHarbor002Script,
+  FIXTURE_SIG_PAYOUT_SEA,
   PORT_001,
   HARBOR_002,
   type MissionEvent,
@@ -271,6 +272,111 @@ describe("economic handoff panel render", () => {
     expect(payoutStage.textContent).toContain("1100000000");
     // fracture verdict recorded
     expect(screen.getByText(/rule-visibility-below-1m/i)).toBeVisible();
+  });
+});
+
+/**
+ * Payment-stage acceptance matrix (PR #53 review corrections).
+ *
+ * Canonical fixture seq (1-based): 15 ends at task.verified, 16 = payout
+ * transactionSubmitted, 17 = receipt status confirmed, 18 =
+ * task.paymentConfirmed (task paid). Every row states ONLY what the
+ * recorded evidence justifies — a financial success claim requires a
+ * confirmed/finalized receipt AND the recorded payout event (the exact
+ * reducer rule); anything else renders eligible/waiting.
+ *
+ * | row | recorded evidence                              | rendered state                 | forbidden                          |
+ * |-----|------------------------------------------------|--------------------------------|------------------------------------|
+ * | A   | verified, no payout receipt                    | awaiting-authority ("ELIGIBLE") | "initiated"/"confirmed", confirmation |
+ * | B   | verified, receipt submitted                    | submitted-awaiting-confirmation | "confirmed", confirmation object   |
+ * | C   | verified, receipt processed                    | submitted-awaiting-confirmation | "confirmed", confirmation object   |
+ * | D   | verified, receipt confirmed, event not recorded| awaiting-authority ("ELIGIBLE") | "initiated", confirmation object   |
+ * | E   | paid, receipt confirmed + payment event        | confirmed + amount             | invented recipientWallet           |
+ * | F   | receipt rejected (via unknown)                 | rejected                       | "confirmed", confirmation object   |
+ */
+describe("payment-stage acceptance matrix", () => {
+  const ctx = { missionId: PORT_001.missionId, taskId: PORT_001.tasks.sea.taskId };
+  const RUNE = RUN as MissionEvent[];
+  const payoutStage = (events: unknown[]) =>
+    projectEconomicHandoff(events, ctx).stages.find((s) => s.id === "payout-confirmation")!;
+
+  const chainUpdate = (sequence: number, status: string) => ({
+    eventId: `evt-matrix-chain-${sequence}`,
+    missionId: PORT_001.missionId,
+    sequence,
+    kind: "chain.transactionUpdated",
+    payload: { transactionSignature: FIXTURE_SIG_PAYOUT_SEA, status },
+    occurredAtMs: 1_762_000_000_000 + 12_000 + sequence,
+    observedAtMs: 1_762_000_000_000 + 12_010 + sequence,
+    ...(status === "confirmed" || status === "finalized" ? { chainTimeMs: 1_762_000_000_000 + 12_000 + sequence } : {}),
+    schemaVersion: 1,
+  });
+
+  it("A: verified task, no payout receipt — eligible/waiting, never 'initiated' or 'confirmed'", () => {
+    const stage = payoutStage(RUNE.slice(0, 15));
+    expect(stage.state).toBe("awaiting-authority");
+    expect(stage.confirmation).toBeUndefined();
+    expect(stage.detail).toContain("ELIGIBLE");
+    expect(stage.title.toLowerCase()).not.toContain("confirmed");
+    expect(stage.detail).not.toMatch(/initiated/i);
+    expect(stage.detail).not.toMatch(/confirmed/i);
+  });
+
+  it("B: verified task, receipt SUBMITTED — in flight, no confirmation object", () => {
+    const stage = payoutStage(RUNE.slice(0, 16));
+    expect(stage.state).toBe("submitted-awaiting-confirmation");
+    expect(stage.confirmation).toBeUndefined();
+    expect(stage.detail).toContain('"submitted"');
+    expect(stage.detail).toMatch(/NOT treated as paid/);
+  });
+
+  it("C: verified task, receipt PROCESSED — still not confirmed", () => {
+    const stage = payoutStage([...RUNE.slice(0, 16), chainUpdate(17, "processed")]);
+    expect(stage.state).toBe("submitted-awaiting-confirmation");
+    expect(stage.confirmation).toBeUndefined();
+    expect(stage.detail).toContain('"processed"');
+  });
+
+  it("D: receipt confirmed but payment event not yet recorded — task not shown paid", () => {
+    const stage = payoutStage(RUNE.slice(0, 17));
+    expect(stage.state).toBe("awaiting-authority");
+    expect(stage.confirmation).toBeUndefined();
+    expect(stage.detail).toContain("ELIGIBLE");
+    expect(stage.detail).not.toMatch(/initiated/i);
+  });
+
+  it("E: paid task, confirmed receipt + recorded payment event — confirmed, amount, no invented recipient", () => {
+    const stage = payoutStage(RUNE);
+    expect(stage.state).toBe("confirmed");
+    expect(stage.confirmation?.amountLamports).toBe(1_100_000_000);
+    // the canonical receipt records NO recipientWallet — the projection must
+    // not invent one (recipient claims need a receipt that recorded it)
+    expect(stage.confirmation?.recipientWallet).toBeUndefined();
+  });
+
+  it("F: payout receipt ended rejected (via unknown observation) — rejected, not confirmed", () => {
+    const stage = payoutStage([...RUNE.slice(0, 16), chainUpdate(17, "unknown"), chainUpdate(18, "rejected")]);
+    expect(stage.state).toBe("rejected");
+    expect(stage.confirmation).toBeUndefined();
+    expect(stage.detail).toContain('"rejected"');
+  });
+
+  it("G: hostile processed-update cannot promote the payout stage for ANY task status", () => {
+    // processed presented all the way to the end of the canonical run: the
+    // receipt's own update replaces confirmed, so payment can never have
+    // applied — the stage must stay in-flight, never confirmed.
+    const hostile = [...RUNE];
+    const confirmedIdx = hostile.findIndex(
+      (e) => e.kind === "chain.transactionUpdated" && (e.payload as { status?: string }).status === "confirmed",
+    );
+    hostile[confirmedIdx] = {
+      ...hostile[confirmedIdx]!,
+      payload: { transactionSignature: FIXTURE_SIG_PAYOUT_SEA, status: "processed" },
+    };
+    const projection = projectEconomicHandoff(hostile, ctx);
+    const stage = projection.stages.find((s) => s.id === "payout-confirmation")!;
+    expect(stage.state).not.toBe("confirmed");
+    expect(stage.confirmation).toBeUndefined();
   });
 });
 

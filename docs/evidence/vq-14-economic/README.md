@@ -39,3 +39,17 @@ When Omar's chain-client (#50) and verifier (#49) merge, their outputs plug
 into `projectEconomicHandoff(rawEvents, ctx)` — the SAME validated boundary.
 No UI redesign is needed: stage states derive from the canonical events.
 Until then, the panel renders truthful pending/unavailable states.
+
+## Review corrections (2026-11-08, post-rebase onto 048ebac)
+
+`corrections/` holds the PR #53 review-correction evidence with full
+provenance and the payment-stage acceptance matrix (see
+`corrections/README.md`): camera selected/disabled visual states in light and
+dark, the fixture-walkthrough handoff panel, and the measured fault journey.
+The capture tool is `tools/capture-corrections.mjs`; the original capture
+provenance for the pre-correction set is `capture-notes.md`. Boundary
+corrections: only `confirmed`/`finalized` receipts (mirroring the reducer's
+`confirmedChainRecord`) authorize a confirmed stage; `task.status ===
+"verified"` without a recorded payout event renders payout-ELIGIBLE and
+waiting — never "payout initiated". Test count grew 16 → 23 (matrix rows
+A-G).

@@ -558,7 +558,13 @@ function ViewModeBar({
                 ? "Available while a synthetic survey session is producing observations"
                 : undefined
             }
-            className="min-h-11 rounded-full px-2 font-mono text-[11px] transition-colors sm:px-3"
+            className={`min-h-11 rounded-full px-2 font-mono text-[11px] transition-colors sm:px-3 disabled:cursor-not-allowed disabled:opacity-40 ${
+              mode === m
+                ? // selected station: filled brand pill (same idiom as the
+                  // PlaybackBar toggles — bg-primary/text-primary-foreground)
+                  "bg-primary text-primary-foreground"
+                : "text-foreground enabled:hover:bg-muted"
+            }`}
             onClick={() => onChange(m)}
           >
             {m === "UNDERWATER" ? "UW" : m}

@@ -110,14 +110,55 @@ export interface ProjectHandoffOptions {
   readonly maxJoinGapMs?: number;
 }
 
-function latestStatus(
+/**
+ * Canonical confirmation test — mirrors the contracts reducer's
+ * `confirmedChainRecord` exactly: a chain receipt authorizes state display
+ * ONLY when its LATEST statusHistory entry is "confirmed" or "finalized"
+ * AND its recorded kind matches the expected stage. A receipt whose latest
+ * status is submitted/processed/unknown/expired/rejected — or an absent
+ * receipt — NEVER counts as confirmed.
+ */
+function confirmedReceipt(
   projection: MissionProjection,
   signature: string,
-): { status: string; record: MissionProjection["chain"][string] } | null {
+  expectKind: "reassignment" | "payout",
+): MissionProjection["chain"][string] | null {
   const record = projection.chain[signature];
-  if (!record) return null;
+  if (record === undefined || record.kind !== expectKind) return null;
   const last = record.statusHistory[record.statusHistory.length - 1];
-  return { status: last ?? "unknown", record };
+  return last === "confirmed" || last === "finalized" ? record : null;
+}
+
+/** True when the receipt's LATEST status authorizes nothing (not confirmed). */
+function unconfirmedStatus(
+  projection: MissionProjection,
+  signature: string,
+  expectKind: "reassignment" | "payout",
+): string | null {
+  const record = projection.chain[signature];
+  if (record === undefined || record.kind !== expectKind) return null;
+  const last = record.statusHistory[record.statusHistory.length - 1];
+  return last === "confirmed" || last === "finalized" ? null : (last ?? "unknown");
+}
+
+/**
+ * The payout receipt bound to this task + assignment version, via the
+ * reducer's own chain-record identity (kind "payout", taskId, version) —
+ * independent of task.payoutSignature, which is only set once the payout
+ * EVENT applies. Covers the honest in-flight window between a submitted
+ * payout transaction and the recorded payment event.
+ */
+function payoutReceiptForTask(
+  projection: MissionProjection,
+  taskId: string,
+  assignmentVersion: number,
+): { signature: string; record: MissionProjection["chain"][string] } | null {
+  for (const [signature, record] of Object.entries(projection.chain)) {
+    if (record.kind !== "payout" || record.taskId !== taskId) continue;
+    if (record.assignmentVersion !== undefined && record.assignmentVersion !== assignmentVersion) continue;
+    return { signature, record };
+  }
+  return null;
 }
 
 /**
@@ -271,36 +312,47 @@ export function projectEconomicHandoff(
     });
 
     // --- Owner-authorized reassignment with confirmed chain receipt ---
+    // Mirrors the reducer's confirmedChainRecord: only a receipt whose
+    // LATEST status is confirmed/finalized (and whose kind is "reassignment")
+    // shows as enacted. Every other receipt state renders its honest wait.
     const version = task.currentAssignmentVersion;
     const latestAssignment = task.assignments[version];
     const reassignSig = latestAssignment?.chainSignature ?? null;
-    const reassignStatus = reassignSig ? latestStatus(projection, reassignSig) : null;
-    if (version >= 2 && reassignSig !== null && reassignStatus?.status === "confirmed") {
+    const confirmedReassign = reassignSig !== null ? confirmedReceipt(projection, reassignSig, "reassignment") : null;
+    const unconfirmedReassign = reassignSig !== null ? unconfirmedStatus(projection, reassignSig, "reassignment") : null;
+    if (version >= 2 && reassignSig !== null && confirmedReassign !== null) {
       stages.push({
         id: "reassignment-confirmation",
-        title: "Owner-authorized reassignment (on-chain)",
+        title: "Owner-authorized reassignment",
         state: "confirmed",
         detail: `Assignment v${version} → ${latestAssignment?.operatorId ?? "?"} enacted by confirmed chain transaction ${reassignSig}.`,
         confirmation: {
           transactionSignature: reassignSig,
-          cluster: reassignStatus.record.cluster,
-          slot: reassignStatus.record.slot,
-          chainTimeMs: reassignStatus.record.confirmedAtMs,
-          amountLamports: reassignStatus.record.amountLamports,
+          cluster: confirmedReassign.cluster,
+          slot: confirmedReassign.slot,
+          chainTimeMs: confirmedReassign.confirmedAtMs,
+          amountLamports: confirmedReassign.amountLamports,
         },
       });
-    } else if (reassignStatus && ["submitted", "processed"].includes(reassignStatus.status)) {
+    } else if (reassignSig !== null && unconfirmedReassign !== null && (unconfirmedReassign === "rejected" || unconfirmedReassign === "expired")) {
       stages.push({
         id: "reassignment-confirmation",
-        title: "Owner-authorized reassignment (on-chain)",
+        title: "Owner-authorized reassignment",
+        state: "rejected",
+        detail: `Reassignment transaction ${reassignSig} ended "${unconfirmedReassign}" on-chain — no authority change; the original assignment still holds.`,
+      });
+    } else if (reassignSig !== null && unconfirmedReassign !== null) {
+      stages.push({
+        id: "reassignment-confirmation",
+        title: "Owner-authorized reassignment",
         state: "submitted-awaiting-confirmation",
-        detail: `Reassignment transaction ${reassignSig} is "${reassignStatus.status}" — the new operator holds the task only after confirmation.`,
+        detail: `Reassignment transaction ${reassignSig} exists on-chain with status "${unconfirmedReassign}" — the new operator holds the task only after the chain reports confirmed/finalized.`,
       });
     } else {
       stages.push({
         id: "reassignment-confirmation",
-        title: "Owner-authorized reassignment (on-chain)",
-        state: "awaiting-proposals",
+        title: "Owner-authorized reassignment",
+        state: version >= 2 ? "awaiting-authority" : "awaiting-proposals",
         detail: "No confirmed reassignment in the recorded events — the original assignment still holds.",
       });
     }
@@ -315,41 +367,69 @@ export function projectEconomicHandoff(
     });
 
     // --- Single-use payout: confirmed chain receipt or honest waiting ---
+    // Canonical rule (reducer confirmedChainRecord): task.status "paid"
+    // exists only through a payout event authorized by a receipt whose
+    // LATEST status is confirmed/finalized. A submitted/processed receipt is
+    // IN FLIGHT, never paid; task.status "verified" without an enacted
+    // payout is payout-ELIGIBLE only — nothing is initiated, nothing has
+    // moved, and no recipient is enacted. Recipient wallets are named only
+    // when the receipt itself recorded one.
     const payoutSig = task.payoutSignature ?? null;
-    const payoutStatus = payoutSig ? latestStatus(projection, payoutSig) : null;
-    const agreed = latestAssignment?.agreedLamports ?? null;
-    if (task.status === "paid" && payoutSig !== null && payoutStatus?.status === "confirmed") {
+    const confirmedPayout = payoutSig !== null ? confirmedReceipt(projection, payoutSig, "payout") : null;
+    const boundPayout = payoutReceiptForTask(projection, ctx.taskId, version);
+    const boundSig = boundPayout?.signature ?? null;
+    const boundUnconfirmed = boundSig !== null ? unconfirmedStatus(projection, boundSig, "payout") : null;
+    const boundUnconfirmedSig = payoutSig !== null ? unconfirmedStatus(projection, payoutSig, "payout") : null;
+    if (task.status === "paid" && payoutSig !== null && confirmedPayout !== null) {
       stages.push({
         id: "payout-confirmation",
-        title: "Single-use payout (on-chain, confirmed)",
+        title: "Single-use payout",
         state: "confirmed",
-        detail: `Payout confirmed for assignment v${version}: ${payoutStatus.record.amountLamports ?? agreed ?? "?"} lamports enacted to the registered recipient. Signature ${payoutSig}${payoutStatus.record.slot ? `, slot ${payoutStatus.record.slot}` : ""}.`,
+        detail: `Payout confirmed for assignment v${version}: ${confirmedPayout.amountLamports ?? "?"} lamports enacted by confirmed chain transaction ${payoutSig}${confirmedPayout.slot ? `, slot ${confirmedPayout.slot}` : ""}.`,
         confirmation: {
           transactionSignature: payoutSig,
-          cluster: payoutStatus.record.cluster,
-          slot: payoutStatus.record.slot,
-          chainTimeMs: payoutStatus.record.confirmedAtMs,
-          amountLamports: payoutStatus.record.amountLamports,
+          cluster: confirmedPayout.cluster,
+          slot: confirmedPayout.slot,
+          chainTimeMs: confirmedPayout.confirmedAtMs,
+          amountLamports: confirmedPayout.amountLamports,
+          ...(confirmedPayout.recipientWallet !== undefined
+            ? { recipientWallet: confirmedPayout.recipientWallet }
+            : {}),
         },
       });
-    } else if (payoutSig && payoutStatus && ["submitted", "processed"].includes(payoutStatus.status)) {
+    } else if (boundUnconfirmed !== null && (boundUnconfirmed === "rejected" || boundUnconfirmed === "expired")) {
       stages.push({
         id: "payout-confirmation",
-        title: "Single-use payout (on-chain, confirmed)",
+        title: "Single-use payout",
+        state: "rejected",
+        detail: `Payout transaction ${boundSig} ended "${boundUnconfirmed}" on-chain — no funds moved; the task is not paid.`,
+      });
+    } else if (boundUnconfirmed !== null) {
+      stages.push({
+        id: "payout-confirmation",
+        title: "Single-use payout",
         state: "submitted-awaiting-confirmation",
-        detail: `Payout transaction ${payoutSig} is "${payoutStatus.status}" — NOT treated as paid until the chain confirms.`,
+        detail: `Payout transaction ${boundSig} for assignment v${version} exists on-chain with latest status "${boundUnconfirmed}" — NOT treated as paid until the chain reports confirmed/finalized and the payout event is recorded.`,
+      });
+    } else if (task.status === "paid") {
+      stages.push({
+        id: "payout-confirmation",
+        title: "Single-use payout",
+        state: "awaiting-authority",
+        detail: `Task state "paid" is recorded, but its payout receipt's latest on-chain status is "${boundUnconfirmedSig ?? "absent"}" — not displayed as confirmed.`,
       });
     } else if (task.status === "verified") {
       stages.push({
         id: "payout-confirmation",
-        title: "Single-use payout (on-chain, confirmed)",
-        state: "submitted-awaiting-confirmation",
-        detail: "Task verified; payout initiated — awaiting chain confirmation.",
+        title: "Single-use payout",
+        state: "awaiting-authority",
+        detail:
+          "Task verified by recorded verdict — payout ELIGIBLE. No recorded payout event has enacted payment for this task: the task is not paid, and no recipient is enacted in this projection.",
       });
     } else {
       stages.push({
         id: "payout-confirmation",
-        title: "Single-use payout (on-chain, confirmed)",
+        title: "Single-use payout",
         state: "awaiting-authority",
         detail: "Awaiting verified evidence and an enacted chain payout — no payment state can exist before that.",
       });
