@@ -394,8 +394,11 @@ try {
           name: /Ghost replay: recorded paths shown/,
         }),
       ).toHaveAttribute("aria-pressed", "true");
-      await expect(page.getByTestId("playback-bar")).toContainText(
-        "no simulated recovery",
+      await expect(page.getByTestId("ghost-legend")).toContainText(
+        "no replacement robot",
+      );
+      await expect(page.getByTestId("ghost-legend")).toContainText(
+        "recovery reassignment is not simulated",
       );
       await page.getByTestId("world-canvas-frame").scrollIntoViewIfNeeded();
       await page.waitForTimeout(600);
