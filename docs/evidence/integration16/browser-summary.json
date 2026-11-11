@@ -1,0 +1,39 @@
+{
+  "status": "FAIL",
+  "sourceSha": "002c765ffbfc7da40dc80f0e731cca89408565fa",
+  "productionMainSha": "10b09e67bd18c1d755add2e09ba4a2739f1e85a9",
+  "stats": {
+    "startTime": "2026-11-08T01:43:36.585Z",
+    "duration": 392451.757,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "unchangedStrictSuite": {
+    "total": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0
+  },
+  "addedWholeRowCases": {
+    "total": 8,
+    "passed": 6,
+    "failed": 2,
+    "skipped": 0
+  },
+  "newCameraStates": {
+    "integrity": "PASS",
+    "layout": "FAIL",
+    "expected": 32,
+    "layoutPassed": 24,
+    "layoutFailed": 8
+  },
+  "strictPngValidation": "PASS",
+  "fullStrictPngCount": 126,
+  "newPngCount": 32,
+  "retainedPngCount": 40,
+  "retainedStrictPngs": 8,
+  "manualInspection": "Eight new captures inspected: both themes at all four widths; plus selected Replay/no-WebGL/native captures described in README",
+  "noOwnerFilesEdited": true
+}

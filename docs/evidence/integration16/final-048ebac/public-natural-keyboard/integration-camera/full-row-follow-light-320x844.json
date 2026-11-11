@@ -1,0 +1,127 @@
+{
+  "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+  "runId": "8a1ca19c-0014-4cf8-83e8-1fe8b100e670",
+  "source": "real production Chromium, actual API, no route fixtures",
+  "theme": "light",
+  "url": "https://vorqynweb-production.up.railway.app/demo/mission",
+  "hasTouch": true,
+  "reducedMotion": "reduce",
+  "screenshotOptions": {
+    "fullPage": false,
+    "animations": "disabled",
+    "scale": "device"
+  },
+  "png": {
+    "width": 320,
+    "height": 844
+  },
+  "sha256": "a768125166e599ed445d96ba1f43cb2327d254a3974d46cb95ab77266bf92d97",
+  "viewport": {
+    "width": 320,
+    "height": 844,
+    "dpr": 1
+  },
+  "documentWidth": 320,
+  "storedThemePreference": "light",
+  "group": {
+    "x": 32,
+    "y": 581.609375,
+    "width": 256,
+    "height": 102,
+    "top": 581.609375,
+    "right": 288,
+    "bottom": 683.609375,
+    "left": 32
+  },
+  "groupScrollLeft": 0,
+  "frame": {
+    "x": 20,
+    "y": 172.34375,
+    "width": 280,
+    "height": 523.265625,
+    "top": 172.34375,
+    "right": 300,
+    "bottom": 695.609375,
+    "left": 20
+  },
+  "controls": [
+    {
+      "name": "RESET",
+      "rect": {
+        "x": 37,
+        "y": 586.609375,
+        "width": 79.328125,
+        "height": 44,
+        "top": 586.609375,
+        "right": 116.328125,
+        "bottom": 630.609375,
+        "left": 37
+      }
+    },
+    {
+      "name": "AIR",
+      "rect": {
+        "x": 120.328125,
+        "y": 586.609375,
+        "width": 79.328125,
+        "height": 44,
+        "top": 586.609375,
+        "right": 199.65625,
+        "bottom": 630.609375,
+        "left": 120.328125
+      }
+    },
+    {
+      "name": "LAND",
+      "rect": {
+        "x": 203.65625,
+        "y": 586.609375,
+        "width": 79.34375,
+        "height": 44,
+        "top": 586.609375,
+        "right": 283,
+        "bottom": 630.609375,
+        "left": 203.65625
+      }
+    },
+    {
+      "name": "UW",
+      "rect": {
+        "x": 37,
+        "y": 634.609375,
+        "width": 79.328125,
+        "height": 44,
+        "top": 634.609375,
+        "right": 116.328125,
+        "bottom": 678.609375,
+        "left": 37
+      }
+    },
+    {
+      "name": "INSPECT",
+      "rect": {
+        "x": 120.328125,
+        "y": 634.609375,
+        "width": 79.328125,
+        "height": 44,
+        "top": 634.609375,
+        "right": 199.65625,
+        "bottom": 678.609375,
+        "left": 120.328125
+      }
+    },
+    {
+      "name": "FOLLOW",
+      "rect": {
+        "x": 203.65625,
+        "y": 634.609375,
+        "width": 79.34375,
+        "height": 44,
+        "top": 634.609375,
+        "right": 283,
+        "bottom": 678.609375,
+        "left": 203.65625
+      }
+    }
+  ]
+}

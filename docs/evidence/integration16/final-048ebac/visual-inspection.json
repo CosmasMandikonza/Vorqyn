@@ -1,0 +1,17 @@
+{
+  "scope": "Visual inspection of original genuine PNGs, no image edits",
+  "inspectedAt": "2026-11-08T13:47:51.748630+00:00",
+  "images": [
+    "public-smoke/screenshots/fault-follow-light-1440x900.png",
+    "public-natural-keyboard/integration-camera/full-row-follow-light-390x844.png",
+    "browser/screenshots/journey-fault-inspector-dark-390x844-dpr1.png"
+  ],
+  "findings": [
+    "ROV recognizable in FOLLOW; all six mobile camera controls visible in two rows",
+    "Mobile inspector numeric pose/source/fault/quality readable; synthetic unitless disclosure retained",
+    "P2 inspector heading SIM T N/A MS remains; use playback clock",
+    "1024 Replay screenshot inspected in first b8a3 checkpoint: natural replay succeeded and identical badge readable",
+    "Mobile/desktop evidence uses genuine respective viewport IHDR, not resized images"
+  ],
+  "claims": "No authenticated verifier decision, runtime AI, wallet authority, chain receipts, recorded video or submission receipt observed"
+}

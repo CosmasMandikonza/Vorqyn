@@ -1,0 +1,46 @@
+
+> vorqyn@ test /workspace/work/final-technical-preflight/snapshot
+> pnpm -r run test
+
+Scope: 4 of 5 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/final-technical-preflight/snapshot/packages/contracts
+packages/contracts test:  Test Files  6 passed (6)
+packages/contracts test:       Tests  90 passed (90)
+packages/contracts test:    Start at  13:35:03
+packages/contracts test:    Duration  2.57s (transform 48%, import 27%, tests 22%, worker 3%)
+packages/contracts test:     Isolate  6 workers spawned · ~232ms startup each (spawn + environment, per file)
+packages/contracts test:              at least ~1.16s faster with isolate: false — reuses workers across files instead of one per file
+packages/contracts test: Done
+apps/web test$ vitest run
+packages/chain-client test$ vitest run && node scripts/check-browser-bundle.mjs
+apps/web test:  RUN  v5.1.0 /workspace/work/final-technical-preflight/snapshot/apps/web
+packages/chain-client test:  RUN  v5.1.0 /workspace/work/final-technical-preflight/snapshot/packages/chain-client
+packages/chain-client test:  Test Files  2 passed | 1 skipped (3)
+packages/chain-client test:       Tests  24 passed | 1 skipped (25)
+packages/chain-client test:    Start at  13:35:06
+packages/chain-client test:    Duration  4.06s (import 60%, transform 31%, tests 6%, worker 3%)
+packages/chain-client test:     Isolate  3 workers spawned · ~327ms startup each (spawn + environment, per file)
+packages/chain-client test:              at least ~654ms faster with isolate: false — reuses workers across files instead of one per file
+packages/chain-client test: OK: @vorqyn/chain-client bundles clean for the browser (72 modules)
+packages/chain-client test: Done
+services/verifier test$ vitest run
+services/verifier test:  RUN  v5.1.0 /workspace/work/final-technical-preflight/snapshot/services/verifier
+services/verifier test:  Test Files  3 passed (3)
+services/verifier test:       Tests  36 passed (36)
+services/verifier test:    Start at  13:35:12
+services/verifier test:    Duration  2.05s (transform 64%, import 26%, tests 8%, worker 2%)
+services/verifier test:     Isolate  3 workers spawned · ~298ms startup each (spawn + environment, per file)
+services/verifier test:              at least ~595ms faster with isolate: false — reuses workers across files instead of one per file
+services/verifier test: Done
+apps/web test: (node:6506) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+apps/web test: Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+apps/web test: (Use `node --trace-deprecation ...` to show where the warning was created)
+apps/web test:  Test Files  15 passed (15)
+apps/web test:       Tests  190 passed (190)
+apps/web test:    Start at  13:35:06
+apps/web test:    Duration  57.23s (environment 66%, setup 12%, tests 11%, transform 6%, import 4%)
+apps/web test: Environment  jsdom was created 15 times · 34.55s total, 66% of tracked time
+apps/web test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+apps/web test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+apps/web test: Done

@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: world.json declares the authoritative ENU frame, datums and bounds coherently
+ok 1 - world.json declares the authoritative ENU frame, datums and bounds coherently
+  ---
+  duration_ms: 2.275983
+  type: 'test'
+  ...
+# Subtest: all required anchors exist and sit in physically sensible zones
+ok 2 - all required anchors exist and sit in physically sensible zones
+  ---
+  duration_ms: 0.612762
+  type: 'test'
+  ...
+# Subtest: rover route equals world.json.routes.rover verbatim and starts at rover_home
+ok 3 - rover route equals world.json.routes.rover verbatim and starts at rover_home
+  ---
+  duration_ms: 0.401805
+  type: 'test'
+  ...
+# Subtest: ROV route equals world.json.routes.rov verbatim, starts at rov_home, ends in the obstruction zone
+ok 4 - ROV route equals world.json.routes.rov verbatim, starts at rov_home, ends in the obstruction zone
+  ---
+  duration_ms: 0.220311
+  type: 'test'
+  ...
+# Subtest: drone route equals drone_home anchor plus world.json.routes.drone_survey, starting at drone_home
+ok 5 - drone route equals drone_home anchor plus world.json.routes.drone_survey, starting at drone_home
+  ---
+  duration_ms: 0.198204
+  type: 'test'
+  ...
+# Subtest: kernel task regions equal the authoritative world zone boxes
+ok 6 - kernel task regions equal the authoritative world zone boxes
+  ---
+  duration_ms: 1.919621
+  type: 'test'
+  ...
+# Subtest: scenario constants derive from world.json (bounds, datum, bands, frame id)
+ok 7 - scenario constants derive from world.json (bounds, datum, bands, frame id)
+  ---
+  duration_ms: 0.632467
+  type: 'test'
+  ...
+# Subtest: every rover waypoint AND segment sample stands on traversable land at deck height
+ok 8 - every rover waypoint AND segment sample stands on traversable land at deck height
+  ---
+  duration_ms: 1.166528
+  type: 'test'
+  ...
+# Subtest: every ROV waypoint AND segment sample is submerged; survey legs reach the inspection region
+ok 9 - every ROV waypoint AND segment sample is submerged; survey legs reach the inspection region
+  ---
+  duration_ms: 1.022538
+  type: 'test'
+  ...
+# Subtest: every drone waypoint AND segment sample stays inside the aerial survey zone
+ok 10 - every drone waypoint AND segment sample stays inside the aerial survey zone
+  ---
+  duration_ms: 0.957698
+  type: 'test'
+  ...
+# Subtest: detector catches the rover below the dock, floating, and with swapped ENU axes
+ok 11 - detector catches the rover below the dock, floating, and with swapped ENU axes
+  ---
+  duration_ms: 0.256999
+  type: 'test'
+  ...
+# Subtest: detector catches the ROV outside the underwater inspection region (pre-alignment route)
+ok 12 - detector catches the ROV outside the underwater inspection region (pre-alignment route)
+  ---
+  duration_ms: 0.123375
+  type: 'test'
+  ...
+# Subtest: detector catches the drone outside the declared survey bounds
+ok 13 - detector catches the drone outside the declared survey bounds
+  ---
+  duration_ms: 0.080497
+  type: 'test'
+  ...
+# Subtest: the glTF conversion rule matches world.json and maps anchors correctly
+ok 14 - the glTF conversion rule matches world.json and maps anchors correctly
+  ---
+  duration_ms: 0.453925
+  type: 'test'
+  ...
+# Subtest: double-applying the glTF conversion is detectable and wrong; the kernel stays ENU
+ok 15 - double-applying the glTF conversion is detectable and wrong; the kernel stays ENU
+  ---
+  duration_ms: 2.391096
+  type: 'test'
+  ...
+# Subtest: aligned kernel remains deterministic and replayable (post-alignment regression)
+ok 16 - aligned kernel remains deterministic and replayable (post-alignment regression)
+  ---
+  duration_ms: 10.763547
+  type: 'test'
+  ...
+# Subtest: aligned routes keep movement within speed x elapsed time (no teleport on world geometry)
+ok 17 - aligned routes keep movement within speed x elapsed time (no teleport on world geometry)
+  ---
+  duration_ms: 4.886767
+  type: 'test'
+  ...
+# Subtest: aligned ROV route genuinely enters the world inspection region (movement regression)
+ok 18 - aligned ROV route genuinely enters the world inspection region (movement regression)
+  ---
+  duration_ms: 24.252987
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 213.063869

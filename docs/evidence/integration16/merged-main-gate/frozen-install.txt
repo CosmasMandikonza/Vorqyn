@@ -1,0 +1,6 @@
+Scope: all 5 workspace projects
+Lockfile is up to date, resolution step is skipped
+ ERR_PNPM_LOCKFILE_MISSING_DEPENDENCY  Broken lockfile: no entry for 'vitest@5.1.0(@types/node@22.20.5)(jsdom@31.0.0)(vite@8.3.6(@types/node@22.20.5)(jiti@2.7.0))' in pnpm-lock.yaml
+
+This issue is probably caused by a badly resolved merge conflict.
+To fix the lockfile, run 'pnpm install --no-frozen-lockfile'.

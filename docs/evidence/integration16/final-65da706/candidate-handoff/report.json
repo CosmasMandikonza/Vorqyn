@@ -1,0 +1,131 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T14:11:43.369Z",
+  "sourceSha": "04b9f6136bb321661b2da088901fcac0da6f43c8",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16-pr53",
+  "targetSha": "5795018bb67841dae379e4150b82f5bfff2ec016",
+  "targetDirty": false,
+  "scope": "READ-ONLY CANDIDATE DIAGNOSTIC; not merged-main evidence",
+  "checks": [
+    {
+      "id": "frozen-install",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "log": "frozen-install.txt"
+    },
+    {
+      "id": "qa-tooling",
+      "status": "PASS",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "scripts/integration/tooling.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "qa-tooling.txt",
+      "stats": {
+        "total": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cancelled": 0
+      },
+      "scope": "QA-tool negative fixtures and historical evidence validation only; not product/chain acceptance"
+    },
+    {
+      "id": "existing-boundaries",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "tests/cross-system/boundaries.test.tsx",
+        "--reporter=json",
+        "--outputFile=/workspace/work/final-handoff-canonical-truth/existing-boundaries.json"
+      ],
+      "log": "existing-boundaries.txt",
+      "report": "existing-boundaries.json",
+      "stats": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "BLOCKED",
+      "detail": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "BLOCKED",
+      "detail": "Simulator-relative sources 500,1000,1500,2000,2500,3000,3500,4000 vs epoch capture 1762000000020; no clock rebasing invented"
+    },
+    {
+      "id": "chain-client",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "recovery",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "handoff",
+      "status": "FAIL",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "--config",
+        "../../scripts/integration/vitest.config.mts",
+        "--reporter=json",
+        "--outputFile=/workspace/work/final-handoff-canonical-truth/handoff.json"
+      ],
+      "log": "handoff.txt",
+      "report": "handoff.json",
+      "stats": {
+        "total": 7,
+        "passed": 6,
+        "failed": 1,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "orchestrator",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "evidence-adapter",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "orchestrationDriver": {
+    "status": "BLOCKED",
+    "reason": "No owner-reviewed orchestration driver supplied; no substitute is created"
+  },
+  "status": "FAIL",
+  "finishedAt": "2026-11-08T14:11:56.647Z"
+}

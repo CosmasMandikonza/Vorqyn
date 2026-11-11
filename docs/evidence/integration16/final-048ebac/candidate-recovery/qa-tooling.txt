@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: QA runner: failed frozen installation cannot invoke any dependent product check
+ok 1 - QA runner: failed frozen installation cannot invoke any dependent product check
+  ---
+  duration_ms: 201.621439
+  type: 'test'
+  ...
+# Subtest: historical capture audit: valid PNG integrity cannot erase eight known geometry failures
+ok 2 - historical capture audit: valid PNG integrity cannot erase eight known geometry failures
+  ---
+  duration_ms: 272.017678
+  type: 'test'
+  ...
+# Subtest: capture audit rejects a desktop PNG substituted as 320px mobile evidence
+ok 3 - capture audit rejects a desktop PNG substituted as 320px mobile evidence
+  ---
+  duration_ms: 104.005322
+  type: 'test'
+  ...
+# Subtest: capture audit rejects forged runId independently
+ok 4 - capture audit rejects forged runId independently
+  ---
+  duration_ms: 131.966461
+  type: 'test'
+  ...
+# Subtest: capture audit rejects forged sourceSha independently
+ok 5 - capture audit rejects forged sourceSha independently
+  ---
+  duration_ms: 270.85811
+  type: 'test'
+  ...
+# Subtest: capture audit rejects false viewport metadata despite a plausible filename
+ok 6 - capture audit rejects false viewport metadata despite a plausible filename
+  ---
+  duration_ms: 189.798499
+  type: 'test'
+  ...
+# Subtest: capture audit refuses an incomplete 31-image inventory
+ok 7 - capture audit refuses an incomplete 31-image inventory
+  ---
+  duration_ms: 202.926713
+  type: 'test'
+  ...
+# Subtest: tool TAP parser accepts a complete nonempty zero-skip run
+ok 8 - tool TAP parser accepts a complete nonempty zero-skip run
+  ---
+  duration_ms: 0.470543
+  type: 'test'
+  ...
+# Subtest: tool TAP parser refuses zero, missing, skipped, todo, cancelled or nonzero-exit proof
+ok 9 - tool TAP parser refuses zero, missing, skipped, todo, cancelled or nonzero-exit proof
+  ---
+  duration_ms: 1.413834
+  type: 'test'
+  ...
+# Subtest: driver fingerprint records exact committed bytes without claiming authority
+ok 10 - driver fingerprint records exact committed bytes without claiming authority
+  ---
+  duration_ms: 85.970001
+  type: 'test'
+  ...
+# Subtest: modified or untracked driver bytes cannot borrow the recorded commit SHA
+ok 11 - modified or untracked driver bytes cannot borrow the recorded commit SHA
+  ---
+  duration_ms: 39.986329
+  type: 'test'
+  ...
+# Subtest: absent driver remains blocked rather than replaced by a fixture
+ok 12 - absent driver remains blocked rather than replaced by a fixture
+  ---
+  duration_ms: 0.11527
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1764.535399

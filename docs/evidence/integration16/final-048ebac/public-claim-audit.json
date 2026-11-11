@@ -1,0 +1,66 @@
+{
+  "origin": "https://vorqynweb-production.up.railway.app",
+  "scope": "Actual signed-out DOM claim excerpts, static page load only; manual review required",
+  "remoteDeploymentSha": null,
+  "results": [
+    {
+      "route": "/",
+      "url": "https://vorqynweb-production.up.railway.app/",
+      "claimLines": [
+        "Coordinate independent fleets, inspect their evidence and recover unfinished work — with settlement designed around what was actually accepted.",
+        "Product preview. No account or wallet needed.",
+        "01 / AIR",
+        "Air survey. Ground access. Submerged obstruction mapping.",
+        "Failure is part of the mission.",
+        "COLLABORATION / AIR + LAND + SEA",
+        "A failed sensor isn’t a finished job.",
+        "After a storm, poor visibility can make an optical survey unusable. Keep the failed evidence visible. Don’t call the work complete.",
+        "An AI coordinator proposes a sonar-capable replacement. Deterministic capability and budget checks gate the proposal; an authorized signer approves the handoff.",
+        "Settle the accepted outcome.",
+        "Independent verification binds evidence to the current assignment. Solana is intended to enforce who can claim, how much and only once.",
+        "SETTLEMENT / AUTHORITY ON SOLANA",
+        "WHY SOLANA BELONGS HERE",
+        "The planned program holds mission escrow, versions task assignments and limits claims to the authorized operator after verifier approval. A stale assignment must not collect. A retry must not pay twice.",
+        "Solana enforces financial rules and authorization. It does not establish physical truth; evidence still needs independent verification.",
+        "This release establishes the visual language, navigation and entry routes. The port is an original concept illustration. The 3D mission world, telemetry, AI recovery, organization accounts and Solana flows are future integrations.",
+        "Font & component license noticesSource inventory & verification evidence",
+        "Solana × MLH Hackathon · 2026",
+        "An early-stage prototype. No live fleet operations or on-chain settlement in this preview."
+      ]
+    },
+    {
+      "route": "/demo",
+      "url": "https://vorqynweb-production.up.railway.app/demo",
+      "claimLines": [
+        "A storm has disrupted a port. The intended experience follows independent machines as they inspect access, encounter failed evidence and recover the work together.",
+        "01 / AIR",
+        "Air survey. Ground access. Submerged obstruction mapping.",
+        "Trace the failure.",
+        "Review the authorized assignment change, independent verifier decision and confirmed Solana devnet settlement when those systems are integrated.",
+        "This is a scenario introduction, not a playable mission or a recorded run. The illustration does not require WebGL. No fault trigger, wallet approval or settlement action is available yet.",
+        "Solana × MLH Hackathon · 2026",
+        "An early-stage prototype. No live fleet operations or on-chain settlement in this preview."
+      ]
+    },
+    {
+      "route": "/demo/mission",
+      "url": "https://vorqynweb-production.up.railway.app/demo/mission",
+      "claimLines": [
+        "Solana × MLH Hackathon · 2026",
+        "An early-stage prototype. No live fleet operations or on-chain settlement in this preview."
+      ]
+    },
+    {
+      "route": "/workspace/create",
+      "url": "https://vorqynweb-production.up.railway.app/workspace/create",
+      "claimLines": [
+        "No account, organization or wallet is connected. Drafts are unencrypted and are not shared across browsers. Use fictional planning names; do not enter customer information, credentials or private keys.",
+        "New local draft",
+        "No local drafts yet.",
+        "Choose a browser-local draft or start a new one.",
+        "Solana × MLH Hackathon · 2026",
+        "An early-stage prototype. No live fleet operations or on-chain settlement in this preview."
+      ]
+    }
+  ]
+}

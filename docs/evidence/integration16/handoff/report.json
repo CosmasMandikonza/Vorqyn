@@ -1,0 +1,91 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T01:42:14.216Z",
+  "sourceSha": "efddcda8d9a68c5105be1f1a1e5efa8142b59c96",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16-pr53",
+  "targetSha": "43d8059c7c6da6afc72d21ea3e568b6cbef9f8f8",
+  "targetDirty": false,
+  "scope": "READ-ONLY CANDIDATE DIAGNOSTIC; not merged-main evidence",
+  "checks": [
+    {
+      "id": "existing-boundaries",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "tests/cross-system/boundaries.test.tsx",
+        "--reporter=json",
+        "--outputFile=/workspace/work/integration16-handoff-proof/existing-boundaries.json"
+      ],
+      "log": "existing-boundaries.txt",
+      "report": "existing-boundaries.json",
+      "stats": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "BLOCKED",
+      "detail": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "BLOCKED",
+      "detail": "Simulator-relative sources 500,1000,1500,2000,2500,3000,3500,4000 vs epoch capture 1762000000020; no clock rebasing invented"
+    },
+    {
+      "id": "chain-client",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "recovery",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "handoff",
+      "status": "FAIL",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "--config",
+        "../../scripts/integration/vitest.config.mts",
+        "--reporter=json",
+        "--outputFile=/workspace/work/integration16-handoff-proof/handoff.json"
+      ],
+      "log": "handoff.txt",
+      "report": "handoff.json",
+      "stats": {
+        "total": 3,
+        "passed": 2,
+        "failed": 1,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "orchestrator",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "status": "FAIL",
+  "finishedAt": "2026-11-08T01:42:27.126Z"
+}

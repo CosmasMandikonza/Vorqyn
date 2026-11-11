@@ -1,0 +1,11 @@
+
+> vorqyn@ typecheck /workspace/work/integration16
+> pnpm -r run typecheck
+
+Scope: 3 of 4 workspace projects
+packages/contracts typecheck$ tsc --noEmit
+packages/contracts typecheck: Done
+services/verifier typecheck$ tsc --noEmit
+apps/web typecheck$ tsc --noEmit
+services/verifier typecheck: Done
+apps/web typecheck: Done

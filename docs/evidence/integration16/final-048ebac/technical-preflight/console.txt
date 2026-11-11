@@ -1,0 +1,20 @@
+PASS    node-version: observed 22.21.1; required 22.21.1
+PASS    pnpm-version: observed 10.34.5; required 10.34.5
+PASS    fresh-snapshot: isolated committed-source snapshot, no pre-existing node_modules
+PASS    environment-config: static world and local drafts need no external secrets; optional public config is valid
+PASS    credential-hygiene: no supported credential patterns found; heuristic scan, not a security guarantee
+PASS    install: exit 0
+PASS    lint: exit 0
+PASS    typecheck: exit 0
+PASS    unit: exit 0
+PASS    build: exit 0
+PASS    simulation-core: exit 0
+PASS    world-coordinates: exit 0
+PASS    world-assets: exit 0
+PASS    release-tools: exit 0
+PASS    narration: exit 0
+PASS    kernel-recording-demo: exit 0
+NOT RUN browser: --technical-only requested; no browser result is implied
+NOT RUN judge-qa: --technical-only requested; no browser result is implied
+NOT RUN judge-qa-png-validation: --technical-only requested; no browser result is implied
+Local checks: BLOCKED; submission readiness: BLOCKED. Report: /workspace/work/final-technical-preflight/report.json

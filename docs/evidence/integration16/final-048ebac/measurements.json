@@ -1,0 +1,1154 @@
+[
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-dark-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-dark-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-dark-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-dark-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-light-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-light-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-light-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-clean-uw-light-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-dark-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-dark-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-dark-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-dark-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-light-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-light-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-light-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-fault-uw-light-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-dark-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-dark-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-dark-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-dark-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-light-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-light-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-light-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-follow-light-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-dark-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-dark-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-dark-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-dark-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-light-1024x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-light-1440x900.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-light-320x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "local",
+    "file": "browser/integration-camera/full-row-inspect-light-390x844.json",
+    "sourceSha": "b5a4afc965ec57f5b90e7942ddee609e7397745b",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-dark-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-dark-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-dark-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-dark-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-light-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-light-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-light-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-clean-uw-light-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-dark-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-dark-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-dark-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-dark-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-light-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-light-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-light-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-fault-uw-light-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-dark-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-dark-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-dark-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-dark-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-light-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-light-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-light-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-follow-light-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-dark-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-dark-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-dark-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-dark-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "dark",
+    "storedThemePreference": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-light-1024x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1024,
+    "frameLeft": 48,
+    "frameRight": 976,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-light-1440x900.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "documentWidth": 1440,
+    "frameLeft": 48,
+    "frameRight": 1392,
+    "controlLeft": 65,
+    "controlRight": 492.640625,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-light-320x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 320,
+    "frameLeft": 20,
+    "frameRight": 300,
+    "controlLeft": 37,
+    "controlRight": 283,
+    "minimumControlHeight": 44
+  },
+  {
+    "scope": "public",
+    "file": "public-natural-keyboard/integration-camera/full-row-inspect-light-390x844.json",
+    "sourceSha": "bbe5dfbace6bddcca8de0401f1a70dfc072da240",
+    "theme": "light",
+    "storedThemePreference": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "documentWidth": 390,
+    "frameLeft": 20,
+    "frameRight": 370,
+    "controlLeft": 37,
+    "controlRight": 352.984375,
+    "minimumControlHeight": 44
+  }
+]

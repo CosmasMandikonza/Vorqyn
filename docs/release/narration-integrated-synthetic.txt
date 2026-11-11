@@ -1,15 +1,15 @@
 This is VORQYN for the MLH Solana Hackathon.
 
-A storm-damaged port needs air, ground and underwater inspection. When a sensor becomes unreliable, operators need to understand what was observed and what failed.
+A storm-damaged port needs air, ground and underwater inspection. When a sensor fails, operators need to distinguish observations from decisions and authorized outcomes.
 
-I start our synthetic survey and advance it. This is our original fictional port. The ROV follows kernel-observed coordinates; the clock is simulator time, not blockchain time. These are not physical robots or SITL.
+This is our original fictional port. I launch a synthetic survey, advance its server-backed kernel, select the underwater ROV and follow its observed position. These are synthetic measurements, not physical robots or SITL.
 
-I inject an underwater optical fault. The next measurement shows a sharp optical quality drop. Sonar remains independent of that fault, with its own synthetic noise. These measurements are not evidence verdicts.
+I inject an optical fault. The inspector and quality plot show the measured degradation. Sonar remains independently modelled. These unitless values are observations, not visibility metres or evidence verdicts.
 
-Replay re-executes the actual operation trace and returns identical observations. The two-dimensional alternative preserves source-labelled robot state without WebGL.
+Replay re-executes the actual operation trace and reproduces identical observations. Recorded ghost paths explain where the robot was; they do not simulate a replacement or reassignment. The two-dimensional alternative keeps source-labelled robot state accessible.
 
-Now I configure and save a distinct mission brief, then reload it. Regions, sonar requirements, thresholds and an exact proposed budget persist in this browser. This is not company authentication, funding or launch.
+I can also save a distinct local mission brief with regions, sonar requirements and an exact proposed budget. It stays in this browser; it is not funded or launched.
 
-Our merged escrow foundation has local VM tests; our source-aware journal has replay and ordering guards. Devnet deployment, reassignment, payout, independent verification and runtime AI are not demonstrated here.
+Our source contains tested verifier and escrow foundations. This take does not demonstrate authenticated recovery, independent verifier authority, wallet approval, devnet settlement or runtime AI. Those claims require integrated source and actual public receipts.
 
-Codex and ZCode assisted development. Event work and external dependencies are disclosed in the repository. This is a working synthetic inspection prototype with explicit release limitations.
+Codex and ZCode assisted development. Event work and external dependencies are disclosed in the repository. VORQYN makes its working synthetic workflow inspectable and its remaining boundaries explicit.

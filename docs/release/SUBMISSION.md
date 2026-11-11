@@ -1,8 +1,8 @@
 # Founder submission desk
 
-Status on November 7, 2026: **not submitted; no deployment, public video, devnet settlement proof or acceptance receipt is asserted.** The public project is [CosmasMandikonza/Vorqyn](https://github.com/CosmasMandikonza/Vorqyn). Local judge entry is `/demo`, followed by `/demo/mission`; these are paths, not a public deployment URL.
+Status on November 8, 2026: the canonical public origin **https://vorqynweb-production.up.railway.app/** passed 9/9 signed-out functional smoke checks. The remote deployment commit remains unverified. No produced public video, devnet settlement proof or MLH acceptance receipt is asserted. [Public source](https://github.com/CosmasMandikonza/Vorqyn) and [current independent QA](../evidence/integration16/ACCEPTANCE_STATUS.md) remain distinct from authenticated submission.
 
-Founder action now: open the authenticated MLH form and begin the entry while deployment/recording proceeds. Required fields and actual registration/receipt state are human-only until inspected. Use [DEPLOYMENT.md](DEPLOYMENT.md) for the validated Node packaging, provider sign-in action and anonymous smoke; no public origin is asserted by a local container.
+Founder action now: open the authenticated MLH form and begin the entry while deployment/recording proceeds. Required fields and actual registration/receipt state are human-only until inspected. Use [DEPLOYMENT.md](DEPLOYMENT.md) for the validated Node packaging, provider sign-in action and anonymous smoke; the canonical origin has now been tested independently; a local container alone still cannot prove public hosting.
 
 ## Confirmed deadlines and portal discrepancy
 
@@ -23,7 +23,7 @@ The [MLH standard rules](https://github.com/MLH/mlh-policies/blob/main/standard-
 - [ ] Founder reviews event eligibility, work dates and team registration/check-in. Record any pre-existing dependencies and original event-time work.
 - [ ] Choose an exact reviewed **merged main SHA**; rerun the preflight on that SHA. A feature-branch check is not integrated-main proof.
 - [ ] Confirm [repository](https://github.com/CosmasMandikonza/Vorqyn) is public in a signed-out browser and keep it public. Inspect `git status` before publishing; retain no `.env`, wallet JSON, private keys, customer data or credentials.
-- [ ] If a deployed demo is requested by the form: founder signs into the chosen hosting provider, connects this repository, configures the Next.js workspace root/build/runtime, deploys reviewed main, and verifies the returned HTTPS URL signed out. **No host is configured or deployment performed by this PR.** Do not invent a URL or claim local setup meets an unknown portal field.
+- [ ] If a deployed demo is requested by the form: founder signs into the chosen hosting provider, connects this repository, configures the Next.js workspace root/build/runtime, deploys reviewed main, and verifies the returned HTTPS URL signed out. The canonical Railway origin is verified functionally; obtain the actual hosting build/deploy record to attest its SHA. This QA task did not deploy it. Do not claim an unknown portal field is satisfied.
 - [ ] Rehearse and record the enabled shot list. Inspect the produced audio/video, then run `node scripts/release/check-media.mjs --file <actual-file>`. That command does not upload or verify spoken content.
 - [ ] Founder signs into their video host, uploads the actual recording, selects **Public** visibility, and checks playback without login. Keep public after the event. Capture the real URL only after inspection; no video presently exists in this packet.
 - [ ] Populate the form with the reviewed [submission copy](SUBMISSION_COPY.md), real repository/video/demo URLs and actual contributors/tool disclosures. Confirm the form's required fields after login.
@@ -35,4 +35,4 @@ The [MLH standard rules](https://github.com/MLH/mlh-policies/blob/main/standard-
 
 ## Proof inventory to fill with observed artifacts
 
-`submission-status.json` deliberately contains null deployment/video/receipt/chain fields. Do not replace null with a plausible-looking identifier. Public form/project links may be recorded after human inspection; keep account email, receipt secrets and personal registration data out of public evidence. The preflight never auto-certifies external submission, receipt, video content or chain truth from a URL string.
+`submission-status.json` now records the verified public origin, while deployment-source/video/receipt/chain proof remains null. Do not replace null with a plausible-looking identifier. Public form/project links may be recorded after human inspection; keep account email, receipt secrets and personal registration data out of public evidence. The preflight never auto-certifies external submission, receipt, video content or chain truth from a URL string.

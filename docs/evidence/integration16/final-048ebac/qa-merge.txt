@@ -1,0 +1,28 @@
+Merge made by the 'ort' strategy.
+ Anchor.toml                                        |  11 +-
+ apps/web/components/mission-world/PortViewer.tsx   |  53 +--
+ apps/web/tests/browser/mission-world.spec.ts       | 121 +++++++
+ .../vq-14-visual/camera-row-320-dark-frame.png     | Bin 0 -> 33315 bytes
+ .../vq-14-visual/camera-row-320-dark-viewport.png  | Bin 0 -> 44918 bytes
+ .../vq-14-visual/camera-row-320-light-frame.png    | Bin 0 -> 33379 bytes
+ .../vq-14-visual/camera-row-320-light-viewport.png | Bin 0 -> 44855 bytes
+ docs/evidence/vq-14-visual/camera-row-audit.json   | 392 +++++++++++++++++++++
+ docs/evidence/vq-14-visual/tools/README.md         |  64 ++++
+ .../vq-14-visual/tools/audit-camera-row.mjs        | 186 ++++++++++
+ docs/release/DEPLOYMENT_RUNBOOK.md                 | 133 +++++++
+ .../scripts/local-validator-e2e.test.ts            |   2 +-
+ packages/chain-client/src/client.test.ts           |   2 +-
+ packages/chain-client/src/config.ts                |   4 +-
+ packages/chain-client/src/fixtures-chain.json      |  10 +-
+ pnpm-lock.yaml                                     |   2 +-
+ programs/vorqyn/ACCOUNTS.md                        |   9 +-
+ programs/vorqyn/src/lib.rs                         |   6 +-
+ 18 files changed, 949 insertions(+), 46 deletions(-)
+ create mode 100644 docs/evidence/vq-14-visual/camera-row-320-dark-frame.png
+ create mode 100644 docs/evidence/vq-14-visual/camera-row-320-dark-viewport.png
+ create mode 100644 docs/evidence/vq-14-visual/camera-row-320-light-frame.png
+ create mode 100644 docs/evidence/vq-14-visual/camera-row-320-light-viewport.png
+ create mode 100644 docs/evidence/vq-14-visual/camera-row-audit.json
+ create mode 100644 docs/evidence/vq-14-visual/tools/README.md
+ create mode 100644 docs/evidence/vq-14-visual/tools/audit-camera-row.mjs
+ create mode 100644 docs/release/DEPLOYMENT_RUNBOOK.md

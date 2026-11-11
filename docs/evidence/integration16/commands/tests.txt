@@ -1,0 +1,36 @@
+
+> vorqyn@ test /workspace/work/integration16
+> pnpm -r run test
+
+Scope: 3 of 4 workspace projects
+packages/contracts test$ vitest run
+packages/contracts test:  RUN  v5.1.0 /workspace/work/integration16/packages/contracts
+packages/contracts test:  Test Files  6 passed (6)
+packages/contracts test:       Tests  90 passed (90)
+packages/contracts test:    Start at  01:40:31
+packages/contracts test:    Duration  10.76s (transform 60%, import 20%, tests 16%, worker 5%)
+packages/contracts test:     Isolate  6 workers spawned · ~946ms startup each (spawn + environment, per file)
+packages/contracts test:              at least ~4.73s faster with isolate: false — reuses workers across files instead of one per file
+packages/contracts test: Done
+apps/web test$ vitest run
+services/verifier test$ vitest run
+services/verifier test:  RUN  v5.1.0 /workspace/work/integration16/services/verifier
+apps/web test:  RUN  v5.1.0 /workspace/work/integration16/apps/web
+services/verifier test:  Test Files  3 passed (3)
+services/verifier test:       Tests  36 passed (36)
+services/verifier test:    Start at  01:40:45
+services/verifier test:    Duration  3.22s (transform 55%, import 31%, tests 7%, worker 7%)
+services/verifier test:     Isolate  3 workers spawned · ~475ms startup each (spawn + environment, per file)
+services/verifier test:              at least ~951ms faster with isolate: false — reuses workers across files instead of one per file
+services/verifier test: Done
+apps/web test: (node:56510) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+apps/web test: Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+apps/web test: (Use `node --trace-deprecation ...` to show where the warning was created)
+apps/web test:  Test Files  15 passed (15)
+apps/web test:       Tests  190 passed (190)
+apps/web test:    Start at  01:40:45
+apps/web test:    Duration  46.40s (environment 66%, tests 13%, setup 13%, transform 5%, import 3%)
+apps/web test: Environment  jsdom was created 15 times · 27.82s total, 66% of tracked time
+apps/web test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+apps/web test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+apps/web test: Done

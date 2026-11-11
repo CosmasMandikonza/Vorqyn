@@ -1,0 +1,91 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T01:42:14.278Z",
+  "sourceSha": "efddcda8d9a68c5105be1f1a1e5efa8142b59c96",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16-pr50",
+  "targetSha": "3be9eeee8bf015f4fafe88423d1e452b44637363",
+  "targetDirty": false,
+  "scope": "READ-ONLY CANDIDATE DIAGNOSTIC; not merged-main evidence",
+  "checks": [
+    {
+      "id": "existing-boundaries",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "tests/cross-system/boundaries.test.tsx",
+        "--reporter=json",
+        "--outputFile=/workspace/work/integration16-chain-proof/existing-boundaries.json"
+      ],
+      "log": "existing-boundaries.txt",
+      "report": "existing-boundaries.json",
+      "stats": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "BLOCKED",
+      "detail": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "BLOCKED",
+      "detail": "Simulator-relative sources 500,1000,1500,2000,2500,3000,3500,4000 vs epoch capture 1762000000020; no clock rebasing invented"
+    },
+    {
+      "id": "chain-client",
+      "status": "FAIL",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@vorqyn/web",
+        "exec",
+        "vitest",
+        "run",
+        "--config",
+        "../../scripts/integration/vitest.config.mts",
+        "--reporter=json",
+        "--outputFile=/workspace/work/integration16-chain-proof/chain-client.json"
+      ],
+      "log": "chain-client.txt",
+      "report": "chain-client.json",
+      "stats": {
+        "total": 5,
+        "passed": 4,
+        "failed": 1,
+        "pending": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "recovery",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "handoff",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    },
+    {
+      "id": "orchestrator",
+      "status": "NOT RUN",
+      "detail": "Excluded by explicit single-component diagnostic; cannot certify full integration"
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "status": "FAIL",
+  "finishedAt": "2026-11-08T01:42:27.197Z"
+}

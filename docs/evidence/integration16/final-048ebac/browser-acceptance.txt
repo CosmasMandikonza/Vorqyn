@@ -1,0 +1,51 @@
+[WebServer] (node:2428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:2521) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+
+Running 34 tests using 1 worker
+
+(node:2573) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 320 › entire row remains visible after four real station/fault states
+[2/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 390 › entire row remains visible after four real station/fault states
+[3/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1024 › entire row remains visible after four real station/fault states
+[4/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1440 › entire row remains visible after four real station/fault states
+[5/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 320 › entire row remains visible after four real station/fault states
+[6/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 390 › entire row remains visible after four real station/fault states
+[7/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1024 › entire row remains visible after four real station/fault states
+[8/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1440 › entire row remains visible after four real station/fault states
+[9/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% light (historical 89px reproduction)
+[10/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% dark (historical 89px reproduction)
+[11/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1440x900
+[12/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1024x900
+[13/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+[14/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+[15/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1440x900
+[16/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1024x900
+[17/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+[18/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+[19/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 1440
+[20/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 2048
+[21/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 1440
+[22/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 2048
+[23/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1440x900
+[24/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+[25/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+[26/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+[27/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1440x900
+[28/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+[29/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+[30/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+[31/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 1440
+[32/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 390
+[33/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 1440
+[34/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 390
+  Slow test file: [judge-qa] › tests/browser/judge-qa-shell.spec.ts (5.1m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  34 passed (7.7m)

@@ -1,0 +1,37 @@
+{
+  "sourceKind": "SYNTHETIC_SIM",
+  "emittedMetricKinds": [
+    "rov-01-optical"
+  ],
+  "requiredMetricKinds": [
+    "visibility_m",
+    "sonar_ping"
+  ],
+  "sampleSourceTimesMs": [
+    500,
+    1000,
+    1500,
+    2000,
+    2500,
+    3000,
+    3500,
+    4000
+  ],
+  "capturedAtMs": 1762000000020,
+  "accepted": false,
+  "reasons": [
+    "sensor_backing_missing:optical:kind=visibility_m",
+    "metric_missing:visibility_m",
+    "sample_stale:rov-01#1:age_ms=1761999999520:max=120000",
+    "sample_stale:rov-01#2:age_ms=1761999999020:max=120000",
+    "sample_stale:rov-01#3:age_ms=1761999998520:max=120000",
+    "sample_stale:rov-01#4:age_ms=1761999998020:max=120000",
+    "sample_stale:rov-01#5:age_ms=1761999997520:max=120000",
+    "sample_stale:rov-01#6:age_ms=1761999997020:max=120000",
+    "sample_stale:rov-01#7:age_ms=1761999996520:max=120000",
+    "sample_stale:rov-01#8:age_ms=1761999996020:max=120000"
+  ],
+  "metricCompatibility": "BLOCKED",
+  "clockMapping": "BLOCKED",
+  "explanation": "Unitless optical sensor ID is not visibility metres; receipt epochs do not rebase simulator source clocks. No source-backed conversion or clock mapping is implemented by QA."
+}

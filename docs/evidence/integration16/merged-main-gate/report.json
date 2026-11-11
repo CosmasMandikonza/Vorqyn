@@ -1,0 +1,61 @@
+{
+  "schema": "vorqyn.cross-system-gate/1",
+  "startedAt": "2026-11-08T01:54:02.137Z",
+  "sourceSha": "997bf307ed50a66e4c6f58e447e04cea833747c4",
+  "dirty": false,
+  "targetRoot": "/workspace/work/integration16",
+  "targetSha": "997bf307ed50a66e4c6f58e447e04cea833747c4",
+  "targetDirty": false,
+  "scope": "Current checkout; existing boundaries and pending connection acceptance",
+  "checks": [
+    {
+      "id": "frozen-install",
+      "status": "FAIL",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "log": "frozen-install.txt"
+    },
+    {
+      "id": "existing-boundaries",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "source-backed-verifier-metrics",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "source-to-capture-clock-mapping",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "chain-client",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "recovery",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "handoff",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    },
+    {
+      "id": "orchestrator",
+      "status": "NOT RUN",
+      "detail": "Frozen dependency installation failed; existing node_modules cannot certify this target"
+    }
+  ],
+  "publicChainReceipts": "NOT RUN — no chain calls, signatures or wallet authority in this QA runner",
+  "status": "FAIL",
+  "finishedAt": "2026-11-08T01:54:02.852Z"
+}

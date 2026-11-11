@@ -1,0 +1,35 @@
+
+> vorqyn@ build /workspace/work/integration16
+> pnpm -r run build
+
+Scope: 4 of 5 workspace projects
+apps/web build$ next build
+apps/web build:    ▲ Next.js 15.5.29
+apps/web build:    Creating an optimized production build ...
+apps/web build:  ✓ Compiled successfully in 6.2s
+apps/web build:    Linting and checking validity of types ...
+apps/web build:    Collecting page data ...
+apps/web build:    Generating static pages (0/9) ...
+apps/web build:    Generating static pages (2/9) 
+apps/web build:    Generating static pages (4/9) 
+apps/web build:    Generating static pages (6/9) 
+apps/web build:  ✓ Generating static pages (9/9)
+apps/web build:    Finalizing page optimization ...
+apps/web build:    Collecting build traces ...
+apps/web build: Route (app)                                 Size  First Load JS
+apps/web build: ┌ ○ /                                      592 B         107 kB
+apps/web build: ├ ○ /_not-found                            131 B         103 kB
+apps/web build: ├ ƒ /api/demo/observations                 131 B         103 kB
+apps/web build: ├ ƒ /api/demo/simulation                   131 B         103 kB
+apps/web build: ├ ○ /demo                                  592 B         107 kB
+apps/web build: ├ ○ /demo/mission                        1.42 kB         107 kB
+apps/web build: ├ ○ /icon.svg                                0 B            0 B
+apps/web build: ├ ○ /workspace                             164 B         106 kB
+apps/web build: └ ○ /workspace/create                    10.5 kB         127 kB
+apps/web build: + First Load JS shared by all             103 kB
+apps/web build:   ├ chunks/0e0b8bca-3cef25f6382172fb.js  54.2 kB
+apps/web build:   ├ chunks/450-df0df7919498d45b.js       46.3 kB
+apps/web build:   └ other shared chunks (total)          2.12 kB
+apps/web build: ○  (Static)   prerendered as static content
+apps/web build: ƒ  (Dynamic)  server-rendered on demand
+apps/web build: Done

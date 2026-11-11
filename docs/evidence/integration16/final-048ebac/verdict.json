@@ -1,0 +1,85 @@
+{
+  "schema": "vorqyn.final-gate-verdict/1",
+  "recordedAt": "2026-11-08T13:49:05.093136+00:00",
+  "reviewedMainSha": "048ebac912a0e22db6b2a99427c5a5b5c40845f8",
+  "pr": 55,
+  "verdict": {
+    "honestSyntheticRecording": "GO",
+    "authenticatedRecoveryVerifierWalletDevnetWorkflow": "NO-GO",
+    "productComplete": false,
+    "initialSubmissionHeldForP2": false
+  },
+  "publicOrigin": "https://vorqynweb-production.up.railway.app",
+  "remoteDeploymentSha": null,
+  "currentResults": {
+    "workspace": {
+      "passed": 340,
+      "failed": 0,
+      "gatedSkippedNotRun": 1
+    },
+    "strictLocalBrowser": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "strictPng": {
+      "passed": 126,
+      "failed": 0
+    },
+    "cameraStatesLocal": {
+      "passed": 32,
+      "failed": 0
+    },
+    "publicFunctional": {
+      "passed": 9,
+      "failed": 0
+    },
+    "publicNaturalCameraCases": {
+      "passed": 8,
+      "failed": 0,
+      "states": 32
+    },
+    "publicSavedDraftJourney": {
+      "passed": 1,
+      "failed": 0
+    },
+    "originalBoundaries": {
+      "passed": 20,
+      "failed": 0
+    },
+    "owner51Acceptance": {
+      "passed": 7,
+      "failed": 3
+    },
+    "owner53Acceptance": {
+      "passed": 2,
+      "failed": 1
+    },
+    "owner54Unit": {
+      "passed": 26,
+      "failed": 0
+    },
+    "owner58NewUnit": {
+      "passed": 54,
+      "failed": 0
+    },
+    "owner58NewAcceptance": {
+      "passed": 9,
+      "failed": 0
+    },
+    "mergedChainClientAcceptance": {
+      "passed": 4,
+      "failed": 1,
+      "priority": "P2"
+    }
+  },
+  "notProven": [
+    "Real orchestration driver and trusted ingestion",
+    "Integrated owner adapters on merged main",
+    "Authenticated verifier/wallet authority",
+    "Deployed devnet program and actual transaction/account receipts",
+    "Remote hosting source SHA",
+    "Produced public video and accepted MLH submission receipt"
+  ],
+  "note": "Counts overlap; do not sum. Separate source SHAs and scope in individual reports. No merge or deployment by QA."
+}

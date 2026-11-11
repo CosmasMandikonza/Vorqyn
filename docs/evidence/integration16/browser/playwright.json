@@ -1,0 +1,1481 @@
+{
+  "config": {
+    "argv": [
+      "/workspace/work/tooling/node_modules/node/bin/node",
+      "/workspace/work/integration16/apps/web/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "../../scripts/release/judge-qa.config.mjs"
+    ],
+    "configFile": "/workspace/work/integration16/scripts/release/judge-qa.config.mjs",
+    "rootDir": "/workspace/work/integration16/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/workspace/work/integration16/scripts/release/prepare-browser.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/work/integration16-browser-proof/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "judge-qa",
+        "name": "judge-qa",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "judge-qa*.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/workspace/work/integration16-browser-proof/traces",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "judge-qa",
+        "testDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "snapshotDir": "/workspace/work/integration16/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "judge-qa*.spec.ts",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3110",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "deviceScaleFactor": 1,
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "launchOptions": {
+            "executablePath": "/usr/bin/chromium",
+            "args": [
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--disable-dev-shm-usage"
+            ]
+          },
+          "actionTimeout": 10000,
+          "navigationTimeout": 30000
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "judge-qa"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/work/integration16-browser-proof/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @vorqyn/web start --port 3110",
+      "cwd": "/workspace/work/integration16",
+      "url": "http://127.0.0.1:3110",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "judge-qa-cross-system.spec.ts",
+      "file": "judge-qa-cross-system.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "cross-system camera light 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13683,
+                      "error": {
+                        "message": "Error: full-row-clean-uw-light-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m",
+                        "stack": "Error: full-row-clean-uw-light-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16",
+                        "location": {
+                          "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                          "column": 16,
+                          "line": 165
+                        },
+                        "snippet": " \u001b[90m 163 |\u001b[39m             expect\n \u001b[90m 164 |\u001b[39m               \u001b[33m.\u001b[39msoft(button\u001b[33m.\u001b[39mrect\u001b[33m.\u001b[39mright\u001b[33m,\u001b[39m \u001b[32m`${name}: ${button.name} right edge`\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 165 |\u001b[39m               \u001b[33m.\u001b[39mtoBeLessThanOrEqual(\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mmin(width\u001b[33m,\u001b[39m measured\u001b[33m.\u001b[39mframe\u001b[33m.\u001b[39mright))\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 166 |\u001b[39m             expect\n \u001b[90m 167 |\u001b[39m               \u001b[33m.\u001b[39msoft(button\u001b[33m.\u001b[39mrect\u001b[33m.\u001b[39mheight\u001b[33m,\u001b[39m \u001b[32m`${name}: ${button.name} hit height`\u001b[39m)\n \u001b[90m 168 |\u001b[39m               \u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m44\u001b[39m)\u001b[33m;\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 165
+                          },
+                          "message": "Error: full-row-clean-uw-light-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m\n\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n> 165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n      |                ^\n  166 |             expect\n  167 |               .soft(button.rect.height, `${name}: ${button.name} hit height`)\n  168 |               .toBeGreaterThanOrEqual(44);\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-follow-light-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-inspect-light-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-fault-uw-light-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:43:38.677Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/workspace/work/integration16-browser-proof/traces/judge-qa-cross-system-cros-08382-r-real-station-fault-states-judge-qa/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/workspace/work/integration16-browser-proof/traces/judge-qa-cross-system-cros-08382-r-real-station-fault-states-judge-qa/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                        "column": 16,
+                        "line": 165
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-844ea6afa568a90651e1",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13335,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:43:53.644Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-3d11cec186e9086744ad",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17107,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:44:07.362Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-8c4fa8194b9466689218",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera light 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19788,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:44:24.510Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-3e7b6eb92892c8a6688b",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 320",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11648,
+                      "error": {
+                        "message": "Error: full-row-clean-uw-dark-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m",
+                        "stack": "Error: full-row-clean-uw-dark-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16",
+                        "location": {
+                          "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                          "column": 16,
+                          "line": 165
+                        },
+                        "snippet": " \u001b[90m 163 |\u001b[39m             expect\n \u001b[90m 164 |\u001b[39m               \u001b[33m.\u001b[39msoft(button\u001b[33m.\u001b[39mrect\u001b[33m.\u001b[39mright\u001b[33m,\u001b[39m \u001b[32m`${name}: ${button.name} right edge`\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 165 |\u001b[39m               \u001b[33m.\u001b[39mtoBeLessThanOrEqual(\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mmin(width\u001b[33m,\u001b[39m measured\u001b[33m.\u001b[39mframe\u001b[33m.\u001b[39mright))\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 166 |\u001b[39m             expect\n \u001b[90m 167 |\u001b[39m               \u001b[33m.\u001b[39msoft(button\u001b[33m.\u001b[39mrect\u001b[33m.\u001b[39mheight\u001b[33m,\u001b[39m \u001b[32m`${name}: ${button.name} hit height`\u001b[39m)\n \u001b[90m 168 |\u001b[39m               \u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m44\u001b[39m)\u001b[33m;\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 165
+                          },
+                          "message": "Error: full-row-clean-uw-dark-320x844: FOLLOW right edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m353.75\u001b[39m\n\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n> 165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n      |                ^\n  166 |             expect\n  167 |               .soft(button.rect.height, `${name}: ${button.name} hit height`)\n  168 |               .toBeGreaterThanOrEqual(44);\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-follow-dark-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-inspect-dark-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        },
+                        {
+                          "location": {
+                            "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                            "column": 16,
+                            "line": 162
+                          },
+                          "message": "Error: full-row-fault-uw-dark-320x844: RESET left edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-34\u001b[39m\n\n  160 |             expect\n  161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)\n> 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));\n      |                ^\n  163 |             expect\n  164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)\n  165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));\n    at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:44:44.310Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/workspace/work/integration16-browser-proof/traces/judge-qa-cross-system-cros-cd8ff-r-real-station-fault-states-judge-qa/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/workspace/work/integration16-browser-proof/traces/judge-qa-cross-system-cros-cd8ff-r-real-station-fault-states-judge-qa/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts",
+                        "column": 16,
+                        "line": 165
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-134e536fd51a83dd55ce",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 390",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13919,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:44:56.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-d82b8cdb73f30d0acae8",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1024",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17345,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:45:11.118Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-960c296626079cfa750c",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "cross-system camera dark 1440",
+          "file": "judge-qa-cross-system.spec.ts",
+          "line": 26,
+          "column": 10,
+          "specs": [
+            {
+              "title": "entire row remains visible after four real station/fault states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "judge-qa",
+                  "projectName": "judge-qa",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-08T01:45:28.571Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd41342f4af3410b36fb-0ebd5f311df988616dea",
+              "file": "judge-qa-cross-system.spec.ts",
+              "line": 34,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "judge-qa-shell.spec.ts",
+      "file": "judge-qa-shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "shared header fits at CSS root zoom 200% light (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:45:48.379Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1de4da06ed72bd01a1c8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared header fits at CSS root zoom 200% dark (historical 89px reproduction)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1722,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:45:50.361Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-6e7dac4b54b605d1fd37",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 221,
+          "column": 3
+        },
+        {
+          "title": "shared routes and accessible navigation light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7182,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:45:52.102Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-424f9df38afc2cbbee6d",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:45:59.319Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-9546229d4c885ccc42b0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9392,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:06.370Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4842c2183fccd2773e76",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation light 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5514,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:15.817Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-a28b71153870b8f19465",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:21.368Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1881d5d14ef278a45d88",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5774,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:28.069Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c5191f73af357b23ebb5",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:33.863Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-96a86c460ba23ec73828",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "shared routes and accessible navigation dark 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5335,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:39.609Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c104d9e6d9559116243b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 244,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8933,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:44.982Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-e6529b37eff327bde6d8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes light window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7790,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:46:53.930Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-2b317622111a611160cf",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:47:01.730Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f87d5241d697ef8c91c6",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "native Chromium 200% shared routes dark window 2048",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10774,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:47:10.796Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-1737f27e5fa8754d66c0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 336,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:47:21.580Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-958487ca8ee1598f4dc0",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:47:45.091Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-0c1001f699b2d1172806",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:48:06.128Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-3f9f0b6810611e12aff8",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector light 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13853,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:48:21.386Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-948e763248283a4f39dd",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25962,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:48:35.262Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-ce5284f709e5c3c77207",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 1024x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20649,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:49:01.251Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-eb62e898dc1c0d1e1169",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:49:21.919Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-7104cf2ec741884069d2",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "real guest fault replay and inspector dark 320x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:49:38.888Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-4e273b8511a22afa006f",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 436,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:50:00.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-c9eac884821103d3b86a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative light 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1817,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:50:02.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-30753ed343d6c628862b",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:50:04.449Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-f4cda780c9308d07eb1a",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        },
+        {
+          "title": "no WebGL actual synthetic text alternative dark 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "judge-qa",
+              "projectName": "judge-qa",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1888,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T01:50:06.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "79047e00ea44f215bac2-b2c99550d1ecdc751e07",
+          "file": "judge-qa-shell.spec.ts",
+          "line": 594,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T01:43:36.585Z",
+    "duration": 392451.757,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

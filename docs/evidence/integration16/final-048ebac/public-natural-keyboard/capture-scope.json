@@ -1,0 +1,6 @@
+{
+  "scope": "Actual signed-out public HTTPS camera acceptance; sourceSha in sidecars is the QA harness, not the remote deployment",
+  "origin": "https://vorqynweb-production.up.railway.app",
+  "remoteDeploymentSha": null,
+  "note": "No mocks, forced clicks, product credentials or deployment-SHA inference. Inspect hosting record separately."
+}

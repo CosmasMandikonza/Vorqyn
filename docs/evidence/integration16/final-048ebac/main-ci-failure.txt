@@ -1,0 +1,15 @@
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	﻿2026-11-08T13:05:56.9044832Z ##[group]Run cargo build-sbf
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9045202Z [36;1mcargo build-sbf[0m
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9097030Z shell: /usr/bin/bash -e {0}
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9097262Z env:
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9097445Z   CARGO_HOME: /home/runner/.cargo
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9097675Z   CARGO_INCREMENTAL: 0
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9097864Z   CARGO_TERM_COLOR: always
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9098064Z   CACHE_ON_FAILURE: false
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9098343Z   VORQYN_REGISTRY_ADMIN: Dhy3dtB6rWZwH9aJqHz1HPuzzJh8QDL6A67yFBFrPnAD
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9098898Z   VORQYN_TEST_REGISTRY_ADMIN_KEYPAIR: /home/runner/work/Vorqyn/Vorqyn/programs/vorqyn/target/deploy/registry-admin-keypair.json
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:56.9099350Z ##[endgroup]
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:05:59.4595658Z [2026-11-08T13:05:59.459323208Z WARN  cargo_build_sbf] Package 'vorqyn' has two crate types defined: cdylib and lib. This setting precludes link-time optimizations (LTO). Use cdylib for programs to be deployed and rlib for packages to be imported by other programs as libraries.
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:06:29.4786452Z [2026-11-08T13:06:29.477809306Z ERROR cargo_build_sbf::toolchain] Failed to install platform-tools: error sending request for url (https://github.com/anza-xyz/platform-tools/releases/download/v1.57/platform-tools-linux-x86_64.tar.bz2)
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:06:29.4788149Z      It looks like the download has failed. If this is a persistent issue, try `cargo-build-sbf --install-only` to download from an alternative source.
+Anchor escrow program (Rust + LiteSVM)	Build SBF program	2026-11-08T13:06:29.4802449Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,215 @@
+[WebServer] (node:57601) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:57613) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+
+Running 34 tests using 1 worker
+
+(node:57632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 320 › entire row remains visible after four real station/fault states
+  1) [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 320 › entire row remains visible after four real station/fault states
+
+    Error: full-row-clean-uw-light-320x844: FOLLOW right edge
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 300
+    Received:    353.75
+
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+    > 165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+          |                ^
+      166 |             expect
+      167 |               .soft(button.rect.height, `${name}: ${button.name} hit height`)
+      168 |               .toBeGreaterThanOrEqual(44);
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16
+
+    Error: full-row-follow-light-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error: full-row-inspect-light-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error: full-row-fault-uw-light-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error Context: ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-08382-r-real-station-fault-states-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-08382-r-real-station-fault-states-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-08382-r-real-station-fault-states-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:57802) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 390 › entire row remains visible after four real station/fault states
+[3/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1024 › entire row remains visible after four real station/fault states
+[4/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1440 › entire row remains visible after four real station/fault states
+[5/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 320 › entire row remains visible after four real station/fault states
+  2) [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 320 › entire row remains visible after four real station/fault states
+
+    Error: full-row-clean-uw-dark-320x844: FOLLOW right edge
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 300
+    Received:    353.75
+
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+    > 165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+          |                ^
+      166 |             expect
+      167 |               .soft(button.rect.height, `${name}: ${button.name} hit height`)
+      168 |               .toBeGreaterThanOrEqual(44);
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:165:16
+
+    Error: full-row-follow-dark-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error: full-row-inspect-dark-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error: full-row-fault-uw-dark-320x844: RESET left edge
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 20
+    Received:    -34
+
+      160 |             expect
+      161 |               .soft(button.rect.left, `${name}: ${button.name} left edge`)
+    > 162 |               .toBeGreaterThanOrEqual(Math.max(0, measured.frame.left));
+          |                ^
+      163 |             expect
+      164 |               .soft(button.rect.right, `${name}: ${button.name} right edge`)
+      165 |               .toBeLessThanOrEqual(Math.min(width, measured.frame.right));
+        at /workspace/work/integration16/apps/web/tests/browser/judge-qa-cross-system.spec.ts:162:16
+
+    Error Context: ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-cd8ff-r-real-station-fault-states-judge-qa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-cd8ff-r-real-station-fault-states-judge-qa/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../integration16-browser-proof/traces/judge-qa-cross-system-cros-cd8ff-r-real-station-fault-states-judge-qa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:58176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 390 › entire row remains visible after four real station/fault states
+[7/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1024 › entire row remains visible after four real station/fault states
+[8/34] [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1440 › entire row remains visible after four real station/fault states
+[9/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% light (historical 89px reproduction)
+[10/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:221:3 › shared header fits at CSS root zoom 200% dark (historical 89px reproduction)
+[11/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1440x900
+[12/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 1024x900
+[13/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 390x844
+[14/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation light 320x844
+[15/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1440x900
+[16/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 1024x900
+[17/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 390x844
+[18/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:244:5 › shared routes and accessible navigation dark 320x844
+[19/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 1440
+[20/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes light window 2048
+[21/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 1440
+[22/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:336:5 › native Chromium 200% shared routes dark window 2048
+[23/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1440x900
+[24/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 1024x900
+[25/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 390x844
+[26/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector light 320x844
+[27/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1440x900
+[28/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 1024x900
+[29/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 390x844
+[30/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:436:5 › real guest fault replay and inspector dark 320x844
+[31/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 1440
+[32/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative light 390
+[33/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 1440
+[34/34] [judge-qa] › tests/browser/judge-qa-shell.spec.ts:594:5 › no WebGL actual synthetic text alternative dark 390
+  2 failed
+    [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 320 › entire row remains visible after four real station/fault states
+    [judge-qa] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 320 › entire row remains visible after four real station/fault states
+  32 passed (6.5m)
+undefined
+/workspace/work/integration16/apps/web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config ../../scripts/release/judge-qa.config.mjs

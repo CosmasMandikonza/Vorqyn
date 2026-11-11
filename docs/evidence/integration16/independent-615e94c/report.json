@@ -1,0 +1,85 @@
+{
+  "schema": "vorqyn.independent-qa/1",
+  "sourceSha": "615e94cf4eed27182479df381f8fc747ddd5af3d",
+  "workingTreeDirty": false,
+  "mainObservedSha": "fe00763cd44bb854a7554f55ca0359a76e6a2b83",
+  "startedAt": "2026-11-08T03:22:31.006924+00:00",
+  "finishedAt": "2026-11-08T03:22:33.034995+00:00",
+  "nodeVersion": "v22.21.1",
+  "scope": "Dependency-free synthetic kernel/coordinate behavior and QA-tool negative regressions. Not a frozen install, workspace/owner-module test, browser rerun, authenticated workflow or chain proof.",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "kernel",
+      "status": "PASS",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/core/determinism.test.mjs",
+        "services/simulation/core/evidence-thresholds.test.mjs",
+        "services/simulation/core/fault.test.mjs",
+        "services/simulation/core/geometry.test.mjs",
+        "services/simulation/core/input-validation.test.mjs",
+        "services/simulation/core/lifecycle.test.mjs",
+        "services/simulation/core/provenance.test.mjs",
+        "services/simulation/core/sample.test.mjs"
+      ],
+      "exitCode": 0,
+      "stats": {
+        "tests": 48,
+        "pass": 48,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "kernel.txt"
+    },
+    {
+      "id": "coordinates",
+      "status": "PASS",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "services/simulation/integration/world-alignment.test.mjs"
+      ],
+      "exitCode": 0,
+      "stats": {
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "coordinates.txt"
+    },
+    {
+      "id": "qa-tooling",
+      "status": "PASS",
+      "command": [
+        "/workspace/work/tooling/node_modules/node/bin/node",
+        "--test",
+        "scripts/integration/tooling.test.mjs"
+      ],
+      "exitCode": 0,
+      "stats": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "qa-tooling.txt"
+    }
+  ],
+  "protectedPacketReferenceSha": "79945228e08adf9276410132da3a0212bed7c7f5",
+  "protectedOriginal20TestsAndEvidence": "PASS \u2014 byte-identical before and after all tests",
+  "protectedFiles": 205,
+  "frozenInstall": "BLOCKED \u2014 separate owner hotfix not on observed main",
+  "fullIntegrationGate": "NOT RUN this phase; installation prerequisite remains enforced",
+  "fresh34CaseBrowser": "NOT RUN \u2014 no corrected-main production build",
+  "currentOwnerRuntimeDiagnostics": "NOT RUN \u2014 no use of stale workspace dependencies",
+  "authorityAndReceipts": "BLOCKED \u2014 no production adapter/wallet/chain behavior exercised"
+}

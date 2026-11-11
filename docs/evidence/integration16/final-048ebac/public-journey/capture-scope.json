@@ -1,0 +1,7 @@
+{
+  "scope": "Actual signed-out public HTTPS acceptance; sourceSha is the QA harness, not the remote deployment",
+  "suite": "guest-to-saved-draft",
+  "origin": "https://vorqynweb-production.up.railway.app",
+  "remoteDeploymentSha": null,
+  "note": "No mocks, forced clicks, product credentials or deployment-SHA inference. Inspect hosting record separately."
+}

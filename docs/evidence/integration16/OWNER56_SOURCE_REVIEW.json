@@ -1,0 +1,50 @@
+{
+  "scope": "Read-only owner source and supplied-image inspection. No package installation, renderer execution, browser rerun or merge acceptance.",
+  "ownerPr": 56,
+  "ownerHeadSha": "dac240eac932b892dd15b13d583fdf6e9fdb4db4",
+  "images": [
+    {
+      "repositoryPath": "docs/evidence/vq-14-visual/camera-row-320-light-viewport.png",
+      "pngWidth": 320,
+      "pngHeight": 844,
+      "sha256": "b5dd6d236c7e471f59926aa62444e2cdb25c1a2ad496f59135f87340d9dd91be",
+      "inspection": "Owner-supplied image inspected; FIXTURE PLAYBACK badge visible; this is not our browser execution"
+    },
+    {
+      "repositoryPath": "docs/evidence/vq-14-visual/camera-row-320-dark-viewport.png",
+      "pngWidth": 320,
+      "pngHeight": 844,
+      "sha256": "8a7db0a0d62a057d309d9c745817ea8544c2462acad80cd2e486388961002d40",
+      "inspection": "Owner-supplied image inspected; FIXTURE PLAYBACK badge visible; this is not our browser execution"
+    }
+  ],
+  "auditStations": [
+    "RESET",
+    "AIR",
+    "UW",
+    "FOLLOW"
+  ],
+  "requiredIndependentStates": [
+    "clean-UW",
+    "FOLLOW",
+    "INSPECT",
+    "fault-UW"
+  ],
+  "auditUrlFromSource": "/demo/mission?fixture=1",
+  "runtimeVerification": "NOT RUN \u2014 frozen-install prerequisite still blocked",
+  "old320Failures": "RETAINED at original exact source until independent corrected-source rerun",
+  "sourceFindings": [
+    {
+      "priority": "P2",
+      "finding": "Selected-station styling was previously scoped to .halo-options button[aria-pressed=\"true\"]; new grid buttons have no matching wrapper or conditional selected class. Owner RESET screenshots show no distinct selected station. Runtime computed-style verification NOT RUN."
+    },
+    {
+      "priority": "P1 evidence coverage",
+      "finding": "Added theme loop writes localStorage.theme before reload, while actual provider storageKey is vorqyn-theme; loop has no post-reload actual-theme assertion. Source inspection only, no claim a real dark run failed."
+    },
+    {
+      "priority": "P1 evidence attribution",
+      "finding": "Owner audit summary omits source SHA/run IDs/rectangles and uses fixture transport. Its 32 rows are not the independent 32 fault/inspect states."
+    }
+  ]
+}

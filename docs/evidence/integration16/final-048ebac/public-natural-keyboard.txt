@@ -1,0 +1,15 @@
+
+Running 8 tests using 1 worker
+
+(node:8408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 320 › entire row remains visible after four real station/fault states
+[2/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 390 › entire row remains visible after four real station/fault states
+[3/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1024 › entire row remains visible after four real station/fault states
+[4/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera light 1440 › entire row remains visible after four real station/fault states
+[5/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 320 › entire row remains visible after four real station/fault states
+[6/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 390 › entire row remains visible after four real station/fault states
+[7/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1024 › entire row remains visible after four real station/fault states
+[8/8] [public-camera] › tests/browser/judge-qa-cross-system.spec.ts:34:7 › cross-system camera dark 1440 › entire row remains visible after four real station/fault states
+  8 passed (4.0m)

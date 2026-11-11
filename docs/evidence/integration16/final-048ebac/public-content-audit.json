@@ -1,0 +1,101 @@
+{
+  "origin": "https://vorqynweb-production.up.railway.app",
+  "recordedAt": "2026-11-08T13:35:54.768748+00:00",
+  "remoteDeploymentSha": null,
+  "scope": "Anonymous HTML and same-origin JS linked by four public routes; TLS verified, inherited curl session proxy; heuristic only, not a security guarantee",
+  "resources": [
+    {
+      "path": "/",
+      "bytes": 54730,
+      "sha256": "23a53dd87fcacc2bc65f70be0aa29613734ebb75fe9a3c67652d2b96953572de"
+    },
+    {
+      "path": "/demo",
+      "bytes": 45986,
+      "sha256": "914340c4a4fa62d27a71e9a8457eb090d31695fa6c01f3a6d1662bf4d4e242fc"
+    },
+    {
+      "path": "/demo/mission",
+      "bytes": 18139,
+      "sha256": "d0f48daba1d1e97140ede526a12be60d590d926cea80d58a36103f1341680842"
+    },
+    {
+      "path": "/workspace/create",
+      "bytes": 18159,
+      "sha256": "091eb14f81aeb3e9007038b05c29e99f68bd2558a6c190b4f3ef1615f847a314"
+    },
+    {
+      "path": "/_next/static/chunks/0e0b8bca-3cef25f6382172fb.js",
+      "bytes": 173019,
+      "sha256": "9882c00e2778b39342b9b564ae12f572050be6c5bed144c74a89aaf0a28d4e3a"
+    },
+    {
+      "path": "/_next/static/chunks/450-df0df7919498d45b.js",
+      "bytes": 174113,
+      "sha256": "1f372e11ffa452632f8afd5c189f41ef71524f35dc144697a61278c9520be4d6"
+    },
+    {
+      "path": "/_next/static/chunks/728-68615ae3a2d0fd07.js",
+      "bytes": 8537,
+      "sha256": "7644a1e9dac07cd032579cfbb83d42a955199e16d49168d0fc965d75d78a1412"
+    },
+    {
+      "path": "/_next/static/chunks/737-304541272d544fb6.js",
+      "bytes": 197937,
+      "sha256": "285ceb1b16cb743266c72829d84208ac5c946b0a41c96c3f3608b6b2aece9f4d"
+    },
+    {
+      "path": "/_next/static/chunks/881-77d5e625cda4bf34.js",
+      "bytes": 31720,
+      "sha256": "415f87f80da27b235dd511dca256bb63fe1984d535847a03e0d8cd44fbe68cc4"
+    },
+    {
+      "path": "/_next/static/chunks/app/demo/mission/page-a28b898ef75a63b9.js",
+      "bytes": 3772,
+      "sha256": "97c24e891476edd3ae388ab6d9f2000f94a55b83beb6dc4347ca6a800e80dc70"
+    },
+    {
+      "path": "/_next/static/chunks/app/demo/page-338fa628e8963248.js",
+      "bytes": 900,
+      "sha256": "b91bb20a17bcc2b258fb0bc0c00547a5002d468ad84e62463f6d9448c8bfab49"
+    },
+    {
+      "path": "/_next/static/chunks/app/error-5b39e3fb73e3e230.js",
+      "bytes": 1445,
+      "sha256": "b1901163fee68784e3990045dab93eaaa21dc3d8a8bce82be9de69526e5627ad"
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6fb566d5688b6048.js",
+      "bytes": 4366,
+      "sha256": "32eedbaa8105f7927ff779ace4f73b1dfb33a47d6884afafccfe86f4ba137920"
+    },
+    {
+      "path": "/_next/static/chunks/app/page-338fa628e8963248.js",
+      "bytes": 900,
+      "sha256": "b91bb20a17bcc2b258fb0bc0c00547a5002d468ad84e62463f6d9448c8bfab49"
+    },
+    {
+      "path": "/_next/static/chunks/app/workspace/create/page-b9d94d20fad05bd9.js",
+      "bytes": 31738,
+      "sha256": "22df39a3962fad768c10e5961e1d0e881336571e6a037e49826ff278a6829828"
+    },
+    {
+      "path": "/_next/static/chunks/main-app-4ad01e41ce8d2ca2.js",
+      "bytes": 557,
+      "sha256": "8860542350520adadbcc10a4452f92d9475d63a0a02997fdf7fe153dd4d5dacc"
+    },
+    {
+      "path": "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683"
+    },
+    {
+      "path": "/_next/static/chunks/webpack-841a08f61c165dcb.js",
+      "bytes": 3651,
+      "sha256": "041ae5cab4752ce3e9dcc0ca975121ffb8ed3074489f397932d7ff0cf9e28530"
+    }
+  ],
+  "findings": [],
+  "status": "PASS",
+  "claimsReview": "Separate manual screenshot/source-label review; string scanning cannot establish claim truth. No transactions, AI decisions, verifier verdicts or physical measurements proven by this audit."
+}
