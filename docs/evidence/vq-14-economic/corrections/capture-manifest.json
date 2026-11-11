@@ -1,0 +1,55 @@
+{
+  "failures": 0,
+  "total": 8,
+  "base": "http://127.0.0.1:3000",
+  "captures": [
+    {
+      "name": "camera-320-light-follow-disabled",
+      "width": 256,
+      "height": 103,
+      "ihdrOk": true
+    },
+    {
+      "name": "camera-320-dark-follow-disabled",
+      "width": 256,
+      "height": 103,
+      "ihdrOk": true
+    },
+    {
+      "name": "camera-320-light-air-selected",
+      "width": 256,
+      "height": 103,
+      "ihdrOk": true
+    },
+    {
+      "name": "camera-320-light-viewport",
+      "width": 320,
+      "height": 844,
+      "ihdrOk": true
+    },
+    {
+      "name": "camera-320-dark-air-selected",
+      "width": 256,
+      "height": 103,
+      "ihdrOk": true
+    },
+    {
+      "name": "camera-320-dark-viewport",
+      "width": 320,
+      "height": 844,
+      "ihdrOk": true
+    },
+    {
+      "name": "handoff-fixture-walkthrough-1440",
+      "width": 1344,
+      "height": 626,
+      "ihdrOk": true
+    },
+    {
+      "name": "measured-fault-1440",
+      "width": 1344,
+      "height": 559,
+      "ihdrOk": true
+    }
+  ]
+}

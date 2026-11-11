@@ -35,6 +35,9 @@ import { useDemoPlayback } from "./demo-sim/useDemoPlayback";
 import { buildFaultSeries, faultStartIndex } from "./fault-series";
 import { buildGhostPaths, type GhostPaths } from "./ghost-paths";
 import { buildDiveLegs, nextLegIndex } from "./world-dive";
+import { projectEconomicHandoff } from "./economic-handoff/boundary";
+import { RecoveryHandoffPanel } from "./economic-handoff/RecoveryHandoffPanel";
+import { buildPort001Script } from "@vorqyn/contracts";
 
 /** R3F Canvas itself must never render during SSR. */
 const PortSceneDynamic = dynamic(() => import("./PortScene").then((m) => m.PortScene), { ssr: false });
@@ -117,6 +120,13 @@ export function PortViewer() {
   const selectedLive =
     liveRobots?.find((r) => r.robotId === selectedMachine?.robotId) ?? null;
 
+  // Economic Handoff (Issue #15): read-only event projection. Default source
+  // is NONE — the authority stages honestly show pending/unavailable. The
+  // opt-in canonical fixture walkthrough (fixture mode only) loads Lane 1's
+  // committed deterministic fixture script through the SAME validated
+  // boundary, clearly labelled; no chain events are ever synthesized here.
+  const [handoffWalkthroughLoaded, setHandoffWalkthroughLoaded] = useState(false);
+
   // Mission Fracture + Ghost Replay data: derived strictly from the recorded
   // kernel observation log (Issue #15, sections B and C).
   const snapshots = useMemo(() => playback.response?.snapshots ?? [], [playback.response]);
@@ -128,6 +138,15 @@ export function PortViewer() {
   );
   const hasFault = faultIndex !== null;
   const [ghostVisible, setGhostVisible] = useState(true);
+
+  const economicEvents = useMemo(
+    () => (handoffWalkthroughLoaded ? buildPort001Script().map((event) => event as unknown) : []),
+    [handoffWalkthroughLoaded],
+  );
+  const handoffProjection = useMemo(
+    () => projectEconomicHandoff(economicEvents, { missionId: "port-001", taskId: "task-sea-survey" }),
+    [economicEvents],
+  );
 
   // World Dive (Issue #15, section A): timed playthrough of calibrated
   // stations. Any operator input cancels; reduced motion disables it.
@@ -350,6 +369,17 @@ export function PortViewer() {
                 dive={{ available: !reducedMotion, active: diveActive, legLabel: buildDiveLegs()[diveLegIndex]?.label ?? "", onStart: startDive, onSkip: () => { cancelDive(); setMode("INSPECT"); } }}
               />
             </div>
+            <RecoveryHandoffPanel
+              projection={handoffProjection}
+              sourceLabel={
+                fixtureMode
+                  ? "FIXTURE WALKTHROUGH · canonical contracts fixture script (deterministic — no chain transactions submitted)"
+                  : "PENDING — awaiting an authoritative mission event source"
+              }
+              measuredAvailable={hasFault}
+              onLoadWalkthrough={fixtureMode ? () => setHandoffWalkthroughLoaded(true) : undefined}
+              walkthroughLoaded={handoffWalkthroughLoaded}
+            />
             <div className="mt-4 lg:hidden">
               <InspectorPanel
                 world={state.world}
@@ -387,6 +417,17 @@ export function PortViewer() {
                 dive={{ available: !reducedMotion, active: diveActive, legLabel: buildDiveLegs()[diveLegIndex]?.label ?? "", onStart: startDive, onSkip: () => { cancelDive(); setMode("INSPECT"); } }}
               />
             </div>
+            <RecoveryHandoffPanel
+              projection={handoffProjection}
+              sourceLabel={
+                fixtureMode
+                  ? "FIXTURE WALKTHROUGH · canonical contracts fixture script (deterministic — no chain transactions submitted)"
+                  : "PENDING — awaiting an authoritative mission event source"
+              }
+              measuredAvailable={hasFault}
+              onLoadWalkthrough={fixtureMode ? () => setHandoffWalkthroughLoaded(true) : undefined}
+              walkthroughLoaded={handoffWalkthroughLoaded}
+            />
           </div>
         ))}
     </div>
@@ -517,7 +558,13 @@ function ViewModeBar({
                 ? "Available while a synthetic survey session is producing observations"
                 : undefined
             }
-            className="min-h-11 rounded-full px-2 font-mono text-[11px] transition-colors sm:px-3"
+            className={`min-h-11 rounded-full px-2 font-mono text-[11px] transition-colors sm:px-3 disabled:cursor-not-allowed disabled:opacity-40 ${
+              mode === m
+                ? // selected station: filled brand pill (same idiom as the
+                  // PlaybackBar toggles — bg-primary/text-primary-foreground)
+                  "bg-primary text-primary-foreground"
+                : "text-foreground enabled:hover:bg-muted"
+            }`}
             onClick={() => onChange(m)}
           >
             {m === "UNDERWATER" ? "UW" : m}
