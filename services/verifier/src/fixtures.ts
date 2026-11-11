@@ -56,20 +56,20 @@ export function synthSample(spec: SampleSpec): TelemetrySample {
 /** ROV A optical survey under the injected low-visibility fault (0.4 m). */
 export function rovAOpticalSamples(visibility = 0.4): TelemetrySample[] {
   return [
-    synthSample({ robotId: "rov-a-01", sequence: 10, sourceTimestampMs: CAPTURE_MS - 4_000, x: 2, y: 3, visibilityMetres: visibility, degraded: visibility < 1.5 }),
-    synthSample({ robotId: "rov-a-01", sequence: 11, sourceTimestampMs: CAPTURE_MS - 3_000, x: 8, y: 4, visibilityMetres: visibility, degraded: visibility < 1.5 }),
-    synthSample({ robotId: "rov-a-01", sequence: 12, sourceTimestampMs: CAPTURE_MS - 2_000, x: 14, y: 5, visibilityMetres: visibility, degraded: visibility < 1.5 }),
-    synthSample({ robotId: "rov-a-01", sequence: 13, sourceTimestampMs: CAPTURE_MS - 1_000, x: 20, y: 6, visibilityMetres: visibility, degraded: visibility < 1.5 }),
+    synthSample({ robotId: "rov-a-01", sequence: 10, sourceTimestampMs: CAPTURE_MS - 4_000, x: 150, y: -75, visibilityMetres: visibility, degraded: visibility < 1.5 }),
+    synthSample({ robotId: "rov-a-01", sequence: 11, sourceTimestampMs: CAPTURE_MS - 3_000, x: 157, y: -78, visibilityMetres: visibility, degraded: visibility < 1.5 }),
+    synthSample({ robotId: "rov-a-01", sequence: 12, sourceTimestampMs: CAPTURE_MS - 2_000, x: 163, y: -81, visibilityMetres: visibility, degraded: visibility < 1.5 }),
+    synthSample({ robotId: "rov-a-01", sequence: 13, sourceTimestampMs: CAPTURE_MS - 1_000, x: 170, y: -84, visibilityMetres: visibility, degraded: visibility < 1.5 }),
   ];
 }
 
 /** ROV B sonar survey — no visibility dependency, same zone. */
 export function rovBSonarSamples(): TelemetrySample[] {
   return [
-    synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: CAPTURE_MS - 4_000, x: 3, y: 2, sonarQuality: 0.92 }),
-    synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: CAPTURE_MS - 3_000, x: 9, y: 3, sonarQuality: 0.90 }),
-    synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: CAPTURE_MS - 2_000, x: 15, y: 4, sonarQuality: 0.95 }),
-    synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: CAPTURE_MS - 1_000, x: 21, y: 5, sonarQuality: 0.93 }),
+    synthSample({ robotId: "rov-b-02", sequence: 40, sourceTimestampMs: CAPTURE_MS - 4_000, x: 150, y: -76, sonarQuality: 0.92 }),
+    synthSample({ robotId: "rov-b-02", sequence: 41, sourceTimestampMs: CAPTURE_MS - 3_000, x: 160, y: -82, sonarQuality: 0.90 }),
+    synthSample({ robotId: "rov-b-02", sequence: 42, sourceTimestampMs: CAPTURE_MS - 2_000, x: 168, y: -88, sonarQuality: 0.95 }),
+    synthSample({ robotId: "rov-b-02", sequence: 43, sourceTimestampMs: CAPTURE_MS - 1_000, x: 172, y: -90, sonarQuality: 0.93 }),
   ];
 }
 
